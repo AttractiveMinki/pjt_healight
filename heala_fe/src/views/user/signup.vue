@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      heala-logo
+      heala-logos
     </div>
     <h1>회원 가입</h1>
     <el-row>
