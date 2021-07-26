@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
 
-import join from "@/views/user/join"
+import signup from "@/views/user/signup"
 import login from "@/views/user/login"
 
 Vue.use(VueRouter);
@@ -24,9 +24,9 @@ const routes = [
   },
 
   {
-    path: '/user/join',
-    name: 'join',
-    component: join,
+    path: '/user/signup',
+    name: 'signup',
+    component: signup,
   },
   {
     path: '/user/login',

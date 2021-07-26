@@ -1,13 +1,8 @@
 <template>
   <div id="app">
-    <router-link :to="{ name: 'join' }">회원가입</router-link>
+    <router-link :to="{ name: 'signup' }">회원가입</router-link>
     <br>
     <router-link :to="{ name: 'login' }">로그인</router-link>
-    <el-menu-item :key="index" :index="login" >
-      <span slot="title">
-        test
-      </span>
-    </el-menu-item>
     <router-view></router-view>
   </div>
 </template>
