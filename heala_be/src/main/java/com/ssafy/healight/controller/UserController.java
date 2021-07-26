@@ -1,24 +1,27 @@
 package com.ssafy.healight.controller;
 
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.healight.domain.entity.User;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin("*")
 @RequestMapping("/user")
 @RestController
-
+@Api(value="Healight", description="Healight Resouces Management 2021")
 public class UserController {
 	
+	@ApiOperation(value = "회원가입시 아이디 중복을 검사한다.")
+	@GetMapping("/{id}")
+	public User getUser(@PathVariable String id) {
+		return new User();
+	}
 	/*
 	@Autowired
 	private UserService userService;
