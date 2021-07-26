@@ -1,12 +1,12 @@
 <template>
   <div>
-    안녕하세요
+    <h1>로그인</h1>
   </div>
 </template>
 
 <script>
 export default {
-
+  name: "login",
 }
 </script>
 

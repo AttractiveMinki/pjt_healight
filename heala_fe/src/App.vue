@@ -1,32 +1,22 @@
 <template>
   <div id="app">
-    <!-- <el-row
-      type="flex"
-      align="center"
-      justify="center"
-    >
-      헬로우
-    </el-row> -->
-    <img src="./assets/logo.png" />
-    <div>
-      <p>
-        If Element is successfully added to this project, you'll see an
-        <code v-text="'<el-button>'"></code>
-        below
-      </p>
-      <el-button>el-button</el-button>
-    </div>
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <router-link :to="{ name: 'join' }">회원가입</router-link>
+    <br>
+    <router-link :to="{ name: 'login' }">로그인</router-link>
+    <el-menu-item :key="index" :index="login" >
+      <span slot="title">
+        test
+      </span>
+    </el-menu-item>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
 
 export default {
   name: "app",
   components: {
-    HelloWorld,
   },
 };
 </script>
