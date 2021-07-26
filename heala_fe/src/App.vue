@@ -8,6 +8,7 @@
         test
       </span>
     </el-menu-item>
+    <router-view></router-view>
   </div>
 </template>
 
