@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/feed")
 @RestController
 
+
+//피드 컨트롤러
 public class FeedController {
 
 }
