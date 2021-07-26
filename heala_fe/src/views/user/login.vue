@@ -1,7 +1,9 @@
 <template>
   <div>
+    <div>
+      heala-logos
+    </div>
     <h1>로그인</h1>
-
     <el-row>
       <el-col :span="24"><div class="introduce-text-align-start">아이디</div>
         <input type="text" class='get-input bg-gray' id="identity" v-model="data.identity" maxlength="20" required>
