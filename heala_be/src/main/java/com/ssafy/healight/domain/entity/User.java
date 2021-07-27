@@ -13,6 +13,7 @@ import java.util.Date;
 @Entity
 @Builder
 @Getter
+@Setter
 public class User {
 
 	@Id

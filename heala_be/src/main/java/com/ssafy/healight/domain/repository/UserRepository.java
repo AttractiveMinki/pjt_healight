@@ -8,7 +8,7 @@ import com.ssafy.healight.domain.entity.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
 	User getUserById(int id);
-	
 
+	
 
 }
