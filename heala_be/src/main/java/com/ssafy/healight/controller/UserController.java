@@ -57,21 +57,16 @@ public class UserController {
 	}
 	
 	
-//	// 성공 코드랑 pk보내줘야함
-//	// 로그인
-//	@PostMapping("/login")
-//	public ResponseEntity<String> login(@RequestBody User user, HttpSession session) {
-//		return userService.login(user, session);
-//		String name = userService.login(user.getId(), user.getPassword());
-//		if (name != null) {
-//			session.setAttribute("id", user.getId());
-//			session.setAttribute("name", name);
-//			return name;
-//		} else {
-//			return "false";
-//		}
-//	}
-
+	// 로그인
+	@PostMapping("/login")
+	public Object login(@RequestBody User user) {
+		Optional<User> userOpt = userRepository.getUserByIdentityAndPassword(user.getIdentity(), user.getPassword());
+		if (userOpt.isPresent()) {
+			return new ResponseEntity<Integer>(userOpt.get().getId(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 	
 }
 
