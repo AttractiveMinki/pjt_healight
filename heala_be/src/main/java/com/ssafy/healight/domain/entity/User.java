@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
 import java.util.Date;
 
 // 회원정보를 표현
@@ -16,6 +18,7 @@ import java.util.Date;
 @Builder
 @Getter
 @ToString
+//@Table(name = "user")
 public class User {
 
 	@Id
