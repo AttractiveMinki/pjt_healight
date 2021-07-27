@@ -48,31 +48,13 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-//
-//	// 회원 가입
-//	@PostMapping("/signup")
-//	public Object signUp(@RequestBody User user) {
-//		userRepository.save(user);
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
-	
-	
-	
-//	// 아이디
-//	Optional<User> findUserByIdentity = userRepository.getUserByIdentity(user.getIdentity());
-//	// 이메일
-//	Optional<User> findUserByEmail = userRepository.getUserByEmail(user.getEmail());
-//	
-//	System.out.println(findUserByIdentity);
-	
-//	if (!findUserByIdentity.isPresent() && !findUserByEmail.isPresent()) {
-//		userRepository.save(user);
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
-//	else {
-//		return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
-//	}
+
+	// 회원 가입
+	@PostMapping("/signup")
+	public Object signUp(@RequestBody User user) {
+		userRepository.save(user);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 	
 	
 //	// 성공 코드랑 pk보내줘야함
