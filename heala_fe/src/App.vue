@@ -1,5 +1,13 @@
 <template>
   <div id="app">
+    <router-link :to="{ name: 'join' }">회원가입</router-link>
+    <br>
+    <router-link :to="{ name: 'login' }">로그인</router-link>
+    <el-menu-item :key="index" :index="login" >
+      <span slot="title">
+        test
+      </span>
+    </el-menu-item>
     <router-view></router-view>
   </div>
 </template>
@@ -8,17 +16,12 @@
 
 export default {
   name: "app",
-  components: {},
+  components: {
+  },
 };
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
-
-html, body {
-  font-family: 'Roboto', sans-serif;
-}
-
 #app {
   font-family: 'Roboto', sans-serif;
   /* font-family: "Avenir", Helvetica, Arial, sans-serif; */
