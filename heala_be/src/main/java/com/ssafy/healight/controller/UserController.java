@@ -1,5 +1,8 @@
 package com.ssafy.healight.controller;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.healight.domain.entity.Profile;
 import com.ssafy.healight.domain.entity.User;
@@ -55,18 +59,26 @@ public class UserController {
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	
+	
 	@ApiOperation(value = "프로필 편집 반영하기.")
 	@PatchMapping("/profile/{user_id}")
-	public Object updateUser(@PathVariable int user_id, @RequestBody Profile userRequest) {
+	public Object updateUser(@PathVariable int user_id, @RequestBody Profile userRequest) throws Exception {
 		User updateUser = userRepository.getUserById(user_id);
 		boolean user_update = false;
 		boolean badge_update = false;
 		User user = userRequest.getUser();
 		List<UserBadge> badges = userRequest.getBadges();
-		if(StringUtils.hasLength(user.getImage())) {
-			updateUser.setImage(user.getImage());
+		MultipartFile image = userRequest.getImage();
+		
+		//프로필 사진 변경
+		if(!image.isEmpty()) {
+			String fileName = image.getOriginalFilename();
+			Path path = Paths.get("C:/Users/82103/Desktop/healight/S05P12A605/heala_fe/src/assets" + image.getOriginalFilename());
+			image.transferTo(path);
+			updateUser.setImage(fileName);
 			user_update = true;
 		}
+		//프로필 사진 외 정보 변경
 		if(StringUtils.hasLength(user.getName())) {
 			updateUser.setName(user.getName());
 			user_update = true;
@@ -79,6 +91,7 @@ public class UserController {
 			updateUser.setIntroduction(user.getIntroduction());
 			user_update = true;
 		}
+		//배지 변경
 		if(badges.size()!=0) badge_update = true;
 		
 		if(user_update || badge_update) {
