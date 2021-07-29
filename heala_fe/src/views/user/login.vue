@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      heala-logos
+      heala-logo
     </div>
     <h1>로그인</h1>
     <el-row>
@@ -16,10 +16,10 @@
         </div>
       </el-col>
       <el-col :span="24" class="signup-forgetpassword-button justify-content-space-between">
-        <span><router-link :to="{ name: 'signup' }" class="text-decoration-none">가입하기</router-link></span>
-        <span><router-link :to="{ name: 'signup' }" class="text-decoration-none">[]비밀번호를 잊으셨나요?</router-link> </span>
+        <span><router-link :to="{ name: 'Signup' }" class="text-decoration-none">가입하기</router-link></span>
+        <span><router-link :to="{ name: 'Signup' }" class="text-decoration-none">[]비밀번호를 잊으셨나요?</router-link> </span>
       </el-col>
-      <button class="bg-blue get-input join-button-setting" @click="login(data)">로그인</button>
+      <button class="bg-green get-input join-button-setting" @click="login(data)">로그인</button>
     </el-row>
   </div>
 </template>
@@ -62,8 +62,8 @@ export default {
 </script>
 
 <style scoped>
-  .bg-blue {
-    background: #1A8EFA;
+  .bg-green {
+    background: #ADEC6E;
     color: white;
     /* color: #99a9bf; */
   }
