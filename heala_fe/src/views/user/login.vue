@@ -28,10 +28,10 @@
 import { mapActions } from 'vuex'
 
 export default {
-  name: "login",
+  name: "Login",
   methods: {
     ...mapActions([
-      'login',
+      'Login',
     ]),
     toggleIcon: function () {
       if (this.isvisible == false) {

@@ -9,15 +9,21 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    // 한길 #@
+
+    // 원석 #@
+
+    // 주엽 #@
     username: "",
     userid: "",
-    check_email: true,
-    check_identity: true,
+    // check_email: true,
+    // check_identity: true,
 
     // feeds: [],
     feeds: [
       // post
       {
+        id: "",
         image:"www.naver.com",
         title:"안뇽",
         category:"운동",
@@ -31,6 +37,7 @@ export default new Vuex.Store({
         user_id: 12123,
       },
       {
+        id: "",
         image:"www.daum.net",
         title:"헬로우",
         category:"마음",
@@ -44,6 +51,7 @@ export default new Vuex.Store({
         user_id: 522,
       },
       {
+        id: "",
         image:"www.google.com",
         title:"일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십",
         category:"식단",
@@ -103,12 +111,22 @@ export default new Vuex.Store({
     // decoded: "",
   },
   getters: {
+    // 한길 #@
+
+    // 원석 #@
+
+    // 주엽 #@
     isLoggedIn: function (state) {
       // authToken이 있으면 True, 없으면 False
       return state.userid === "" ? true : false
     },
   },
   mutations: {
+    // 한길 #@
+
+    // 원석 #@
+
+    // 주엽 #@
     // jwt 사용시 적용
     // SET_TOKEN: function (state, token) {
     //   // 1. JWT를 변경
@@ -128,20 +146,25 @@ export default new Vuex.Store({
     INIT_USERNAME: function (state) {
       state.username = ""
     },
-    SET_CHECKIDENTITY: function (state) {
-      state.check_identity = false
-    },
-    SET_CHECKEMAIL: function (state) {
-      state.check_email = false
-    },
-    INIT_CHECKIDENTITY: function (state) {
-      state.check_identity = true
-    },
-    INIT_CHECKEMAIL: function (state) {
-      state.check_email = true
-    },
+    // SET_CHECKIDENTITY: function (state) {
+    //   state.check_identity = false
+    // },
+    // SET_CHECKEMAIL: function (state) {
+    //   state.check_email = false
+    // },
+    // INIT_CHECKIDENTITY: function (state) {
+    //   state.check_identity = true
+    // },
+    // INIT_CHECKEMAIL: function (state) {
+    //   state.check_email = true
+    // },
   },
   actions: {
+    // 한길 #@
+
+    // 원석 #@
+
+    // 주엽 #@
     signup: function (context, data) {
       console.log(SERVER.URL)
       console.log(SERVER.ROUTES.signup)
@@ -178,28 +201,8 @@ export default new Vuex.Store({
       commit("INIT_USERNAME")
       router.push({ name: "Login" })
     },
-    checkIdentity: function ({ commit }, identity ) {
-      axios.post(SERVER.URL + SERVER.ROUTES.checkIdentity + identity, identity)
-        .then(() => {
-          console.log("DB에 없는 이메일")
-          commit("SET_CHECKIDENTITY")
-      })
-        .catch(() => {
-          console.log("DB에 있는 이메일")
-          commit("INIT_CHECKIDENTITY")
-      })
-    },
-    checkEmail: function ({ commit }, email ) {
-      axios.post(SERVER.URL + SERVER.ROUTES.checkEmail + email, email)
-        .then(() => {
-          console.log("DB에 없는 아이디")
-          commit("SET_CHECKEMAIL", )
-      })
-        .catch(() => {
-          console.log("DB에 있는 아이디")
-          commit("INIT_CHECKEMAIL")
-      })
-    },
+
+
     getFeeds: function ({ commit }) {
       // const headers = getters.config
       axios.get(SERVER.URL + SERVER.ROUTES.community + "/main/")
