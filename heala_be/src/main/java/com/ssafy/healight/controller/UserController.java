@@ -1,6 +1,9 @@
 package com.ssafy.healight.controller;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.healight.domain.entity.Profile;
 import com.ssafy.healight.domain.entity.User;
-import com.ssafy.healight.domain.entity.Badge;
+import com.ssafy.healight.domain.entity.UserBadge;
 import com.ssafy.healight.domain.repository.BadgeRepository;
 import com.ssafy.healight.domain.repository.UserBadgeRepository;
 import com.ssafy.healight.domain.repository.UserRepository;
 
-import antlr.collections.List;
 import io.swagger.annotations.ApiOperation;
 
 
@@ -54,27 +57,33 @@ public class UserController {
 	
 	@ApiOperation(value = "프로필 편집 반영하기.")
 	@PatchMapping("/profile/{user_id}")
-	public Object updateUser(@PathVariable int user_id, @RequestBody User user) {
+	public Object updateUser(@PathVariable int user_id, @RequestBody Profile userRequest) {
 		User updateUser = userRepository.getUserById(user_id);
-		boolean update = false;
+		boolean user_update = false;
+		boolean badge_update = false;
+		User user = userRequest.getUser();
+		List<UserBadge> badges = userRequest.getBadges();
 		if(StringUtils.hasLength(user.getImage())) {
 			updateUser.setImage(user.getImage());
-			update = true;
+			user_update = true;
 		}
 		if(StringUtils.hasLength(user.getName())) {
 			updateUser.setName(user.getName());
-			update = true;
+			user_update = true;
 		}
 		if(StringUtils.hasLength(user.getIdentity())) {
 			updateUser.setIdentity(user.getIdentity());
-			update = true;
+			user_update = true;
 		}
 		if(StringUtils.hasLength(user.getIntroduction())) {
 			updateUser.setIntroduction(user.getIntroduction());
-			update = true;
+			user_update = true;
 		}
-		if(update) {
-			userRepository.save(updateUser);
+		if(badges.size()!=0) badge_update = true;
+		
+		if(user_update || badge_update) {
+			if(user_update) userRepository.save(updateUser);
+			if(badge_update) userbadgeRepository.saveAll(badges);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

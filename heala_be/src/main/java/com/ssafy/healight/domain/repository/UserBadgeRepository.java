@@ -13,5 +13,6 @@ public interface UserBadgeRepository extends JpaRepository<UserBadge, Integer> {
 	
 	@Query(value = "select ub from UserBadge ub left join fetch ub.badge where ub.user_id = :user_id")
 	 List<UserBadge> getAllWithBadge(int user_id);
+
 	
 }

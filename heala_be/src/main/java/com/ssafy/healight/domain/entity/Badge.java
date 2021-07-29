@@ -1,6 +1,7 @@
 package com.ssafy.healight.domain.entity;
 
 import javax.persistence.*;
+
 import lombok.*;
 
 
@@ -12,7 +13,7 @@ import lombok.*;
 @Getter
 public class Badge {
 	@Id
-	private int Id;
+	private int id;
 	
 	private String name;
 	private String image;
