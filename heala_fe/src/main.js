@@ -6,8 +6,9 @@ import store from "./store";
 import Element from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import "./plugins/element.js";
+import "@/fontAwesomeIcon.js";
 
-// import '@/assets/css/main.css'
+import '@/assets/css/main.css'
 
 Vue.config.productionTip = false;
 Vue.use(Element);
