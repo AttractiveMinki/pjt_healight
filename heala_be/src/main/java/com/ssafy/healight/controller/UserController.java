@@ -15,15 +15,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.healight.domain.entity.User;
-import com.ssafy.healight.domain.repository.UserRepository;
-//import com.ssafy.healight.model.service.UserService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin("*")
 @RequestMapping("/user")
 @RestController
-
+@Api(value="Healight", description="Healight Resouces Management 2021")
 public class UserController {
 	
+	@ApiOperation(value = "회원가입시 아이디 중복을 검사한다.")
+	@GetMapping("/{id}")
+	public User getUser(@PathVariable String id) {
+		return new User();
+	}
+	/*
 	@Autowired
 	private UserRepository userRepository;
 
