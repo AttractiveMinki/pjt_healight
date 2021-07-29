@@ -5,28 +5,33 @@
     </div>
     <h1>회원 가입</h1>
     <el-row>
-      <el-col :span="24"><div class="introduce-text-align-start">이메일</div>
-        <input type="text" class="get-input bg-gray" id="email" v-model="email" v-bind:class="{error : error.email, complete:!error.email&&identity.email>0}" placeholder=" 이메일을 입력하세요." maxlength="30" required>
+      <el-col :span="24"><div class="introduce-text-align-start"></div>
+        <input type="text" class="get-input bg-gray" id="email" v-model="email" v-bind:class="{error : error.email, complete:!error.email&&identity.email>0}" placeholder=" 이메일" maxlength="30" required>
         <div class="error-text" v-if="error.email">{{error.email}}</div>
       </el-col>
+      <button class="check-button-setting bg-blue" @click="checkEmail(email)">중복 확인</button>
+      <div class="error-text" v-if="error.check_email">{{error.check_email}}</div>
+      <!-- modal - 사용 가능합니다! 이미 있는 이메일입니다. -->
       <br>
-      <el-col :span="24"><div class="introduce-text-align-start">아이디</div>
-        <input type="text" class='get-input bg-gray' id="identity" v-model="identity" v-bind:class="{error : error.identity, complete:!error.identity&&identity.length>0}" maxlength="20" required>
+      <el-col :span="24"><div class="introduce-text-align-start"></div>
+        <input type="text" class='get-input bg-gray' id="identity" v-model="identity" v-bind:class="{error : error.identity, complete:!error.identity&&identity.length>0}" placeholder=" 아이디" maxlength="20" required>
         <div class="error-text" v-if="error.identity">{{error.identity}}</div>
       </el-col>
-      <button>중복 확인</button>
+      <button class="check-button-setting bg-blue" @click="checkIdentity(identity)">중복 확인</button>
+      <div class="error-text" v-if="error.check_identity">{{error.check_identity}}</div>
+      <!-- modal - 사용 가능합니다! 이미 있는 아이디입니다. -->
       <br>
-      <el-col :span="24"><div class="introduce-text-align-start">닉네임</div>
-        <input type="text" class='get-input bg-gray' id="name" v-model="name" v-bind:class="{error : error.name, complete:!error.name&&name.length>0}" maxlength="15" required >
+      <el-col :span="24"><div class="introduce-text-align-start"></div>
+        <input type="text" class='get-input bg-gray' id="name" v-model="name" v-bind:class="{error : error.name, complete:!error.name&&name.length>0}" placeholder=" 닉네임" maxlength="15" required >
         <div class="error-text" v-if="error.name">{{error.name}}</div>
       </el-col>
       <br>
-      <el-col :span="24"><div class="introduce-text-align-start">비밀번호</div>
-        <input type="password" class='get-input bg-gray' id="password" v-model="password" v-bind:class="{error : error.password, complete:!error.password&&password.length>0}" maxlength="20" required>
+      <el-col :span="24"><div class="introduce-text-align-start"></div>
+        <input type="password" class='get-input bg-gray' id="password" v-model="password" v-bind:class="{error : error.password, complete:!error.password&&password.length>0}" placeholder=" 비밀번호" maxlength="20" required>
         <div class="error-text" v-if="error.password">{{error.password}}</div>
       </el-col>
       <br>
-      <el-col :span="24"><div class="introduce-text-align-start">비밀번호 확인</div>
+      <el-col :span="24"><div class="introduce-text-align-start"></div>
         <input
           type="password" 
           id="passwordConfirm" 
@@ -34,6 +39,7 @@
           maxlength="20"
           v-model="passwordConfirm"
           v-bind:class="{error : error.passwordConfirm, complete:!error.passwordConfirm&&passwordConfirm.length!==0}"
+          placeholder=" 비밀번호 확인" 
           @keypress.enter="signup(data)"
           required
         >
@@ -52,6 +58,7 @@
 import PV from "password-validator";
 import * as EmailValidator from "email-validator";
 import { mapActions } from 'vuex'
+import { store } from '../../store/index.js'
 
 export default {
   name: 'join',
@@ -62,7 +69,7 @@ export default {
       .is()
       .min(8)
       .is()
-      .max(100)
+      .max(20)
       .has()
       .digits()
       .has()
@@ -98,6 +105,8 @@ export default {
   methods: {
     ...mapActions([
       'signup',
+      'checkIdentity',
+      'checkEmail',
     ]),
     checkForm() {
       if (this.email.length >= 0 && !EmailValidator.validate(this.email))
@@ -107,10 +116,19 @@ export default {
       if (this.identity.length == 0)
         this.error.identity = "아이디를 입력해주세요."
       else this.error.identity = false;
+      console.log(store)
+      console.log('check_email:', store.check_email, 'check_identity:', store.check_identity)
+      if (store.check_email == true)
+        this.error.check_email = "아이디 중복 확인 버튼을 눌러주세요."
+      else this.error.check_email = false;
 
       if (this.name.length == 0)
         this.error.name = "닉네임을 입력해주세요."
       else this.error.name = false;
+
+      if (store.check_identity == true)
+        this.error.check_identity = "아이디 중복 확인 버튼을 눌러주세요."
+      else this.error.check_identity = false;
 
       if (
         this.password.length >= 0 &&
@@ -136,6 +154,8 @@ export default {
       });
       this.isSubmit = isSubmit;
     },
+    checkEmail() {},
+    checkIdentity() {},
   },
   data: function () {
     return {
@@ -151,6 +171,8 @@ export default {
         name: false,
         password: false,
         passwordConfirm: false,
+        check_email: false,
+        check_identity: false,
         // term: false
       },
       isSubmit: false,
@@ -186,6 +208,12 @@ export default {
     margin-top: 10px;
     margin-left: 10%;
     text-align: start;
+  }
+  .check-button-setting {
+    margin-top: 5px;
+    height: 20px;
+    width: 30%;
+    cursor: pointer;
   }
   .join-button-setting {
     margin-top: 30px;
