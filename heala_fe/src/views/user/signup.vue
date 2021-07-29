@@ -61,7 +61,7 @@ import { mapActions } from 'vuex'
 import { store } from '../../store/index.js'
 
 export default {
-  name: 'join',
+  name: 'Signup',
   created() {
     this.component = this;
 
