@@ -10,6 +10,9 @@ import "@/fontAwesomeIcon.js";
 
 import '@/assets/css/main.css'
 
+import "@/assets/css/main.css";
+import "@/fontAwesomeIcon.js";
+
 Vue.config.productionTip = false;
 Vue.use(Element);
 
