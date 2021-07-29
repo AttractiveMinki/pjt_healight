@@ -8,4 +8,5 @@ import com.ssafy.healight.domain.entity.KiwiChallenge;
 public interface KiwiChallengeRepository extends JpaRepository<KiwiChallenge, Integer> {
 	
 	List<KiwiChallenge> findAll();
+
 }
