@@ -1,13 +1,10 @@
 package com.ssafy.healight.domain.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.util.Collection;
+
+import javax.persistence.*;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,4 +21,7 @@ public class KiwiMission {
 	private int badge_id;
 	private int category;
 	
+	@OneToMany
+	@JoinColumn(name="mission_id")
+	private Collection<KiwiUser> kiwiUser;
 }
