@@ -41,7 +41,8 @@ public class ChallengeController {
 	@Autowired
 	KiwiUserRepository kiwiUserRepository;
 	
-	// 글 작성
+	
+	@ApiOperation(value = "챌린지 만들기.")
 	@PostMapping("/post")
 	public Object post(@RequestBody WithInput withInput) {
 		withChallengeService.post(withInput);

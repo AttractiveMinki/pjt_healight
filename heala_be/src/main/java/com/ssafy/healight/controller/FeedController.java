@@ -14,6 +14,8 @@ import com.ssafy.healight.domain.entity.User;
 import com.ssafy.healight.domain.repository.FeedRepository;
 import com.ssafy.healight.service.FeedService;
 
+import io.swagger.annotations.ApiOperation;
+
 @CrossOrigin("*")
 @RequestMapping("/feed")
 @RestController
@@ -25,7 +27,7 @@ public class FeedController {
 	@Autowired
 	private FeedService feedService;
 	
-	// 글 작성
+	@ApiOperation(value = "글 작성하기.")
 	@PostMapping("/post")
 	public Object post(@RequestBody Post post) {
 		return feedService.post(post);

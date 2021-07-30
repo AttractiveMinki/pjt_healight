@@ -12,7 +12,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-//http://localhost:8080/healight/swagger-ui.html
+//http://localhost:8080/swagger-ui.html
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -29,10 +29,10 @@ public class SwaggerConfig {
 
 
 	private ApiInfo swaggerInfo() {
-		return new ApiInfoBuilder().title("Healight API")
-				.description("Healight API Reference for Developers")
+		return new ApiInfoBuilder().title("Kiwi API")
+				.description("Kiwi API Reference for Developers")
 				.termsOfServiceUrl("edu.ssafy.com")
-				.license("Healight License")
+				.license("Kiwi License")
 				.licenseUrl("ssafy").version("1.0").build();
 	}
 

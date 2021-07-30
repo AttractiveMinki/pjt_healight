@@ -47,7 +47,7 @@ public class UserController {
     UserBadgeRepository userbadgeRepository;
 	
 
-	// 아이디 중복 검사
+	@ApiOperation(value = "아이디 중복 검사하기.")
 	@GetMapping("/checkidentity/{identity}")
 	public Object checkId(@PathVariable String identity) {
 		Optional<User> userOpt = userRepository.getUserByIdentity(identity);
@@ -58,7 +58,7 @@ public class UserController {
 		}
 	}
 
-	// 이메일 중복 검사
+	@ApiOperation(value = "이메일 중복 검사.")
 	@GetMapping("/checkemail/{email}")
 	public Object checkEmail(@PathVariable String email) {
 		Optional<User> userOpt = userRepository.getUserByEmail(email);
@@ -69,7 +69,7 @@ public class UserController {
 		}
 	}
 
-	// 회원 가입
+	@ApiOperation(value = "회원가입 하기.")
 	@PostMapping("/signup")
 	public Object signUp(@RequestBody User user) {
 		userRepository.save(user);
@@ -77,7 +77,7 @@ public class UserController {
 	}
 	
 	
-	// 로그인
+	@ApiOperation(value = "로그인 하기.")
 	@PostMapping("/login")
 	public Object login(@RequestBody User user) {
 		Optional<User> userOpt = userRepository.getUserByIdentityAndPassword(user.getIdentity(), user.getPassword());
@@ -87,6 +87,7 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
 	
 	@ApiOperation(value = "프로필 편집 조회하기.")
 	@GetMapping("/profile/{user_id}")
