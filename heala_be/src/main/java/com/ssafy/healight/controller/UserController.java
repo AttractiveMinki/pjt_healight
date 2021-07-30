@@ -1,6 +1,5 @@
 package com.ssafy.healight.controller;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -31,10 +30,6 @@ import com.ssafy.healight.domain.repository.UserRepository;
 
 import io.swagger.annotations.ApiOperation;
 
-import com.ssafy.healight.domain.entity.User;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin("*")
 @RequestMapping("/user")
