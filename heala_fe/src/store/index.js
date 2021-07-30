@@ -111,17 +111,6 @@ export default new Vuex.Store({
         post_id: 1,
       },
     ],
-
-    // 원석 #@
-
-    // 주엽 #@
-    username: "",
-    userid: "",
-    // check_email: true,
-    // check_identity: true,
-
-    // feeds: [],
-    
     with_challenges: [
       {
         id : 1,
