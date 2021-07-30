@@ -1,7 +1,6 @@
 package com.ssafy.healight.domain.entity;
 
-import java.sql.Timestamp;
-//import java.util.Date;
+import java.sql.Date;
 
 import lombok.*;
 
@@ -14,13 +13,11 @@ public class WithInput {
 	private String image;
 	private String title;
 	private int category;
-	
-	// Date로 나중에 수정하자 일단 Timestamp로 사용하고
-	private Timestamp startdate;
-	private Timestamp enddate;
+	private Date start_date;
+	private Date end_date;
 	private String certify_info;
 	private String introduction;
 	private int user_id;
-	private String[] hashtags;
+	private String hashtags;
 	
 }
