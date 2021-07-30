@@ -239,12 +239,14 @@ export default new Vuex.Store({
     signup: function (context, data) {
       console.log(SERVER.URL)
       console.log(SERVER.ROUTES.signup)
+      console.log(data)
       axios.post(SERVER.URL + SERVER.ROUTES.signup, data)
         .then(() => {
           router.push({ name: "Login" })
       })
         .catch((err) => {
           console.log(err)
+          console.error(err.response.data)
       })
     },
     login: function ({ commit }, data) {
@@ -265,6 +267,7 @@ export default new Vuex.Store({
         .catch((err) => {
           console.log("로그인 에러 발생")
           console.log(err)
+          console.error(err.response.data)
       })
     },
     logout: function ({ commit }) {
