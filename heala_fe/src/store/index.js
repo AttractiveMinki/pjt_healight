@@ -33,11 +33,24 @@ export default new Vuex.Store({
       {title: '수영하기'},
     ],
     // feeds: [],
+    postDetail: {
+      id: 1,
+      title: "일이삼사오육칠팔구십일이삼사오육칠팔구십일이",
+      created_at: "13:56",
+      image: "cat.jpg",
+      likes: 0,
+      scrap: 0,
+      anonymouse: 0,
+      category:"운동",
+      sub_category:"질문",
+      access:"",
+      content: "오늘 정말 너무 힘들고 지치는 하루였는데 우리 귀여운 치즈 덕에 힘난다 ㅠ ㅠ 우리네들 파이팅~!!",
+      user_id: 2,
+    },
     feeds: [
-      // post
       {
         id: 1,
-        image:"www.naver.com",
+        image:"cat.jpg",
         title:"안뇽",
         category:0,
         sub_category:2,
@@ -51,7 +64,7 @@ export default new Vuex.Store({
       },
       {
         id: 2,
-        image:"www.daum.net",
+        image:"cat.jpg",
         title:"헬로우",
         category:2,
         sub_category:1,
@@ -65,7 +78,7 @@ export default new Vuex.Store({
       },
       {
         id: 3,
-        image:"www.google.com",
+        image:"cat.jpg",
         title:"일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십",
         category:1,
         sub_category:0,
@@ -78,6 +91,37 @@ export default new Vuex.Store({
         user_id: 329,
       },
     ],
+    comments: [
+      {
+        id: 1,
+        text: "오늘도 치즈 귀여움에 힐링 받고 갑니다.. 치즈는 사랑..♥",
+        likes: 1,
+        created_at: "07/17 22:45",
+        comment_id: "",
+        user_id: 2,
+        post_id: 1,
+      },
+      {
+        id: 2,
+        text: "치즈는 사랑이지",
+        likes: 1,
+        created_at: "07/17 22:50",
+        comment_id: "1",
+        user_id: 1,
+        post_id: 1,
+      },
+    ],
+
+    // 원석 #@
+
+    // 주엽 #@
+    username: "",
+    userid: "",
+    // check_email: true,
+    // check_identity: true,
+
+    // feeds: [],
+    
     with_challenges: [
       {
         id : 1,
@@ -136,6 +180,12 @@ export default new Vuex.Store({
   },
   mutations: {
     // 한길 #@
+    setPostDetail: (state, payload) => {
+      state.postDetail = payload.post;
+    },
+    setPostComments: (state, payload) => {
+      state.comments = payload.comments;
+    },
 
     // 원석 #@
 
@@ -174,6 +224,25 @@ export default new Vuex.Store({
   },
   actions: {
     // 한길 #@
+    setPostDetail(store, { id }) {
+      axios
+        .get(SERVER.URL + SERVER.ROUTES.getPost + id)
+        .then((response) =>
+          store.commit('setPostDetail', { post: response.data })
+        )
+        .catch((exp) =>
+          console.log(`게시글 조회에 실패했습니다: ${exp}`)
+        );
+
+      axios
+      .get(SERVER.URL + SERVER.ROUTES.getPost + id + SERVER.ROUTES.getComment)
+      .then((response) =>
+        store.commit('setPostComments', { comments: response.data })
+      )
+      .catch((exp) =>
+        console.log(`댓글 조회에 실패했습니다: ${exp}`)
+      );
+    },
 
     // 원석 #@
 
