@@ -19,7 +19,7 @@ import {
 
 // 주엽 #@
 // 설치했던 아이콘파일에서 필요한 아이콘만 불러옵니다.
-import { faPlus, faArrowLeft } from "@fortawesome/free-solid-svg-icons"; //fas
+import { faPlus } from "@fortawesome/free-solid-svg-icons"; //fas
 import { faStar } from "@fortawesome/free-regular-svg-icons"; //far
 
 // 한길 #@
@@ -29,7 +29,7 @@ library.add(farBookmark, farStar, farComment);
 
 // 주엽 #@
 // 불러온 아이콘을 라이브러리에 담습니다.
-library.add(faPlus, faArrowLeft);
+library.add(faPlus);
 library.add(faStar);
 
 
