@@ -265,6 +265,7 @@ export default new Vuex.Store({
         .catch((err) => {
           console.log("로그인 에러 발생")
           console.log(err)
+          console.error(err.response.data)
       })
     },
     logout: function ({ commit }) {
