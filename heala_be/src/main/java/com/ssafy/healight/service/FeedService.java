@@ -1,4 +1,4 @@
-package com.ssafy.healight.model.service;
+package com.ssafy.healight.service;
 
 import com.ssafy.healight.domain.entity.Post;
 

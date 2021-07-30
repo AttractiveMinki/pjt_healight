@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.healight.domain.entity.Post;
 import com.ssafy.healight.domain.entity.User;
 import com.ssafy.healight.domain.repository.FeedRepository;
-import com.ssafy.healight.model.service.FeedService;
+import com.ssafy.healight.service.FeedService;
 
 @CrossOrigin("*")
 @RequestMapping("/feed")
