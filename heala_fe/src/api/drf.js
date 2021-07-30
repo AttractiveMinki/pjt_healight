@@ -6,6 +6,9 @@ export default {
   URL: SERVER_URL,
   ROUTES: {
     // 한길 #@
+    follow: "/user/follow",
+    getPost: "/community/post/",
+    getComment: "/comment",
 
     // 원석 #@
 
