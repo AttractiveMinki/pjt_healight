@@ -16,18 +16,31 @@ export default new Vuex.Store({
     // 주엽 #@
     username: "",
     userid: "",
+    currentPageId: 0,
     // check_email: true,
     // check_identity: true,
 
+    // recent_challenges: [],
+    recent_challenges: [
+      {title: '숨쉬기'},
+      {title: '1km 러닝'},
+      {title: '수영하기'},
+      {title: '숨쉬기'},
+      {title: '1km 러닝'},
+      {title: '수영하기'},
+      {title: '숨쉬기'},
+      {title: '1km 러닝'},
+      {title: '수영하기'},
+    ],
     // feeds: [],
     feeds: [
       // post
       {
-        id: "",
+        id: 1,
         image:"www.naver.com",
         title:"안뇽",
-        category:"운동",
-        sub_category:"질문",
+        category:0,
+        sub_category:2,
         access:"",
         content:"오늘 근육 잘먹었쥬?오늘 근육 잘먹었쥬?오늘 근육 잘먹었쥬?오늘 근육 잘먹었쥬?오늘 근육 잘먹었쥬?오늘 근육 잘먹었쥬?오늘 근육 잘먹었쥬?오늘 근육 잘먹었쥬?오늘 근육 잘먹었쥬?",
         likes:10,
@@ -37,11 +50,11 @@ export default new Vuex.Store({
         user_id: 12123,
       },
       {
-        id: "",
+        id: 2,
         image:"www.daum.net",
         title:"헬로우",
-        category:"마음",
-        sub_category:"정보",
+        category:2,
+        sub_category:1,
         access:"",
         content:"만나서 반가워열",
         likes:3,
@@ -51,11 +64,11 @@ export default new Vuex.Store({
         user_id: 522,
       },
       {
-        id: "",
+        id: 3,
         image:"www.google.com",
         title:"일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십",
-        category:"식단",
-        sub_category:"일반",
+        category:1,
+        sub_category:0,
         access:"",
         content:"오늘 정말 힘들고 지치는 하루였는데 우리 치즈 때문에 힘이 난다~!",
         likes:6,
@@ -67,7 +80,7 @@ export default new Vuex.Store({
     ],
     with_challenges: [
       {
-        id : "12323",
+        id : 1,
         title : "Daily 1km 러닝",
         category : "운동",
         start_date : "",
@@ -80,7 +93,7 @@ export default new Vuex.Store({
         certify_week : "",
       },
       {
-        id : "12323",
+        id : 2,
         title : "Daily 1km 러닝",
         category : "운동",
         start_date : "",
@@ -93,7 +106,7 @@ export default new Vuex.Store({
         certify_week : "",
       },
       {
-        id : "12323",
+        id : 3,
         title : "Daily 1km 러닝",
         category : "운동",
         start_date : "",
