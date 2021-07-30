@@ -15,5 +15,6 @@ export default {
     community: "/community/",
     checkemail: "/user/checkemail/",
     checkidentity: "/user/checkidentity/",
+    withmake: "/challenge/with",
   }
 }

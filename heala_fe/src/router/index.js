@@ -9,6 +9,7 @@ import Diet from "@/views/community/Diet"
 import Heart from "@/views/community/Heart"
 import WithMain from "@/views/challenge/with/WithMain"
 import WithMake from "@/views/challenge/with/WithMake"
+import WithDetail from "@/views/challenge/with/WithDetail"
 
 Vue.use(VueRouter);
 
@@ -52,6 +53,11 @@ const routes = [
     path: "/challenge/with/withmake",
     name: "WithMake",
     component: WithMake,
+  },
+  {
+    path: "/challenge/with/:id",
+    name: "WithDetail",
+    component: WithDetail,
   },
 ];
 
