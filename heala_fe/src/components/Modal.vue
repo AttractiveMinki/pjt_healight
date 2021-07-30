@@ -89,4 +89,7 @@ export default {
     margin: auto 5px;
     float:right;
 }
+.modal-button:hover {
+    cursor: pointer;
+}
 </style>
