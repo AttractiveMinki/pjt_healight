@@ -1,13 +1,6 @@
 <template>
   <div class="home">
-    <div>
-      안녕하세요
-    </div>
-    <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <div>
-      안녕하세요
-    </div>
+    
   </div>
 </template>
 

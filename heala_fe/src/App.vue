@@ -1,32 +1,17 @@
 <template>
   <div id="app">
-    <!-- <el-row
-      type="flex"
-      align="center"
-      justify="center"
-    >
-      헬로우
-    </el-row> -->
-    <img src="./assets/logo.png" />
-    <div>
-      <p>
-        If Element is successfully added to this project, you'll see an
-        <code v-text="'<el-button>'"></code>
-        below
-      </p>
-      <el-button>el-button</el-button>
-    </div>
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <router-view></router-view><br><br>
+    <router-link to="/profile">Profile</router-link>&nbsp;
+    <router-link to="/writing">Writing</router-link>&nbsp;
+    <router-link to="/healHome">Challenge</router-link>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
 
 export default {
   name: "app",
   components: {
-    HelloWorld,
   },
 };
 </script>
@@ -39,5 +24,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+html, body {
+  padding: 0;
+  margin: 0;
 }
 </style>
