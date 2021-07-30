@@ -1,11 +1,9 @@
 <template>
   <div>
-    <div class="input-container">
-      <div class="image-wrapper">
-        <slot name="image">
-          <img src="../assets/image/blue.jpg" alt="../assets/image/user.png">
-        </slot>
-      </div>
+    <div class="input-message-container">
+      <slot name="image">
+        <user-image :image="image"></user-image>
+      </slot>
       <div class="input-wrapper">
       <slot name="input">
         <input v-model="message" type="text" placeholder="댓글 달기..">
@@ -19,18 +17,21 @@
 </template>
 
 <script>
+import UserImage from "@/components/UserImage.vue";
 export default {
     name: "InputMessage",
+    props: [ 'image' ],
     data() {
         return {
             message: "",
         }
     },
+    components: { UserImage },
 }
 </script>
 
 <style scoped>
-.input-container {
+.input-message-container {
     left: 0px;
     bottom: 0px;
     right: 0px;
@@ -38,25 +39,17 @@ export default {
     font-size: 13px;
     border: 1px solid;
     padding: 10px;
-}
-.image-wrapper {
-    width: 30px;
-    height: 30px;
-    border-radius: 70%;
-    overflow: hidden;
-    float: left;
+    background-color: #fff;
 }
 .input-wrapper {
-    float: left;
-    margin: 5px auto auto 10px;
-}
-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  float: left;
+  margin: 5px auto auto 10px;
+  width: calc(100% - 90px);
 }
 input {
   border: none;
+  width: 100%;
+  word-break: break-all;
 }
 input:focus {
     outline: none;

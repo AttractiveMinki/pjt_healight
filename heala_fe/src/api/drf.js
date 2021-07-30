@@ -5,9 +5,13 @@ const SERVER_URL = 'http://127.0.0.1:8080'
 export default {
   URL: SERVER_URL,
   ROUTES: {
-    signup: '/user/signup/',
-    login: '/user/login/',
+    // 한길 #@
+    follow: "/user/follow",
+    getPost: "/community/post/",
+    getComment: "/comment"
 
-    follow: '/user/follow',
+    // 원석 #@
+
+    // 주엽 #@
   }
 }
