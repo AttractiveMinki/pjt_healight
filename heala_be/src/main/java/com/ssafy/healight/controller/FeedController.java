@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.healight.domain.entity.Post;
 import com.ssafy.healight.domain.entity.User;
 import com.ssafy.healight.domain.repository.FeedRepository;
+import com.ssafy.healight.model.service.FeedService;
 
 @CrossOrigin("*")
 @RequestMapping("/feed")
@@ -22,12 +23,13 @@ import com.ssafy.healight.domain.repository.FeedRepository;
 public class FeedController {
 	
 	@Autowired
-	private FeedRepository feedRepository;
+	private FeedService feedService;
 	
 	// 글 작성
 	@PostMapping("/post")
 	public Object post(@RequestBody Post post) {
-		feedRepository.save(post);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return feedService.post(post);
 	}
+	
+	// 글 목록 불러오기
 }
