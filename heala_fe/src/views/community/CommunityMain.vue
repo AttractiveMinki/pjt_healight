@@ -49,21 +49,23 @@
         <el-col :span="24">
           <hr>
           <el-col :span="22" v-for="(feed, idx) in feeds" :key="idx" >
-            <el-col :span="6">
-              <!-- {{ feed.image }} -->
-              <el-image class="margin-left-10"
-                style="width: 100%; height: 80px"
-                :src="feed.image" 
-                >
-              </el-image>
-            </el-col>
-            <el-col :span="15" class="margin-left-10">
-              <div class="text-align-start text-title">{{ feed.title }}</div>
-              <div class="text-align-start text-content"><i class="el-icon-user-solid"></i>{{ feed.user_id }}</div>
-              <div class="text-align-start text-content">{{ feed.content }}</div>
-              <el-col class="display-flex justify-content-space-between"><span class="community-title">{{ feed.created_at }}</span> <span class="fix-width"><font-awesome-icon :icon="['far', 'star']" class="padding-right"/>{{ feed.likes }}</span></el-col>
-            </el-col>
-            
+            <router-link :to="{ name: 'PostDetail',  id: feed.id }" class="text-decoration-none align-self">
+              <el-col :span="6">
+                <!-- {{ feed.image }} -->
+                <el-image class="margin-left-10"
+                  style="width: 100%; height: 80px"
+                  :src="feed.image" 
+                  >
+                </el-image>
+              </el-col>
+              <el-col :span="15" class="margin-left-10">
+                
+                <div class="text-align-start text-title">{{ feed.title }}</div>
+                <div class="text-align-start text-content"><i class="el-icon-user-solid"></i>{{ feed.user_id }}</div>
+                <div class="text-align-start text-content">{{ feed.content }}</div>
+                <el-col class="display-flex justify-content-space-between"><span class="community-title">{{ feed.created_at }}</span> <span class="fix-width"><font-awesome-icon :icon="['far', 'star']" class="padding-right"/>{{ feed.likes }}</span></el-col>
+              </el-col>
+            </router-link>
           </el-col>
         </el-col>
       </el-col>
@@ -176,7 +178,7 @@ export default {
   }
   .bg-gray {
     background: #F0F0F0;
-  }    
+  }
   .fix-width {
     width: 65px;
     text-align: start;
