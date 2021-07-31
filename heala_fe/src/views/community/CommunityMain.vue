@@ -104,8 +104,8 @@ export default {
 <style scoped>
   #square {
     width: 100%;
-    height: 10px;
-    background: #B5DBFF;
+    height: 5px;
+    background: #F85050;
   }
   .text-decoration-none {
     text-decoration: none;
@@ -149,9 +149,6 @@ export default {
   .community-title {
     font-size: 11px;
     color: gray;
-  }
-  .align-center {
-    align-self: center;
   }
   .display-flex {
     display: flex;

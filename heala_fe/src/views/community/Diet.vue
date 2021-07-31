@@ -80,15 +80,15 @@ export default {
 <style scoped>  
   #square {
     width: 100%;
-    height: 10px;
-    background: #1A8EFA;
+    height: 5px;
+    background: #FFE600;
   }
   .text-decoration-none {
     text-decoration: none;
     color: black;
   }
   .justify-content-space-between {
-    justify-content: start;
+    justify-content: space-between;
   }
   .introduce-text-align-start {
     display: block;
@@ -151,5 +151,12 @@ export default {
   }
   .display-flex {
     display: flex;
+  }
+  .fix-width {
+    width: 65px;
+    text-align: start;
+  }
+  .padding-right {
+    padding-right: 5px;
   }
 </style>
