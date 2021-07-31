@@ -25,7 +25,6 @@ public class FeedController {
 	@ApiOperation(value = "글 작성하기")
 	@PostMapping("/post")
 	public Object post(@RequestBody Post post) {
-		System.out.println(post.getSubCategory());
 		return feedService.post(post);
 	}
 	
