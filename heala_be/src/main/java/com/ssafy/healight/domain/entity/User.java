@@ -2,10 +2,15 @@ package com.ssafy.healight.domain.entity;
 
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.DynamicInsert;
+
 import java.sql.Date;
 
 // 회원정보를 표현
@@ -17,7 +22,8 @@ import java.sql.Date;
 @Getter
 @Setter
 @ToString
-//@Table(name = "user")
+@DynamicInsert
+@Table(name = "user")
 public class User {
 
 	@Id
@@ -28,7 +34,10 @@ public class User {
 	private String identity;
 	private String name;
 	private String password;
+	
+	@Column
 	private String image;
+	
 	private int exp;
 	private boolean gender;
 	private Date birth;
