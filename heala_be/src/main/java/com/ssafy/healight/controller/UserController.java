@@ -116,7 +116,7 @@ public class UserController {
 		//프로필 사진 변경
 		if(!image.isEmpty()) {
 			String fileName = image.getOriginalFilename();
-			Path path = Paths.get("C:/Users/82103/Desktop/healight/S05P12A605/heala_fe/src/assets" + image.getOriginalFilename());
+			Path path = Paths.get("../../../../../../../../heala_fe/src/assets/image/profile/" + image.getOriginalFilename());
 			image.transferTo(path);
 			updateUser.setImage(fileName);
 			user_update = true;
