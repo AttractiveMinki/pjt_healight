@@ -1,8 +1,5 @@
 package com.ssafy.healight.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,24 +10,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.healight.domain.entity.KiwiMission;
 import com.ssafy.healight.domain.entity.WithInput;
 import com.ssafy.healight.service.KiwiChallengeService;
 import com.ssafy.healight.service.WithChallengeService;
 
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @CrossOrigin("*")
 @RequestMapping("/challenge")
 @RestController
 
 public class ChallengeController {
 	
-	@Autowired
-	private WithChallengeService withChallengeService;
-	
-	@Autowired
-	private KiwiChallengeService kiwiChallengeService;
+	final private WithChallengeService withChallengeService;
+	final private KiwiChallengeService kiwiChallengeService;
 	
 	
 	@ApiOperation(value = "챌린지 만들기.")

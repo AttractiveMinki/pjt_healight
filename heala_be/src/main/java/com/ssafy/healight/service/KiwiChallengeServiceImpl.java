@@ -2,7 +2,6 @@ package com.ssafy.healight.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,17 +11,15 @@ import com.ssafy.healight.domain.repository.KiwiChallengeRepository;
 import com.ssafy.healight.domain.repository.KiwiMissionRepository;
 import com.ssafy.healight.domain.repository.KiwiUserRepository;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	
-	@Autowired
-	KiwiChallengeRepository kiwiChallengeRepository;
-	
-	@Autowired
-	KiwiMissionRepository kiwiMissionRepository;
-	
-	@Autowired
-	KiwiUserRepository kiwiUserRepository;
+	final private KiwiChallengeRepository kiwiChallengeRepository;
+	final private KiwiMissionRepository kiwiMissionRepository;
+	final private KiwiUserRepository kiwiUserRepository;
 
 	
 	//키위 챌린지 목록 조회
@@ -34,7 +31,9 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	//키위 챌린지 상세 조회
 	@Override
 	public Object getKiwiMission(int category, int user_id) {
-		//List<KiwiMission> kiwi_mission = kiwiMissionRepository.getMissionByCategory(category);
+		List<KiwiMission> kiwi_mission = kiwiMissionRepository.getMissionByCategory(category);
+//		List<KiwiMission> result_mission = kiwiMissionRepository.getAllWithUser(category, user_id);
+//		return new ResponseEntity<>(result_mission, HttpStatus.OK);
 		return new ResponseEntity<>(kiwiMissionRepository.getMissionByCategory(category), HttpStatus.OK);
 	}
 
