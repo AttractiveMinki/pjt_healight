@@ -44,9 +44,9 @@
         <span style="font-weight: bold">챌린지 기간</span>
       </el-col>
       <el-col :span="18">
-        <input type="date" style="width:35%" v-model="data.startdate" placeholder="시작 날짜를 선택하세요." onfocus="(this.type='date')" id="date">
+        <input type="date" style="width:35%" v-model="data.start_date" placeholder="시작 날짜를 선택하세요." onfocus="(this.type='date')" id="date">
         <span> ~ </span>
-        <input type="date" style="width:35%" v-model="data.enddate" placeholder="종료 날짜를 선택하세요.">
+        <input type="date" style="width:35%" v-model="data.end_date" placeholder="종료 날짜를 선택하세요.">
       </el-col>
     </el-row>
     <div id="square" class="margin-line"></div>
@@ -90,11 +90,12 @@ export default {
     return {
       data: {
         // id: "",
+
         image: "",
         title: "",
         category: -1,
-        startdate: "",
-        enddate: "",
+        start_date: "",
+        end_date: "",
         certify_info: "",
         introduction: "",
         user_id:"",
@@ -113,8 +114,8 @@ export default {
       this.data.category = num
     },
     checkChallenge: function (data) {
-      let start = new Date(data.startdate)
-      let end = new Date(data.enddate)
+      let start = new Date(data.start_date)
+      let end = new Date(data.end_date)
       // data.user_id = userid
       if (data.title.length == 0){
         alert('제목을 작성해주세요.')
@@ -123,11 +124,11 @@ export default {
         alert('카테고리를 선택해주세요.', data.category)
         console.log(data.category)
       }
-      else if (data.startdate == ''){
-        alert('챌린지 시작 날짜를 선택해주세요.', data.startdate)
+      else if (data.start_date == ''){
+        alert('챌린지 시작 날짜를 선택해주세요.', data.start_date)
       }
-      else if (data.enddate == ''){
-        alert('챌린지 종료 날짜를 선택해주세요.', data.startdate)
+      else if (data.end_date == ''){
+        alert('챌린지 종료 날짜를 선택해주세요.', data.end_date)
       }
       else if (start > end) {
         alert('시작 날짜는 종료 날짜보다 일러야 합니다.')

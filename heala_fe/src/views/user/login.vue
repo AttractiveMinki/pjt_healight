@@ -31,7 +31,7 @@ export default {
   name: "Login",
   methods: {
     ...mapActions([
-      'Login',
+      'login',
     ]),
     toggleIcon: function () {
       if (this.isvisible == false) {

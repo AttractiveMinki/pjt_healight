@@ -7,6 +7,8 @@ import Heart from "@/views/community/Heart"
 import WithMain from "@/views/challenge/with/WithMain"
 import WithMake from "@/views/challenge/with/WithMake"
 import WithDetail from "@/views/challenge/with/WithDetail"
+import WithMainDiet from "@/views/challenge/with/WithMainDiet"
+import WithMainHeart from "@/views/challenge/with/WithMainHeart"
 
 export default [
     {
@@ -54,4 +56,14 @@ export default [
         name: "WithDetail",
         component: WithDetail,
       },
+      {
+        path: "/challenge/with/withmaindiet",
+        name: "WithMainDiet",
+        component: WithMainDiet,
+      },
+      {
+        path: "/challenge/with/withmainheart",
+        name: "WithMainHeart",
+        component: WithMainHeart,
+      },            
 ]
