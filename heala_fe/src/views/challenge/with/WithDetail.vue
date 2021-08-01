@@ -10,14 +10,14 @@
     </div>
     <el-row id="category" class="justify-content-space-between">
       <el-col :span="8">
-        <router-link :to="{ name: '' }" class="text-decoration-none selected-category">소개</router-link> 
+        <router-link :to="{ name: 'WithDetail' }" class="text-decoration-none selected-category">소개</router-link> 
         <div id="square"></div>
       </el-col>
       <el-col :span="8">
-        <router-link :to="{ name: '' }" class="text-decoration-none">인증</router-link> 
+        <router-link :to="{ name: 'WithDetailCertify' }" class="text-decoration-none">인증</router-link> 
       </el-col>
       <el-col :span="8">
-        <router-link :to="{ name: '' }" class="text-decoration-none">후기</router-link> 
+        <router-link :to="{ name: 'WithDetailReview' }" class="text-decoration-none">후기</router-link> 
       </el-col>
     </el-row>
     <el-row id="challenge-image" style="margin: 1%">
