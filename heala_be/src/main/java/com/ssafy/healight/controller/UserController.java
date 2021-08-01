@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -24,33 +23,24 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ssafy.healight.domain.entity.Profile;
 import com.ssafy.healight.domain.entity.User;
 import com.ssafy.healight.domain.entity.UserBadge;
-import com.ssafy.healight.domain.repository.BadgeRepository;
-import com.ssafy.healight.domain.repository.UserBadgeRepository;
-import com.ssafy.healight.domain.repository.UserRepository;
+import com.ssafy.healight.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 
-
+@RequiredArgsConstructor
 @CrossOrigin("*")
 @RequestMapping("/user")
 @RestController
 public class UserController {
 	
-
-	@Autowired
-    UserRepository userRepository;
-	
-	@Autowired
-    BadgeRepository badgeRepository;
-	
-	@Autowired
-    UserBadgeRepository userbadgeRepository;
+    final private UserService userService;
 	
 
 	@ApiOperation(value = "아이디 중복 검사하기.")
 	@GetMapping("/checkidentity/{identity}")
 	public Object checkId(@PathVariable String identity) {
-		Optional<User> userOpt = userRepository.getUserByIdentity(identity);
+		Optional<User> userOpt = userService.checkId(identity);
 		if (!userOpt.isPresent()) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		} else {
@@ -61,7 +51,7 @@ public class UserController {
 	@ApiOperation(value = "이메일 중복 검사.")
 	@GetMapping("/checkemail/{email}")
 	public Object checkEmail(@PathVariable String email) {
-		Optional<User> userOpt = userRepository.getUserByEmail(email);
+		Optional<User> userOpt = userService.checkEmail(email);
 		if (!userOpt.isPresent()) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		} else {
@@ -72,7 +62,7 @@ public class UserController {
 	@ApiOperation(value = "회원가입 하기.")
 	@PostMapping("/signup")
 	public Object signUp(@RequestBody User user) {
-		userRepository.save(user);
+		userService.signUp(user);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
@@ -80,7 +70,7 @@ public class UserController {
 	@ApiOperation(value = "로그인 하기.")
 	@PostMapping("/login")
 	public Object login(@RequestBody User user) {
-		Optional<User> userOpt = userRepository.getUserByIdentityAndPassword(user.getIdentity(), user.getPassword());
+		Optional<User> userOpt = userService.login(user.getIdentity(), user.getPassword());
 		if (userOpt.isPresent()) {
 			return new ResponseEntity<Integer>(userOpt.get().getId(), HttpStatus.OK);
 		} else {
@@ -92,11 +82,11 @@ public class UserController {
 	@ApiOperation(value = "프로필 편집 조회하기.")
 	@GetMapping("/profile/{user_id}")
 	public Object getUser(@PathVariable int user_id) {
-		Optional<User> userOpt = Optional.of(userRepository.getUserById(user_id));
+		Optional<User> userOpt = userService.getUser(user_id);
 		Map<String, Object> response = new HashMap<>();
 		if(userOpt.isPresent()) {
-			response.put("user", userOpt);
-			response.put("badges", userbadgeRepository.getAllWithBadge(user_id));
+			response.put("user", userOpt);			
+			response.put("badges", userService.getAllWithBadge(user_id));
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -106,17 +96,19 @@ public class UserController {
 	@ApiOperation(value = "프로필 편집 반영하기.")
 	@PatchMapping("/profile/{user_id}")
 	public Object updateUser(@PathVariable int user_id, @RequestBody Profile userRequest) throws Exception {
-		User updateUser = userRepository.getUserById(user_id);
+		
+		User updateUser = userService.getUserProfile(user_id);
 		boolean user_update = false;
 		boolean badge_update = false;
 		User user = userRequest.getUser();
 		List<UserBadge> badges = userRequest.getBadges();
 		MultipartFile image = userRequest.getImage();
-		
+
 		//프로필 사진 변경
+		//null exception 나니까 프론트랑 어떻게 처리할지 상의하기
 		if(!image.isEmpty()) {
 			String fileName = image.getOriginalFilename();
-			Path path = Paths.get("C:/Users/82103/Desktop/healight/S05P12A605/heala_fe/src/assets" + image.getOriginalFilename());
+			Path path = Paths.get("../../../../../../../../heala_fe/src/assets/image/profile/" + image.getOriginalFilename());
 			image.transferTo(path);
 			updateUser.setImage(fileName);
 			user_update = true;
@@ -131,6 +123,7 @@ public class UserController {
 			user_update = true;
 		}
 		if(StringUtils.hasLength(user.getIntroduction())) {
+			System.out.println("이름바꾼다-------------------");
 			updateUser.setIntroduction(user.getIntroduction());
 			user_update = true;
 		}
@@ -138,8 +131,12 @@ public class UserController {
 		if(badges.size()!=0) badge_update = true;
 		
 		if(user_update || badge_update) {
-			if(user_update) userRepository.save(updateUser);
-			if(badge_update) userbadgeRepository.saveAll(badges);
+			System.out.println("변경합니다");
+			if(user_update) userService.save(updateUser);
+			if(badge_update) {
+				System.out.println("배지 ㅇㅋ");
+				userService.saveAll(badges);
+			}
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

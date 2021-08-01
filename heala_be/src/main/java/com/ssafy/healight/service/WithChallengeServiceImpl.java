@@ -16,17 +16,15 @@ import com.ssafy.healight.domain.repository.ChallengeHashtagRepository;
 import com.ssafy.healight.domain.repository.WithChallengeHashtagRepository;
 import com.ssafy.healight.domain.repository.WithChallengeRepository;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 public class WithChallengeServiceImpl implements WithChallengeService {
 	
-	@Autowired
-	private WithChallengeRepository withChallengeRepository;
-	
-	@Autowired
-	private ChallengeHashtagRepository challengeHashtagRepository;
-	
-	@Autowired
-	private WithChallengeHashtagRepository withChallengeHashtagRepository;
+	final private WithChallengeRepository withChallengeRepository;
+	final private ChallengeHashtagRepository challengeHashtagRepository;
+	final private WithChallengeHashtagRepository withChallengeHashtagRepository;
 	
 
 	@Override
