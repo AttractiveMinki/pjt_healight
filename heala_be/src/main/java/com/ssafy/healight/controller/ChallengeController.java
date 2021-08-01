@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.healight.domain.entity.WithInput;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ssafy.healight.domain.entity.KiwiMission;
+import com.ssafy.healight.domain.entity.WithChallengeHashtag;
 import com.ssafy.healight.domain.repository.KiwiChallengeRepository;
 import com.ssafy.healight.domain.repository.KiwiMissionRepository;
 import com.ssafy.healight.domain.repository.KiwiUserRepository;
@@ -43,12 +45,21 @@ public class ChallengeController {
 	KiwiUserRepository kiwiUserRepository;
 	
 	
-	@ApiOperation(value = "함께 챌린지 만들기.")
+	@ApiOperation(value = "함께 챌린지 만들기")
 	@PostMapping("/with")
-	public Object post(@RequestBody WithInput withInput) {
+	public Object makeWith(@RequestBody WithInput withInput) {
 		return withChallengeService.makeWith(withInput);
 
 	}
+	
+	@ApiOperation(value = "함께 챌린지 목록 가져오기")
+	@GetMapping("/with")
+	public ResponseEntity<List<Map<String,Object>>> getWithList(@RequestParam int category) {
+		return withChallengeService.getWithList(category);
+
+	}
+	
+	
 	
 	@ApiOperation(value = "키위 챌린지 목록 조회하기.")
 	@GetMapping("/kiwi")

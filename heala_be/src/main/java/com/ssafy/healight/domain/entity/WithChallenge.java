@@ -13,7 +13,8 @@ import java.sql.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "WithChallenge")
+@Entity
+//@Entity(name = "WithChallenge")
 @Builder
 @Getter
 @ToString

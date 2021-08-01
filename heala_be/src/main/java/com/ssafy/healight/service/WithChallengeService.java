@@ -1,5 +1,10 @@
 package com.ssafy.healight.service;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.http.ResponseEntity;
+
 import com.ssafy.healight.domain.entity.WithInput;
 
 public interface WithChallengeService {
@@ -9,4 +14,5 @@ public interface WithChallengeService {
 	*/
 	public Object makeWith(WithInput withInput);
 	
+	public ResponseEntity<List<Map<String,Object>>> getWithList(int category);
 }
