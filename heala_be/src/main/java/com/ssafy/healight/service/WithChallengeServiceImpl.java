@@ -1,5 +1,6 @@
 package com.ssafy.healight.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.StringTokenizer;
 
@@ -13,6 +14,7 @@ import com.ssafy.healight.domain.entity.WithChallenge;
 import com.ssafy.healight.domain.entity.WithChallengeHashtag;
 import com.ssafy.healight.domain.entity.WithInput;
 import com.ssafy.healight.domain.repository.ChallengeHashtagRepository;
+import com.ssafy.healight.domain.repository.MyChallengeRepository;
 import com.ssafy.healight.domain.repository.WithChallengeHashtagRepository;
 import com.ssafy.healight.domain.repository.WithChallengeRepository;
 
@@ -25,6 +27,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 	final private WithChallengeRepository withChallengeRepository;
 	final private ChallengeHashtagRepository challengeHashtagRepository;
 	final private WithChallengeHashtagRepository withChallengeHashtagRepository;
+	final private MyChallengeRepository myChallengeRepository;
 	
 
 	@Override
@@ -84,5 +87,18 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		}
 		
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+
+	//마이 챌린지 - 함께 챌린지 id 리스트 가져오기
+	@Override
+	public List<Integer> getByUserid(int user_id) {
+		return myChallengeRepository.getListByUserid(user_id);
+	}
+
+	//마이 챌린지 - 함께 챌린지 정보 가져오기
+	@Override
+	public WithChallenge getByChallengeId(int n) {
+		return withChallengeHashtagRepository.getById(n);
 	}
 }
