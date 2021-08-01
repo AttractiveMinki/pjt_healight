@@ -2,6 +2,7 @@
   <div>
     <button class="following" v-if="isFollowing" @click="following">팔로잉</button>
     <button class="follow" @click="follow" v-else>팔로우</button>
+    <!-- $store.state.userid 확인해보고 비어있으면 팔로우 눌렀을 때 로그인하시겠습니까? 모달 뜨도록 구현 -->
     <modal v-if="showModal" @yes="cancelFollow" @no="showModal = false">
         <div slot="header">팔로우 취소</div>
         <div slot="body">팔로우를 취소하시겠습니까?</div>
@@ -10,23 +11,27 @@
 </template>
 
 <script>
-import SERVER from "@/api/drf.js";
-import Modal from "../Modal";
+import Modal from "@/components/Modal";
 export default {
     name: 'follow',
+    props: {
+        InitialIsFollowing: {
+            required: true
+        },
+        follow_id: {
+            required: true
+        },
+    },
     data() {
         return {
-            isFollowing: false,
+            isFollowing: this.InitialIsFollowing,
             showModal: false,
         }
     },
     methods: {
         follow() {
             this.isFollowing = true;
-            axios.post(SERVER.URL + SERVER.ROUTES.follow, {
-                    user_id: 1,
-                    follow_id: 2,
-                })
+            this.$store.dispatch("follow", { follow_id: this.follow_id });
         },
         following() {
             this.showModal = true;
@@ -34,10 +39,7 @@ export default {
         cancelFollow() {
             this.showModal = false;
             this.isFollowing = false;
-            axios.delete(SERVER.URL + SERVER.ROUTES.follow, {
-                user_id: 1,
-                follow_id: 2,
-            })
+            this.$store.dispatch("cancelFollow", { follow_id: this.follow_id });
         }
     },
     components: {

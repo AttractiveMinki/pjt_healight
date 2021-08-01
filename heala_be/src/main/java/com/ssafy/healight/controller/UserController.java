@@ -7,23 +7,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.ssafy.healight.domain.repository.FollowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.healight.domain.entity.Profile;
 import com.ssafy.healight.domain.entity.User;
 import com.ssafy.healight.domain.entity.UserBadge;
+import com.ssafy.healight.domain.entity.Follow;
 import com.ssafy.healight.domain.repository.BadgeRepository;
 import com.ssafy.healight.domain.repository.UserBadgeRepository;
 import com.ssafy.healight.domain.repository.UserRepository;
@@ -35,7 +30,6 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/user")
 @RestController
 public class UserController {
-	
 
 	@Autowired
     UserRepository userRepository;
@@ -45,7 +39,9 @@ public class UserController {
 	
 	@Autowired
     UserBadgeRepository userbadgeRepository;
-	
+
+	@Autowired
+	FollowRepository followRepository;
 
 	@ApiOperation(value = "아이디 중복 검사하기.")
 	@GetMapping("/checkidentity/{identity}")
@@ -140,6 +136,37 @@ public class UserController {
 		if(user_update || badge_update) {
 			if(user_update) userRepository.save(updateUser);
 			if(badge_update) userbadgeRepository.saveAll(badges);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
+
+	@ApiOperation(value = "팔로우하기.")
+	@PostMapping("/follow")
+	public Object follow(@RequestBody Follow follow) {
+		int userId = follow.getUserId();
+		int followId = follow.getFollowId();
+		// userId 와 followId 에 해당하는 유저가 있는지 검사
+		User user = userRepository.getUserById(userId);
+		Optional<User> followUser = userRepository.findById(followId);
+
+		// 있으면 follow 관계 저장
+		if(user != null && followUser.isPresent()) {
+			Follow newFollow = new Follow(followId, userId);
+			followRepository.save(newFollow);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
+
+	@ApiOperation(value = "팔로우 취소하기.")
+	@DeleteMapping("/follow")
+	public Object cancelFollow(@RequestBody Follow follow) {
+		Optional<Follow> oldFollow = followRepository.findFirstByFollowIdAndUserId(follow.getFollowId(), follow.getUserId());
+
+		// 있으면 follow 관계 저장
+		if(oldFollow.isPresent()) {
+			followRepository.delete(oldFollow.get());
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
