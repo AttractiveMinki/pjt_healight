@@ -28,13 +28,6 @@ public class WithChallengeHashtag {
 	
 	@Column(name = "challenge_hashtag_id")
 	private int challengeHashtagId;
-
-	public WithChallengeHashtag(int withChallengeId, int challengeHashtagId) {
-		super();
-		this.withChallengeId = withChallengeId;
-		this.challengeHashtagId = challengeHashtagId;
-	}
-	
 	
 	
 }

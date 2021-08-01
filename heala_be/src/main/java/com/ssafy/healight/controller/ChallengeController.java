@@ -1,6 +1,7 @@
 package com.ssafy.healight.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,15 +23,15 @@ import com.ssafy.healight.domain.repository.KiwiMissionRepository;
 import com.ssafy.healight.domain.repository.KiwiUserRepository;
 
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 
 @CrossOrigin("*")
 @RequestMapping("/challenge")
 @RestController
-
+@RequiredArgsConstructor
 public class ChallengeController {
 	
-	@Autowired
-	private WithChallengeService withChallengeService;
+	final private WithChallengeService withChallengeService;
 	
 	@Autowired
 	KiwiChallengeRepository kiwiChallengeRepository;
@@ -42,11 +43,11 @@ public class ChallengeController {
 	KiwiUserRepository kiwiUserRepository;
 	
 	
-	@ApiOperation(value = "챌린지 만들기.")
-	@PostMapping("/post")
+	@ApiOperation(value = "함께 챌린지 만들기.")
+	@PostMapping("/with")
 	public Object post(@RequestBody WithInput withInput) {
-		withChallengeService.post(withInput);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return withChallengeService.makeWith(withInput);
+
 	}
 	
 	@ApiOperation(value = "키위 챌린지 목록 조회하기.")

@@ -36,6 +36,7 @@ public class WithChallenge {
 	
 	@Column(name = "certify_info")
 	private String certifyInfo;
+	
 	private String introduction;
 	
 	@Column(name = "user_id")
