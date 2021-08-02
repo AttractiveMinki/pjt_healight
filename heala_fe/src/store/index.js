@@ -189,8 +189,11 @@ export default new Vuex.Store({
     SET_FEEDS: function (state, feeds) {
       state.feeds = feeds
     },
-    SET_USERID: function (state, userid) {
-      state.userid = userid
+    SET_USERID: function (state, res) {
+      state.userid = res.userid
+    },
+    SET_USERNAME: function (state, res) {
+      state.username = res.username
     },
     INIT_USERID: function (state) {
       state.userid = ""
@@ -252,19 +255,20 @@ export default new Vuex.Store({
       console.log(data)
       axios.post(SERVER.URL + SERVER.ROUTES.login, data)
         .then((res) => {
-          
           console.log(res)
           console.log("로그인 요청 성공")
           commit("SET_USERID", res)
+          commit("SET_USERNAME", res)
           // commit("SET_TOKEN", res.data.token) // jwt 사용시 적용
           // commit("GET_USERNAME") // 가서 디코딩하기
           // commit("GET_USERID") // 가서 디코딩하기
           // dispatch("verifyUser", data) // 관리자 권한 검증
-          router.push({ name: "Home" })
+          router.push({ name: "CommunityMain" }) // 홈 피드 구현 후 변경
       })
         .catch((err) => {
           console.log("로그인 에러 발생")
           console.log(err)
+          console.error(err.response.data)
       })
     },
     logout: function ({ commit }) {
