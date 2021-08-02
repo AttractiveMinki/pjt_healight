@@ -16,8 +16,8 @@ export default {
     signup: "/user/signup/",
     login: "/user/login/",
     community: "/community/",
-    checkemail: "/user/checkemail/",
-    checkidentity: "/user/checkidentity/",
+    checkEmail: "/user/checkemail/",
+    checkIdentity: "/user/checkidentity/",
     withmake: "/challenge/with",
   }
 }

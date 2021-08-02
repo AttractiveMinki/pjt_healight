@@ -17,15 +17,11 @@
     </el-row>
     <h1>전체</h1>
     <div>
-      <!-- <font-awesome-icon icon="trash-alt" /> -->
-      <font-awesome-icon :icon="['far', 'trash-alt']" />
-      <!-- <font-awesome-icon :icon="['fas', 'trash-alt']" /> -->
-      <!-- <font-awesome-icon icon="angle-down" /> -->
-      <font-awesome-icon icon="link" />
-      <font-awesome-icon icon="redo" />
-      <font-awesome-icon icon="undo" />
-      <!-- <font-awesome-icon icon="user-secret" /> -->
-      <font-awesome-icon :icon="['far', 'star']" />
+      {{ username }}님, 환영합니다!
+      {{ userid}}
+      <div>
+        <button @click="logout"> 로그아웃</button>
+      </div>
     </div>
     <el-row>
       <el-col :span="24">hashtag</el-col>
@@ -72,7 +68,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex"
+import { mapState, mapActions } from "vuex"
 
 export default {
   name: "CommunityMain",
@@ -82,6 +78,11 @@ export default {
       },
       isvisible: false,
     }
+  },
+  methods: {
+    ...mapActions([
+      'logout',
+    ]),
   },
   // created: function () {
   //   if (this.$store.getters.isLoggedIn) {
@@ -94,6 +95,8 @@ export default {
   computed: {
     ...mapState([
       "feeds",
+      "username",
+      "userid"
     ])
   },
 }

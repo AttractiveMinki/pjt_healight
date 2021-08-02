@@ -19,6 +19,7 @@ public class KiwiUser {
 	private boolean complete;
 	private Date complete_date;
 
+	@Column(name="user_id")
 	private int userid;
 	private int mission_id;
 }

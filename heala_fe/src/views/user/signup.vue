@@ -110,7 +110,6 @@ export default {
       this.checkForm();
     },
     passwordConfirm: function() {
-      console.log(this.isSubmit)
       this.checkForm();
     },
     // isTerm: function() {
@@ -121,24 +120,18 @@ export default {
     ...mapActions([
       'signup',
     ]),
-    SET_CHECKIDENTITY: function () {
-      this.error.check_identity = false
-      this.check_identity.length = "1"
-    },
-    SET_CHECKEMAIL: function () {
-      this.error.check_email = false
-      this.check_email.length = "1"
-    },
-    INIT_CHECKIDENTITY: function () {
-      // this.error.check_identity = "이미 존재하는 아이디입니다."
-      this.check_identity.length = ""
-      this.error.check_identity = false
-    },
-    INIT_CHECKEMAIL: function () {
-      // this.error.check_mail = "이미 존재하는 이메일입니다."
-      this.check_email.length = ""
-      this.error.check_mail = false
-    },
+    // SET_CHECKIDENTITY: function () {
+    //   this.error.check_identity = false
+    // },
+    // SET_CHECKEMAIL: function () {
+    //   this.error.check_email = false
+    // },
+    // INIT_CHECKIDENTITY: function () {
+    //   this.error.check_identity = "이미 존재하는 아이디입니다."
+    // },
+    // INIT_CHECKEMAIL: function () {
+    //   this.error.check_mail = "이미 존재하는 이메일입니다."
+    // },
 
     checkForm() {
       if (this.email.length >= 0 && !EmailValidator.validate(this.email))
@@ -148,8 +141,6 @@ export default {
       if (this.identity.length == 0)
         this.error.identity = "아이디를 입력해주세요."
       else this.error.identity = false;
-      console.log(this.$store.username)
-
 
       if (this.name.length == 0)
         this.error.name = "닉네임을 입력해주세요."
@@ -166,14 +157,13 @@ export default {
         this.error.passwordConfirm = "비밀번호가 일치하지 않습니다."
       }
       else this.error.passwordConfirm = false;
-      // console.log('check_email:', this.$store.state.check_email, 'check_identity:', store.check_identity)
-      if (this.check_email.length == 0)
-        this.error.check_email = "이메일 중복 확인 버튼을 눌러주세요."
-      else this.error.check_email = false;
 
-      if (this.check_identity.length == 0)
+      if (this.email.length <= 1)
+        this.error.check_email = "이메일 중복 확인 버튼을 눌러주세요."
+
+      if (this.identity.length <= 1)
         this.error.check_identity = "아이디 중복 확인 버튼을 눌러주세요."
-      else this.error.check_identity = false;
+
 
       // if (this.isTerm == false){
       //   this.error.term = "약관에 동의해주세요."
@@ -187,36 +177,33 @@ export default {
       this.isSubmit = isSubmit;
     },
     checkIdentity: function (identity) {
-      axios.get(`${SERVER.URL}/${SERVER.ROUTES.checkIdentity}/${identity}`)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.checkIdentity}${identity}`)
         .then(() => {
-          console.log("DB에 없는 아이디. 사용 가능합니다.")
-          this.error.check_identity = "DB에 없는 아이디. 사용 가능합니다."
+          alert("사용 가능합니다!")
+          this.error.check_identity = false
           // commit("SET_CHECKIDENTITY", res)
       })
         .catch(() => {
-          console.log("DB에 있는 아이디. 사용 불가합니다.")
-          this.error.check_identity = "DB에 있는 아이디. 사용 불가합니다."
-
+          alert("이미 존재하는 아이디입니다.")
+          this.error.check_identity = "이미 존재하는 아이디입니다."
+          
           // commit("INIT_CHECKIDENTITY")
       })
     },
     checkEmail: function (email) {
-      axios.get(`${SERVER.URL}/${SERVER.ROUTES.checkEmail}/${email}`)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.checkEmail}${email}`)
         .then(() => {
-          console.log("DB에 없는 이메일. 사용 가능합니다.")
+          alert("사용 가능합니다!")
           //// commit("SET_CHECKEMAIL", res)
-          this.error.check_email = "DB에 없는 이메일. 사용 가능합니다."
+          this.error.check_email = false
       })
         .catch(() => {
-          console.log("DB에 있는 이메일. 사용 불가합니다.")
-          //// commit("INIT_CHECKEMAIL")
-          this.error.check_email = "DB에 있는 이메일. 사용 불가합니다."
-          console.log(this.error.check_email)
-          console.log('이메일 에러')
+          alert("이미 존재하는 이메일입니다.")
+          // commit("INIT_CHECKEMAIL")
+          this.error.check_email = "이미 존재하는 이메일입니다."
+          // console.log(`${SERVER.URL}${SERVER.ROUTES.checkEmail}${email}`)
       })
     },
-    // checkEmail() {},
-    // checkIdentity() {},
   },
   data: function () {
     return {

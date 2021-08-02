@@ -1,10 +1,8 @@
 package com.ssafy.healight.domain.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import com.ssafy.healight.domain.entity.KiwiMission;
 
@@ -15,5 +13,8 @@ public interface KiwiMissionRepository extends JpaRepository<KiwiMission, Intege
 //			+ "from mission m, mission_user u"
 //			+ "where m.m.category = :category and u.user_id = :userid")
 //	List<KiwiMission> getMissionByCategoryAndUserid(int category, int userid);
+	
+//	@Query(value = "select m from KiwiMission m left join fetch m.kiwiUser where m.category = :category and m.user_id = :user_id")
+//	List<KiwiMission> getAllWithUser(int category, int user_id);
 
 }

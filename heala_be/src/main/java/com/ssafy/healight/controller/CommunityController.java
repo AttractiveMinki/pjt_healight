@@ -1,6 +1,5 @@
 package com.ssafy.healight.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,13 +10,15 @@ import com.ssafy.healight.service.CommunityService;
 
 import io.swagger.annotations.ApiOperation;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @CrossOrigin("*")
 @RequestMapping("/community")
 @RestController
 public class CommunityController {
 	
-	@Autowired
-	private CommunityService communityService;
+	final private CommunityService communityService;
 	
 	@ApiOperation(value = "커뮤니티 전체 글 목록 가져오기")
 	@GetMapping

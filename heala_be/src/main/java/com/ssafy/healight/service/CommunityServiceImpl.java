@@ -31,7 +31,9 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public Object getPostList(int category, int subCategory) {
 		List<Post> postList;
-		if (subCategory == 3) {
+		
+		// Best 게시글: 3
+		if (subCategory == 3) { 
 			postList = communityRepository.getPostByCategoryAndLikesGreaterThan(category, CRITERION);
 		} else {
 			postList = communityRepository.getPostByCategoryAndSubCategory(category, subCategory);

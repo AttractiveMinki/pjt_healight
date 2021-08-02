@@ -60,5 +60,18 @@ public class WithChallenge {
 		this.introduction = introduction;
 		this.userId = user_id;
 	}
+
+
+	public WithChallenge(int id, String image, String title, int category, Date startDate, Date endDate, int userId) {
+		super();
+		this.id = id;
+		this.image = image;
+		this.title = title;
+		this.category = category;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.userId = userId;
+	}
+	
 	
 }

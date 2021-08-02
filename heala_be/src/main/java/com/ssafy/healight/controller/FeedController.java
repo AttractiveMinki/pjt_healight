@@ -1,6 +1,5 @@
 package com.ssafy.healight.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,16 +10,17 @@ import com.ssafy.healight.domain.entity.Post;
 import com.ssafy.healight.service.FeedService;
 
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @CrossOrigin("*")
 @RequestMapping("/feed")
 @RestController
 
-
+//피드 컨트롤러
 public class FeedController {
 	
-	@Autowired
-	private FeedService feedService;
+	final private FeedService feedService;
 	
 	@ApiOperation(value = "글 작성하기")
 	@PostMapping("/post")
