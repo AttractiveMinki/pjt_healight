@@ -32,6 +32,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 	final private WithChallengeHashtagRepository withChallengeHashtagRepository;
 	final private MyChallengeRepository myChallengeRepository;
 
+	//[함께 챌린지] 함께 챌린지 만들기
 	@Override
 	public Object makeWith(WithInput withInput) {
 		
@@ -64,9 +65,9 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 	}
 
 
+	//[함께 챌린지] 함께 챌린지 목록 가져오기
 	@Override
 	public ResponseEntity<List<Map<String,Object>>> getWithList(int category) {
-		
 		// 반환할 Map<String, Object> 리스트 생성
 		// "withChallenge", "hashtags"
 		List<Map<String,Object>> response = new LinkedList<Map<String,Object>>();
@@ -99,16 +100,37 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		return new ResponseEntity<List<Map<String,Object>>>(response, HttpStatus.OK);
 	}
 
+	//[함께 챌린지] Id에 해당하는 함께 챌린지 객체와 연결된 해시태그들 가져오기 
+	@Override
+	public ResponseEntity<Map<String, Object>> getWithChallenge(int id) {
+		Map<String, Object> map = new HashMap<>();
+		
+		Optional<WithChallenge> withChallenge = withChallengeRepository.findWithChallengeById(id);
+		map.put("withChallenge", withChallenge);
+		
+		// 해시태그들 담을 문자열 리스트
+		ArrayList<String> hashtags = new ArrayList<>();
+		
+		// 해당 id에 연결되어 있는 해시태그들 가져오기
+		List<WithChallengeHashtag> list = withChallengeHashtagRepository.getAllWithChallengeHashtag(id);
+		for (int i = 0, size = list.size(); i < size; i++) {
+			hashtags.add(list.get(i).getChallengehashtag().getWord());
+		}
+		map.put("hashtags", hashtags);
 
-	//마이 챌린지 - 함께 챌린지 id 리스트 가져오기
+		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+	}
+
+	//[마이 챌린지] 함께 챌린지 id 리스트 가져오기
 	@Override
 	public List<Integer> getByUserid(int user_id) {
 		return myChallengeRepository.getListByUserid(user_id);
 	}
 
-	//마이 챌린지 - 함께 챌린지 정보 가져오기
+	//[마이 챌린지] 함께 챌린지 정보 가져오기
 	@Override
 	public WithChallenge getByChallengeId(int challengeId) {
 		return withChallengeHashtagRepository.getById(challengeId);
 	}
+
 }
