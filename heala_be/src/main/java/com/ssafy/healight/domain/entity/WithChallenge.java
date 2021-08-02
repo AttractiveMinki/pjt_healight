@@ -13,7 +13,8 @@ import java.sql.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "WithChallenge")
+@Entity
+//@Entity(name = "WithChallenge")
 @Builder
 @Getter
 @ToString
@@ -36,6 +37,7 @@ public class WithChallenge {
 	
 	@Column(name = "certify_info")
 	private String certifyInfo;
+	
 	private String introduction;
 	
 	@Column(name = "user_id")

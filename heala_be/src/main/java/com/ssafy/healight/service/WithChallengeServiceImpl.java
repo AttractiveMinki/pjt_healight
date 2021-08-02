@@ -1,10 +1,13 @@
 package com.ssafy.healight.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.StringTokenizer;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -28,65 +31,72 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 	final private ChallengeHashtagRepository challengeHashtagRepository;
 	final private WithChallengeHashtagRepository withChallengeHashtagRepository;
 	final private MyChallengeRepository myChallengeRepository;
-	
 
 	@Override
-	public Object post(WithInput withInput) {
+	public Object makeWith(WithInput withInput) {
 		
-		int challengeId;
-		int hashtagId;
+		// with_challenge 테이블에 insert
+		WithChallenge withchallenge = (WithChallenge) withInput.getWithChallenge();
+		int withChallengeId = withChallengeRepository.save(withchallenge).getId();
 		
-		boolean flag = true;
-		
-		// withchallenge에 내용 저장
-		WithChallenge withChallenge = new WithChallenge(withInput.getImage(), withInput.getTitle(), withInput.getCategory(), 
-				withInput.getStart_date(), withInput.getEnd_date(), withInput.getCertify_info(), withInput.getIntroduction(), withInput.getUser_id());
-		Optional<WithChallenge> checkChallengeHashtag = withChallengeRepository.getWithChallengeByTitleAndCategoryAndStartDateAndEndDateAndCertifyInfoAndIntroduction(withInput.getTitle(), 
-				withInput.getCategory(), withInput.getStart_date(), withInput.getEnd_date(), withInput.getCertify_info(), withInput.getIntroduction());
-		
-		if (!checkChallengeHashtag.isPresent()) {
-//			System.out.println("여기까지 들어오나요?"); -> 안들어옴 그럼 else로 들어가서 bad_request여야 하는데?!
-			withChallengeRepository.save(withChallenge);
-			
-			// 가장 최근에 삽입한 객체의 id 알아내기
-			checkChallengeHashtag = withChallengeRepository.getWithChallengeByTitleAndCategoryAndStartDateAndEndDateAndCertifyInfoAndIntroduction(withInput.getTitle(), 
-					withInput.getCategory(), withInput.getStart_date(), withInput.getEnd_date(), withInput.getCertify_info(), withInput.getIntroduction());
-			challengeId = checkChallengeHashtag.get().getId();
-		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		// challengehashtag에 내용 저장
-		ChallengeHashtag challengeHashtag = null; 
-
-		String hashtags = withInput.getHashtags();
+		// challenge_hashtag 테이블에 insert
+		String hashtags = withInput.getChallengeHashtag().getWord();
 		StringTokenizer st = new StringTokenizer(hashtags," ");
-		System.out.println("test");
 		
-		String hashtag;
-		while (st.hasMoreTokens()) {
-			hashtag = st.nextToken().replace("#", "");
+		int challengeHashtagId;
+		while(st.hasMoreTokens()) {
+			String hashtag = st.nextToken().replace("#", "");
 			Optional<ChallengeHashtag> checkHashtag = challengeHashtagRepository.getChallengeHashtagByWord(hashtag);
 			if(!checkHashtag.isPresent()){
-				challengeHashtag = new ChallengeHashtag(hashtag);
-				System.out.println(hashtag.toString());
-				challengeHashtagRepository.save(challengeHashtag);
-				
-				// 가장 최근에 삽입한 객체의 id 알아내기
-				checkHashtag = challengeHashtagRepository.getChallengeHashtagByWord(hashtag);
-				hashtagId = checkHashtag.get().getId();
-				
-				
-				System.out.println(challengeId);
-				System.out.println(hashtagId);
-				
-				// 관계 테이블에 저장
-				WithChallengeHashtag withChallengeHashtag = new WithChallengeHashtag(challengeId, hashtagId);
-				withChallengeHashtagRepository.save(withChallengeHashtag);
+				ChallengeHashtag challengeHashtag = new ChallengeHashtag(hashtag);
+				challengeHashtagId = challengeHashtagRepository.save(challengeHashtag).getId();
+			} else {
+				challengeHashtagId = checkHashtag.get().getId();
 			}
+			
+			// with_challenge_hashtag 테이블에 각 id 값 insert
+			WithChallengeHashtag withChallengeHashtag = WithChallengeHashtag.builder()
+														.withChallengeId(withChallengeId)
+														.challengeHashtagId(challengeHashtagId).build();
+			withChallengeHashtagRepository.save(withChallengeHashtag);
+		} 
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+
+	@Override
+	public ResponseEntity<List<Map<String,Object>>> getWithList(int category) {
+		
+		// 반환할 Map<String, Object> 리스트 생성
+		// "withChallenge", "hashtags"
+		List<Map<String,Object>> response = new LinkedList<Map<String,Object>>();
+		Map<String,Object> map; 
+		
+		// 카테고리에 해당하는 함께 챌린지 목록 가져오기
+		List<WithChallenge> withChallengeList = withChallengeRepository.getByCategory(category);
+		
+		for (int i = 0, size=withChallengeList.size(); i < size; i++) {
+			map = new HashMap<String, Object>();
+			
+			WithChallenge withchallenge = withChallengeList.get(i);
+			map.put("withChallenge", withchallenge); // withChallenge 객체 한 개 Map에 저장
+			
+			int withChallengeId = withchallenge.getId(); // 해당 withChallenge의 id 가져오기
+			
+			// 해시태그들 담을 문자열 리스트
+			ArrayList<String> hashtags = new ArrayList<String>();
+			
+			// 해당 id에 연결되어 있는 해시태그들 가져오기
+			List<WithChallengeHashtag> list = withChallengeHashtagRepository.getAllWithChallengeHashtag(withChallengeId);
+			for (int j = 0, size2=list.size(); j < size2; j++) {
+				hashtags.add(list.get(j).getChallengehashtag().getWord()); // 리스트에 해시태그 하나씩 추가
+			}
+			map.put("hashtags", hashtags); // withChallenge에 연결된 해시 태그들 리스트 Map에 저장
+			
+			response.add(map);
 		}
 		
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<List<Map<String,Object>>>(response, HttpStatus.OK);
 	}
 
 
@@ -98,7 +108,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 
 	//마이 챌린지 - 함께 챌린지 정보 가져오기
 	@Override
-	public WithChallenge getByChallengeId(int n) {
-		return withChallengeHashtagRepository.getById(n);
+	public WithChallenge getByChallengeId(int challengeId) {
+		return withChallengeHashtagRepository.getById(challengeId);
 	}
 }

@@ -7,12 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "WithChallengeHashtag")
+@Entity
+//@Entity(name = "WithChallengeHashtag")
 @Builder
 @Getter
 @ToString
@@ -28,13 +31,10 @@ public class WithChallengeHashtag {
 	
 	@Column(name = "challenge_hashtag_id")
 	private int challengeHashtagId;
-
-	public WithChallengeHashtag(int withChallengeId, int challengeHashtagId) {
-		super();
-		this.withChallengeId = withChallengeId;
-		this.challengeHashtagId = challengeHashtagId;
-	}
 	
-	
+	//다대일 : challenge_hashtag의 id와 연결
+	@ManyToOne
+	@JoinColumn(name="challenge_hashtag_id", insertable = false, updatable = false)
+	private ChallengeHashtag challengehashtag;
 	
 }

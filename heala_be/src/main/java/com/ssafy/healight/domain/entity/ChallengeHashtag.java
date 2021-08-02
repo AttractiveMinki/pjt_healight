@@ -12,7 +12,8 @@ import javax.persistence.Table;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "ChallengeHashtag")
+@Entity
+//@Entity(name = "ChallengeHashtag")
 @Builder
 @Getter
 @Setter
