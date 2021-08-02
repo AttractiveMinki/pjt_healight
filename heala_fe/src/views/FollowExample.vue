@@ -9,7 +9,7 @@
 <script>
 import Follow from "@/components/my_page/Follow";
 export default {
-  name: "Test",
+  name: "FollowExample",
   data() {
     return {
       follow_id: 2,

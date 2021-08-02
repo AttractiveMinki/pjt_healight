@@ -1,5 +1,5 @@
 import PostDetail from "@/views/community/PostDetail";
-import Test from "@/views/Test";
+import FollowExample from "@/views/FollowExample";
 
 export default [
     {
@@ -8,8 +8,8 @@ export default [
         component: PostDetail,
     },
     {
-        path: "/test",
-        name: "Test",
-        component: Test,
+        path: "/followexample",
+        name: "FollowExample",
+        component: FollowExample,
     }
 ]
