@@ -10,6 +10,16 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     // 한길 #@
+    isFollowingList: [
+      {
+        follow_id: 2,
+        isFollowing: true,
+      },
+      {
+        follow_id: 3,
+        isFollowing: false,
+      },
+    ],
 
     // 원석 #@
 
@@ -158,6 +168,9 @@ export default new Vuex.Store({
   },
   getters: {
     // 한길 #@
+    // getFollowUserById: (state) => (id) => {
+    //   return state.isFollowingList.find(followUser => followUser.follow_id == id);
+    // },
 
     // 원석 #@
 
@@ -174,6 +187,9 @@ export default new Vuex.Store({
     },
     setPostComments: (state, payload) => {
       state.comments = payload.comments;
+    },
+    setIsFollowing: (state, payload) => {
+      state.isFollowingList[payload.index].isFollowing = payload.isFollowing;
     },
 
     // 원석 #@
@@ -227,13 +243,43 @@ export default new Vuex.Store({
         );
 
       axios
-      .get(SERVER.URL + SERVER.ROUTES.getPost + id + SERVER.ROUTES.getComment)
-      .then((response) =>
-        store.commit('setPostComments', { comments: response.data })
-      )
-      .catch((exp) =>
-        console.log(`댓글 조회에 실패했습니다: ${exp}`)
-      );
+        .get(SERVER.URL + SERVER.ROUTES.getPost + id + SERVER.ROUTES.getComment)
+        .then((response) =>
+          store.commit('setPostComments', { comments: response.data })
+        )
+        .catch((exp) =>
+          console.log(`댓글 조회에 실패했습니다: ${exp}`)
+        );
+    },
+    follow(store, { follow_id }){
+      axios
+        .post(SERVER.URL + SERVER.ROUTES.follow, {
+          user_id: store.state.userid,
+          follow_id,
+        })
+        .then(() => {
+          // 이 부분은 필요없나? 헷갈림
+          const index = store.state.isFollowingList.findIndex(element => element.follow_id == follow_id);
+          store.commit("setIsFollowing", { index, isFollowing: true });
+        })
+        .catch((exp) => {
+          console.log(`팔로우에 실패했습니다: ${exp}`)
+        });
+    },
+    cancelFollow(store, { follow_id }){
+      axios
+        .delete(SERVER.URL + SERVER.ROUTES.follow, {
+          user_id: store.state.userid,
+          follow_id,
+        })
+        .then(() => {
+          // 이 부분은 필요없나? 헷갈림
+          const index = store.state.isFollowingList.findIndex(element => element.follow_id == follow_id);
+          store.commit("setIsFollowing", { index, isFollowing: false });
+        })
+        .catch((exp) => {
+          console.log(`팔로우 취소에 실패했습니다: ${exp}`)
+        });
     },
 
     // 원석 #@
