@@ -11,6 +11,11 @@ import WithDetailCertify from "@/views/challenge/with/WithDetailCertify"
 import WithDetailReview from "@/views/challenge/with/WithDetailReview"
 import WithMainDiet from "@/views/challenge/with/WithMainDiet"
 import WithMainHeart from "@/views/challenge/with/WithMainHeart"
+import KiwiMain from "@/views/challenge/kiwi/KiwiMain"
+import KiwiHealth from "@/views/challenge/kiwi/KiwiHealth"
+import KiwiDiet from "@/views/challenge/kiwi/KiwiDiet"
+import KiwiHeart from "@/views/challenge/kiwi/KiwiHeart"
+import KiwiSpecial from "@/views/challenge/kiwi/KiwiSpecial"
 
 export default [
     {
@@ -77,5 +82,30 @@ export default [
         path: "/challenge/with/:id/review",
         name: "WithDetailReview",
         component: WithDetailReview,
+      },
+      {
+        path: "/challenge/kiwimain",
+        name: "KiwiMain",
+        component: KiwiMain,
+      },
+      {
+        path: "/challenge/kiwihealth",
+        name: "KiwiHealth",
+        component: KiwiHealth,
+      },
+      {
+        path: "/challenge/kiwidiet",
+        name: "KiwiDiet",
+        component: KiwiDiet,
+      },
+      {
+        path: "/challenge/kiwiheart",
+        name: "KiwiHeart",
+        component: KiwiHeart,
+      },
+      {
+        path: "/challenge/kiwispecial",
+        name: "KiwiSpecial",
+        component: KiwiSpecial,
       },
 ]
