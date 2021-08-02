@@ -7,6 +7,10 @@ import Heart from "@/views/community/Heart"
 import WithMain from "@/views/challenge/with/WithMain"
 import WithMake from "@/views/challenge/with/WithMake"
 import WithDetail from "@/views/challenge/with/WithDetail"
+import WithDetailCertify from "@/views/challenge/with/WithDetailCertify"
+import WithDetailReview from "@/views/challenge/with/WithDetailReview"
+import WithMainDiet from "@/views/challenge/with/WithMainDiet"
+import WithMainHeart from "@/views/challenge/with/WithMainHeart"
 
 export default [
     {
@@ -50,8 +54,28 @@ export default [
         component: WithMake,
       },
       {
+        path: "/challenge/with/withmaindiet",
+        name: "WithMainDiet",
+        component: WithMainDiet,
+      },
+      {
+        path: "/challenge/with/withmainheart",
+        name: "WithMainHeart",
+        component: WithMainHeart,
+      },            
+      {
         path: "/challenge/with/:id",
         name: "WithDetail",
         component: WithDetail,
+      },
+      {
+        path: "/challenge/with/:id/certify",
+        name: "WithDetailCertify",
+        component: WithDetailCertify,
+      },
+      {
+        path: "/challenge/with/:id/review",
+        name: "WithDetailReview",
+        component: WithDetailReview,
       },
 ]

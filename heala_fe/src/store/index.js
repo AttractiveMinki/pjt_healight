@@ -115,7 +115,7 @@ export default new Vuex.Store({
       {
         id : 1,
         title : "Daily 1km 러닝",
-        category : "운동",
+        category : 0,
         start_date : "",
         end_date : "",
         image : "www.naver.com",
@@ -128,7 +128,7 @@ export default new Vuex.Store({
       {
         id : 2,
         title : "Daily 1km 러닝",
-        category : "운동",
+        category : 0,
         start_date : "",
         end_date : "",
         image : "www.naver.com",
@@ -141,7 +141,7 @@ export default new Vuex.Store({
       {
         id : 3,
         title : "Daily 1km 러닝",
-        category : "운동",
+        category : 0,
         start_date : "",
         end_date : "",
         image : "www.naver.com",

@@ -21,12 +21,12 @@
 
       <el-col :span="24">
         <el-row>
-          <el-col :span="8" class="container-box-detail selected-category">
-            <router-link router-link :to="{ name: 'WithMain' }" class="text-decoration-none">운동</router-link> 
-            <div id="square"></div>
-          </el-col>
           <el-col :span="8" class="container-box-detail">
+            <router-link router-link :to="{ name: 'WithMain' }" class="text-decoration-none">운동</router-link> 
+          </el-col>
+          <el-col :span="8" class="container-box-detail selected-category">
             <router-link router-link :to="{ name: 'WithMainDiet' }" class="text-decoration-none">식단</router-link> 
+            <div id="square"></div>
           </el-col>
           <el-col :span="8" class="container-box-detail">
             <router-link router-link :to="{ name: 'WithMainHeart' }" class="text-decoration-none">마음</router-link> 
@@ -34,7 +34,7 @@
         </el-row>
         <el-col class="community-box">
           <el-col :span="24" v-for="(with_challenge, idx) in with_challenges" :key="idx" class="community-inside ">
-            <div v-if="with_challenge.category == 0">
+            <div v-if="with_challenge.category == 1">
               <div @click="SetCurrentPageId(with_challenge.id)">
                 <router-link :to="{ name: 'WithDetail' , params: { id: with_challenge.id } }" class="text-decoration-none">
                   <el-col :span="18" class="margin-left-10">

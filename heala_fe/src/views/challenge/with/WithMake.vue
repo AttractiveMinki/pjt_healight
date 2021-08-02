@@ -90,6 +90,7 @@ export default {
     return {
       data: {
         // id: "",
+
         image: "",
         title: "",
         category: -1,
@@ -127,7 +128,7 @@ export default {
         alert('챌린지 시작 날짜를 선택해주세요.', data.start_date)
       }
       else if (data.end_date == ''){
-        alert('챌린지 종료 날짜를 선택해주세요.', data.start_date)
+        alert('챌린지 종료 날짜를 선택해주세요.', data.end_date)
       }
       else if (start > end) {
         alert('시작 날짜는 종료 날짜보다 일러야 합니다.')
@@ -147,7 +148,7 @@ export default {
       
     },
     createChallenge: function (data) {
-      axios.post(`${SERVER.URL}/${SERVER.ROUTES.withmake}`, data)
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.withmake}`, data)
         .then(() => {
           alert('성공적으로 글이 작성되었습니다.')
           router.push({ name: "WithMain" })
