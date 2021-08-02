@@ -28,7 +28,10 @@ public class Post {
 	private String image;
 	private String title;
 	private int category;
-	private int sub_category;
+	
+	@Column(name = "sub_category")
+	private int subCategory;
+	
 	private int access;
 	private String content;
 	private int likes;
