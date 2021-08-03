@@ -41,6 +41,12 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		WithChallenge withchallenge = (WithChallenge) withInput.getWithChallenge();
 		int withChallengeId = withChallengeRepository.save(withchallenge).getId();
 		
+		// my_challenge 테이블에 insert
+		MyChallenge myChallenge = MyChallenge.builder().userId(withchallenge.getUserId())
+				.withChallengeId(withChallengeId) // MyChallenge 변수명 카멜 표기법으로 이후 통일
+				.build();
+		myChallengeRepository.save(myChallenge);
+
 		// challenge_hashtag 테이블에 insert
 		String hashtags = withInput.getChallengeHashtag().getWord();
 		StringTokenizer st = new StringTokenizer(hashtags," ");
