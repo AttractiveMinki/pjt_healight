@@ -103,8 +103,8 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 
 	//마이 챌린지 - 함께 챌린지 id 리스트 가져오기
 	@Override
-	public List<Integer> getByUserid(int userId) {
-		return myChallengeRepository.getByUserId(userId);
+	public List<MyChallenge> getByUserid(int userId) {
+		return myChallengeRepository.getMyChallengeByUserId(userId);
 	}
 
 	//마이 챌린지 - 함께 챌린지 정보 가져오기

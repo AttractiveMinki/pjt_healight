@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.kiwi.model.domain.entity.MyChallenge;
 import com.ssafy.kiwi.model.domain.entity.MyChallengeList;
 import com.ssafy.kiwi.model.dto.WithInput;
 import com.ssafy.kiwi.model.service.KiwiChallengeService;
@@ -63,10 +64,10 @@ public class ChallengeController {
 	@ApiOperation(value = "마이 챌린지 목록 조회하기.")
 	@GetMapping("/my/{userId}")
 	public Object getMyChallenge(@PathVariable int userId) {
-		List<Integer> myChallengeIdList = withChallengeService.getByUserid(userId);
+		List<MyChallenge> myChallengeIdList = withChallengeService.getByUserid(userId);
 		List<MyChallengeList> myChallengeList = new ArrayList<>();
 		for (int i = 0; i < myChallengeIdList.size(); i++) {
-			int challengeId = myChallengeIdList.get(i);
+			int challengeId = myChallengeIdList.get(i).getWithChallengeId();
 			MyChallengeList mcl = new MyChallengeList();
 			mcl.setWithChallenge(withChallengeService.getByChallengeId(challengeId));
 			myChallengeList.add(mcl);

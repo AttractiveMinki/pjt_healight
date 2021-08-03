@@ -17,7 +17,7 @@ public interface WithChallengeService {
 	*/
 	public Object makeWith(WithInput withInput);
 
-	public List<Integer> getByUserid(int user_id);
+	public List<MyChallenge> getByUserid(int user_id);
 
 	public WithChallenge getByChallengeId(int challengeId);
 	
