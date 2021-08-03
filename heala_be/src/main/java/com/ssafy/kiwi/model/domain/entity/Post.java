@@ -37,9 +37,12 @@ public class Post {
 	private int likes;
 	private boolean anonymous;
 	
-	@Column(name = "timestamp", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") 
-	public Timestamp created_at;
-
-	public Timestamp updated_at;
-	public int user_id;
+	@Column(name = "created_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") 
+	public Timestamp createdAt;
+	
+	@Column(name = "updated_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") 
+	public Timestamp updatedAt;
+	
+	@Column(name = "user_id")
+	public int userId;
 }

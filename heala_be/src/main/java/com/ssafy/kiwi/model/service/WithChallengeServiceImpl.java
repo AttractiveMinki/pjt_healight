@@ -109,6 +109,6 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 	//마이 챌린지 - 함께 챌린지 정보 가져오기
 	@Override
 	public WithChallenge getByChallengeId(int challengeId) {
-		return withChallengeHashtagRepository.getById(challengeId);
+		return withChallengeRepository.getById(challengeId);
 	}
 }

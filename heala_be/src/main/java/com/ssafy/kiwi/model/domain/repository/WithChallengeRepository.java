@@ -15,4 +15,7 @@ public interface WithChallengeRepository extends JpaRepository<WithChallenge,Int
 	
 	// category 일치하는 WithChallenge 가져오기
 	List<WithChallenge> getByCategory(int category);
+	
+	// id 일치하는 WithChallenge 가져오기
+	WithChallenge getById(int id);
 }
