@@ -1,7 +1,11 @@
 package com.ssafy.kiwi.model.service;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,23 +37,28 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	//키위 챌린지 상세 조회
 	@Override
 	public Object getKiwiMission(int category, int userId) {
+		//미션 목록 가져오기
 		List<KiwiMission> kiwi_mission = kiwiMissionRepository.getMissionByCategory(category);
+		
+		List<Map<String,Object>> missions = new ArrayList<>();
+		//각 미션별 체크
 		for (KiwiMission km : kiwi_mission) {
+			Map<String, Object> mission = new HashMap<>();
+			mission.put("id", km.getId());
+			mission.put("content", km.getContent());
+			mission.put("badgeId", km.getBadge_id());
+			
+			//userId에 맞는 미션 성공 여부 찾기
 			Collection<KiwiUser> kiwi_user = km.getKiwiUser();
-			while(true) {
-				int size = kiwi_user.size();
-				int cnt = 0;
-				for(KiwiUser ku : kiwi_user) {
-					cnt++;
-					if(ku.getUserId()!=userId) {
-						kiwi_user.remove(ku);
-						break;
-					}
+			for(KiwiUser ku : kiwi_user) {
+				if(ku.getUserId()==userId) {
+					mission.put("completeDate", ku.getCompleteDate());
+					break;
 				}
-				if(cnt==size) break;
 			}
+			missions.add(mission);
 		}
-		return new ResponseEntity<>(kiwi_mission, HttpStatus.OK);
+		return new ResponseEntity<>(missions, HttpStatus.OK);
 	}
 	
 }
