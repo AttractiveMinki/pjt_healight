@@ -47,7 +47,11 @@ public class ChallengeController {
 
 	}
 	
-	
+	@ApiOperation(value = "함께 챌린지 상세 정보 가져오기")
+	@GetMapping("/with/detail")
+	public ResponseEntity<Map<String,Object>> getWithChallenge(@RequestParam int id) {
+		return withChallengeService.getWithChallenge(id);
+	}
 	
 	@ApiOperation(value = "키위 챌린지 목록 조회하기.")
 	@GetMapping("/kiwi")
