@@ -137,6 +137,11 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		int participantsNum = myChallengeRepository.countByWithChallengeId(withChallengeId);
 		map.put("participantsNum", participantsNum);
 		
+		// 키위 점수 계산하기(1일: 100 point)
+		int diffDays = (int)(withChallenge.get().getEndDate().getTime() - withChallenge.get().getStartDate().getTime())/(24*60*60*1000);
+		int kiwiPoint = diffDays * 100;
+		map.put("kiwiPoint", kiwiPoint);
+		
 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
 
