@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.entity.UserBadge;
-import com.ssafy.kiwi.model.domain.repository.BadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
 
@@ -20,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
 	
     final private UserRepository userRepository;
-    final private BadgeRepository badgeRepository;
     final private UserBadgeRepository userbadgeRepository;
     final private FollowRepository followRepository;
     

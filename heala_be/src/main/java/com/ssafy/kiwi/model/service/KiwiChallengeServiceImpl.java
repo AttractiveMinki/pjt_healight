@@ -1,6 +1,5 @@
 package com.ssafy.kiwi.model.service;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,7 +14,6 @@ import com.ssafy.kiwi.model.domain.entity.KiwiMission;
 import com.ssafy.kiwi.model.domain.entity.KiwiUser;
 import com.ssafy.kiwi.model.domain.repository.KiwiChallengeRepository;
 import com.ssafy.kiwi.model.domain.repository.KiwiMissionRepository;
-import com.ssafy.kiwi.model.domain.repository.KiwiUserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +23,6 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	
 	final private KiwiChallengeRepository kiwiChallengeRepository;
 	final private KiwiMissionRepository kiwiMissionRepository;
-	final private KiwiUserRepository kiwiUserRepository;
 
 	
 	//키위 챌린지 목록 조회
