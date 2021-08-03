@@ -1,6 +1,5 @@
 package com.ssafy.kiwi.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.kiwi.model.domain.entity.MyChallenge;
-import com.ssafy.kiwi.model.domain.entity.MyChallengeList;
 import com.ssafy.kiwi.model.dto.WithInput;
 import com.ssafy.kiwi.model.service.KiwiChallengeService;
 import com.ssafy.kiwi.model.service.WithChallengeService;

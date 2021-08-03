@@ -18,7 +18,8 @@ public class KiwiMission {
 	
 	private String content;
 	private int point;
-	private int badge_id;
+	//int는 null값이 올 수 없으므로 Integer로 지정
+	private Integer badge_id;
 	private int category;
 	
 	@OneToMany
