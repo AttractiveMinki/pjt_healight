@@ -24,6 +24,6 @@ public interface WithChallengeService {
 
 	public Object getMyChallenge(int userId);
 	
-	// Id에 해당하는 함께 챌린지 객체와 연결된 해시태그들 가져오기 
-	public ResponseEntity<Map<String,Object>> getWithChallenge(int withChallengeId);
+	// Id에 해당하는 함께 챌린지 상세 정보 가져오기(소개, 인증) 
+	public ResponseEntity<Map<String,Object>> getWithChallengeDetail(int withChallengeId, int userId);
 }

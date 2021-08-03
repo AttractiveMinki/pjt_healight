@@ -41,6 +41,12 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		WithChallenge withchallenge = (WithChallenge) withInput.getWithChallenge();
 		int withChallengeId = withChallengeRepository.save(withchallenge).getId();
 		
+		// my_challenge 테이블에 insert
+		MyChallenge myChallenge = MyChallenge.builder().userId(withchallenge.getUserId())
+				.withChallengeId(withChallengeId) // MyChallenge 변수명 카멜 표기법으로 이후 통일
+				.build();
+		myChallengeRepository.save(myChallenge);
+
 		// challenge_hashtag 테이블에 insert
 		String hashtags = withInput.getChallengeHashtag().getWord();
 		StringTokenizer st = new StringTokenizer(hashtags," ");
@@ -101,24 +107,32 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		return new ResponseEntity<List<Map<String,Object>>>(response, HttpStatus.OK);
 	}
 
-	//[함께 챌린지] Id에 해당하는 함께 챌린지 객체와 연결된 해시태그들 가져오기 
+	//[함께 챌린지] Id에 해당하는 함께 챌린지 상세 정보 가져오기(소개, 인증)
 	@Override
-	public ResponseEntity<Map<String, Object>> getWithChallenge(int id) {
+	public ResponseEntity<Map<String, Object>> getWithChallengeDetail(int withChallengeId, int userId) {
 		Map<String, Object> map = new HashMap<>();
 		
-		Optional<WithChallenge> withChallenge = withChallengeRepository.findWithChallengeById(id);
+		Optional<WithChallenge> withChallenge = withChallengeRepository.findWithChallengeById(withChallengeId);
 		map.put("withChallenge", withChallenge);
 		
 		// 해시태그들 담을 문자열 리스트
 		ArrayList<String> hashtags = new ArrayList<>();
 		
 		// 해당 id에 연결되어 있는 해시태그들 가져오기
-		List<WithChallengeHashtag> list = withChallengeHashtagRepository.getAllWithChallengeHashtag(id);
+		List<WithChallengeHashtag> list = withChallengeHashtagRepository.getAllWithChallengeHashtag(withChallengeId);
 		for (int i = 0, size = list.size(); i < size; i++) {
 			hashtags.add(list.get(i).getChallengehashtag().getWord());
 		}
 		map.put("hashtags", hashtags);
-
+		
+		// 현재 로그인 한 사용자가 챌린지에 참여하고 있는지 여부 확인
+		boolean participated = false;
+		Optional<MyChallenge> myChallenge = myChallengeRepository.getMyChallengeByUserIdAndWithChallengeId(userId, withChallengeId);
+		if (myChallenge.isPresent()) {
+			participated = true;
+		}
+		map.put("participated", participated);
+		
 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
 
