@@ -27,6 +27,7 @@ export default new Vuex.Store({
     username: "",
     userid: "",
     currentPageId: 0,
+    profileSelectedCategory: 1,
     // check_email: true,
     // check_identity: true,
 
