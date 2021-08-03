@@ -16,4 +16,6 @@ public interface MyChallengeRepository extends JpaRepository<MyChallenge, Intege
 
 	// userId와 challengeId가 일치하는 MyChallenge 객체 가져오기
 	Optional<MyChallenge> getMyChallengeByUserIdAndWithChallengeId(int userId, int withChallengeId);
+	
+	int countByWithChallengeId(int withChallengeId);
 }

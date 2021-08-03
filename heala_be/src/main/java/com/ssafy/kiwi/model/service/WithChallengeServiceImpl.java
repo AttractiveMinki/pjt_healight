@@ -133,6 +133,10 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		}
 		map.put("participated", participated);
 		
+		// 챌린지 참가자 수 가져오기
+		int participantsNum = myChallengeRepository.countByWithChallengeId(withChallengeId);
+		map.put("participantsNum", participantsNum);
+		
 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
 
