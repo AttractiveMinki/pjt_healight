@@ -50,20 +50,20 @@ public class UserServiceImpl implements UserService {
 
 	//프로필 편집 조회하기 - optional user 타입
 	@Override
-	public Optional<User> getUser(int user_id) {
-		return Optional.of(userRepository.getUserById(user_id));
+	public Optional<User> getUser(int userId) {
+		return Optional.of(userRepository.getUserById(userId));
 	}
 
 	//프로필 편집 조회하기 - user 타입
 	@Override
-	public User getUserProfile(int user_id) {
-		return userRepository.getUserById(user_id);
+	public User getUserProfile(int userId) {
+		return userRepository.getUserById(userId);
 	}
 	
 	//배지 정보 가져오기
 	@Override
-	public Object getAllWithBadge(int user_id) {
-		return userbadgeRepository.getAllWithBadge(user_id);
+	public Object getAllWithBadge(int userId) {
+		return userbadgeRepository.getAllWithBadge(userId);
 	}
 
 	//프로필 편집 저장 - 유저

@@ -73,13 +73,13 @@ public class UserController {
 	
 	
 	@ApiOperation(value = "프로필 편집 조회하기.")
-	@GetMapping("/profile/{user_id}")
-	public Object getUser(@PathVariable int user_id) {
-		Optional<User> userOpt = userService.getUser(user_id);
+	@GetMapping("/profile/{userId}")
+	public Object getUser(@PathVariable int userId) {
+		Optional<User> userOpt = userService.getUser(userId);
 		Map<String, Object> response = new HashMap<>();
 		if(userOpt.isPresent()) {
 			response.put("user", userOpt);			
-			response.put("badges", userService.getAllWithBadge(user_id));
+			response.put("badges", userService.getAllWithBadge(userId));
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -87,10 +87,10 @@ public class UserController {
 
 
 	@ApiOperation(value = "프로필 편집 반영하기.")
-	@PatchMapping("/profile/{user_id}")
-	public Object updateUser(@PathVariable int user_id, @RequestBody Profile userRequest) throws Exception {
+	@PatchMapping("/profile/{userId}")
+	public Object updateUser(@PathVariable int userId, @RequestBody Profile userRequest) throws Exception {
 		
-		User updateUser = userService.getUserProfile(user_id);
+		User updateUser = userService.getUserProfile(userId);
 		boolean user_update = false;
 		boolean badge_update = false;
 		User user = userRequest.getUser();

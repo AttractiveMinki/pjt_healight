@@ -28,7 +28,7 @@ public class CommunityController {
 	
 	@ApiOperation(value = "카테고리와 서브 카테고리에 맞는 글 목록 가져오기")
 	@GetMapping("/category")
-	public Object getPostList(@RequestParam(value="category") int category, @RequestParam(value="sub_category") int subCategory) {
+	public Object getPostList(@RequestParam int category, @RequestParam int subCategory) {
 		return communityService.getPostList(category, subCategory);
 	}
 	

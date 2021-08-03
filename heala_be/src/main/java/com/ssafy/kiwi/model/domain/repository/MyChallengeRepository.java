@@ -11,7 +11,8 @@ import com.ssafy.kiwi.model.domain.entity.MyChallenge;
 @Repository
 public interface MyChallengeRepository extends JpaRepository<MyChallenge, Integer> {
 
-	@Query(value = "select with_challenge_id from MyChallenge where user_id = :user_id")
-	List<Integer> getListByUserid(int user_id);
+	// userId에 일치하는 함께 챌린지 id들을 리스트로 가져옴
+	@Query(value = "select with_challenge_id from my_challenge where user_id = ?1")
+	List<Integer> getByUserId(int userId);
 
 }

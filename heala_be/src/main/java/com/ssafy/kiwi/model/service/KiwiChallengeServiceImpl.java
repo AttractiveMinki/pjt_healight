@@ -30,9 +30,9 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	
 	//키위 챌린지 상세 조회
 	@Override
-	public Object getKiwiMission(int category, int user_id) {
+	public Object getKiwiMission(int category, int userId) {
 		List<KiwiMission> kiwi_mission = kiwiMissionRepository.getMissionByCategory(category);
-//		List<KiwiMission> result_mission = kiwiMissionRepository.getAllWithUser(category, user_id);
+//		List<KiwiMission> result_mission = kiwiMissionRepository.getAllWithUser(category, userId);
 //		return new ResponseEntity<>(result_mission, HttpStatus.OK);
 		return new ResponseEntity<>(kiwiMissionRepository.getMissionByCategory(category), HttpStatus.OK);
 	}

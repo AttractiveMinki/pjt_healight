@@ -55,15 +55,15 @@ public class ChallengeController {
 	}
 	
 	@ApiOperation(value = "키위 챌린지 상세 미션 조회하기.")
-	@GetMapping("/kiwi/{category}/{user_id}")
-	public Object getKiwiMission(@PathVariable int category, @PathVariable int user_id) {
-		return kiwiChallengeService.getKiwiMission(category, user_id);
+	@GetMapping("/kiwi/{category}/{userId}")
+	public Object getKiwiMission(@PathVariable int category, @PathVariable int userId) {
+		return kiwiChallengeService.getKiwiMission(category, userId);
 	}
 	
 	@ApiOperation(value = "마이 챌린지 목록 조회하기.")
-	@GetMapping("/my/{user_id}")
-	public Object getMyChallenge(@PathVariable int user_id) {
-		List<Integer> myChallengeIdList = withChallengeService.getByUserid(user_id);
+	@GetMapping("/my/{userId}")
+	public Object getMyChallenge(@PathVariable int userId) {
+		List<Integer> myChallengeIdList = withChallengeService.getByUserid(userId);
 		List<MyChallengeList> myChallengeList = new ArrayList<>();
 		for (int i = 0; i < myChallengeIdList.size(); i++) {
 			int challengeId = myChallengeIdList.get(i);

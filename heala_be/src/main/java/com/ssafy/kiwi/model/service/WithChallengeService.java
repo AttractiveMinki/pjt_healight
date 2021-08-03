@@ -3,6 +3,7 @@ package com.ssafy.kiwi.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.ssafy.kiwi.model.domain.entity.MyChallenge;
 import com.ssafy.kiwi.model.domain.entity.WithChallenge;
 import com.ssafy.kiwi.model.dto.WithInput;
 

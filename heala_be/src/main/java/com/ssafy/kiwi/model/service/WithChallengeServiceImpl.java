@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.kiwi.model.domain.entity.ChallengeHashtag;
+import com.ssafy.kiwi.model.domain.entity.MyChallenge;
 import com.ssafy.kiwi.model.domain.entity.WithChallenge;
 import com.ssafy.kiwi.model.domain.entity.WithChallengeHashtag;
 import com.ssafy.kiwi.model.dto.WithInput;
@@ -102,8 +103,8 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 
 	//마이 챌린지 - 함께 챌린지 id 리스트 가져오기
 	@Override
-	public List<Integer> getByUserid(int user_id) {
-		return myChallengeRepository.getListByUserid(user_id);
+	public List<Integer> getByUserid(int userId) {
+		return myChallengeRepository.getByUserId(userId);
 	}
 
 	//마이 챌린지 - 함께 챌린지 정보 가져오기
