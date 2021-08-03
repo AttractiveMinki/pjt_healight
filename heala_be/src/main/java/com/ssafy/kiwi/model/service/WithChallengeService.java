@@ -22,4 +22,6 @@ public interface WithChallengeService {
 	public WithChallenge getByChallengeId(int challengeId);
 	
 	public ResponseEntity<List<Map<String,Object>>> getWithList(int category);
+
+	public Object getMyChallenge(int userId);
 }

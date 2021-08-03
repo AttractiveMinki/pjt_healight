@@ -64,15 +64,7 @@ public class ChallengeController {
 	@ApiOperation(value = "마이 챌린지 목록 조회하기.")
 	@GetMapping("/my/{userId}")
 	public Object getMyChallenge(@PathVariable int userId) {
-		List<MyChallenge> myChallengeIdList = withChallengeService.getByUserid(userId);
-		List<MyChallengeList> myChallengeList = new ArrayList<>();
-		for (int i = 0; i < myChallengeIdList.size(); i++) {
-			int challengeId = myChallengeIdList.get(i).getWithChallengeId();
-			MyChallengeList mcl = new MyChallengeList();
-			mcl.setWithChallenge(withChallengeService.getByChallengeId(challengeId));
-			myChallengeList.add(mcl);
-		}
-		return myChallengeList;
+		return withChallengeService.getMyChallenge(userId);
 	}
 	
 }

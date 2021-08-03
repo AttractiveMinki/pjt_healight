@@ -15,9 +15,7 @@ public class KiwiUser {
 
 	@Id
 	private int id;
-	
-	private boolean complete;
-	
+		
 	@Column(name="complete_date")
 	private Date completeDate;
 

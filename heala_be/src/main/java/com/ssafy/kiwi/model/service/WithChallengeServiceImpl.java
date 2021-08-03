@@ -16,11 +16,11 @@ import com.ssafy.kiwi.model.domain.entity.ChallengeHashtag;
 import com.ssafy.kiwi.model.domain.entity.MyChallenge;
 import com.ssafy.kiwi.model.domain.entity.WithChallenge;
 import com.ssafy.kiwi.model.domain.entity.WithChallengeHashtag;
-import com.ssafy.kiwi.model.dto.WithInput;
 import com.ssafy.kiwi.model.domain.repository.ChallengeHashtagRepository;
 import com.ssafy.kiwi.model.domain.repository.MyChallengeRepository;
 import com.ssafy.kiwi.model.domain.repository.WithChallengeHashtagRepository;
 import com.ssafy.kiwi.model.domain.repository.WithChallengeRepository;
+import com.ssafy.kiwi.model.dto.WithInput;
 
 import lombok.RequiredArgsConstructor;
 
@@ -112,4 +112,36 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 	public WithChallenge getByChallengeId(int challengeId) {
 		return withChallengeRepository.getById(challengeId);
 	}
+
+
+	//마이 챌린지 - 챌린지 목록 조회하기
+	@Override
+	public Object getMyChallenge(int userId) {
+		//함께 챌린지 id 리스트 가져오기
+		List<MyChallenge> myChallengeIdList = getByUserid(userId);
+		//응답할 리스트 만들기
+		List<Map<String,Object>> myChallengeList = new ArrayList<>();
+		for (int i = 0; i < myChallengeIdList.size(); i++) {
+			//함께 챌린지 id별로 챌린지 정보 가져오기
+			int challengeId = myChallengeIdList.get(i).getWithChallengeId();
+			WithChallenge nowChallenge = getByChallengeId(challengeId);
+			//함께 챌린지 id별로 해시태그 정보 가져오기
+			List<WithChallengeHashtag> nowHash = withChallengeHashtagRepository.getAllWithChallengeHashtag(challengeId);
+			List<String> hashtagWord = new ArrayList<>();
+			for (WithChallengeHashtag wch : nowHash) {
+				String word = wch.getChallengehashtag().getWord();
+				hashtagWord.add(word);				
+			}
+			//필요한 정보만 맵에 담아 리스트에 저장
+			//달성률은 마이 챌린지 인증하기 개발 후 추가 예정 
+			Map<String,Object> map = new HashMap<>();
+			map.put("title", nowChallenge.getTitle());
+			map.put("startDate", nowChallenge.getStartDate());
+			map.put("endDate", nowChallenge.getEndDate());
+			map.put("hashtag", hashtagWord);
+			myChallengeList.add(map);
+		}
+		return myChallengeList;
+	}
+	
 }
