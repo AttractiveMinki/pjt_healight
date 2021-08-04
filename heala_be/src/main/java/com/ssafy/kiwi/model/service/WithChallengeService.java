@@ -30,4 +30,7 @@ public interface WithChallengeService {
 
 	// 마이 챌린지 - 인증하기
 	public boolean certifyMyChallenge(CertifyImage certifyImage);
+
+	// 마이 챌린지 - 결과보기
+	public Object resultMyChallenge(int userId, int withChallengeId);
 }

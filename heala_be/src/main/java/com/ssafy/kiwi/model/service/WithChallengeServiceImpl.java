@@ -1,6 +1,8 @@
 package com.ssafy.kiwi.model.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -197,5 +199,37 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		certifyImageRepository.save(certifyImage);
 		return true;
 	}
+
+	//[마이 챌린지] 결과보기
+	@Override
+	public Object resultMyChallenge(int userId, int withChallengeId) {
+		Map<String, Object> map = new HashMap<>();
+		//해당 챌린지 정보 가져오기
+		Optional<WithChallenge> withChallenge = withChallengeRepository.findWithChallengeById(withChallengeId);
+		//챌린지 달성률 : 매일 인증 가정
+		long days = (withChallenge.get().getEndDate().getTime() - withChallenge.get().getStartDate().getTime()) / (24*60*60*1000);
+		long totalCnt = days * withChallenge.get().getCertifyDay();
+		int certifyCnt = certifyImageRepository.countByUserIdAndWithChallengeId(userId, withChallengeId);
+		double achievement = (double)certifyCnt / (double)totalCnt * 100;
+		map.put("achievement", Math.floor(achievement*10)/10.0);
+		//획득 포인트
+		if(achievement >= 85) map.put("point", withChallenge.get().getKiwiPoint());
+		else map.put("point", 0);
+		//인증 사진 리스트 (가공)
+		List<CertifyImage> beforeImage = certifyImageRepository.getAllByUserIdAndWithChallengeId(userId, withChallengeId);
+		List<Map<String, Object>> afterImage = new ArrayList<>();
+		SimpleDateFormat format = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
+		for (int i = 0; i < beforeImage.size(); i++) {
+			CertifyImage ci = beforeImage.get(i);
+			Map<String, Object> imgMap = new HashMap<>();
+			imgMap.put("id", ci.getId());
+			imgMap.put("image", ci.getImage());
+			imgMap.put("time", format.format(ci.getTime()));
+			afterImage.add(imgMap);
+		}
+		map.put("image", afterImage);
+		return map;
+	}
+
 	
 }

@@ -78,4 +78,11 @@ public class ChallengeController {
 		}
 		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
+	
+	@ApiOperation(value = "마이 챌린지 결과 조회하기.")
+	@GetMapping("/my/result")
+	public Object resultMyChallenge(@RequestParam(value="userId", required=true) int userId,
+			@RequestParam(value="withChallengeId", required=true) int withChallengeId) {
+		return withChallengeService.resultMyChallenge(userId, withChallengeId);
+	}
 }

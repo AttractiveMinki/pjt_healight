@@ -27,5 +27,11 @@ public class CertifyImage {
 	
 	@Column(name="with_challenge_id")
 	private int withChallengeId;
-	
+
+	public CertifyImage(int id, String image, Date time) {
+		super();
+		this.id = id;
+		this.image = image;
+		this.time = time;
+	}
 }
