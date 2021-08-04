@@ -19,9 +19,9 @@ public class CommunityServiceImpl implements CommunityService {
 
 	// 커뮤니티 전체 글 목록 가져오기
 	@Override
-	public Object getAllPostList() {
+	public List<Post> getAllPostList() {
 		List<Post> postList = communityRepository.findAll();
-		return new ResponseEntity<>(postList, HttpStatus.OK);
+		return postList;
 	}
 	
 	// Best 글에 들어갈 좋아요 기준 설정
@@ -29,7 +29,7 @@ public class CommunityServiceImpl implements CommunityService {
 
 	// 카테고리와 서브 카테고리에 맞는 글 목록 가져오기
 	@Override
-	public Object getPostList(int category, int subCategory) {
+	public List<Post> getPostList(int category, int subCategory) {
 		List<Post> postList;
 		
 		// Best 게시글: 3
@@ -38,7 +38,7 @@ public class CommunityServiceImpl implements CommunityService {
 		} else {
 			postList = communityRepository.getPostByCategoryAndSubCategory(category, subCategory);
 		}
-		return new ResponseEntity<>(postList, HttpStatus.OK);
+		return postList;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.ssafy.kiwi.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -27,14 +28,16 @@ public class CommunityController {
 	
 	@ApiOperation(value = "커뮤니티 전체 글 목록 가져오기")
 	@GetMapping
-	public Object getAllPostList() {
-		return communityService.getAllPostList();
+	public ResponseEntity<List<Post>> getAllPostList() {
+		List<Post> postList = communityService.getAllPostList();
+		return new ResponseEntity<>(postList, HttpStatus.OK);
 	} 
 	
 	@ApiOperation(value = "카테고리와 서브 카테고리에 맞는 글 목록 가져오기")
 	@GetMapping("/category")
 	public Object getPostList(@RequestParam int category, @RequestParam int subCategory) {
-		return communityService.getPostList(category, subCategory);
+		List<Post> postList = communityService.getPostList(category, subCategory);
+		return new ResponseEntity<>(postList, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "커뮤니티 글 상세 화면")
