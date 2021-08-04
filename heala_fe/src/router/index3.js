@@ -17,6 +17,7 @@ import ProfilePhysInfo from "@/views/my_page/ProfilePhysInfo";
 import Scrap from "@/views/my_page/showmore/Scrap";
 import ChangePassword from "@/views/my_page/showmore/ChangePassword";
 import DietRecord from "@/views/my_page/record/DietRecord";
+import DietRecordMake from "@/views/my_page/record/DietRecordMake";
 
 export default [
   {
@@ -100,18 +101,23 @@ export default [
     component: ProfilePhysInfo,
   },
   {
-    path: "/profile/Scrap",
+    path: "/profile/scrap",
     name: "Scrap",
     component: Scrap,
   },
   {
-    path: "/profile/ChangePassword",
+    path: "/profile/changepassword",
     name: "ChangePassword",
     component: ChangePassword,
   },
   {
-    path: "/profile/DietRecord",
+    path: "/profile/dietrecord",
     name: "DietRecord",
     component: DietRecord,
+  },
+  {
+    path: "/profile/dietRecordmake",
+    name: "DietRecordMake",
+    component: DietRecordMake,
   },
 ]

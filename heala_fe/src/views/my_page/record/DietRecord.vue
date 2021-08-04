@@ -54,8 +54,9 @@
         <el-progress :stroke-width="24" :percentage="((diet.sodium / recommend.sodium) * 100).toFixed(2)" :color="colors"></el-progress>
       </el-col>
     </el-row>
-
-    <div id="submit" @click="submit(data)" style="background-color: #ADEC6E; color: white; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">식단 기록하기</div>
+    <router-link :to="{ name: 'DietRecordMake' }" class="text-decoration-none">
+      <div id="submit" style="background-color: #ADEC6E; color: black; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">식단 기록하기</div>
+    </router-link>
   </div>
 </template>
 
