@@ -187,6 +187,10 @@ export default {
     width: 100%;
     border: 1.5px solid darkgrey;
   }
+  .text-decoration-none {
+    text-decoration: none;
+    color: black;
+  }
   .text-align-start {
     text-align: start;
   }
