@@ -86,7 +86,7 @@ export default {
     },
   },
   // mounted() {
-  //   // 프로필 기존 정보 불러오기
+  //   // 프로필 기존 정보 불러오기 -> 함수를 선언하고 따로 뺀 뒤, mounted에는 함수 이름만 호출하면 될 듯.
   //   axios.get(`${SERVER.URL}${SERVER.ROUTES.userProfile}`)
   //     .then(response => {     
   //       this.image = require("@/assets/img/profile/" + response.data.image);
