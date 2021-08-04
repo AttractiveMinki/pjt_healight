@@ -227,7 +227,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 			imgMap.put("time", format.format(ci.getTime()));
 			afterImage.add(imgMap);
 		}
-		map.put("image", afterImage);
+		map.put("certifyImage", afterImage);
 		return map;
 	}
 
