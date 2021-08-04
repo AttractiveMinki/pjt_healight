@@ -6,4 +6,7 @@ public interface FeedService {
 
 	// 글 작성
 	public Object post(Post post);
+
+	// 글 삭제
+	public boolean delete(int postId, int userId);
 }

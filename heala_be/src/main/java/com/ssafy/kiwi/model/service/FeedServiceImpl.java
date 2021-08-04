@@ -22,4 +22,16 @@ public class FeedServiceImpl implements FeedService {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
+	// 글 삭제
+	@Override
+	public boolean delete(int postId, int userId) {
+		boolean isPossible = false;
+		int checkId = feedRepository.getById(postId).getUserId();
+		if (checkId == userId) {
+			feedRepository.deleteById(postId);
+			isPossible = true;
+		}
+		return isPossible;
+	}
+
 }
