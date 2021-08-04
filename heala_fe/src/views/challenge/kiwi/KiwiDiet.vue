@@ -3,6 +3,7 @@
     <ChallengeContainerKiwiDetail 
       category=2
     />
+    <!-- v-bind :category="category" -->
     <el-row>
       <el-col :span="24" class="community">
         <div style="text-align:start; margin: 2vh 2vw;">

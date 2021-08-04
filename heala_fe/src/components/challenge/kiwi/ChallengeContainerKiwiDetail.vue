@@ -29,6 +29,8 @@ export default {
   props: {
     category: {
       type: Object
+      // 같은 타입은 타입 작성 안해도 됨.
+      // 이건 String
     }
   },
   methods: {
