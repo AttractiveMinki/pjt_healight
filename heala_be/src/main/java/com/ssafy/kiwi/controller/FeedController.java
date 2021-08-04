@@ -1,5 +1,7 @@
 package com.ssafy.kiwi.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,8 +26,9 @@ public class FeedController {
 	
 	@ApiOperation(value = "글 작성하기")
 	@PostMapping("/post")
-	public Object post(@RequestBody Post post) {
-		return feedService.post(post);
+	public ResponseEntity post(@RequestBody Post post) {
+		 feedService.post(post);
+		 return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 }
