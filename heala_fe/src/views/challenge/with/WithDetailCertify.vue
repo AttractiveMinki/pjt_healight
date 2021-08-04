@@ -49,7 +49,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   #square {
     width: 100%;
     height: 10px;

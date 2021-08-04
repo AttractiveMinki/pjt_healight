@@ -28,7 +28,7 @@
     </el-row>
     <el-row style="text-align: space-between">
       <el-col :span="12">
-        <span style="padding: 2vw"> <span style="font-weight: bold; padding: 1vw">231<!-- {{ user.following }} --></span>팔로잉</span>  
+        <span style="padding: 2vw">  <span style="font-weight: bold; padding: 1vw">231<!-- {{ user.following }} --></span>팔로잉</span>  
         <span style="padding: 2vw"> <span style="font-weight: bold; padding: 1vw">583<!-- {{ user.follower }} --></span>팔로워</span>
       </el-col>
     </el-row>
@@ -50,24 +50,64 @@
       </el-dialog>
     </el-row>
 
-    <el-row class="justify-content-space-between align-items-center">
-      <el-col :span="12" style="background: #ADEC6E; height: 5vh">
-        <router-link :to="{ name: 'Profile' }" class="text-decoration-none selected-category"><font-awesome-icon :icon="['far', 'images']" style="margin-top: 1.5vh" /></router-link> 
+    <el-row>
+      <el-col :span="12">
+        <router-link :to="{ name: 'Profile' }" class="text-decoration-none"><font-awesome-icon :icon="['far', 'images']" style="margin-top: 1.5vh" /></router-link> 
       </el-col>
-      <el-col :span="11">
+      <el-col :span="11" style="background: #ADEC6E; height: 5vh" class="display-inline-grid aligh-items-center">
         <!-- 내 계정이라면 -->
-        <router-link :to="{ name: 'ProfileTodoList' }" class="text-decoration-none">오늘의 할 일</router-link> 
+        <router-link :to="{ name: 'ProfileTodoList' }" class="text-decoration-none selected-category">오늘의 할 일</router-link> 
         <!-- 내 계정이 아니라면 -->
         <!-- 배지 모음 -->
       </el-col>
     </el-row>
-    <Category />
+    <div class="community">
+      <el-row style="padding-top: 2vh">
+        <el-col :span="24">
+          <el-col :span="12" style="text-align: start; padding: 2vw">
+            <span>오늘의 할 일</span>
+          </el-col>
+          <router-link :to="{ name: 'ProfilePhysInfo' }" class="text-decoration-none">
+            <el-col :span="12" style="text-align: end; padding: 2vw" class="community-title">
+              <i class="margin-left-10 el-icon-arrow-right"></i>
+              <span>신체정보 등록</span>
+            </el-col>
+          </router-link>
+        </el-col>
+      </el-row>
+
+      <router-link :to="{ name: '' }" class="text-decoration-none">
+        <el-row class="community-inside">
+          <el-col :span="18">
+            <router-link :to="{ name: 'DietRecord' }" class="text-decoration-none">
+            <div>식단 기록하기</div>
+            </router-link>
+          </el-col>
+          <el-col :span="6">
+            <!-- 그림 자리 -->
+          </el-col>
+        </el-row>
+      </router-link>
+
+      <router-link :to="{ name: '' }" class="text-decoration-none">
+        <el-row class="community-inside">
+          <el-col :span="18">
+            <router-link :to="{ name: 'WeightCalender' }" class="text-decoration-none">
+              <div>체중 기록하기</div>
+            </router-link>
+          </el-col>
+          <el-col :span="6">
+            <!-- 그림 자리 -->
+          </el-col>
+        </el-row>
+      </router-link>
+    </div>  
+    
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/my_page/Navbar"
-import Category from "@/components/my_page/profile/Category"
 import { mapState } from "vuex"
 
 export default {
@@ -82,7 +122,6 @@ export default {
   },
   components: {
     Navbar,
-    Category,
   },
   computed: {
     ...mapState([
@@ -122,7 +161,39 @@ export default {
     padding-right: 5px;
   }
   .align-items-center {
-    display: flex;
+    display: flex-inline;
+    text-align: center;
     align-items: center;
+  }
+  .display-inline-grid {
+    display: inline-grid;
+    align-items: center;
+  }
+
+  .community {
+    padding: 5px;
+    /* margin-left: 2.5%; */
+    border-radius: 5px;
+    width: 97%;
+    height: calc(50vh - 140px);
+    border: 1px solid white;
+    overflow : scroll;
+  }
+  .community-title {
+    font-size: 11px;
+    color: gray;
+  }
+  .community-inside {
+    /* margin-left: 2.5%; */
+    padding: 5px;
+    padding-left: 10vw;
+    padding-top: 3vh;
+    font-size: 16;
+    font-weight: bold;
+    border-radius: 5px;
+    width: 98%;
+    height: 10vh;
+    text-align: start;
+    border: 1.5px solid darkgrey;
   }
 </style>
