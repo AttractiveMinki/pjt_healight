@@ -1,13 +1,7 @@
 package com.ssafy.kiwi.model.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.kiwi.model.domain.entity.KiwiMission;
@@ -28,7 +22,7 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	//키위 챌린지 목록 조회
 	@Override
 	public Object getKiwiChallenge() {
-		return new ResponseEntity<>(kiwiChallengeRepository.findAll(), HttpStatus.OK);
+		return kiwiChallengeRepository.findAll();
 	}
 	
 	//키위 챌린지 상세 조회
@@ -55,7 +49,7 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 			}
 			missions.add(mission);
 		}
-		return new ResponseEntity<>(missions, HttpStatus.OK);
+		return missions;
 	}
 	
 }
