@@ -21,6 +21,7 @@ import {
 // 설치했던 아이콘파일에서 필요한 아이콘만 불러옵니다.
 import { faPlus } from "@fortawesome/free-solid-svg-icons"; //fas
 import { faStar, faBell, faImages } from "@fortawesome/free-regular-svg-icons"; //far
+// import { faStar } from "@fortawesome/free-regular-svg-icons"; //far
 
 // 한길 #@
 // 불러온 아이콘을 라이브러리에 담습니다.
@@ -31,6 +32,7 @@ library.add(farBookmark, farStar, farComment);
 // 불러온 아이콘을 라이브러리에 담습니다.
 library.add(faPlus);
 library.add(faStar, faBell, faImages);
+// library.add(faStar);
 
 
 // fontawesome아이콘을 Vue탬플릿에 사용할 수 있게 등록해 줍니다.

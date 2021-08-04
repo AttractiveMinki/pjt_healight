@@ -20,5 +20,9 @@ export default {
     checkIdentity: "/user/checkidentity/",
     withmake: "/challenge/with/",
     userProfile: "/user/profile/",
+    getKiwiHealthChallenge: "/challenge/kiwi/1/",
+    getKiwiDietChallenge: "/challenge/kiwi/2/",
+    getKiwiHeartChallenge: "/challenge/kiwi/3/",
+    getKiwiSpecialChallenge: "/challenge/kiwi/4/",
   }
 }

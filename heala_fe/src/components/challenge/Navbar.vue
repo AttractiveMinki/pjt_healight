@@ -4,7 +4,11 @@
     <el-row>
       <el-col :span="24" class="justify-content-space-between">
         <span class="challenge-text">다양한 챌린지에 <br>도전해보세요!</span>
+<<<<<<< HEAD
         <span id="square"><router-link :to="{ name: 'WithMake' }" class="text-decoration-none challenge-make">나만의 챌린지 만들기</router-link><font-awesome-icon icon="plus" class="plus-button"/> </span>
+=======
+        <span id="square" style="text-align:center"><router-link :to="{ name: 'WithMake' }" class="text-decoration-none challenge-make">나만의 챌린지 만들기</router-link><font-awesome-icon icon="plus" class="plus-button"/> </span>
+>>>>>>> 1605187157d1376bbee3928575529ec2d4c536b8
       </el-col>
     </el-row>
   </div>

@@ -9,16 +9,16 @@
       <span id="block"></span>
     </div>
     <el-row id="category" class="justify-content-space-between">
-      <el-col :span="8">
+      <el-col :span="12">
         <router-link :to="{ name: 'WithDetail' }" class="text-decoration-none">소개</router-link> 
       </el-col>
-      <el-col :span="8">
+      <el-col :span="12">
         <router-link :to="{ name: 'WithDetailCertify' }" class="text-decoration-none selected-category">인증</router-link>
         <div id="square"></div>
       </el-col>
-      <el-col :span="8">
+      <!-- <el-col :span="8">
         <router-link :to="{ name: 'WithDetailReview' }" class="text-decoration-none">후기</router-link> 
-      </el-col>
+      </el-col> -->
     </el-row>
     <el-row>
       <el-col>인증 방법</el-col>

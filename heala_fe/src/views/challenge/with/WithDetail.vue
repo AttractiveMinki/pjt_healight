@@ -4,21 +4,21 @@
     {{ currentPageId }}
     <div class="display-flex justify-content-space-between align-items">
       <span><font-awesome-icon icon="arrow-left" class="padding-left cursor-pointer" @click="goBack()"/></span>
-      <span class="text-title">챌린지 상세</span>
+      <span class="text-decoration-title">챌린지 상세</span>
       <!-- <button class="button-color">작성</button> -->
       <span id="block"></span>
     </div>
     <el-row id="category" class="justify-content-space-between">
-      <el-col :span="8">
+      <el-col :span="12">
         <router-link :to="{ name: 'WithDetail' }" class="text-decoration-none selected-category">소개</router-link> 
         <div id="square"></div>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="12">
         <router-link :to="{ name: 'WithDetailCertify' }" class="text-decoration-none">인증</router-link> 
       </el-col>
-      <el-col :span="8">
+      <!-- <el-col :span="8">
         <router-link :to="{ name: 'WithDetailReview' }" class="text-decoration-none">후기</router-link> 
-      </el-col>
+      </el-col> -->
     </el-row>
     <el-row id="challenge-image" style="margin: 1%">
       {{ with_challenges[currentPageId - 1].image }}
@@ -44,6 +44,12 @@
         해시태그: {{ with_challenges[currentPageId - 1].certify_infoy }}
       </el-col>
     </el-row> -->
+    <hr>
+    <el-row>
+      <el-col id="challenge-certifyinfo" style="margin: 1%">
+        해시태그: 
+      </el-col>
+    </el-row>
     <el-row>
       <el-col id="challenge-certifyinfo" style="margin: 1%">
         소개: {{ with_challenges[currentPageId - 1].certify_infoy }}
@@ -60,14 +66,11 @@
         키위 점수:
       </el-col>
     </el-row>
-    <el-row>
-      <el-col id="challenge-success-rate" style="margin: 1%">
-        역대 성공 비율:
-      </el-col>
-    </el-row>
-    <el-button style="margin: 1%">
-      참여하기
-    </el-button>
+    <!-- 유저가 참가중이 아니라면 -->
+    <!-- <div id="submit" @click="submit(data)" style="background-color: #ADEC6E; color: white; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">참여하기</div> -->
+
+    <!-- 유저가 참가중이라면 -->
+    <div id="submit" style="background-color: #C4C4C4; color: white; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">참여중</div>
   </div>
 </template>
 
@@ -100,6 +103,10 @@ export default {
     width: 10%;
     height: 0px;
     background: white;
+  }
+  #submit {
+    position: fixed;
+    bottom: 0rem;
   }
   .text-decoration-none {
     text-decoration: none;

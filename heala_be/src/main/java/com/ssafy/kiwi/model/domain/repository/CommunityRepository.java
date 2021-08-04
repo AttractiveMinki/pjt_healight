@@ -1,6 +1,7 @@
 package com.ssafy.kiwi.model.domain.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -8,8 +9,8 @@ import com.ssafy.kiwi.model.domain.entity.Post;
 
 public interface CommunityRepository extends JpaRepository<Post,Integer>{
 
-	List<Post> findAll();
-	List<Post> getPostByCategoryAndSubCategory(int category, int subCategory);
-	List<Post> getPostByCategoryAndLikesGreaterThan(int category, int criterion);
+	List<Post> getPostByAccess(int access);
+	List<Post> getPostByCategoryAndSubCategoryAndAccess(int category, int subCategory, int access);
+	List<Post> getPostByCategoryAndAccessAndLikesGreaterThan(int category, int access, int criterion);
 	
 }
