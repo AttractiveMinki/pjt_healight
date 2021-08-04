@@ -4,12 +4,12 @@
       <el-col :span="8" class="container-box-detail">
         <router-link :to="{ name: 'WithMain' }" class="text-decoration-none align-self">[]티모 챌린지</router-link> 
       </el-col>
-      <el-col :span="8" class="container-box-detail selected-category">
-        <router-link :to="{ name: 'WithMain' }" class="text-decoration-none align-self">함께 챌린지</router-link> 
-        <div id="square"></div>
-      </el-col>
       <el-col :span="8" class="container-box-detail">
+        <router-link :to="{ name: 'WithMain' }" class="text-decoration-none align-self">함께 챌린지</router-link> 
+      </el-col>
+      <el-col :span="8" class="container-box-detail selected-category">
         <router-link :to="{ name: 'MyMain' }" class="text-decoration-none align-self">나의 챌린지</router-link>
+        <div id="square"></div>
       </el-col>
     </el-row>
   </div>
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "ChallengeContainerWith",
+  name: "ChallengeContainerMy",
 
 }
 </script>
