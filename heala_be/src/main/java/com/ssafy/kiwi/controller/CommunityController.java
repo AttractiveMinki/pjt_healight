@@ -1,11 +1,16 @@
 package com.ssafy.kiwi.controller;
 
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.kiwi.model.domain.entity.Post;
 import com.ssafy.kiwi.model.service.CommunityService;
 
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +35,13 @@ public class CommunityController {
 	@GetMapping("/category")
 	public Object getPostList(@RequestParam int category, @RequestParam int subCategory) {
 		return communityService.getPostList(category, subCategory);
+	}
+	
+	@ApiOperation(value = "커뮤니티 글 상세 화면")
+	@GetMapping("/post")
+	public Object getPost(@RequestParam int postId) {
+		Optional<Post> post = communityService.getPost(postId);
+		return new ResponseEntity<>(post, HttpStatus.OK);
 	}
 	
 }

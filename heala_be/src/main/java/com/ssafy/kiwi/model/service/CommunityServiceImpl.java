@@ -1,6 +1,7 @@
 package com.ssafy.kiwi.model.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,11 @@ public class CommunityServiceImpl implements CommunityService {
 			postList = communityRepository.getPostByCategoryAndSubCategory(category, subCategory);
 		}
 		return new ResponseEntity<>(postList, HttpStatus.OK);
+	}
+
+	@Override
+	public Optional<Post> getPost(int postId) {
+		return communityRepository.getPostById(postId);
 	}
 
 
