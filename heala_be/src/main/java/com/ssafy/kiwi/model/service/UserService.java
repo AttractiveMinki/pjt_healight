@@ -21,8 +21,10 @@ public interface UserService {
 	Optional<User> getUser(int followId);
 	User getUserProfile(int user_id);
 
-	//배지 조회
+	//배지 조회 (모든 정보)
 	Object getAllWithBadge(int user_id);
+	//배지 조회 (데이터 가공)
+	Object getBadge(int userId);
 	
 	//프로필 편집
 	Map<String, Object> getProfile(int user_id);
@@ -32,6 +34,7 @@ public interface UserService {
 	Follow saveFollow(Follow follow);
 	Optional<Follow> findFirstByFollowIdAndUserId(int followId, int userId);
 	void delete(Follow follow);
+	
 
 
 }

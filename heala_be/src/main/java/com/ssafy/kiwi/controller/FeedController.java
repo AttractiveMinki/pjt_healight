@@ -2,16 +2,11 @@ package com.ssafy.kiwi.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ssafy.kiwi.model.domain.entity.Post;
 import com.ssafy.kiwi.model.service.FeedService;
+import com.ssafy.kiwi.model.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class FeedController {
 
 	final private FeedService feedService;
+	final private UserService userService;
 
 	@ApiOperation(value = "글 작성하기")
 	@PostMapping("/post")
@@ -44,4 +40,9 @@ public class FeedController {
 		}
 	}
 
+	@ApiOperation(value = "배지 보관함 보기")
+	@GetMapping("/badge/{userId}")
+	public Object getBadge(@PathVariable int userId) {
+		return new ResponseEntity<>(userService.getBadge(userId), HttpStatus.OK);
+	}
 }

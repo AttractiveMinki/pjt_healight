@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+import com.ssafy.kiwi.model.domain.entity.Badge;
 import com.ssafy.kiwi.model.domain.entity.Follow;
 import com.ssafy.kiwi.model.domain.repository.FollowRepository;
 
@@ -65,10 +66,21 @@ public class UserServiceImpl implements UserService {
 		return userRepository.getUserById(userId);
 	}
 	
-	//배지 정보 가져오기
+	//배지 정보 가져오기 - 모든 정보
 	@Override
-	public Object getAllWithBadge(int userId) {
+	public List<UserBadge> getAllWithBadge(int userId) {
 		return userbadgeRepository.getAllWithBadge(userId);
+	}
+	
+	//배지 정보 가져오기 - 가공 (배지보관함용)
+	@Override
+	public Object getBadge(int userId) {
+		List<UserBadge> userBadges = getAllWithBadge(userId);
+		List<Badge> badge = new ArrayList<>();
+		for (UserBadge ub : userBadges) {
+			badge.add(ub.getBadge());
+		}
+		return badge;
 	}
 	
 	//프로필 편집 조회하기
