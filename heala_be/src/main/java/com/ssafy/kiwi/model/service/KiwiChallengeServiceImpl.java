@@ -28,7 +28,7 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	//키위 챌린지 목록 조회
 	@Override
 	public Object getKiwiChallenge() {
-		return new ResponseEntity<>(kiwiChallengeRepository.findAll(), HttpStatus.OK);
+		return kiwiChallengeRepository.findAll();
 	}
 	
 	//키위 챌린지 상세 조회
@@ -55,7 +55,7 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 			}
 			missions.add(mission);
 		}
-		return new ResponseEntity<>(missions, HttpStatus.OK);
+		return missions;
 	}
 	
 }

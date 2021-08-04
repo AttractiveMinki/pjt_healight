@@ -39,7 +39,6 @@ public class ChallengeController {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
 	}
 	
 	@ApiOperation(value = "함께 챌린지 목록 가져오기")
@@ -51,8 +50,7 @@ public class ChallengeController {
 	@ApiOperation(value = "함께 챌린지 상세 정보 가져오기")
 	@GetMapping("/with/detail")
 	public ResponseEntity<Map<String,Object>> getWithChallengeDetail(@RequestParam int withChallengeId, @RequestParam int userId) {
-		return new ResponseEntity<>(withChallengeService.getWithChallengeDetail(withChallengeId, userId),
-				HttpStatus.OK);
+		return new ResponseEntity<>(withChallengeService.getWithChallengeDetail(withChallengeId, userId), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "함께 챌린지 참여하기")
@@ -62,17 +60,19 @@ public class ChallengeController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	
 	@ApiOperation(value = "키위 챌린지 목록 조회하기.")
 	@GetMapping("/kiwi")
 	public Object getKiwiChallenge() {
-		return kiwiChallengeService.getKiwiChallenge();
+		return new ResponseEntity<>(kiwiChallengeService.getKiwiChallenge(), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "키위 챌린지 상세 미션 조회하기.")
 	@GetMapping("/kiwi/{category}/{userId}")
 	public Object getKiwiMission(@PathVariable int category, @PathVariable int userId) {
-		return kiwiChallengeService.getKiwiMission(category, userId);
+		return new ResponseEntity<>(kiwiChallengeService.getKiwiMission(category, userId), HttpStatus.OK);
 	}
+	
 	
 	@ApiOperation(value = "마이 챌린지 목록 조회하기.")
 	@GetMapping("/my/{userId}")
@@ -93,6 +93,6 @@ public class ChallengeController {
 	@GetMapping("/my/result")
 	public Object resultMyChallenge(@RequestParam(value="userId", required=true) int userId,
 			@RequestParam(value="withChallengeId", required=true) int withChallengeId) {
-		return withChallengeService.resultMyChallenge(userId, withChallengeId);
+		return new ResponseEntity<>(withChallengeService.resultMyChallenge(userId, withChallengeId), HttpStatus.OK);
 	}
 }
