@@ -18,6 +18,10 @@ export default {
     community: "/community/",
     checkEmail: "/user/checkemail/",
     checkIdentity: "/user/checkidentity/",
-    withmake: "/challenge/with",
+    withmake: "/challenge/with/",
+    getKiwiHealthChallenge: "/challenge/kiwi/1/",
+    getKiwiDietChallenge: "/challenge/kiwi/2/",
+    getKiwiHeartChallenge: "/challenge/kiwi/3/",
+    getKiwiSpecialChallenge: "/challenge/kiwi/4/",
   }
 }

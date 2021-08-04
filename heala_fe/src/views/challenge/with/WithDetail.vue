@@ -4,7 +4,7 @@
     {{ currentPageId }}
     <div class="display-flex justify-content-space-between align-items">
       <span><font-awesome-icon icon="arrow-left" class="padding-left cursor-pointer" @click="goBack()"/></span>
-      <span class="text-title">챌린지 상세</span>
+      <span class="text-decoration-title">챌린지 상세</span>
       <!-- <button class="button-color">작성</button> -->
       <span id="block"></span>
     </div>
