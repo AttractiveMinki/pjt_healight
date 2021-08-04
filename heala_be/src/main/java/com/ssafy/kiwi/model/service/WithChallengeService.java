@@ -26,4 +26,7 @@ public interface WithChallengeService {
 	
 	// Id에 해당하는 함께 챌린지 상세 정보 가져오기(소개, 인증) 
 	public ResponseEntity<Map<String,Object>> getWithChallengeDetail(int withChallengeId, int userId);
+	
+	// 함께 챌린지 참여하기
+	public void joinWithChallenge(int withChallengeId, int userId);
 }

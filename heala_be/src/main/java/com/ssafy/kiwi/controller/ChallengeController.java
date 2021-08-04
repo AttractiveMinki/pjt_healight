@@ -3,6 +3,7 @@ package com.ssafy.kiwi.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,8 +47,15 @@ public class ChallengeController {
 	
 	@ApiOperation(value = "함께 챌린지 상세 정보 가져오기")
 	@GetMapping("/with/detail")
-	public ResponseEntity<Map<String,Object>> getWithChallengeDetail(@RequestParam int withCallengeId, @RequestParam int userId) {
-		return withChallengeService.getWithChallengeDetail(withCallengeId, userId);
+	public ResponseEntity<Map<String,Object>> getWithChallengeDetail(@RequestParam int withChallengeId, @RequestParam int userId) {
+		return withChallengeService.getWithChallengeDetail(withChallengeId, userId);
+	}
+	
+	@ApiOperation(value = "함께 챌린지 참여하기")
+	@PostMapping("/with/join")
+	public ResponseEntity joinWithChallenge(@RequestParam int withChallengeId, @RequestParam int userId) {
+		withChallengeService.joinWithChallenge(withChallengeId, userId);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "키위 챌린지 목록 조회하기.")
