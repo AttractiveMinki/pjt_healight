@@ -12,6 +12,5 @@ public interface CommunityRepository extends JpaRepository<Post,Integer>{
 	List<Post> getPostByAccess(int access);
 	List<Post> getPostByCategoryAndSubCategoryAndAccess(int category, int subCategory, int access);
 	List<Post> getPostByCategoryAndAccessAndLikesGreaterThan(int category, int access, int criterion);
-	Optional<Post> getPostById(int postId);
 	
 }

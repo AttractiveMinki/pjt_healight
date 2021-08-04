@@ -44,8 +44,7 @@ public class CommunityServiceImpl implements CommunityService {
 	// 커뮤니티 글 가져오기
 	@Override
 	public Optional<Post> getPost(int postId) {
-		return communityRepository.getPostById(postId);
+		return communityRepository.findById(postId);
 	}
-
 
 }
