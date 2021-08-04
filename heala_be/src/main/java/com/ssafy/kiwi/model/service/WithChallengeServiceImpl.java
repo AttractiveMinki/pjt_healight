@@ -152,6 +152,13 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
 
+	//[함께 챌린지] 참가하기
+	@Override
+	public void joinWithChallenge(int withChallengeId, int userId) {
+		MyChallenge mychallenge = MyChallenge.builder().withChallengeId(withChallengeId).userId(userId).build();
+		myChallengeRepository.save(mychallenge);
+	}
+
 	//[마이 챌린지] 함께 챌린지 id 리스트 가져오기
 	@Override
 	public List<MyChallenge> getByUserid(int userId) {

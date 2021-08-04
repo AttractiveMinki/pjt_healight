@@ -33,4 +33,7 @@ public interface WithChallengeService {
 
 	// 마이 챌린지 - 결과보기
 	public Object resultMyChallenge(int userId, int withChallengeId);
+	
+	// 함께 챌린지 참여하기
+	public void joinWithChallenge(int withChallengeId, int userId);
 }
