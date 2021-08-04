@@ -1,6 +1,7 @@
 <template>
   <div>
     <Navbar />
+    <CallenderTest />
     <h1>체중 기록하기</h1>
     <el-calendar>
       <!-- Use 2.5 slot syntax. If you use Vue 2.6, please use new slot syntax-->
@@ -19,16 +20,19 @@
 
 <script>
 import Navbar from "@/components/my_page/Navbar"
+import CallenderTest from '@/components/my_page/CallenderTest.vue'
 
 export default {
   name: "WeightCalender",
   components: {
     Navbar,
+    CallenderTest
   },
 }
 </script>
 
-<style scoped>
+
+    CallenderTest<style scoped>
   .is-selected {
     color: #1989FA;
   }
