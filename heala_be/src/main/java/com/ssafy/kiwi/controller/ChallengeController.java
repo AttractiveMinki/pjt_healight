@@ -3,6 +3,7 @@ package com.ssafy.kiwi.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.kiwi.model.domain.entity.CertifyImage;
 import com.ssafy.kiwi.model.dto.WithInput;
 import com.ssafy.kiwi.model.service.KiwiChallengeService;
 import com.ssafy.kiwi.model.service.WithChallengeService;
@@ -68,4 +70,19 @@ public class ChallengeController {
 		return withChallengeService.getMyChallenge(userId);
 	}
 	
+	@ApiOperation(value = "마이 챌린지 인증하기.")
+	@PostMapping("/my/certify")
+	public ResponseEntity<Object> certifyMyChallenge(@RequestBody CertifyImage certifyImage) {
+		if(withChallengeService.certifyMyChallenge(certifyImage)) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
+	
+	@ApiOperation(value = "마이 챌린지 결과 조회하기.")
+	@GetMapping("/my/result")
+	public Object resultMyChallenge(@RequestParam(value="userId", required=true) int userId,
+			@RequestParam(value="withChallengeId", required=true) int withChallengeId) {
+		return withChallengeService.resultMyChallenge(userId, withChallengeId);
+	}
 }

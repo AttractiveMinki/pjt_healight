@@ -1,5 +1,6 @@
 package com.ssafy.kiwi.model.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -12,12 +13,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.kiwi.model.domain.entity.CertifyImage;
 import com.ssafy.kiwi.model.domain.entity.ChallengeHashtag;
 import com.ssafy.kiwi.model.domain.entity.MyChallenge;
+import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.entity.WithChallenge;
 import com.ssafy.kiwi.model.domain.entity.WithChallengeHashtag;
+import com.ssafy.kiwi.model.domain.repository.CertifyImageRepository;
 import com.ssafy.kiwi.model.domain.repository.ChallengeHashtagRepository;
 import com.ssafy.kiwi.model.domain.repository.MyChallengeRepository;
+import com.ssafy.kiwi.model.domain.repository.UserRepository;
 import com.ssafy.kiwi.model.domain.repository.WithChallengeHashtagRepository;
 import com.ssafy.kiwi.model.domain.repository.WithChallengeRepository;
 import com.ssafy.kiwi.model.dto.WithInput;
@@ -32,6 +37,8 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 	final private ChallengeHashtagRepository challengeHashtagRepository;
 	final private WithChallengeHashtagRepository withChallengeHashtagRepository;
 	final private MyChallengeRepository myChallengeRepository;
+	final private CertifyImageRepository certifyImageRepository;
+	final private UserRepository userRepository;
 
 	//[함께 챌린지] 함께 챌린지 만들기
 	@Override
@@ -157,7 +164,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		return withChallengeRepository.getById(challengeId);
 	}
 
-	//마이 챌린지 - 챌린지 목록 조회하기
+	//[마이 챌린지] 챌린지 목록 조회하기
 	@Override
 	public Object getMyChallenge(int userId) {
 		//함께 챌린지 id 리스트 가져오기
@@ -186,5 +193,52 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		}
 		return myChallengeList;
 	}
+
+
+	//[마이 챌린지] 인증하기
+	@Override
+	public boolean certifyMyChallenge(CertifyImage certifyImage) {
+		//사진 저장
+		certifyImageRepository.save(certifyImage);
+		//포인트 증가
+		User user = userRepository.getById(certifyImage.getUserId());
+		int exp = user.getExp();
+		exp += 10;
+		user.setExp(exp);
+		userRepository.save(user);
+		return true;
+	}
+
+	//[마이 챌린지] 결과보기
+	@Override
+	public Object resultMyChallenge(int userId, int withChallengeId) {
+		Map<String, Object> map = new HashMap<>();
+		//해당 챌린지 정보 가져오기
+		Optional<WithChallenge> withChallenge = withChallengeRepository.findWithChallengeById(withChallengeId);
+		//챌린지 달성률 : 매일 인증 가정
+		long days = (withChallenge.get().getEndDate().getTime() - withChallenge.get().getStartDate().getTime()) / (24*60*60*1000);
+		long totalCnt = days * withChallenge.get().getCertifyDay();
+		int certifyCnt = certifyImageRepository.countByUserIdAndWithChallengeId(userId, withChallengeId);
+		double achievement = (double)certifyCnt / (double)totalCnt * 100;
+		map.put("achievement", Math.floor(achievement*10)/10.0);
+		//획득 포인트
+		if(achievement >= 85) map.put("point", withChallenge.get().getKiwiPoint());
+		else map.put("point", 0);
+		//인증 사진 리스트 (가공)
+		List<CertifyImage> beforeImage = certifyImageRepository.getAllByUserIdAndWithChallengeId(userId, withChallengeId);
+		List<Map<String, Object>> afterImage = new ArrayList<>();
+		SimpleDateFormat format = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
+		for (int i = 0; i < beforeImage.size(); i++) {
+			CertifyImage ci = beforeImage.get(i);
+			Map<String, Object> imgMap = new HashMap<>();
+			imgMap.put("id", ci.getId());
+			imgMap.put("image", ci.getImage());
+			imgMap.put("time", format.format(ci.getTime()));
+			afterImage.add(imgMap);
+		}
+		map.put("certifyImage", afterImage);
+		return map;
+	}
+
 	
 }
