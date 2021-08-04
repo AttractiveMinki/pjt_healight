@@ -2,7 +2,6 @@ package com.ssafy.kiwi.model.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,11 +16,13 @@ import org.springframework.stereotype.Service;
 import com.ssafy.kiwi.model.domain.entity.CertifyImage;
 import com.ssafy.kiwi.model.domain.entity.ChallengeHashtag;
 import com.ssafy.kiwi.model.domain.entity.MyChallenge;
+import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.entity.WithChallenge;
 import com.ssafy.kiwi.model.domain.entity.WithChallengeHashtag;
 import com.ssafy.kiwi.model.domain.repository.CertifyImageRepository;
 import com.ssafy.kiwi.model.domain.repository.ChallengeHashtagRepository;
 import com.ssafy.kiwi.model.domain.repository.MyChallengeRepository;
+import com.ssafy.kiwi.model.domain.repository.UserRepository;
 import com.ssafy.kiwi.model.domain.repository.WithChallengeHashtagRepository;
 import com.ssafy.kiwi.model.domain.repository.WithChallengeRepository;
 import com.ssafy.kiwi.model.dto.WithInput;
@@ -37,6 +38,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 	final private WithChallengeHashtagRepository withChallengeHashtagRepository;
 	final private MyChallengeRepository myChallengeRepository;
 	final private CertifyImageRepository certifyImageRepository;
+	final private UserRepository userRepository;
 
 	//[함께 챌린지] 함께 챌린지 만들기
 	@Override
@@ -196,7 +198,14 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 	//[마이 챌린지] 인증하기
 	@Override
 	public boolean certifyMyChallenge(CertifyImage certifyImage) {
+		//사진 저장
 		certifyImageRepository.save(certifyImage);
+		//포인트 증가
+		User user = userRepository.getById(certifyImage.getUserId());
+		int exp = user.getExp();
+		exp += 10;
+		user.setExp(exp);
+		userRepository.save(user);
 		return true;
 	}
 
