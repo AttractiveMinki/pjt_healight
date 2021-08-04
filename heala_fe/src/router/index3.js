@@ -11,6 +11,7 @@ import WithDetailCertify from "@/views/challenge/with/WithDetailCertify"
 import WithDetailReview from "@/views/challenge/with/WithDetailReview"
 import WithMainDiet from "@/views/challenge/with/WithMainDiet"
 import WithMainHeart from "@/views/challenge/with/WithMainHeart"
+import MyMain from "@/views/challenge/my/MyMain"
 
 export default [
     {
@@ -77,5 +78,10 @@ export default [
         path: "/challenge/with/:id/review",
         name: "WithDetailReview",
         component: WithDetailReview,
+      },
+      {
+        path: "/challenge/my/mymain",
+        name: "MyMain",
+        component: MyMain,
       },
 ]
