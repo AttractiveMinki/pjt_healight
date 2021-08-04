@@ -15,11 +15,13 @@ public class KiwiUser {
 
 	@Id
 	private int id;
-	
-	private boolean complete;
-	private Date complete_date;
+		
+	@Column(name="complete_date")
+	private Date completeDate;
 
 	@Column(name="user_id")
-	private int userid;
-	private int mission_id;
+	private int userId;
+	
+	@Column(name="mission_id")
+	private int missionId;
 }

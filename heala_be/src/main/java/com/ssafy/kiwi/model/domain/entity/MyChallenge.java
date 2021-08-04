@@ -14,6 +14,9 @@ public class MyChallenge {
 	@Id
 	private int id;
 	
-	private int user_id;
-	private int with_challenge_id;
+	@Column(name = "user_id")
+	private int userId;
+	
+	@Column(name = "with_challenge_id")
+	private int withChallengeId;
 }

@@ -1,17 +1,22 @@
 package com.ssafy.kiwi.model.service;
 
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 import com.ssafy.kiwi.model.domain.entity.Follow;
 import com.ssafy.kiwi.model.domain.repository.FollowRepository;
+
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.entity.UserBadge;
-import com.ssafy.kiwi.model.domain.repository.BadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
+import com.ssafy.kiwi.model.dto.Profile;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
 	
     final private UserRepository userRepository;
-    final private BadgeRepository badgeRepository;
     final private UserBadgeRepository userbadgeRepository;
     final private FollowRepository followRepository;
     
@@ -48,42 +52,94 @@ public class UserServiceImpl implements UserService {
 		return userRepository.getUserByIdentityAndPassword(identity, password);
 	}
 
-	//프로필 편집 조회하기 - optional user 타입
+	
+	//유저 정보 조회하기 - optional user type
 	@Override
-	public Optional<User> getUser(int user_id) {
-		return Optional.of(userRepository.getUserById(user_id));
+	public Optional<User> getUser(int userId) {
+		return Optional.of(userRepository.getUserById(userId));
 	}
-
-	//프로필 편집 조회하기 - user 타입
+	
+	//유저 정보 조회하기 - user type
 	@Override
-	public User getUserProfile(int user_id) {
-		return userRepository.getUserById(user_id);
+	public User getUserProfile(int userId) {
+		return userRepository.getUserById(userId);
 	}
 	
 	//배지 정보 가져오기
 	@Override
-	public Object getAllWithBadge(int user_id) {
-		return userbadgeRepository.getAllWithBadge(user_id);
+	public Object getAllWithBadge(int userId) {
+		return userbadgeRepository.getAllWithBadge(userId);
 	}
-
-	//프로필 편집 저장 - 유저
+	
+	//프로필 편집 조회하기
 	@Override
-	public void save(User updateUser) {
-		userRepository.save(updateUser);
+	public Map<String, Object> getProfile(int userId) {
+		Optional<User> userOpt = Optional.of(userRepository.getUserById(userId));
+		Map<String, Object> response = new HashMap<>();
+		if(userOpt.isPresent()) {
+			response.put("image", userOpt.get().getImage());
+			response.put("name", userOpt.get().getName());
+			response.put("identity", userOpt.get().getIdentity());
+			response.put("introduction", userOpt.get().getIntroduction());
+			response.put("badges", getAllWithBadge(userId));
+		}
+		return response;
 	}
 
-	//프로필 편집 저장 - 배지
+	//프로필 편집 반영하기
 	@Override
-	public void saveAll(List<UserBadge> badges) {
-		userbadgeRepository.saveAll(badges);
-	}
+	public boolean updateUser(int userId, Profile userRequest) throws IllegalStateException, IOException {
+		User updateUser = getUserProfile(userId);
+		boolean user_update = false;
+		boolean badge_update = false;
+		User user = userRequest.getUser();
+		List<UserBadge> badges = userRequest.getBadges();
+		MultipartFile image = userRequest.getImage();
 
+		//프로필 사진 변경
+		//null exception 나니까 프론트랑 어떻게 처리할지 상의하기
+		if(!image.isEmpty()) {
+			String fileName = image.getOriginalFilename();
+			Path path = Paths.get("../../../../../../../../heala_fe/src/assets/image/profile/" + image.getOriginalFilename());
+			image.transferTo(path);
+			updateUser.setImage(fileName);
+			user_update = true;
+		}
+		//프로필 사진 외 정보 변경
+		if(StringUtils.hasLength(user.getName())) {
+			updateUser.setName(user.getName());
+			user_update = true;
+		}
+		if(StringUtils.hasLength(user.getIdentity())) {
+			updateUser.setIdentity(user.getIdentity());
+			user_update = true;
+		}
+		if(StringUtils.hasLength(user.getIntroduction())) {
+			updateUser.setIntroduction(user.getIntroduction());
+			user_update = true;
+		}
+		//배지 변경
+		if(badges.size()!=0) badge_update = true;
+		
+		if(user_update || badge_update) {
+			if(user_update) userRepository.save(updateUser);
+			if(badge_update) userbadgeRepository.saveAll(badges);
+			return true;
+		}
+		return false;
+	}
+	
+	
+	//팔로우
 	@Override
 	public Follow saveFollow(Follow follow) { return followRepository.save(follow); }
 
+	//팔로우 관계 찾기
 	@Override
 	public Optional<Follow> findFirstByFollowIdAndUserId(int followId, int userId) { return followRepository.findFirstByFollowIdAndUserId(followId, userId); }
 
+	//언팔로우
 	@Override
 	public void delete(Follow follow) { followRepository.delete(follow); }
+
 }

@@ -18,7 +18,11 @@ public class KiwiChallenge {
 	private String name;
 	private String introduction;
 	private int category;
-	private Date start_date;
-	private Date end_date;
+	
+	@Column(name = "start_date")
+	private Date startDate;
+	
+	@Column(name = "end_date")
+	private Date endDate;
 	
 }

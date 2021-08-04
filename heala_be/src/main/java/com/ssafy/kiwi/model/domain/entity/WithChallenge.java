@@ -49,6 +49,9 @@ public class WithChallenge {
 	@Column(name = "certify_week")
 	private int certifyWeek;
 	
+	@Column(name = "kiwi_point")
+	private int kiwiPoint;
+	
 	
 	public WithChallenge(String image, String title, int category, Date start_date, Date end_date,
 			String certify_info, String introduction, int user_id) {

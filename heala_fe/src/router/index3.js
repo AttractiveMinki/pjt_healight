@@ -16,6 +16,7 @@ import KiwiHealth from "@/views/challenge/kiwi/KiwiHealth"
 import KiwiDiet from "@/views/challenge/kiwi/KiwiDiet"
 import KiwiHeart from "@/views/challenge/kiwi/KiwiHeart"
 import KiwiSpecial from "@/views/challenge/kiwi/KiwiSpecial"
+import MyMain from "@/views/challenge/my/MyMain"
 
 export default [
     {
@@ -107,5 +108,10 @@ export default [
         path: "/challenge/kiwispecial",
         name: "KiwiSpecial",
         component: KiwiSpecial,
+      },
+      {
+        path: "/challenge/my/mymain",
+        name: "MyMain",
+        component: MyMain,
       },
 ]
