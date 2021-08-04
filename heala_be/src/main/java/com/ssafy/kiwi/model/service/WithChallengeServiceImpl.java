@@ -198,6 +198,14 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 			map.put("startDate", nowChallenge.getStartDate());
 			map.put("endDate", nowChallenge.getEndDate());
 			map.put("hashtag", hashtagWord);
+			
+			//챌린지 달성률 : 매일 인증 가정
+			long days = (nowChallenge.getEndDate().getTime() - nowChallenge.getStartDate().getTime()) / (24*60*60*1000);
+			long totalCnt = days * nowChallenge.getCertifyDay();
+			int certifyCnt = certifyImageRepository.countByUserIdAndWithChallengeId(userId, challengeId);
+			double achievement = (double)certifyCnt / (double)totalCnt * 100;
+			map.put("achievement", Math.floor(achievement*10)/10.0);
+			
 			myChallengeList.add(map);
 		}
 		return myChallengeList;
