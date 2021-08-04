@@ -40,9 +40,10 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 	final private CertifyImageRepository certifyImageRepository;
 	final private UserRepository userRepository;
 
+	
 	//[함께 챌린지] 함께 챌린지 만들기
 	@Override
-	public Object makeWith(WithInput withInput) {
+	public boolean makeWith(WithInput withInput) {
 		
 		// with_challenge 테이블에 insert
 		WithChallenge withchallenge = (WithChallenge) withInput.getWithChallenge();
@@ -75,13 +76,13 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 														.challengeHashtagId(challengeHashtagId).build();
 			withChallengeHashtagRepository.save(withChallengeHashtag);
 		} 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return true;
 	}
 
 
 	//[함께 챌린지] 함께 챌린지 목록 가져오기
 	@Override
-	public ResponseEntity<List<Map<String,Object>>> getWithList(int category) {
+	public List<Map<String, Object>> getWithList(int category) {
 		// 반환할 Map<String, Object> 리스트 생성
 		// "withChallenge", "hashtags"
 		List<Map<String,Object>> response = new LinkedList<Map<String,Object>>();
@@ -110,13 +111,13 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 			
 			response.add(map);
 		}
-		
-		return new ResponseEntity<List<Map<String,Object>>>(response, HttpStatus.OK);
+		return response;
 	}
 
+	
 	//[함께 챌린지] Id에 해당하는 함께 챌린지 상세 정보 가져오기(소개, 인증)
 	@Override
-	public ResponseEntity<Map<String, Object>> getWithChallengeDetail(int withChallengeId, int userId) {
+	public Map<String, Object> getWithChallengeDetail(int withChallengeId, int userId) {
 		Map<String, Object> map = new HashMap<>();
 		
 		Optional<WithChallenge> withChallenge = withChallengeRepository.findWithChallengeById(withChallengeId);
@@ -149,9 +150,10 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		int kiwiPoint = diffDays * 100;
 		map.put("kiwiPoint", kiwiPoint);
 		
-		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		return map;
 	}
 
+	
 	//[함께 챌린지] 참가하기
 	@Override
 	public void joinWithChallenge(int withChallengeId, int userId) {
@@ -159,6 +161,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		myChallengeRepository.save(mychallenge);
 	}
 
+	
 	//[마이 챌린지] 함께 챌린지 id 리스트 가져오기
 	@Override
 	public List<MyChallenge> getByUserid(int userId) {
@@ -190,7 +193,6 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 				hashtagWord.add(word);				
 			}
 			//필요한 정보만 맵에 담아 리스트에 저장
-			//달성률은 마이 챌린지 인증하기 개발 후 추가 예정 
 			Map<String,Object> map = new HashMap<>();
 			map.put("title", nowChallenge.getTitle());
 			map.put("startDate", nowChallenge.getStartDate());
