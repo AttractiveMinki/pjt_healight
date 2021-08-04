@@ -18,6 +18,7 @@ import Scrap from "@/views/my_page/showmore/Scrap";
 import ChangePassword from "@/views/my_page/showmore/ChangePassword";
 import DietRecord from "@/views/my_page/record/DietRecord";
 import DietRecordMake from "@/views/my_page/record/DietRecordMake";
+import WeightCalender from "@/views/my_page/record/WeightCalender";
 
 export default [
   {
@@ -119,5 +120,10 @@ export default [
     path: "/profile/dietRecordmake",
     name: "DietRecordMake",
     component: DietRecordMake,
+  },
+  {
+    path: "/profile/weightcalender",
+    name: "WeightCalender",
+    component: WeightCalender,
   },
 ]
