@@ -14,6 +14,8 @@ import WithMainHeart from "@/views/challenge/with/WithMainHeart"
 import Profile from "@/views/my_page/Profile";
 import ProfileTodoList from "@/views/my_page/ProfileTodoList";
 import ProfilePhysInfo from "@/views/my_page/ProfilePhysInfo";
+import Scrap from "@/views/my_page/showmore/Scrap";
+import ChangePassword from "@/views/my_page/showmore/ChangePassword";
 
 export default [
   {
@@ -95,5 +97,15 @@ export default [
     path: "/profile/physinfo",
     name: "ProfilePhysInfo",
     component: ProfilePhysInfo,
+  },
+  {
+    path: "/profile/Scrap",
+    name: "Scrap",
+    component: Scrap,
+  },
+  {
+    path: "/profile/ChangePassword",
+    name: "ChangePassword",
+    component: ChangePassword,
   },
 ]
