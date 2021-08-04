@@ -12,10 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.kiwi.model.domain.entity.CertifyImage;
 import com.ssafy.kiwi.model.domain.entity.ChallengeHashtag;
 import com.ssafy.kiwi.model.domain.entity.MyChallenge;
 import com.ssafy.kiwi.model.domain.entity.WithChallenge;
 import com.ssafy.kiwi.model.domain.entity.WithChallengeHashtag;
+import com.ssafy.kiwi.model.domain.repository.CertifyImageRepository;
 import com.ssafy.kiwi.model.domain.repository.ChallengeHashtagRepository;
 import com.ssafy.kiwi.model.domain.repository.MyChallengeRepository;
 import com.ssafy.kiwi.model.domain.repository.WithChallengeHashtagRepository;
@@ -32,6 +34,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 	final private ChallengeHashtagRepository challengeHashtagRepository;
 	final private WithChallengeHashtagRepository withChallengeHashtagRepository;
 	final private MyChallengeRepository myChallengeRepository;
+	final private CertifyImageRepository certifyImageRepository;
 
 	//[함께 챌린지] 함께 챌린지 만들기
 	@Override
@@ -157,7 +160,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		return withChallengeRepository.getById(challengeId);
 	}
 
-	//마이 챌린지 - 챌린지 목록 조회하기
+	//[마이 챌린지] 챌린지 목록 조회하기
 	@Override
 	public Object getMyChallenge(int userId) {
 		//함께 챌린지 id 리스트 가져오기
@@ -185,6 +188,14 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 			myChallengeList.add(map);
 		}
 		return myChallengeList;
+	}
+
+
+	//[마이 챌린지] 인증하기
+	@Override
+	public boolean certifyMyChallenge(CertifyImage certifyImage) {
+		certifyImageRepository.save(certifyImage);
+		return true;
 	}
 	
 }

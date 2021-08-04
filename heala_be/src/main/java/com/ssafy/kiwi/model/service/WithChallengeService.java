@@ -3,6 +3,7 @@ package com.ssafy.kiwi.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.ssafy.kiwi.model.domain.entity.CertifyImage;
 import com.ssafy.kiwi.model.domain.entity.MyChallenge;
 import com.ssafy.kiwi.model.domain.entity.WithChallenge;
 import com.ssafy.kiwi.model.dto.WithInput;
@@ -26,4 +27,7 @@ public interface WithChallengeService {
 	
 	// Id에 해당하는 함께 챌린지 상세 정보 가져오기(소개, 인증) 
 	public ResponseEntity<Map<String,Object>> getWithChallengeDetail(int withChallengeId, int userId);
+
+	// 마이 챌린지 - 인증하기
+	public boolean certifyMyChallenge(CertifyImage certifyImage);
 }
