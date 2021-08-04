@@ -1,14 +1,11 @@
 package com.ssafy.kiwi.model.service;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.ssafy.kiwi.model.domain.entity.CertifyImage;
 import com.ssafy.kiwi.model.domain.entity.MyChallenge;
 import com.ssafy.kiwi.model.domain.entity.WithChallenge;
 import com.ssafy.kiwi.model.dto.WithInput;
-
-import org.springframework.http.ResponseEntity;
 
 
 public interface WithChallengeService {
