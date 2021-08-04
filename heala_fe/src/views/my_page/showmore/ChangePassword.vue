@@ -121,7 +121,7 @@ export default {
       this.isSubmit = isSubmit;
     },
     // passwordChange: function () {
-    //   axios.get(`${SERVER.URL}${SERVER.ROUTES.passwordChange}`)
+    //   axios.post(`${SERVER.URL}${SERVER.ROUTES.passwordChange}`, data)
     //     .then(() => {
     //       alert('패스워드가 정상적으로 변경되었습니다.')
     //       router.push({ name: "Profile" })

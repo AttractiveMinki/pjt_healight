@@ -16,6 +16,7 @@ import ProfileTodoList from "@/views/my_page/ProfileTodoList";
 import ProfilePhysInfo from "@/views/my_page/ProfilePhysInfo";
 import Scrap from "@/views/my_page/showmore/Scrap";
 import ChangePassword from "@/views/my_page/showmore/ChangePassword";
+import DietRecord from "@/views/my_page/record/DietRecord";
 
 export default [
   {
@@ -107,5 +108,10 @@ export default [
     path: "/profile/ChangePassword",
     name: "ChangePassword",
     component: ChangePassword,
+  },
+  {
+    path: "/profile/DietRecord",
+    name: "DietRecord",
+    component: DietRecord,
   },
 ]

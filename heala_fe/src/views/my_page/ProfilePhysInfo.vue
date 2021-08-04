@@ -47,7 +47,7 @@
         <input type="number" style="margin: 5vw" v-model="data.weight">kg
       </el-col>
     </el-row>
-    <div id="submit" @click="submit(data)" style="background-color: #ADEC6E; color: white; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">저장</div>
+    <div id="submit" @click="submit(data)" style="background-color: #ADEC6E; color: white; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">등록하기</div>
   </div>
 </template>
 
