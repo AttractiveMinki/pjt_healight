@@ -2,14 +2,14 @@
   <div>
     <div class="input-message-container">
       <slot name="image">
-        <user-image :image="image"></user-image>
+        <user-image :image="loginUser.image"></user-image>
       </slot>
       <div class="input-wrapper">
       <slot name="input">
         <input v-model="message" type="text" placeholder="댓글 달기..">
       </slot>
       </div>
-      <button :class="{ disabled:!message }" @click="$emit('write')">
+      <button :class="{ disabled:!message }" @click="$emit('write', this.message)">
         <slot name="button">작성</slot>
       </button>
     </div>
@@ -20,11 +20,15 @@
 import UserImage from "@/components/UserImage.vue";
 export default {
     name: "InputMessage",
-    props: [ 'image' ],
     data() {
         return {
             message: "",
         }
+    },
+    computed: {
+      loginUser() {
+        return this.$store.state.loginUser;
+      }
     },
     components: { UserImage },
 }

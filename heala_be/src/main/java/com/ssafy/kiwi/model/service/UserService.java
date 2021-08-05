@@ -6,6 +6,7 @@ import java.util.*;
 import com.ssafy.kiwi.model.domain.entity.Follow;
 import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.dto.Profile;
+import com.ssafy.kiwi.model.dto.UserSimpleInfo;
 
 public interface UserService {
 
@@ -34,7 +35,8 @@ public interface UserService {
 	Follow saveFollow(Follow follow);
 	Optional<Follow> findFirstByFollowIdAndUserId(int followId, int userId);
 	void delete(Follow follow);
-	
 
-
+	// 유저 간단 정보 가져오기
+    UserSimpleInfo getUserSimpleInfo(int userId);
+	List<UserSimpleInfo> getUserSimpleInfoAll(Set<Integer> userIdSet);
 }

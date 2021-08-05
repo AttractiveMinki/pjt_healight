@@ -3,6 +3,7 @@ import Vuex from "vuex";
 
 import SERVER from "@/api/drf.js"
 import router from "@/router/index.js"
+import util from "@/util.js"
 import axios from "axios"
 
 Vue.use(Vuex);
@@ -10,6 +11,103 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     // 한길 #@
+    loginUser: {
+      id: 1,
+      name: "나다",
+      image: "blue.jpg",
+    },
+    postDetail: {
+      id: 1,
+      title: "일이삼사오육칠팔구십일이삼사오육칠팔구십일이",
+      createdAt: "07/27 13:56",
+      image: "cat.jpg",
+      likes: 0,
+      anonymous: 0,
+      category: 1,
+      subCategory:2,
+      access:"",
+      content: "오늘 정말 너무 힘들고 지치는 하루였는데 우리 귀여운 치즈 덕에 힘난다 ㅠ ㅠ 우리네들 파이팅~!!",
+      userId: 2,
+    },
+    postUser: {
+      id: 2,
+      name: "안나짱",
+      image: "user.png",
+    },
+    postScrap: {
+      scrap: false,
+    },
+    postLike: {
+      like: true,
+    },
+    comments: [
+      {
+        id: 1,
+        text: "오늘도 치즈 귀여움에 힐링 받고 갑니다.. 치즈는 사랑..♥",
+        likes: 1,
+        createdAt: "00/00 11:11",
+        commentId: "",
+        userId: 2,
+        postId: 2,
+      },
+      {
+        id: 2,
+        text: "치즈는 사랑이지",
+        likes: 1,
+        createdAt: "11/11 22:22",
+        commentId: 1,
+        userId: 1,
+        postId: 2,
+      },
+      {
+        id: 3,
+        text: "test33333333333333333333",
+        likes: 0,
+        createdAt: "00/00 33:33",
+        commentId: "",
+        userId: 2,
+        postId: 2,
+      },
+      {
+        id: 4,
+        text: "test44444444444444444",
+        likes: 0,
+        createdAt: "11/11 44:44",
+        commentId: 1,
+        userId: 1,
+        postId: 2,
+      },
+    ],
+    commentUsers: [
+      {
+        id: 1,
+        name: "1번 유저",
+        image: "user.png",
+      },
+      {
+        id: 2,
+        name: "2번 유저",
+        image: "blue.jpg",
+      },
+    ],
+    commentLikes: [
+      {
+        commentId: 1,
+        like: true,
+      },
+      {
+        commentId: 2,
+        like: false,
+      },
+      {
+        commentId: 3,
+        like: true,
+      },
+      {
+        commentId: 4,
+        like: false,
+      },
+    ],
     isFollowingList: [
       {
         follow_id: 2,
@@ -25,7 +123,7 @@ export default new Vuex.Store({
 
     // 주엽 #@
     username: "",
-    userid: "",
+    userid: 2,
     currentPageId: 0,
     profileSelectedCategory: 1,
     // check_email: true,
@@ -44,20 +142,6 @@ export default new Vuex.Store({
       {title: '수영하기'},
     ],
     // feeds: [],
-    postDetail: {
-      id: 1,
-      title: "일이삼사오육칠팔구십일이삼사오육칠팔구십일이",
-      created_at: "13:56",
-      image: "cat.jpg",
-      likes: 0,
-      scrap: 0,
-      anonymouse: 0,
-      category:"운동",
-      sub_category:"질문",
-      access:"",
-      content: "오늘 정말 너무 힘들고 지치는 하루였는데 우리 귀여운 치즈 덕에 힘난다 ㅠ ㅠ 우리네들 파이팅~!!",
-      user_id: 2,
-    },
     feeds: [
       {
         id: 1,
@@ -100,26 +184,6 @@ export default new Vuex.Store({
         created_at:"2021.07.16 16:45",
         updated_at:"2021.07.16 16:45",
         user_id: 329,
-      },
-    ],
-    comments: [
-      {
-        id: 1,
-        text: "오늘도 치즈 귀여움에 힐링 받고 갑니다.. 치즈는 사랑..♥",
-        likes: 1,
-        created_at: "07/17 22:45",
-        comment_id: "",
-        user_id: 2,
-        post_id: 1,
-      },
-      {
-        id: 2,
-        text: "치즈는 사랑이지",
-        likes: 1,
-        created_at: "07/17 22:50",
-        comment_id: "1",
-        user_id: 1,
-        post_id: 1,
       },
     ],
     with_challenges: [
@@ -192,6 +256,15 @@ export default new Vuex.Store({
     setIsFollowing: (state, payload) => {
       state.isFollowingList[payload.index].isFollowing = payload.isFollowing;
     },
+    setCommentUsers: (state, payload) => {
+      state.commentUsers = payload.commentUsers;
+    },
+    setPostScrap: (state, payload) => {
+      state.postScrap = payload.postScrap;
+    },
+    setPostLike: (state, payload) => {
+      state.postLike = payload.postLike;
+    },
 
     // 원석 #@
 
@@ -233,29 +306,71 @@ export default new Vuex.Store({
   },
   actions: {
     // 한길 #@
-    setPostDetail(store, { id }) {
+    setPostDetail(store, { postId }) {
       axios
-        .get(SERVER.URL + SERVER.ROUTES.getPost + id)
+        .get(SERVER.URL + SERVER.ROUTES.post + postId)
         .then((response) =>
-          store.commit('setPostDetail', { post: response.data })
+          store.commit("setPostDetail", { post: response.data })
+        )
+        .catch((exp) => {
+          console.log(`게시글 조회에 실패했습니다: ${exp}`);
+          // console.log(util.convertToTree(store.state.comments, "id", "commentId", "childrenComment"))
+        });
+    },
+    setPostComments(store, { postId }){
+      axios
+        .get(SERVER.URL + SERVER.ROUTES.post + postId + SERVER.ROUTES.comment)
+        .then((response) => {
+          let commentTree = util.convertToTree(response.data, "id", "commentId", "childrenComment");
+          store.commit("setPostComments", { comments: commentTree });
+          let commentUserIds = new Set();
+          store.state.comments.forEach(comment => {
+            commentUserIds.add(comment.userId);
+          });
+          store.dispatch("setCommentUsers", { commentUserIds });
+        })
+        .catch((exp) => {
+          console.log(`댓글 조회에 실패했습니다: ${exp}`);
+          let commentTree = util.convertToTree(store.state.comments, "id", "commentId", "childrenComment");
+          store.commit("setPostComments", { comments: commentTree });
+        });
+    },
+    setPostScrap(store, { postId }){
+      axios
+        .get(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.scrap + `?postId=${postId}&userId=${store.state.loginUser.id}`)
+        .then((response) =>
+          store.commit("setPostScrap", { scrap: response.data })
         )
         .catch((exp) =>
-          console.log(`게시글 조회에 실패했습니다: ${exp}`)
-        );
-
+        console.log(`게시글 스크랩 여부 조회에 실패했습니다: ${exp}`)
+      );
+    },
+    setPostLike(store, { postId }){
       axios
-        .get(SERVER.URL + SERVER.ROUTES.getPost + id + SERVER.ROUTES.getComment)
+        .get(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.like + `?postId=${postId}&userId=${store.state.loginUser.id}`)
         .then((response) =>
-          store.commit('setPostComments', { comments: response.data })
+          store.commit("setPostLike", { like: response.data })
         )
         .catch((exp) =>
-          console.log(`댓글 조회에 실패했습니다: ${exp}`)
-        );
+        console.log(`게시글 좋아요 여부 조회에 실패했습니다: ${exp}`)
+      );
+    },
+    setCommentUsers(store, { commentUserIds }) {
+      axios
+      .post(SERVER.URL + SERVER.ROUTES.commentUsers, {
+        commentUserIds,
+      })
+      .then((response) =>
+        store.commit("setCommentUsers", { commentUsers: response.data })
+      )
+      .catch((exp) =>
+        console.log(`댓글 작성자 조회에 실패했습니다: ${exp}`)
+      );
     },
     follow(store, { follow_id }){
       axios
         .post(SERVER.URL + SERVER.ROUTES.follow, {
-          user_id: store.state.userid,
+          user_id: store.state.loginUser.id,
           follow_id,
         })
         .then(() => {
@@ -270,7 +385,7 @@ export default new Vuex.Store({
     cancelFollow(store, { follow_id }){
       axios
         .delete(SERVER.URL + SERVER.ROUTES.follow, {
-          user_id: store.state.userid,
+          user_id: store.state.loginUser.id,
           follow_id,
         })
         .then(() => {
@@ -280,6 +395,87 @@ export default new Vuex.Store({
         })
         .catch((exp) => {
           console.log(`팔로우 취소에 실패했습니다: ${exp}`)
+        });
+    },
+    likePost(store, { postId }){
+      axios
+        .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.like, {
+          user_id: store.state.loginUser.id,
+          post_id: postId,
+        })
+        .catch((exp) => {
+          console.log(`게시글 좋아요에 실패했습니다: ${exp}`)
+        });
+    },
+    cancelLikePost(store, { postId }){
+      axios
+        .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.like, {
+          user_id: store.state.loginUser.id,
+          post_id: postId,
+        })
+        .catch((exp) => {
+          console.log(`게시글 좋아요 취소에 실패했습니다: ${exp}`)
+        });
+    },
+    scrapPost(store, { postId }){
+      axios
+        .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.scrap, {
+          user_id: store.state.loginUser.id,
+          post_id: postId,
+        })
+        .catch((exp) => {
+          console.log(`게시글 스크랩에 실패했습니다: ${exp}`)
+        });
+    },
+    cancelScrapPost(store, { postId }){
+      axios
+        .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.scrap, {
+          user_id: store.state.loginUser.id,
+          post_id: postId,
+        })
+        .catch((exp) => {
+          console.log(`게시글 스크랩 취소에 실패했습니다: ${exp}`)
+        });
+    },
+    createComment(store, payload) {
+      axios
+        .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment, {
+          text: payload.message,
+          user_id: store.state.loginUser.id,
+          post_id: payload.postId,
+        })
+        .catch((exp) => {
+          console.log(`댓글 작성에 실패했습니다: ${exp}`)
+        });
+    },
+    deleteComment(store, payload) {
+      axios
+        .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment + payload.commetId)
+        .then((response) =>
+          store.commit("setPostComments", { comments: response.data })
+        )
+        .catch((exp) =>
+          console.log(`댓글 삭제에 실패했습니다: ${exp}`)
+        );
+    },
+    likeComment(store, payload) {
+      axios
+        .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment + SERVER.ROUTES.like, {
+          user_id: store.state.loginUser.id,
+          comment_id: payload.commentId,
+        })
+        .catch((exp) => {
+          console.log(`댓글 좋아요에 실패했습니다: ${exp}`)
+        });
+    },
+    cancelLikeComment(store, payload) {
+      axios
+        .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment + SERVER.ROUTES.like, {
+          user_id: store.state.loginUser.id,
+          comment_id: payload.commentId,
+        })
+        .catch((exp) => {
+          console.log(`댓글 좋아요 취소에 실패했습니다: ${exp}`)
         });
     },
 

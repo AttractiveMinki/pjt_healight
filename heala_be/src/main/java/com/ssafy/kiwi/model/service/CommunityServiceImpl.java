@@ -2,6 +2,10 @@ package com.ssafy.kiwi.model.service;
 
 import java.util.*;
 
+import com.ssafy.kiwi.model.domain.entity.Comment;
+import com.ssafy.kiwi.model.domain.entity.LikeUser;
+import com.ssafy.kiwi.model.domain.repository.CommentRepository;
+import com.ssafy.kiwi.model.domain.repository.LikeUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +17,12 @@ public class CommunityServiceImpl implements CommunityService {
 	
 	@Autowired
 	private CommunityRepository communityRepository;
+
+	@Autowired
+	private CommentRepository commentRepository;
+
+	@Autowired
+	private LikeUserRepository likeUserRepository;
 
 	// 커뮤니티 전체 글 목록 가져오기
 	@Override
@@ -47,4 +57,41 @@ public class CommunityServiceImpl implements CommunityService {
 		return communityRepository.findById(postId);
 	}
 
+	// 댓글 목록 가져오기
+	@Override
+	public Object getPostComments(int postId) {
+		return commentRepository.findAllByPostId(postId);
+	}
+
+	// 댓글 작성
+	@Override
+	public void makeComment(Comment comment) {
+		commentRepository.save(comment);
+	}
+
+	// 댓글 삭제
+	@Override
+	public void deleteComment(int commentId) {
+		// 실패 시 에러 발생함
+		commentRepository.deleteById(commentId);
+		commentRepository.deleteAllByCommentId(commentId);
+	}
+
+	// 댓글 좋아요
+	@Override
+	public boolean likeComment(LikeUser likeUser) {
+		likeUserRepository.save(likeUser);
+		return true;
+	}
+
+	// 댓글 좋아요 취소
+	@Override
+	public boolean cancelLikeComment(LikeUser likeUser) {
+		Optional<LikeUser> oldLikeUser = likeUserRepository.findByUserIdAndCommentId(likeUser.getUserId(), likeUser.getCommentId());
+		if(oldLikeUser.isPresent()){
+			likeUserRepository.deleteById(oldLikeUser.get().getId());
+			return true;
+		}
+		return false;
+	}
 }

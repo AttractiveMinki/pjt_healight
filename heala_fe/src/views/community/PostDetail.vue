@@ -6,7 +6,7 @@
             {{ post.title }}
         </div>
         <div class="post-time">
-            {{ post.created_at }}
+            {{ post.createdAt }}
         </div>
         <div class="post-image-wrapper">
             <img :src="require(`@/assets/image/${post.image}`)" alt="" class="post-image">
@@ -19,10 +19,10 @@
         </div>
         <el-row>
             <div class="post-user">
-                <user-image :image="postUserImage"></user-image>
+                <user-image :image="postUser.image"></user-image>
             </div>
             <div class="post-content">
-                <span class="post-user-name">{{ postUserName }}</span>
+                <span class="post-user-name">{{ postUser.name }}</span>
                 {{ post.content }}
             </div>
         </el-row>
@@ -36,7 +36,7 @@
         <div class="rest"></div>
     </div>
     <el-row>
-        <input-message :image="image"></input-message>
+        <input-message @write="createComment"></input-message>
     </el-row>
   </div>
 </template>
@@ -52,15 +52,8 @@ export default {
     name: "PostDetail",
     data() {
         return {
-            postTitle: "일이삼사오육칠팔구십일이삼사오육칠팔구십일이",
-            created_at: "13:56",
-            imgURL: "cat.jpg",
-            likeUI: 0,
-            scrapUI: 0,
-            image: "blue.jpg",
-            postUserImage: "user.png",
-            postUserName: "안나짱",
-            postContent: "test 너무 힘들고 지치는 하루였는데 우리 귀여운 치즈 덕에 힘난다 ㅠ ㅠ 우리네들 파이팅~!!",
+            likeUI: this.$store.state.postLike.like,
+            scrapUI: this.$store.state.postScrap.scrap,
         }
     },
     computed: {
@@ -68,30 +61,39 @@ export default {
             return this.$store.state.postDetail;
         },
         comments() {
-            console.log(this.$store.state.comments);
             return this.$store.state.comments;
-        }
+        },
+        postUser() {
+            return this.$store.state.postUser;
+        },
     },
     created() {
-        this.$store.dispatch("setPostDetail", { id: this.$route.params.id });
+        let postId = this.$route.params.id;
+        this.$store.dispatch("setPostDetail", { postId });
+        this.$store.dispatch("setPostComments", { postId });
+        this.$store.dispatch("setPostScrap", { postId });
+        this.$store.dispatch("setPostLike", { postId });
     },
     methods: {
         cancelStar() {
             this.likeUI = 0;
-            // vuex 에게 통신 ㄱㄱ
+            this.$store.dispatch("cancelLikePost", { postId: this.post.id });
         },
         star() {
             this.likeUI = 1;
-            // vuex 에게 통신 ㄱㄱ
+            this.$store.dispatch("likePost", { postId: this.post.id });
         },
         cancelScrap() {
             this.scrapUI = 0;
-            // vuex 에게 통신 ㄱㄱ
+            this.$store.dispatch("cancelScrapPost", { postId: this.post.id });
         },
         scrap() {
             this.scrapUI = 1;
-            // vuex 에게 통신 ㄱㄱ
-        }
+            this.$store.dispatch("scrapPost", { postId: this.post.id });
+        },
+        createComment(message) {
+            this.$store.dispatch("createComment", { message });
+        },
     },
     components: { InputMessage, PostHeader, Star, UserImage, Comment },
 }
@@ -147,6 +149,9 @@ export default {
     margin: 0px 0px 0px 5px;
     float: left;
 }
+.icon:hover {
+    cursor: pointer;
+}
 .icon-bookmark {
     float: right;
 }
@@ -165,7 +170,7 @@ export default {
 }
 .comment-container {
     font-size: 13px;
-    margin: 10px 0px 0px 0px;
+    margin: 15px 0px 0px 0px;
 }
 .rest {
     height: 60px;

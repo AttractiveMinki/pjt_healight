@@ -17,7 +17,9 @@ import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.entity.UserBadge;
 import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
+
 import com.ssafy.kiwi.model.dto.Profile;
+import com.ssafy.kiwi.model.dto.UserSimpleInfo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -141,7 +143,6 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 	
-	
 	//팔로우
 	@Override
 	public Follow saveFollow(Follow follow) { return followRepository.save(follow); }
@@ -154,4 +155,15 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void delete(Follow follow) { followRepository.delete(follow); }
 
+	// 유저 간단 정보(아이디, 이름, 프로필사진) 불러오기
+	@Override
+	public UserSimpleInfo getUserSimpleInfo(int userId) {
+		return userRepository.getUserSimpleInfoById(userId);
+	}
+
+	// 유저 간단 정보 여러 명 불러오기
+	@Override
+	public List<UserSimpleInfo> getUserSimpleInfoAll(Set<Integer> userIdSet) {
+		return userRepository.getUserSimpleInfoByIds(userIdSet);
+	}
 }

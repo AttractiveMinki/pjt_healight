@@ -2,6 +2,8 @@ package com.ssafy.kiwi.controller;
 
 import java.util.*;
 
+import com.ssafy.kiwi.model.dto.UserIds;
+import com.ssafy.kiwi.model.dto.UserSimpleInfo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -109,7 +111,23 @@ public class UserController {
 		}
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
-	
+
+	@ApiOperation(value = "유저 한 명 간단 정보 불러오기")
+	@GetMapping("/simple/{userId}")
+	public Object getUserSimpleInfoOne(@PathVariable int userId){
+		UserSimpleInfo userSimpleInfo = userService.getUserSimpleInfo(userId);
+		if(userSimpleInfo != null){
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
+	@ApiOperation(value = "유저 여러 명 간단 정보 불러오기")
+	@PostMapping("/comment/users")
+	public Object getUserSimpleInfoAll(@RequestBody UserIds userIds){
+		List<UserSimpleInfo> userSimpleInfoList = userService.getUserSimpleInfoAll(userIds.getUserIdSet());
+		return new ResponseEntity<>(userSimpleInfoList, HttpStatus.OK);
+	}
 }
 
 
