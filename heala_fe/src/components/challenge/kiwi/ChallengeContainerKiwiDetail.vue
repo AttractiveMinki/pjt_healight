@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div v-if="category == 1">
+    <div v-if="category == 0">
       <h1>운동 챌린지</h1>
     </div>
-    <div v-else-if="category == 2">
+    <div v-else-if="category == 1">
       <h1>식단 챌린지</h1>
     </div>
-    <div v-else-if="category == 3">
+    <div v-else-if="category == 2">
       <h1>마음 챌린지</h1>
     </div>
-    <div v-else-if="category == 4">
+    <div v-else-if="category == 3">
       <h1>기간 한정 챌린지</h1>
     </div>
     <div class="display-flex justify-content-space-between align-items">

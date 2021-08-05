@@ -1,7 +1,7 @@
 <template>
   <div>
     <ChallengeContainerKiwiDetail 
-      category=2
+      category=1
     />
     <!-- v-bind :category="category" -->
     <el-row>
