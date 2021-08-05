@@ -2,9 +2,11 @@ package com.ssafy.kiwi.model.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import com.ssafy.kiwi.model.domain.entity.Follow;
 import com.ssafy.kiwi.model.domain.repository.FollowRepository;
+import com.ssafy.kiwi.model.dto.UserSimpleInfo;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.kiwi.model.domain.entity.User;
@@ -86,4 +88,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void delete(Follow follow) { followRepository.delete(follow); }
+
+	// 유저 간단 정보(아이디, 이름, 프로필사진) 불러오기
+	@Override
+	public UserSimpleInfo getUserSimpleInfo(int userId) {
+		return userRepository.getUserSimpleInfoById(userId);
+	}
+
+	// 유저 간단 정보 여러 명 불러오기
+	@Override
+	public List<UserSimpleInfo> getUserSimpleInfoAll(Set<Integer> userIdSet) {
+		return userRepository.getUserSimpleInfoByIds(userIdSet);
+	}
 }

@@ -1,10 +1,10 @@
 package com.ssafy.kiwi.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.ssafy.kiwi.model.domain.entity.Comment;
+import com.ssafy.kiwi.model.domain.entity.LikeUser;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.ssafy.kiwi.model.service.CommunityService;
 
@@ -31,5 +31,45 @@ public class CommunityController {
 	public Object getPostList(@RequestParam(value="category") int category, @RequestParam(value="sub_category") int subCategory) {
 		return communityService.getPostList(category, subCategory);
 	}
-	
+
+	@ApiOperation(value = "커뮤니티 게시글 상세")
+	@GetMapping("/post/{postId}")
+	public Object getPost(@PathVariable int postId){
+		return communityService.getPost(postId);
+	}
+
+	@ApiOperation(value = "댓글 목록 가져오기")
+	@GetMapping("/post/{postId}/comment")
+	public Object getPostComments(@PathVariable int postId){
+		return new ResponseEntity<>(communityService.getPostComments(postId), HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "댓글 작성")
+	@PostMapping("/post/comment")
+	public Object makeComment(@RequestBody Comment comment){
+		communityService.makeComment(comment);
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+
+	@ApiOperation(value = "댓글 삭제")
+	@PostMapping("/post/comment/{commentId}")
+	public Object deleteComment(@PathVariable int commentId){
+		communityService.deleteComment(commentId);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "댓글 좋아요")
+	@PostMapping("/post/comment/like")
+	public Object likeComment(@RequestBody LikeUser likeUser){
+		return communityService.likeComment(likeUser);
+	}
+
+	@ApiOperation(value = "댓글 좋아요")
+	@DeleteMapping("/post/comment/like")
+	public Object cancelLkeComment(@RequestBody LikeUser likeUser){
+		if(communityService.cancelLikeComment(likeUser)){
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
 }

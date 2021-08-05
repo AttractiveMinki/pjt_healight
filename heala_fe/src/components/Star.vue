@@ -17,4 +17,7 @@ export default {
     color: #94EC3C;
     float: left;
 }
+.icon:hover {
+  cursor: pointer;
+}
 </style>

@@ -2,14 +2,10 @@ package com.ssafy.kiwi.model.domain.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 
 @AllArgsConstructor
@@ -37,9 +33,9 @@ public class Post {
 	private int likes;
 	private boolean anonymous;
 	
-	@Column(name = "timestamp", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") 
-	public Timestamp created_at;
+	@Column(name = "created_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	public Timestamp createdAt;
 
-	public Timestamp updated_at;
-	public int user_id;
+	public Timestamp updatedAt;
+	public int userId;
 }

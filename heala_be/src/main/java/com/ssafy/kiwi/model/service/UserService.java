@@ -2,10 +2,13 @@ package com.ssafy.kiwi.model.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import com.ssafy.kiwi.model.domain.entity.Follow;
 import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.entity.UserBadge;
+import com.ssafy.kiwi.model.dto.UserIds;
+import com.ssafy.kiwi.model.dto.UserSimpleInfo;
 
 public interface UserService {
 
@@ -32,4 +35,8 @@ public interface UserService {
 	Optional<Follow> findFirstByFollowIdAndUserId(int followId, int userId);
 
 	void delete(Follow follow);
+
+    UserSimpleInfo getUserSimpleInfo(int userId);
+
+	List<UserSimpleInfo> getUserSimpleInfoAll(Set<Integer> userIdSet);
 }
