@@ -119,7 +119,7 @@ public class CommunityController {
 	}
 
 	@ApiOperation(value = "댓글 삭제")
-	@PostMapping("/post/comment/{commentId}")
+	@DeleteMapping("/post/comment/{commentId}")
 	public Object deleteComment(@PathVariable int commentId){
 		communityService.deleteComment(commentId);
 		return new ResponseEntity<>(HttpStatus.OK);

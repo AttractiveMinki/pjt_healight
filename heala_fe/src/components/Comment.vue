@@ -73,6 +73,7 @@ export default {
             this.$emit('reply', this.id);
         },
         deleteComment() {
+            this.showDeleteModal = false;
             this.$store.dispatch("deleteComment", { commentId: this.id, postId: this.postId });
         },
     },
