@@ -1,6 +1,7 @@
 package com.ssafy.kiwi.model.domain.entity;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.*;
 import lombok.*;
@@ -18,7 +19,6 @@ public class KiwiChallenge {
 	
 	private String name;
 	private String introduction;
-	private int category;
 	
 	@Column(name = "start_date")
 	private Date startDate;

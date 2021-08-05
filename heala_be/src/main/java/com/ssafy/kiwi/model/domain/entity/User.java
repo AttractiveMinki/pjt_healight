@@ -8,10 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.DynamicInsert;
 
-import java.sql.Date;
+import java.util.Date;
 
 // 회원정보를 표현
 
@@ -34,8 +36,6 @@ public class User {
 	private String identity;
 	private String name;
 	private String password;
-	
-	@Column
 	private String image;
 	
 	private int exp;

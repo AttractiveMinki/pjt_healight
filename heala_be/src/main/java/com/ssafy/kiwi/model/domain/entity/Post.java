@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 @AllArgsConstructor
@@ -32,11 +32,13 @@ public class Post {
 	private int likes;
 	private boolean anonymous;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") 
-	public Timestamp createdAt;
+	public Date createdAt;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") 
-	public Timestamp updatedAt;
+	public Date updatedAt;
 	
 	@Column(name = "user_id")
 	public int userId;

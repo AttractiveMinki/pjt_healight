@@ -1,6 +1,6 @@
 package com.ssafy.kiwi.model.domain.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.*;
 import lombok.*;
@@ -16,7 +16,7 @@ public class KiwiUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-		
+	
 	@Column(name="complete_date")
 	private Date completeDate;
 
