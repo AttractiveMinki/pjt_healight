@@ -206,25 +206,32 @@ export default {
   components: {
     ChallengeContainerKiwiDetail,
   },
+
   methods: {
     // 서버와 연결 아직 안 됨.. user_id가 아직 없는 문제 + CORS 에러 발생하는 듯.
     getKiwiHeartChallenge: function () {
-      console.log('monted 실행')
-      // console.log(this.$store.state.user_id)
-      // axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiChallenge}${this.$store.state.user_id}`)
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHeartChallenge}1`)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHeartChallenge}`)
         .then((res) => {
-          this.datas = res
-          alert('성공')
+          this.datas = res.data
         })
         .catch((err) => {
           console.error(err.response.data)
-          alert('실패')
+        })
+    },
+    getKiwiHeartChallengeUser: function () {
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHeartChallengeUser}` + this.$store.state.userid)
+        .then((res) => {
+          console.log(res)
+          this.users = res.data
+        })
+        .catch((err) => {
+          console.error(err)
         })
     },
   },
   mounted: function () {
-    this.getKiwiHeartChallenge()
+    // this.getKiwiHeartChallenge(),
+    this.getKiwiHeartChallengeUser()
   },
 
 }
