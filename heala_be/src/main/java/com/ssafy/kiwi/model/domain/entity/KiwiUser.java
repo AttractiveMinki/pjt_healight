@@ -1,6 +1,6 @@
 package com.ssafy.kiwi.model.domain.entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.*;
 import lombok.*;
