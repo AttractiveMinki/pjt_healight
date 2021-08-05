@@ -208,18 +208,8 @@ export default {
   },
 
   methods: {
-    // 서버와 연결 아직 안 됨.. user_id가 아직 없는 문제 + CORS 에러 발생하는 듯.
     getKiwiHeartChallenge: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHeartChallenge}`)
-        .then((res) => {
-          this.datas = res.data
-        })
-        .catch((err) => {
-          console.error(err.response.data)
-        })
-    },
-    getKiwiHeartChallengeUser: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHeartChallengeUser}` + this.$store.state.userid)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHeartChallenge}` + this.$store.state.userid)
         .then((res) => {
           console.log(res)
           this.users = res.data
@@ -230,8 +220,7 @@ export default {
     },
   },
   mounted: function () {
-    // this.getKiwiHeartChallenge(),
-    this.getKiwiHeartChallengeUser()
+    this.getKiwiHeartChallenge()
   },
 
 }

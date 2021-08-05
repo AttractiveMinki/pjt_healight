@@ -210,18 +210,8 @@ export default {
     ChallengeContainerKiwiDetail,
   },
   methods: {
-    // 서버와 연결 아직 안 됨.. user_id가 아직 없는 문제 + CORS 에러 발생하는 듯.
     getKiwiHealthChallenge: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}`)
-        .then((res) => {
-          this.datas = res.data
-        })
-        .catch((err) => {
-          console.error(err.response.data)
-        })
-    },
-    getKiwiHealthChallengeUser: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallengeUser}` + this.$store.state.userid)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}` + this.$store.state.userid)
         .then((res) => {
           console.log(res)
           this.users = res.data
@@ -232,8 +222,7 @@ export default {
     },
   },
   mounted: function () {
-    // this.getKiwiHealthChallenge(),
-    this.getKiwiHealthChallengeUser()
+    this.getKiwiHealthChallenge()
   },
 
 }
