@@ -17,6 +17,7 @@ import java.sql.Date;
 //@Entity(name = "WithChallenge")
 @Builder
 @Getter
+@Setter
 @ToString
 @Table(name = "with_challenge")
 public class WithChallenge {

@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Builder
 @Getter
 @ToString
+@Table(name = "like_users")
 public class LikeUser {
 
     @Id

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.kiwi.model.domain.entity.CertifyImage;
-import com.ssafy.kiwi.model.dto.WithInput;
+import com.ssafy.kiwi.model.dto.WithChallengeIp;
 import com.ssafy.kiwi.model.service.KiwiChallengeService;
 import com.ssafy.kiwi.model.service.WithChallengeService;
 
@@ -34,7 +34,7 @@ public class ChallengeController {
 	
 	@ApiOperation(value = "함께 챌린지 만들기")
 	@PostMapping("/with")
-	public Object makeWith(@RequestBody WithInput withInput) {
+	public Object makeWith(@RequestBody WithChallengeIp withInput) {
 		if(withChallengeService.makeWith(withInput)) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
