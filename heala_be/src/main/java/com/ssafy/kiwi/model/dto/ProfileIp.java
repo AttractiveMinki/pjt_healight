@@ -10,7 +10,7 @@ import lombok.*;
 
 @Getter
 @Setter
-public class Profile {
+public class ProfileIp {
 	private User user;
 	private List<UserBadge> badges;
 	private MultipartFile image;

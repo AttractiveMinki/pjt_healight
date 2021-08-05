@@ -5,6 +5,6 @@ import lombok.Getter;
 import java.util.Set;
 
 @Getter
-public class UserIds {
+public class UserIdSetIp {
     private Set<Integer> userIdSet;
 }

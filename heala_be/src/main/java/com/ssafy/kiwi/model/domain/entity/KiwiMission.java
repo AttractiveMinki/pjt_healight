@@ -13,7 +13,9 @@ import lombok.*;
 @Getter
 @Table(name="mission")
 public class KiwiMission {
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	private String content;

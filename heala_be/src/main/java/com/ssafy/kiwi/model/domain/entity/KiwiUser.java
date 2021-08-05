@@ -14,6 +14,7 @@ import lombok.*;
 public class KiwiUser {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 		
 	@Column(name="complete_date")
