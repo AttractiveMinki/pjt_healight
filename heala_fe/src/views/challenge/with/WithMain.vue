@@ -76,9 +76,8 @@ export default {
   },
   methods: {
     SetCurrentPageId: function (getId) {
-      console.log('클릭 감지1')
       this.$store.state.currentPageId = getId
-      console.log('클릭 감지2')
+      this.$store.state.currentPageCategory = 0
     },
     getWithHealthChallenge: function () {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithHealthChallenge}`)
