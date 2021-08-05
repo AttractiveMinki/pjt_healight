@@ -39,6 +39,12 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		
 		// with_challenge 테이블에 insert
 		WithChallenge withchallenge = (WithChallenge) withInput.getWithChallenge();
+		
+			// 키위 점수 계산하기(1일: 100 point)
+		int diffDays = (int)(withchallenge.getEndDate().getTime() - withchallenge.getStartDate().getTime())/(24*60*60*1000);
+		int kiwiPoint = diffDays * 100;
+		withchallenge.setKiwiPoint(kiwiPoint);
+		
 		int withChallengeId = withChallengeRepository.save(withchallenge).getId();
 		
 		// my_challenge 테이블에 insert
@@ -136,11 +142,6 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		// 챌린지 참가자 수 가져오기
 		int participantsNum = myChallengeRepository.countByWithChallengeId(withChallengeId);
 		map.put("participantsNum", participantsNum);
-		
-		// 키위 점수 계산하기(1일: 100 point)
-		int diffDays = (int)(withChallenge.get().getEndDate().getTime() - withChallenge.get().getStartDate().getTime())/(24*60*60*1000);
-		int kiwiPoint = diffDays * 100;
-		map.put("kiwiPoint", kiwiPoint);
 		
 		return map;
 	}
