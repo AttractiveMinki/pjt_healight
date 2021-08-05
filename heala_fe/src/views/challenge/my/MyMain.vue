@@ -63,12 +63,14 @@
         </el-col>
       </el-col>
     </el-row>
+    <Footer />
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/challenge/Navbar"
 import ChallengeContainerMy from "@/components/challenge/my/ChallengeContainerMy"
+import Footer from "@/components/home/Footer"
 import { mapState } from "vuex"
 import axios from 'axios';
 
@@ -77,6 +79,7 @@ export default {
   components: {
     Navbar,
     ChallengeContainerMy,
+    Footer,
   },
   methods: {
     SetCurrentPageId: function (getId) {

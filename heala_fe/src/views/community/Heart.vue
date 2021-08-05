@@ -61,14 +61,19 @@
         </el-col>
       </el-col>
     </el-row> 
+    <Footer />
   </div>
 </template>
 
 <script>
+import Footer from "@/components/home/Footer"
 import { mapState } from "vuex"
 
 export default {
   name: 'heart',
+  components: {
+    Footer,
+  },
   computed: {
     ...mapState([
       "feeds",

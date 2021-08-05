@@ -62,12 +62,14 @@
       </el-col>
     </el-row>
     <Category />
+    <Footer />
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/my_page/Navbar"
 import Category from "@/components/my_page/profile/Category"
+import Footer from "@/components/home/Footer"
 import { mapState } from "vuex"
 
 export default {
@@ -83,6 +85,7 @@ export default {
   components: {
     Navbar,
     Category,
+    Footer,
   },
   computed: {
     ...mapState([

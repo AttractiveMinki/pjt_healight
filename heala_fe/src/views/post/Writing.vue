@@ -1,30 +1,35 @@
 <template>
   <div>
     <!-- 이미지 -->
-    <div style="display: flex; justify-content: start; align-items: center; padding-left: 10px;">
-      <label class="input-file-button" for="input-file">+</label>
-      <input type="file" id="input-file" style="display: none;" @change="selectFile"/>
-      <img class="image" src="../../assets/img/writing_upload.png" alt="" @click="dialogVisible.first = true">
-      <el-dialog :visible.sync="dialogVisible.first" width="95%">
-        <img :src="imgUrl.first" alt="" width="99%">
-      </el-dialog>
-      <img class="image" src="../../assets/img/writing_upload.png" alt="" @click="dialogVisible.second = true">
-      <el-dialog :visible.sync="dialogVisible.second" width="95%">
-        <img :src="imgUrl.second" alt="" width="99%">
-      </el-dialog>
-      <img class="image" src="../../assets/img/writing_upload.png" alt="" @click="dialogVisible.third = true">
-      <el-dialog :visible.sync="dialogVisible.third" width="95%">
-        <img :src="imgUrl.third" alt="" width="99%">
-      </el-dialog>
-      <img class="image" src="../../assets/img/writing_upload.png" alt="" @click="dialogVisible.fourth = true">
-      <el-dialog :visible.sync="dialogVisible.fourth" width="95%">
-        <img :src="imgUrl.fourth" alt="" width="99%">
-      </el-dialog>
-      <img class="image" src="../../assets/img/writing_upload.png" alt="" @click="dialogVisible.fifth = true">
-      <el-dialog :visible.sync="dialogVisible.fifth" width="95%">
-        <img :src="imgUrl.fifth" alt="" width="99%">
-      </el-dialog>
-    </div>
+    <el-row style="display: flex; align-items: center">
+      <el-col :span="2">
+        <font-awesome-icon icon="arrow-left" class="padding-left cursor-pointer" @click="goBack()"/>
+      </el-col>
+      <el-col :span="22" style="display: flex; justify-content: start; align-items: center; padding-left: 10px;">
+        <label class="input-file-button" for="input-file">+</label>
+        <input type="file" id="input-file" style="display: none;" @change="selectFile"/>
+        <img class="image" src="../../assets/img/writing_upload.png" alt="" @click="dialogVisible.first = true">
+        <el-dialog :visible.sync="dialogVisible.first" width="95%">
+          <img :src="imgUrl.first" alt="" width="99%">
+        </el-dialog>
+        <img class="image" src="../../assets/img/writing_upload.png" alt="" @click="dialogVisible.second = true">
+        <el-dialog :visible.sync="dialogVisible.second" width="95%">
+          <img :src="imgUrl.second" alt="" width="99%">
+        </el-dialog>
+        <img class="image" src="../../assets/img/writing_upload.png" alt="" @click="dialogVisible.third = true">
+        <el-dialog :visible.sync="dialogVisible.third" width="95%">
+          <img :src="imgUrl.third" alt="" width="99%">
+        </el-dialog>
+        <img class="image" src="../../assets/img/writing_upload.png" alt="" @click="dialogVisible.fourth = true">
+        <el-dialog :visible.sync="dialogVisible.fourth" width="95%">
+          <img :src="imgUrl.fourth" alt="" width="99%">
+        </el-dialog>
+        <img class="image" src="../../assets/img/writing_upload.png" alt="" @click="dialogVisible.fifth = true">
+        <el-dialog :visible.sync="dialogVisible.fifth" width="95%">
+          <img :src="imgUrl.fifth" alt="" width="99%">
+        </el-dialog>
+      </el-col>
+    </el-row>
     <hr>
     <!-- 제목 -->
     <el-row type="flex" align="middle">
@@ -161,6 +166,9 @@ export default {
       dom.style.fontWeight = "bold";
       dom.style.color = "#ADEC6E";
     },
+    goBack: function () {
+      this.$router.go(-1)
+    },
   },
   data: () => {
     return {
@@ -179,6 +187,10 @@ export default {
 </script>
 
 <style scoped>
+  #submit {
+    position: fixed;
+    bottom: 0rem;
+  }
   hr {
     border: 1px solid rgba(240,240,240,1);
   }
@@ -189,7 +201,7 @@ export default {
     background-color:#ADEC6E;
     border-radius: 50%;
     color: white;
-    margin-right: 75px;
+    margin-right: 35px;
     cursor: pointer;
     font-size: 30px;
     font-weight: bold;

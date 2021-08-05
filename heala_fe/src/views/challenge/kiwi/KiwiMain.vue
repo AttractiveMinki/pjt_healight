@@ -117,12 +117,14 @@
         </el-row>
       </el-col> -->
     </el-row>
+   <Footer />
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/challenge/Navbar"
 import ChallengeContainerKiwi from "@/components/challenge/kiwi/ChallengeContainerKiwi"
+import Footer from "@/components/home/Footer"
 import SERVER from "@/api/drf.js"
 import axios from "axios"
 
@@ -144,6 +146,7 @@ export default {
   components: {
     Navbar,
     ChallengeContainerKiwi,
+    Footer,
   },
   methods: {
     getKiwiChallenge: function () {
