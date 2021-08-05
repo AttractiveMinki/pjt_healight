@@ -23,6 +23,7 @@ export default {
     checkIdentity: "/user/checkidentity/",
     withmake: "/challenge/with/",
     userProfile: "/user/profile/",
+    getKiwiChallenge: "/challenge/kiwi/",
     getKiwiHealthChallenge: "/challenge/kiwi/1/",
     getKiwiDietChallenge: "/challenge/kiwi/2/",
     getKiwiHeartChallenge: "/challenge/kiwi/3/",

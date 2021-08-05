@@ -10,7 +10,7 @@
               <div class="text-align-start text-title">기간 한정</div>
               <div class="text-align-start text-title">챌린지</div>
               <div class="text-align-start">기간 한정 챌린지에 도전해보세요!</div>
-              <div class="text-align-end">참가자 수:</div>
+              <!-- <div class="text-align-end">참가자 수:</div> -->
             </el-col>
             <el-col :span="6">
               image
@@ -25,7 +25,6 @@
               <div class="text-align-start text-title">운동</div>
               <div class="text-align-start text-title">챌린지</div>
               <div class="text-align-start">운동 챌린지에 도전해보세요!</div>
-              <div class="text-align-end">참가자 수:</div>
             </el-col>
             <el-col :span="6">
               image
@@ -40,7 +39,6 @@
               <div class="text-align-start text-title">식단</div>
               <div class="text-align-start text-title">챌린지</div>
               <div class="text-align-start">식단 챌린지에 도전해보세요!</div>
-              <div class="text-align-end">참가자 수:</div>
             </el-col>
             <el-col :span="6">
               image
@@ -55,7 +53,6 @@
               <div class="text-align-start text-title">마음</div>
               <div class="text-align-start text-title">챌린지</div>
               <div class="text-align-start">마음 챌린지에 도전해보세요!</div>
-              <div class="text-align-end">참가자 수:</div>
             </el-col>
             <el-col :span="6">
               image
@@ -70,12 +67,34 @@
 <script>
 import Navbar from "@/components/challenge/Navbar"
 import ChallengeContainerKiwi from "@/components/challenge/kiwi/ChallengeContainerKiwi"
+import SERVER from "@/api/drf.js"
+import axios from "axios"
+
 
 export default {
   name: "KiwiMain",
+  data: function () {
+    return {
+
+    }
+  },
   components: {
     Navbar,
     ChallengeContainerKiwi,
+  },
+  methods: {
+    getKiwiChallenge: function () {
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiChallenge}`)
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+  },
+  mounted: function () {
+    this.getKiwiChallenge()
   },
 }
 </script>
@@ -92,9 +111,9 @@ export default {
   .text-align-start {
     text-align: start;
   }
-  .text-align-end {
+  /* .text-align-end {
     text-align: end;
-  }
+  } */
   .text-decoration-none {
     text-decoration: none;
     color: black;
