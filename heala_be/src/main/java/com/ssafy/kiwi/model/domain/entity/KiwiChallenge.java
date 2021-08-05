@@ -21,7 +21,7 @@ public class KiwiChallenge {
 	
 	@Column(name = "start_date")
 	private Date startDate;
-	
+
 	@Column(name = "end_date")
 	private Date endDate;
 	

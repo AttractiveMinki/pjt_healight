@@ -6,7 +6,7 @@
       </slot>
       <div class="input-wrapper">
       <slot name="input">
-        <input v-model="message" type="text" placeholder="댓글 달기..">
+        <input v-model="message" type="text" :placeholder="placeholderMsg">
       </slot>
       </div>
       <button :class="{ disabled:!message }" @click="$emit('write', this.message)">
@@ -20,6 +20,7 @@
 import UserImage from "@/components/UserImage.vue";
 export default {
     name: "InputMessage",
+    props: [ 'placeholderMsg' ],
     data() {
         return {
             message: "",

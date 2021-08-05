@@ -1,7 +1,7 @@
 <template>
   <div>
-    <font-awesome-icon :icon="['fas', 'star']" class="icon" v-if="like" @click="$emit('cancelStar')" />
-    <font-awesome-icon :icon="['far', 'star']" class="icon" v-else @click="$emit('star')" />
+    <font-awesome-icon :icon="['fas', 'star']" class="icon" v-if="likeUI" @click="cancelStar" />
+    <font-awesome-icon :icon="['far', 'star']" class="icon" v-else @click="star" />
   </div>
 </template>
 
@@ -9,6 +9,21 @@
 export default {
     name: "Star",
     props: [ 'like' ],
+    data() {
+      return {
+        likeUI: this.like,
+      }
+    },
+    methods: {
+      star() {
+        this.likeUI = true;
+        this.$emit('star');
+      },
+      cancelStar() {
+        this.likeUI = false;
+        this.$emit('cancelStar');
+      }
+    },
 }
 </script>
 

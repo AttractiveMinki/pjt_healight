@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface LikeUserRepository extends JpaRepository<LikeUser, Integer> {
     Optional<LikeUser> findByUserIdAndCommentId(int userId, int commentId);
+
+    Optional<LikeUser> getByUserIdAndPostId(int userId, int postId);
 }

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import com.ssafy.kiwi.model.dto.UserSimpleInfo;
+import com.ssafy.kiwi.model.dto.UserSimpleOp;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ssafy.kiwi.model.domain.entity.User;
@@ -24,9 +24,9 @@ public interface UserRepository extends JpaRepository<User,Integer>{
 	// identity와 password가 일치하는 회원 조회
     Optional<User> getUserByIdentityAndPassword(String identity, String password);
 
-    @Query(value = "SELECT new com.ssafy.kiwi.model.dto.UserSimpleInfo(u.id, u.name, u.image) FROM User u WHERE u.id = ?1")
-    UserSimpleInfo getUserSimpleInfoById(int userId);
+    @Query(value = "SELECT new com.ssafy.kiwi.model.dto.UserSimpleOp(u.id, u.name, u.image) FROM User u WHERE u.id = ?1")
+	UserSimpleOp getUserSimpleInfoById(int userId);
 
-    @Query(value = "SELECT new com.ssafy.kiwi.model.dto.UserSimpleInfo(u.id, u.name, u.image) FROM User u WHERE u.id IN (:userIdSet)")
-	List<UserSimpleInfo> getUserSimpleInfoByIds(Set<Integer> userIdSet);
+    @Query(value = "SELECT new com.ssafy.kiwi.model.dto.UserSimpleOp(u.id, u.name, u.image) FROM User u WHERE u.id IN (:userIdSet)")
+	List<UserSimpleOp> getUserSimpleInfoByIds(List<Integer> userIdSet);
 }
