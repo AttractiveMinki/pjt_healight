@@ -17,9 +17,8 @@ import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.entity.UserBadge;
 import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
-
-import com.ssafy.kiwi.model.dto.Profile;
-import com.ssafy.kiwi.model.dto.UserSimpleInfo;
+import com.ssafy.kiwi.model.dto.ProfileIp;
+import com.ssafy.kiwi.model.dto.UserSimpleOp;
 
 import lombok.RequiredArgsConstructor;
 
@@ -102,7 +101,7 @@ public class UserServiceImpl implements UserService {
 
 	//프로필 편집 반영하기
 	@Override
-	public boolean updateUser(int userId, Profile userRequest) throws IllegalStateException, IOException {
+	public boolean updateUser(int userId, ProfileIp userRequest) throws IllegalStateException, IOException {
 		User updateUser = getUserProfile(userId);
 		boolean user_update = false;
 		boolean badge_update = false;
@@ -157,13 +156,13 @@ public class UserServiceImpl implements UserService {
 
 	// 유저 간단 정보(아이디, 이름, 프로필사진) 불러오기
 	@Override
-	public UserSimpleInfo getUserSimpleInfo(int userId) {
+	public UserSimpleOp getUserSimpleInfo(int userId) {
 		return userRepository.getUserSimpleInfoById(userId);
 	}
 
 	// 유저 간단 정보 여러 명 불러오기
 	@Override
-	public List<UserSimpleInfo> getUserSimpleInfoAll(Set<Integer> userIdSet) {
+	public List<UserSimpleOp> getUserSimpleInfoAll(Set<Integer> userIdSet) {
 		return userRepository.getUserSimpleInfoByIds(userIdSet);
 	}
 }

@@ -13,6 +13,7 @@ import lombok.*;
 public class KiwiChallenge {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	private String name;

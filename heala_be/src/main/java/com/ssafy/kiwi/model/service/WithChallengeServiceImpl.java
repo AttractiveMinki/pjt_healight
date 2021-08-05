@@ -17,7 +17,7 @@ import com.ssafy.kiwi.model.domain.repository.MyChallengeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
 import com.ssafy.kiwi.model.domain.repository.WithChallengeHashtagRepository;
 import com.ssafy.kiwi.model.domain.repository.WithChallengeRepository;
-import com.ssafy.kiwi.model.dto.WithInput;
+import com.ssafy.kiwi.model.dto.WithChallengeIp;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,7 +35,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 	
 	//[함께 챌린지] 함께 챌린지 만들기
 	@Override
-	public boolean makeWith(WithInput withInput) {
+	public boolean makeWith(WithChallengeIp withInput) {
 		
 		// with_challenge 테이블에 insert
 		WithChallenge withchallenge = (WithChallenge) withInput.getWithChallenge();
@@ -142,6 +142,9 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		// 챌린지 참가자 수 가져오기
 		int participantsNum = myChallengeRepository.countByWithChallengeId(withChallengeId);
 		map.put("participantsNum", participantsNum);
+		
+		// 참가자 인증사진 날짜별로 가져오기
+		
 		
 		return map;
 	}

@@ -2,13 +2,14 @@ package com.ssafy.kiwi.controller;
 
 import java.util.*;
 
-import com.ssafy.kiwi.model.dto.UserIds;
-import com.ssafy.kiwi.model.dto.UserSimpleInfo;
+import com.ssafy.kiwi.model.dto.ProfileIp;
+import com.ssafy.kiwi.model.dto.UserIdSetIp;
+import com.ssafy.kiwi.model.dto.UserSimpleOp;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ssafy.kiwi.model.dto.Profile;
 import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.entity.Follow;
 import com.ssafy.kiwi.model.service.UserService;
@@ -73,7 +74,7 @@ public class UserController {
 
 	@ApiOperation(value = "프로필 편집 반영하기.")
 	@PatchMapping("/profile/{userId}")
-	public Object updateUser(@PathVariable int userId, @RequestBody Profile userRequest) throws Exception {
+	public Object updateUser(@PathVariable int userId, @RequestBody ProfileIp userRequest) throws Exception {
 		if(userService.updateUser(userId, userRequest)) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
@@ -115,7 +116,7 @@ public class UserController {
 	@ApiOperation(value = "유저 한 명 간단 정보 불러오기")
 	@GetMapping("/simple/{userId}")
 	public Object getUserSimpleInfoOne(@PathVariable int userId){
-		UserSimpleInfo userSimpleInfo = userService.getUserSimpleInfo(userId);
+		UserSimpleOp userSimpleInfo = userService.getUserSimpleInfo(userId);
 		if(userSimpleInfo != null){
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
@@ -124,8 +125,8 @@ public class UserController {
 
 	@ApiOperation(value = "유저 여러 명 간단 정보 불러오기")
 	@PostMapping("/comment/users")
-	public Object getUserSimpleInfoAll(@RequestBody UserIds userIds){
-		List<UserSimpleInfo> userSimpleInfoList = userService.getUserSimpleInfoAll(userIds.getUserIdSet());
+	public Object getUserSimpleInfoAll(@RequestBody UserIdSetIp userIds){
+		List<UserSimpleOp> userSimpleInfoList = userService.getUserSimpleInfoAll(userIds.getUserIdSet());
 		return new ResponseEntity<>(userSimpleInfoList, HttpStatus.OK);
 	}
 }
