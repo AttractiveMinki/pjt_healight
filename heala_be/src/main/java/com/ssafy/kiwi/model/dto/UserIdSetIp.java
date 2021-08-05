@@ -1,10 +1,10 @@
-package com.ssafy.kiwi.model.dto.request;
+package com.ssafy.kiwi.model.dto;
 
 import lombok.Getter;
 
-import java.util.Set;
+import java.util.List;
 
 @Getter
-public class UserIdSet {
-    private Set<Integer> userIdSet;
+public class UserIdSetIp {
+    private List<Integer> userIdSet;
 }

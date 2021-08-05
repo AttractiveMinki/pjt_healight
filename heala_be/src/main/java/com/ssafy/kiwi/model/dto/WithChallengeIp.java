@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Data
 //with challenge 입력값들을 받는 클래스
-public class WithInput {
+public class WithChallengeIp {
 	
 	WithChallenge withChallenge;
 	ChallengeHashtag challengeHashtag;

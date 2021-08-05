@@ -17,7 +17,7 @@ import com.ssafy.kiwi.model.domain.repository.MyChallengeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
 import com.ssafy.kiwi.model.domain.repository.WithChallengeHashtagRepository;
 import com.ssafy.kiwi.model.domain.repository.WithChallengeRepository;
-import com.ssafy.kiwi.model.dto.WithInput;
+import com.ssafy.kiwi.model.dto.WithChallengeIp;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,10 +35,10 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 	
 	//[함께 챌린지] 함께 챌린지 만들기
 	@Override
-	public boolean makeWith(WithInput withInput) {
+	public boolean makeWith(WithChallengeIp withChallengeIp) {
 		
 		// with_challenge 테이블에 insert
-		WithChallenge withchallenge = (WithChallenge) withInput.getWithChallenge();
+		WithChallenge withchallenge = (WithChallenge) withChallengeIp.getWithChallenge();
 		int withChallengeId = withChallengeRepository.save(withchallenge).getId();
 		
 		// my_challenge 테이블에 insert
@@ -48,7 +48,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		myChallengeRepository.save(myChallenge);
 
 		// challenge_hashtag 테이블에 insert
-		String hashtags = withInput.getChallengeHashtag().getWord();
+		String hashtags = withChallengeIp.getChallengeHashtag().getWord();
 		StringTokenizer st = new StringTokenizer(hashtags," ");
 		
 		int challengeHashtagId;

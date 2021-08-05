@@ -5,14 +5,14 @@ import java.util.*;
 import com.ssafy.kiwi.model.domain.entity.CertifyImage;
 import com.ssafy.kiwi.model.domain.entity.MyChallenge;
 import com.ssafy.kiwi.model.domain.entity.WithChallenge;
-import com.ssafy.kiwi.model.dto.WithInput;
+import com.ssafy.kiwi.model.dto.WithChallengeIp;
 
 
 public interface WithChallengeService {
 
 	
 	// 함께 챌린지 만들기 input 값들을 받아와서  with_challenge, challenge_hashtag, with_challenge_hashtag 각 테이블에 저장
-	public boolean makeWith(WithInput withInput);
+	public boolean makeWith(WithChallengeIp withChallengeIp);
 
 	// 함께 챌린지 - 목록 만들기
 	public List<Map<String, Object>> getWithList(int category);
