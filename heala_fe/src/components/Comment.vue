@@ -12,7 +12,7 @@
                     <button class="comment-button">{{ createdAt }}</button>
                     <button class="comment-button">추천 {{ likes }}개</button>
                     <button v-if="!commentId" @click="showReplyModal = true" class="comment-button comment-reply">답글 달기</button>
-                    <modal v-if="showReplyModal" @yes="$emit('reply', this.id)" @no="showReplyModal = false">
+                    <modal v-if="showReplyModal" @yes="replyComment" @no="showReplyModal = false">
                         <div slot="header">답글</div>
                         <div slot="body">답글을 작성하시겠습니까?</div>
                     </modal>
@@ -23,7 +23,7 @@
                     </modal>
                 </div>
             </div>
-            <star :like="likeUI" @cancelStar="cancelStar" @star="star" class="star"></star>
+            <star :like="like" @cancelStar="cancelStar" @star="star" class="star"></star>
         </div>
     </div>
     <div v-if="childrenComment">
@@ -46,7 +46,6 @@ export default {
     props: [ 'id', 'text', 'likes', 'createdAt', 'commentId', 'userId', 'postId', 'childrenComment'],
     data() {
         return {
-            likeUI: this.like,
             showReplyModal: false,
             showDeleteModal: false,
         }
@@ -59,20 +58,22 @@ export default {
             return this.$store.state.commentUsers.find(user => user.id == this.userId);
         },
         like() {
-            return this.$store.state.commentLikes.find(like => like.commentId == this.id);
+            return this.$store.state.commentLikes.find(commentId => commentId == this.id) > -1;
         },
     },
     methods: {
         cancelStar() {
-            this.likeUI = 0;
             this.$store.dispatch("cancelLikeComment", { commentId: this.id });
         },
         star() {
-            this.likeUI = 1;
             this.$store.dispatch("likeComment", { commentId: this.id });
         },
+        replyComment() {
+            this.showReplyModal = false;
+            this.$emit('reply', this.id);
+        },
         deleteComment() {
-            this.$store.dispatch("deleteComment", { commentId: this.id });
+            this.$store.dispatch("deleteComment", { commentId: this.id, postId: this.postId });
         },
     },
     components: { UserImage, Star, Modal, },

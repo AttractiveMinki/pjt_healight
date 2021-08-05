@@ -79,16 +79,16 @@ public class CommunityController {
 	@PostMapping("/post/like")
 	public Object likePost(@RequestBody LikeUser likeUser){
 		if(communityService.likePost(likeUser)){
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(true, HttpStatus.OK);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
 
 	@ApiOperation(value = "게시글 좋아요 취소")
 	@DeleteMapping("/post/like")
 	public Object cancelLikePost(@RequestParam int userId, @RequestParam int postId){
 		if(communityService.cancelLikePost(userId, postId)){
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(false, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
@@ -97,16 +97,16 @@ public class CommunityController {
 	@PostMapping("/post/scrap")
 	public Object scrapPost(@RequestBody Scrap scrap){
 		if(communityService.scrapPost(scrap)){
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(true, HttpStatus.OK);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
 
 	@ApiOperation(value = "게시글 스크랩 취소")
 	@DeleteMapping("/post/scrap")
 	public Object cancelScrapPost(@RequestParam int userId, @RequestParam int postId){
 		if(communityService.cancelScrapPost(userId, postId)){
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(false, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
@@ -129,7 +129,7 @@ public class CommunityController {
 	@PostMapping("/post/comment/like")
 	public Object likeComment(@RequestBody LikeUser likeUser){
 		if(communityService.likeComment(likeUser)){
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(true, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
@@ -138,7 +138,7 @@ public class CommunityController {
 	@DeleteMapping("/post/comment/like")
 	public Object cancelLkeComment(@RequestParam int userId, @RequestParam int commentId){
 		if(communityService.cancelLikeComment(userId, commentId)){
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(false, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}

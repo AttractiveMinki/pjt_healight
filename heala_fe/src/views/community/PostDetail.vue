@@ -7,6 +7,7 @@
         </div>
         <div class="post-time">
             {{ post.createdAt }}
+            {{ postScrap }} | {{ postLike }}
         </div>
         <div class="post-image-wrapper">
             <img :src="require(`@/assets/image/${post.image}`)" alt="" class="post-image">
@@ -14,7 +15,7 @@
         <div class="icon-wrapper">
             <star :like="postLike" @cancelStar="cancelStar" @star="star"></star>
             <font-awesome-icon :icon="['far', 'comment']" @click="newComment" class="icon" />
-            <font-awesome-icon :icon="['fas', 'bookmark']" v-if="scrapUI" @click="cancelScrap" class="icon icon-bookmark" />
+            <font-awesome-icon :icon="['fas', 'bookmark']" v-if="postScrap" @click="cancelScrap" class="icon icon-bookmark" />
             <font-awesome-icon :icon="['far', 'bookmark']" v-else @click="scrap" class="icon icon-bookmark" />
         </div>
         <el-row>
@@ -53,7 +54,7 @@ export default {
     name: "PostDetail",
     data() {
         return {
-            scrapUI: this.postScrap,
+            // scrapUI: this.$store.state.postScrap,
             replyCommentId: Number,
             placeholderMsg: "댓글을 입력해주세요",
         }
@@ -69,10 +70,10 @@ export default {
             return this.$store.state.postUser;
         },
         postLike() {
-            return this.$store.state.postLike.like;
+            return this.$store.state.postLike;
         },
         postScrap() {
-            return this.$store.state.postScrap.scrap;
+            return this.$store.state.postScrap;
         },
     },
     created() {

@@ -2,6 +2,7 @@ package com.ssafy.kiwi.controller;
 
 import java.util.*;
 
+import com.ssafy.kiwi.model.dto.CommentIdSetIp;
 import com.ssafy.kiwi.model.dto.UserIdSetIp;
 import com.ssafy.kiwi.model.dto.UserSimpleOp;
 import org.springframework.http.HttpStatus;
@@ -124,9 +125,16 @@ public class UserController {
 
 	@ApiOperation(value = "유저 여러 명 간단 정보 불러오기")
 	@PostMapping("/comment")
-	public Object getUserSimpleInfoAll(@RequestBody UserIdSetIp userIdSetIp){
+	public Object getAllUserSimpleInfoByUserId(@RequestBody UserIdSetIp userIdSetIp){
 		List<UserSimpleOp> userSimpleOpList = userService.getUserSimpleInfoAll(userIdSetIp.getUserIdSet());
 		return new ResponseEntity<>(userSimpleOpList, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "댓글 전체 좋아요 여부 불러오기")
+	@PostMapping("/comment/like")
+	public Object getAllCommentLikeUserByUserId(@RequestBody CommentIdSetIp commentIdSetIp){
+		List<Integer> likeCommentList = userService.getAllLikeCommentByUserId(commentIdSetIp.getCommentIdSet(), commentIdSetIp.getUserId());
+		return new ResponseEntity<>(likeCommentList, HttpStatus.OK);
 	}
 }
 

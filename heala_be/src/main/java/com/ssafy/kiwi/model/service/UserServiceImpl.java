@@ -5,16 +5,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-import com.ssafy.kiwi.model.domain.entity.Badge;
-import com.ssafy.kiwi.model.domain.entity.Follow;
+import com.ssafy.kiwi.model.domain.entity.*;
 import com.ssafy.kiwi.model.domain.repository.FollowRepository;
 
+import com.ssafy.kiwi.model.domain.repository.LikeUserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ssafy.kiwi.model.domain.entity.User;
-import com.ssafy.kiwi.model.domain.entity.UserBadge;
 import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
 
@@ -30,6 +28,7 @@ public class UserServiceImpl implements UserService {
     final private UserRepository userRepository;
     final private UserBadgeRepository userbadgeRepository;
     final private FollowRepository followRepository;
+    final private LikeUserRepository likeUserRepository;
     
     //아이디 중복 검사
 	@Override
@@ -165,5 +164,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserSimpleOp> getUserSimpleInfoAll(List<Integer> userIdSet) {
 		return userRepository.getUserSimpleInfoByIds(userIdSet);
+	}
+
+	@Override
+	public List<Integer> getAllLikeCommentByUserId(List<Integer> commentIdSet, int userId) {
+		return likeUserRepository.getAllLikeUserByUserId(commentIdSet, userId);
 	}
 }

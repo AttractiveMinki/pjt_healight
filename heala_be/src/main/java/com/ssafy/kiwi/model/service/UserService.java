@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.*;
 
 import com.ssafy.kiwi.model.domain.entity.Follow;
+import com.ssafy.kiwi.model.domain.entity.LikeUser;
 import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.dto.ProfileIp;
 import com.ssafy.kiwi.model.dto.UserSimpleOp;
@@ -39,4 +40,7 @@ public interface UserService {
 	// 유저 간단 정보 가져오기
     UserSimpleOp getUserSimpleInfo(int userId);
 	List<UserSimpleOp> getUserSimpleInfoAll(List<Integer> userIdSet);
+
+	// 댓글 전체 좋아요 정보 가져오기
+    List<Integer> getAllLikeCommentByUserId(List<Integer> commentIdSet, int userId);
 }
