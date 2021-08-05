@@ -28,5 +28,8 @@ export default {
     getKiwiDietChallenge: "/challenge/kiwi/2/",
     getKiwiHeartChallenge: "/challenge/kiwi/3/",
     getKiwiSpecialChallenge: "/challenge/kiwi/4/",
+    getWithHealthChallenge: "/challenge/with?category=0",
+    getWithDietChallenge: "/challenge/with?category=1",
+    getWithHeartChallenge: "/challenge/with?category=2",
   }
 }

@@ -7,10 +7,66 @@
         <el-row>
           <router-link :to="{ name: 'KiwiSpecial' }" class="text-decoration-none">
             <el-col :span="18" class="community-inside">
+              <div class="text-align-start text-title">{{ data[0].name }}</div>
+              <div class="text-align-start">{{ data[0].introduction }}</div>
+            </el-col>
+            <el-col :span="6">
+              image
+              <!-- {{ data[0].image }} -->
+            </el-col>
+          </router-link>
+        </el-row>
+      </el-col>
+      <el-col :span="24" class="community-box">
+        <el-row>
+          <router-link :to="{ name: 'KiwiHealth' }" class="text-decoration-none">
+            <el-col :span="18" class="community-inside">
+              <div class="text-align-start text-title">{{ data[1].name }}</div>
+              <div class="text-align-start">{{ data[1].introduction }}</div>
+            </el-col>
+            <el-col :span="6">
+              image
+              <!-- {{ data[1].image }} -->
+            </el-col>
+          </router-link>
+        </el-row>
+      </el-col>
+      <el-col :span="24" class="community-box">
+        <el-row>
+          <router-link :to="{ name: 'KiwiDiet' }" class="text-decoration-none"> 
+            <el-col :span="18" class="community-inside">
+              <div class="text-align-start text-title">{{ data[2].name }}</div>
+              <div class="text-align-start">{{ data[2].introduction }}</div>
+            </el-col>
+            <el-col :span="6">
+              image
+              <!-- {{ data[2].image }} -->
+            </el-col>
+          </router-link>
+        </el-row>
+      </el-col>
+      <el-col :span="24" class="community-box">
+        <el-row>
+          <router-link :to="{ name: 'KiwiHeart' }" class="text-decoration-none">
+            <el-col :span="18" class="community-inside">
+              <div class="text-align-start text-title">{{ data[3].name }}</div>
+              <div class="text-align-start">{{ data[3].introduction }}</div>
+            </el-col>
+            <el-col :span="6">
+              image
+              <!-- {{ data[3].image }} -->
+            </el-col>
+          </router-link>
+        </el-row>
+      </el-col>
+      <!-- <el-col :span="24" class="community-box">
+        <el-row>
+          <router-link :to="{ name: 'KiwiSpecial' }" class="text-decoration-none">
+            <el-col :span="18" class="community-inside">
               <div class="text-align-start text-title">기간 한정</div>
               <div class="text-align-start text-title">챌린지</div>
               <div class="text-align-start">기간 한정 챌린지에 도전해보세요!</div>
-              <!-- <div class="text-align-end">참가자 수:</div> -->
+              <div class="text-align-end">참가자 수:</div>
             </el-col>
             <el-col :span="6">
               image
@@ -59,7 +115,7 @@
             </el-col>
           </router-link>
         </el-row>
-      </el-col>
+      </el-col> -->
     </el-row>
   </div>
 </template>
@@ -75,7 +131,14 @@ export default {
   name: "KiwiMain",
   data: function () {
     return {
-
+      data: {
+        // id: "",
+        // name: "",
+        // introduction: "",
+        // category: "",
+        // startDate: "",
+        // endDate: "",
+      },
     }
   },
   components: {
@@ -86,7 +149,8 @@ export default {
     getKiwiChallenge: function () {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiChallenge}`)
         .then((res) => {
-          console.log(res)
+          this.data = res.data
+          // console.log(res)
         })
         .catch((err) => {
           console.log(err)
@@ -132,6 +196,7 @@ export default {
     padding: 5px;
     border-radius: 5px;
     width: 100%;
+    height: 14vh;
     border: 1.5px solid darkgrey;
   }
   .community-inside {
@@ -139,6 +204,7 @@ export default {
     padding: 5px;
     border-radius: 5px;
     /* width: 100%; */
+    height: 14vh;
     border: 1.5px solid darkgrey;
   }
 </style>

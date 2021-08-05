@@ -64,6 +64,8 @@
 <script>
 import Navbar from "@/components/challenge/Navbar"
 import ChallengeContainerWith from "@/components/challenge/with/ChallengeContainerWith"
+import SERVER from "@/api/drf.js"
+import axios from "axios"
 import { mapState } from "vuex"
 
 export default {
@@ -78,12 +80,24 @@ export default {
       this.$store.state.currentPageId = getId
       console.log('클릭 감지2')
     },
+    getWithHealthChallenge: function () {
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithHealthChallenge}`)
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
   },
   computed: {
     ...mapState([
       "with_challenges",
       "recent_challenges",
     ])
+  },
+  mounted: function () {
+    this.getWithHealthChallenge()
   },
 }
 </script>
