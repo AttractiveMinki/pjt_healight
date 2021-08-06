@@ -2,6 +2,7 @@
   <div>
     <h1>함께챌린지 상세화면</h1>
     {{ currentPageId }}
+    {{ datas }}
     <div class="display-flex justify-content-space-between align-items">
       <span><font-awesome-icon icon="arrow-left" class="padding-left cursor-pointer" @click="goBack()"/></span>
       <span class="text-decoration-title">챌린지 상세</span>
@@ -20,9 +21,9 @@
         <router-link :to="{ name: 'WithDetailReview' }" class="text-decoration-none">후기</router-link> 
       </el-col> -->
     </el-row>
-    <el-row id="challenge-image" style="margin: 1%">
+    <!-- <el-row id="challenge-image" style="margin: 1%">
       {{ with_challenges[currentPageId - 1].image }}
-    </el-row>
+    </el-row> -->
     <el-row id="challenge-title" style="margin: 1%">
       <el-col :span="16" class="text-decoration-title">
         {{ with_challenges[currentPageId - 1].title }}
@@ -47,7 +48,7 @@
     <hr>
     <el-row>
       <el-col id="challenge-certifyinfo" style="margin: 1%">
-        해시태그: 
+        해시태그: {{ datas.participantsNum }}
       </el-col>
     </el-row>
     <el-row>
@@ -58,12 +59,12 @@
     <hr>
     <el-row>
       <el-col id="challenge-people" style="margin: 1%">
-        참가 인원: 
+        참가 인원: {{ datas.participantsNum }}
       </el-col>
     </el-row>
     <el-row>
       <el-col id="challenge-exp" style="margin: 1%">
-        키위 점수:
+        키위 점수: 
       </el-col>
     </el-row>
     <!-- 유저가 참가중이 아니라면 -->
@@ -76,19 +77,42 @@
 
 <script>
 import { mapState } from "vuex"
+import SERVER from "@/api/drf.js"
+import axios from "axios"
 
 export default {
   name: 'WithDetail',
+  data: function () {
+    return {
+      datas: [],
+    }
+  },
   methods: {
     goBack: function () {
       this.$router.go(-1)
+    },
+    getWithDetail: function () {
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?userId=${this.$store.state.userid}&withChallengeId=${this.$store.state.currentPageCategory}`)
+      // axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?challengeId=${this.$store.state.currentPageCategory}&userId=${this.$store.state.userid}`) // 원본
+        .then((res) => {
+          console.log(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?userId=${this.$store.state.userid}&withChallengeId=${this.$store.state.currentPageCategory}`)
+          this.datas = res.data
+        })
+        .catch((err) => {
+          // console.log(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?userId=${this.$store.state.userid}&withChallengeId=${this.$store.state.currentPageCategory}`)
+          console.log(err)
+        })
     },
   },  
   computed: {
     ...mapState([
       "currentPageId",
       "with_challenges",
+      "currentPageCategory",
     ])
+  },
+  mounted: function () {
+    this.getWithDetail()
   },
 }
 </script>
