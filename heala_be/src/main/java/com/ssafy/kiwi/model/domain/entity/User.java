@@ -2,7 +2,6 @@ package com.ssafy.kiwi.model.domain.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,8 +33,6 @@ public class User {
 	private String identity;
 	private String name;
 	private String password;
-	
-	@Column
 	private String image;
 	
 	private int exp;
