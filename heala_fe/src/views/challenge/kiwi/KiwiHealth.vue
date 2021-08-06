@@ -8,6 +8,8 @@
         <div style="text-align:start; margin: 2vh 2vw;">
           <div>
             <!-- challenge.content -->
+            <!-- {{ datas }}
+            {{ users }} -->
             운동 챌린지입니다.
           </div>
           <div>
@@ -201,25 +203,21 @@ export default {
   data: function () {
     return {
       datas: [],
+      users: [],
     }
   },
   components: {
     ChallengeContainerKiwiDetail,
   },
   methods: {
-    // 서버와 연결 아직 안 됨.. user_id가 아직 없는 문제 + CORS 에러 발생하는 듯.
     getKiwiHealthChallenge: function () {
-      console.log('monted 실행')
-      // console.log(this.$store.state.user_id)
-      // axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}${this.$store.state.user_id}`)
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}1`)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}` + this.$store.state.userid)
         .then((res) => {
-          this.datas = res
-          alert('성공')
+          console.log(res)
+          this.users = res.data
         })
         .catch((err) => {
-          console.error(err.response.data)
-          alert('실패')
+          console.error(err)
         })
     },
   },

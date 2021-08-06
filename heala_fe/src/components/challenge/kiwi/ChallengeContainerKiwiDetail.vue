@@ -28,7 +28,7 @@ export default {
   name: "ChallengeContainerKiwiDetail",
   props: {
     category: {
-      type: Object
+      type: String
       // 같은 타입은 타입 작성 안해도 됨.
       // 이건 String
     }
