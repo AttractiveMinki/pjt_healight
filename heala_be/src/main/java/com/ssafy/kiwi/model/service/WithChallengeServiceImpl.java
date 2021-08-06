@@ -255,7 +255,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 
 	//[마이 챌린지] 인증사진 모아보기
 	@Override
-	public Object photoMyChallenge(int userId, int withChallengeId) {
+	public List<CertifyImageOp> photoMyChallenge(int userId, int withChallengeId) {
 		//가공 전 리스트 CertifyImage, 가공 후 리스트 CertifyImageOp
 		List<CertifyImage> beforeImage = certifyImageRepository.getAllByUserIdAndWithChallengeIdOrderByTimeDesc(userId, withChallengeId);
 		List<CertifyImageOp> afterImage = new ArrayList<>();
