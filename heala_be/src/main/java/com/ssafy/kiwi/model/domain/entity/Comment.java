@@ -33,4 +33,12 @@ public class Comment {
 
     @Column(name = "post_id")
     private int postId;
+
+    public void increaseLikes() {
+        this.likes += 1;
+    }
+
+    public void decreaseLikes() {
+        this.likes -= 1;
+    }
 }

@@ -211,8 +211,13 @@ export default new Vuex.Store({
       state.postLike = payload.like;
     },
     setCommentLike: (state, payload) => {
-      const index = state.CommentLikes.findIndex(element => element.userId == payload.userId);
-      state.commentLikes[index].like = payload.commentLike.like;
+      // const index = state.commentLikes.findIndex(element => element.userId == payload.userId);
+      // state.commentLikes[index] = payload.commentLike;
+      state.commentLikes.push(payload.commentId);
+    },
+    setCommentLikeCancel: (state, payload) => {
+      const index = state.commentLikes.findIndex(element => element.userId == payload.userId);
+      state.commentLikes.splice(index, 1);
     },
 
     // 원석 #@
@@ -473,22 +478,23 @@ export default new Vuex.Store({
           commentId: payload.commentId,
         })
         .then(() => {
-          store.commit("setCommentLike", { userId: store.state.loginUser.id, like: true })
+          // store.commit("setCommentLike", { userId: store.state.loginUser.id, like: true })
+          store.commit("setCommentLike", { commentId: payload.commentId });
         })
         .catch((exp) => {
           if(exp.response.status == 409) {
             console.log("이미 존재하는 댓글 좋아요 정보가 있습니다.");
           }
-          else
-          console.log(`댓글 좋아요에 실패했습니다: ${exp}`)
+          else{
+            console.log(`댓글 좋아요에 실패했습니다: ${exp}`)}
         });
     },
     cancelLikeComment(store, payload) {
       axios
         .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment + SERVER.ROUTES.like
           + `?userId=${store.state.loginUser.id}&commentId=${payload.commentId}`)
-        .then((response) => {
-          store.commit("setPostLike", { like: response.data })
+        .then(() => {
+          store.commit("setCommentLikeCancel", { commentId: payload.commentId, userId: store.state.loginUser.id })
         })
         .catch((exp) => {
           if(exp.response.status == 404) {

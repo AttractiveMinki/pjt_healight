@@ -91,6 +91,12 @@ public class CommunityServiceImpl implements CommunityService {
 		if(likeUserRepository.findByUserIdAndCommentId(likeUser.getUserId(), likeUser.getCommentId()).isPresent()){
 			return false;
 		}
+//		Optional<Comment> comment = commentRepository.findById(likeUser.getCommentId());
+//		if(comment.isPresent()){
+//			Comment newComment = comment.get();
+//			newComment.increaseLikes();
+//			commentRepository.save(newComment);
+//		}
 		likeUserRepository.save(likeUser);
 		return true;
 	}
@@ -101,6 +107,12 @@ public class CommunityServiceImpl implements CommunityService {
 		Optional<LikeUser> oldLikeUser = likeUserRepository.findByUserIdAndCommentId(userId, commentId);
 		if(oldLikeUser.isPresent()){
 			likeUserRepository.deleteById(oldLikeUser.get().getId());
+//			Optional<Comment> comment = commentRepository.findById(commentId);
+//			if(comment.isPresent()){
+//				Comment newComment = comment.get();
+//				newComment.decreaseLikes();
+//				commentRepository.save(newComment);
+//			}
 			return true;
 		}
 		return false;

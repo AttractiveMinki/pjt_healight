@@ -7,7 +7,6 @@
         </div>
         <div class="post-time">
             {{ post.createdAt }}
-            {{ postScrap }} | {{ postLike }}
         </div>
         <div class="post-image-wrapper">
             <img :src="require(`@/assets/image/${post.image}`)" alt="" class="post-image">
