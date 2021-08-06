@@ -25,8 +25,14 @@ import KiwiDiet from "@/views/challenge/kiwi/KiwiDiet"
 import KiwiHeart from "@/views/challenge/kiwi/KiwiHeart"
 import KiwiSpecial from "@/views/challenge/kiwi/KiwiSpecial"
 import MyMain from "@/views/challenge/my/MyMain"
+import SendToMain from "@/components/SendToMain"
 
 export default [
+  {
+    path: "/",
+    name: "SendToMain",
+    component: SendToMain,
+  },
   {
     path: "/user/signup",
     name: "Signup",
