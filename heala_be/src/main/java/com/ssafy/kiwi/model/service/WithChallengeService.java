@@ -34,4 +34,6 @@ public interface WithChallengeService {
 	
 	// 함께 챌린지 참여하기
 	public void joinWithChallenge(int withChallengeId, int userId);
+
+	public Object photoMyChallenge(int userId, int withChallengeId);
 }

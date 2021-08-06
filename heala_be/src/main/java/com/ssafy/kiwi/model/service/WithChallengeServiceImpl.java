@@ -17,6 +17,8 @@ import com.ssafy.kiwi.model.domain.repository.MyChallengeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
 import com.ssafy.kiwi.model.domain.repository.WithChallengeHashtagRepository;
 import com.ssafy.kiwi.model.domain.repository.WithChallengeRepository;
+import com.ssafy.kiwi.model.dto.CertifyImageOp;
+import com.ssafy.kiwi.model.dto.CertifyImageSimpleOp;
 import com.ssafy.kiwi.model.dto.WithChallengeIp;
 
 import lombok.RequiredArgsConstructor;
@@ -249,6 +251,45 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		}
 		map.put("certifyImage", afterImage);
 		return map;
+	}
+
+	//[마이 챌린지] 인증사진 모아보기
+	@Override
+	public Object photoMyChallenge(int userId, int withChallengeId) {
+		//가공 전 리스트 CertifyImage, 가공 후 리스트 CertifyImageOp
+		List<CertifyImage> beforeImage = certifyImageRepository.getAllByUserIdAndWithChallengeIdOrderByTimeDesc(userId, withChallengeId);
+		List<CertifyImageOp> afterImage = new ArrayList<>();
+		//날짜 변환
+		SimpleDateFormat format = new SimpleDateFormat ("yyyy-MM-dd");			
+		
+		if(!beforeImage.isEmpty()) {
+			//가공 후 리스트에 넣을 객체 cio
+			CertifyImageOp cio = new CertifyImageOp();
+			//cio의 날짜
+			cio.setDate(format.format(beforeImage.get(0).getTime()));
+			//cio의 사진 정보 리스트 cisoList
+			List<CertifyImageSimpleOp> cisoList = new ArrayList<>();
+			for (CertifyImage ci : beforeImage) {
+				//같은 날짜의 cio인 경우, cisoList에 추가하기
+				if(format.format(ci.getTime()).equals(cio.getDate())) {
+					cisoList.add(new CertifyImageSimpleOp(ci.getId(), ci.getImage()));
+				}
+				//다른 날짜의 cio인 경우
+				else {
+					cio.setList(cisoList);  //cio에 사진 정보 리스트 cisoList 저장 후
+					afterImage.add(cio);  //이전 cio는 리스트에 넣기
+					//새 cio 만들고 날짜 지정, 사진 정보 리스트 새로 만들기.
+					cio = new CertifyImageOp();
+					cio.setDate(format.format(ci.getTime()));
+					cisoList = new ArrayList<>();
+					cisoList.add(new CertifyImageSimpleOp(ci.getId(), ci.getImage()));
+				}
+			}
+			//마지막 정보 담기
+			cio.setList(cisoList);  //cio에 사진 정보 리스트 cisoList 저장 후
+			afterImage.add(cio);  //이전 cio는 리스트에 넣기
+		}
+		return afterImage;
 	}
 
 	
