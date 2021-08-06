@@ -1,7 +1,7 @@
 <template>
   <div>
     <ChallengeContainerKiwiDetail 
-      category=4
+      category=3
     />
     <el-row>
       <el-col :span="24" class="community">

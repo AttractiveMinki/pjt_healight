@@ -123,7 +123,7 @@ export default new Vuex.Store({
 
     // 주엽 #@
     username: "",
-    userid: 2,
+    userid: 1,
     currentPageId: 0,
     profileSelectedCategory: 1,
     // check_email: true,

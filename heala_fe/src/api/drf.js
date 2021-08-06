@@ -23,9 +23,13 @@ export default {
     checkIdentity: "/user/checkidentity/",
     withmake: "/challenge/with/",
     userProfile: "/user/profile/",
-    getKiwiHealthChallenge: "/challenge/kiwi/1/",
-    getKiwiDietChallenge: "/challenge/kiwi/2/",
-    getKiwiHeartChallenge: "/challenge/kiwi/3/",
-    getKiwiSpecialChallenge: "/challenge/kiwi/4/",
+    getKiwiChallenge: "/challenge/kiwi/",
+    getKiwiHealthChallenge: "/challenge/kiwi/0/",
+    getKiwiDietChallenge: "/challenge/kiwi/1/",
+    getKiwiHeartChallenge: "/challenge/kiwi/2/",
+    getKiwiSpecialChallenge: "/challenge/kiwi/3/",
+    getWithHealthChallenge: "/challenge/with?category=0",
+    getWithDietChallenge: "/challenge/with?category=1",
+    getWithHeartChallenge: "/challenge/with?category=2",
   }
 }
