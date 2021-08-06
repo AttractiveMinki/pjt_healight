@@ -5,12 +5,10 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.dto.UserSimpleOp;
-
-import org.springframework.data.jpa.repository.Query;
-
 
 public interface UserRepository extends JpaRepository<User,Integer>{
 	
@@ -26,8 +24,8 @@ public interface UserRepository extends JpaRepository<User,Integer>{
     Optional<User> getUserByIdentityAndPassword(String identity, String password);
 
     @Query(value = "SELECT new com.ssafy.kiwi.model.dto.UserSimpleOp(u.id, u.name, u.image) FROM User u WHERE u.id = ?1")
-    UserSimpleOp getUserSimpleInfoById(int userId);
+	UserSimpleOp getUserSimpleInfoById(int userId);
 
     @Query(value = "SELECT new com.ssafy.kiwi.model.dto.UserSimpleOp(u.id, u.name, u.image) FROM User u WHERE u.id IN (:userIdSet)")
-	List<UserSimpleOp> getUserSimpleInfoByIds(Set<Integer> userIdSet);
+	List<UserSimpleOp> getUserSimpleInfoByIds(List<Integer> userIdSet);
 }

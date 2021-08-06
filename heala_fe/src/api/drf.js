@@ -12,6 +12,8 @@ export default {
     like: "/like/",
     scrap: "/scrap/",
     commentUsers: "/user/comment/",
+    commentLikes: "/user/comment/like",
+    postUser: "/user/simple",
 
     // 원석 #@
 

@@ -4,8 +4,10 @@ import java.util.*;
 
 import com.ssafy.kiwi.model.domain.entity.Comment;
 import com.ssafy.kiwi.model.domain.entity.LikeUser;
+import com.ssafy.kiwi.model.domain.entity.Scrap;
 import com.ssafy.kiwi.model.domain.repository.CommentRepository;
 import com.ssafy.kiwi.model.domain.repository.LikeUserRepository;
+import com.ssafy.kiwi.model.domain.repository.ScrapRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,9 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Autowired
 	private LikeUserRepository likeUserRepository;
+
+	@Autowired
+	private ScrapRepository scrapRepository;
 
 	// 커뮤니티 전체 글 목록 가져오기
 	@Override
@@ -80,16 +85,102 @@ public class CommunityServiceImpl implements CommunityService {
 	// 댓글 좋아요
 	@Override
 	public boolean likeComment(LikeUser likeUser) {
+		if(!commentRepository.findById(likeUser.getCommentId()).isPresent()){
+			return false;
+		}
+		if(likeUserRepository.findByUserIdAndCommentId(likeUser.getUserId(), likeUser.getCommentId()).isPresent()){
+			return false;
+		}
+//		Optional<Comment> comment = commentRepository.findById(likeUser.getCommentId());
+//		if(comment.isPresent()){
+//			Comment newComment = comment.get();
+//			newComment.increaseLikes();
+//			commentRepository.save(newComment);
+//		}
 		likeUserRepository.save(likeUser);
 		return true;
 	}
 
 	// 댓글 좋아요 취소
 	@Override
-	public boolean cancelLikeComment(LikeUser likeUser) {
-		Optional<LikeUser> oldLikeUser = likeUserRepository.findByUserIdAndCommentId(likeUser.getUserId(), likeUser.getCommentId());
+	public boolean cancelLikeComment(int userId, int commentId) {
+		Optional<LikeUser> oldLikeUser = likeUserRepository.findByUserIdAndCommentId(userId, commentId);
 		if(oldLikeUser.isPresent()){
 			likeUserRepository.deleteById(oldLikeUser.get().getId());
+//			Optional<Comment> comment = commentRepository.findById(commentId);
+//			if(comment.isPresent()){
+//				Comment newComment = comment.get();
+//				newComment.decreaseLikes();
+//				commentRepository.save(newComment);
+//			}
+			return true;
+		}
+		return false;
+	}
+
+	// 게시글 좋아요
+	@Override
+	public boolean likePost(LikeUser likeUser) {
+		if(!communityRepository.findById(likeUser.getPostId()).isPresent()){
+			return false;
+		}
+		if(getLike(likeUser.getPostId(), likeUser.getUserId())) {
+			return false;
+		}
+		likeUserRepository.save(likeUser);
+		return true;
+	}
+
+	// 게시글 좋아요 취소
+	@Override
+	public boolean cancelLikePost(int userId, int postId) {
+		Optional<LikeUser> oldLikeUser = likeUserRepository.getByUserIdAndPostId(userId, postId);
+		if(oldLikeUser.isPresent()){
+			likeUserRepository.deleteById(oldLikeUser.get().getId());
+			return true;
+		}
+		return false;
+	}
+
+	// 게시글 스크랩
+	@Override
+	public boolean scrapPost(Scrap scrap) {
+		if(!communityRepository.findById(scrap.getPostId()).isPresent()){
+			return false;
+		}
+		if(getScrap(scrap.getPostId(), scrap.getUserId())){
+			return false;
+		}
+		scrapRepository.save(scrap);
+		return true;
+	}
+
+	// 게시글 스크랩 취소
+	@Override
+	public boolean cancelScrapPost(int userId, int postId) {
+		Optional<Scrap> oldScrap = scrapRepository.getByUserIdAndPostId(userId, postId);
+		if(oldScrap.isPresent()){
+			scrapRepository.deleteById(oldScrap.get().getId());
+			return true;
+		}
+		return false;
+	}
+
+	// 게시글 스크랩 여부 조회
+	@Override
+	public boolean getScrap(int postId, int userId) {
+		Optional<Scrap> scrap = scrapRepository.getByUserIdAndPostId(userId, postId);
+		if(scrap.isPresent()){
+			return true;
+		}
+ 		return false;
+	}
+
+	// 게시글 좋아요 여부 조회
+	@Override
+	public boolean getLike(int postId, int userId) {
+		Optional<LikeUser> likeUser = likeUserRepository.getByUserIdAndPostId(userId, postId);
+		if(likeUser.isPresent()){
 			return true;
 		}
 		return false;

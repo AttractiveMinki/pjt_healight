@@ -29,7 +29,7 @@ public interface UserService {
 	
 	//프로필 편집
 	Map<String, Object> getProfile(int user_id);
-	boolean updateUser(int userId, ProfileIp userRequest) throws IllegalStateException, IOException;
+	boolean updateUser(int userId, ProfileIp profileIp) throws IllegalStateException, IOException;
 	
 	//팔로우, 언팔로우
 	Follow saveFollow(Follow follow);
@@ -38,5 +38,8 @@ public interface UserService {
 
 	// 유저 간단 정보 가져오기
     UserSimpleOp getUserSimpleInfo(int userId);
-	List<UserSimpleOp> getUserSimpleInfoAll(Set<Integer> userIdSet);
+	List<UserSimpleOp> getUserSimpleInfoAll(List<Integer> userIdSet);
+
+	// 댓글 전체 좋아요 정보 가져오기
+    List<Integer> getAllLikeCommentByUserId(List<Integer> commentIdSet, int userId);
 }

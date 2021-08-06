@@ -35,16 +35,16 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 	
 	//[함께 챌린지] 함께 챌린지 만들기
 	@Override
-	public boolean makeWith(WithChallengeIp withInput) {
+	public boolean makeWith(WithChallengeIp withChallengeIp) {
 		
 		// with_challenge 테이블에 insert
-		WithChallenge withchallenge = (WithChallenge) withInput.getWithChallenge();
+		WithChallenge withchallenge = (WithChallenge) withChallengeIp.getWithChallenge();
 		
 			// 키위 점수 계산하기(1일: 100 point)
 		int diffDays = (int)(withchallenge.getEndDate().getTime() - withchallenge.getStartDate().getTime())/(24*60*60*1000);
 		int kiwiPoint = diffDays * 100;
 		withchallenge.setKiwiPoint(kiwiPoint);
-		
+
 		int withChallengeId = withChallengeRepository.save(withchallenge).getId();
 		
 		// my_challenge 테이블에 insert
@@ -54,7 +54,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		myChallengeRepository.save(myChallenge);
 
 		// challenge_hashtag 테이블에 insert
-		String hashtags = withInput.getChallengeHashtag().getWord();
+		String hashtags = withChallengeIp.getChallengeHashtag().getWord();
 		StringTokenizer st = new StringTokenizer(hashtags," ");
 		
 		int challengeHashtagId;
@@ -76,7 +76,6 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		} 
 		return true;
 	}
-
 
 	//[함께 챌린지] 함께 챌린지 목록 가져오기
 	@Override
@@ -111,7 +110,6 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		}
 		return response;
 	}
-
 	
 	//[함께 챌린지] Id에 해당하는 함께 챌린지 상세 정보 가져오기(소개, 인증)
 	@Override

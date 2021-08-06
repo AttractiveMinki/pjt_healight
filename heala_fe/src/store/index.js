@@ -12,21 +12,21 @@ export default new Vuex.Store({
   state: {
     // 한길 #@
     loginUser: {
-      id: 1,
+      id: 2,
       name: "나다",
       image: "blue.jpg",
     },
     postDetail: {
       id: 1,
-      title: "일이삼사오육칠팔구십일이삼사오육칠팔구십일이",
+      title: "기본 init 데이터",
       createdAt: "07/27 13:56",
-      image: "cat.jpg",
+      image: "blue.jpg",
       likes: 0,
       anonymous: 0,
       category: 1,
       subCategory:2,
       access:"",
-      content: "오늘 정말 너무 힘들고 지치는 하루였는데 우리 귀여운 치즈 덕에 힘난다 ㅠ ㅠ 우리네들 파이팅~!!",
+      content: "기본 init 데이터",
       userId: 2,
     },
     postUser: {
@@ -34,50 +34,9 @@ export default new Vuex.Store({
       name: "안나짱",
       image: "user.png",
     },
-    postScrap: {
-      scrap: false,
-    },
-    postLike: {
-      like: true,
-    },
-    comments: [
-      {
-        id: 1,
-        text: "오늘도 치즈 귀여움에 힐링 받고 갑니다.. 치즈는 사랑..♥",
-        likes: 1,
-        createdAt: "00/00 11:11",
-        commentId: "",
-        userId: 2,
-        postId: 2,
-      },
-      {
-        id: 2,
-        text: "치즈는 사랑이지",
-        likes: 1,
-        createdAt: "11/11 22:22",
-        commentId: 1,
-        userId: 1,
-        postId: 2,
-      },
-      {
-        id: 3,
-        text: "test33333333333333333333",
-        likes: 0,
-        createdAt: "00/00 33:33",
-        commentId: "",
-        userId: 2,
-        postId: 2,
-      },
-      {
-        id: 4,
-        text: "test44444444444444444",
-        likes: 0,
-        createdAt: "11/11 44:44",
-        commentId: 1,
-        userId: 1,
-        postId: 2,
-      },
-    ],
+    postScrap: false,
+    postLike: false,
+    comments: [],
     commentUsers: [
       {
         id: 1,
@@ -90,24 +49,7 @@ export default new Vuex.Store({
         image: "blue.jpg",
       },
     ],
-    commentLikes: [
-      {
-        commentId: 1,
-        like: true,
-      },
-      {
-        commentId: 2,
-        like: false,
-      },
-      {
-        commentId: 3,
-        like: true,
-      },
-      {
-        commentId: 4,
-        like: false,
-      },
-    ],
+    commentLikes: [],
     isFollowingList: [
       {
         follow_id: 2,
@@ -250,6 +192,9 @@ export default new Vuex.Store({
     setPostDetail: (state, payload) => {
       state.postDetail = payload.post;
     },
+    setPostUser: (state, payload) => {
+      state.postUser = payload.postUser;
+    },
     setPostComments: (state, payload) => {
       state.comments = payload.comments;
     },
@@ -259,11 +204,21 @@ export default new Vuex.Store({
     setCommentUsers: (state, payload) => {
       state.commentUsers = payload.commentUsers;
     },
+    setCommentLikes: (state, payload) => {
+      state.commentLikes = payload.commentLikes;
+    },
     setPostScrap: (state, payload) => {
-      state.postScrap = payload.postScrap;
+      state.postScrap = payload.scrap;
     },
     setPostLike: (state, payload) => {
-      state.postLike = payload.postLike;
+      state.postLike = payload.like;
+    },
+    setCommentLike: (state, payload) => {
+      state.commentLikes.push(payload.commentId);
+    },
+    setCommentLikeCancel: (state, payload) => {
+      const index = state.commentLikes.findIndex(element => element.userId == payload.userId);
+      state.commentLikes.splice(index, 1);
     },
 
     // 원석 #@
@@ -309,56 +264,54 @@ export default new Vuex.Store({
     setPostDetail(store, { postId }) {
       axios
         .get(SERVER.URL + SERVER.ROUTES.post + postId)
-        .then((response) =>
-          store.commit("setPostDetail", { post: response.data })
-        )
+        .then((response) => {
+          store.commit("setPostDetail", { post: response.data });
+          store.dispatch("setPostUser", { userId: response.data.userId });
+        })
         .catch((exp) => {
           console.log(`게시글 조회에 실패했습니다: ${exp}`);
-          // console.log(util.convertToTree(store.state.comments, "id", "commentId", "childrenComment"))
         });
+    },
+    setPostUser(store, payload) {
+      axios
+        .get(SERVER.URL + SERVER.ROUTES.postUser
+          + `?userId=${payload.userId}`)
+        .then((response) => {
+          store.commit("setPostUser", { postUser: response.data })
+        })
+        .catch((exp) => {
+          console.log(`게시글 작성자 조회에 실패했습니다: ${exp}`);
+        })
     },
     setPostComments(store, { postId }){
       axios
         .get(SERVER.URL + SERVER.ROUTES.post + postId + SERVER.ROUTES.comment)
         .then((response) => {
-          let commentTree = util.convertToTree(response.data, "id", "commentId", "childrenComment");
-          store.commit("setPostComments", { comments: commentTree });
+          let comments = response.data;
           let commentUserIds = new Set();
-          store.state.comments.forEach(comment => {
+          let commentIds = new Set();
+          comments.forEach(comment => {
             commentUserIds.add(comment.userId);
+            commentIds.add(comment.id);
           });
-          store.dispatch("setCommentUsers", { commentUserIds });
+          let commentUserIdArr = Array.from(commentUserIds);
+          let commentIdArr = Array.from(commentIds);
+          store.dispatch("setCommentUsers", { commentUserIds: commentUserIdArr });
+          store.dispatch("setCommentLikes", { commentIds: commentIdArr });
+          let commentTree = util.convertToTree(comments, "id", "commentId", "childrenComment");
+          store.commit("setPostComments", { comments: commentTree });
         })
         .catch((exp) => {
           console.log(`댓글 조회에 실패했습니다: ${exp}`);
+          // 이 밑 두 줄 나중에 삭제
           let commentTree = util.convertToTree(store.state.comments, "id", "commentId", "childrenComment");
           store.commit("setPostComments", { comments: commentTree });
         });
     },
-    setPostScrap(store, { postId }){
-      axios
-        .get(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.scrap + `?postId=${postId}&userId=${store.state.loginUser.id}`)
-        .then((response) =>
-          store.commit("setPostScrap", { scrap: response.data })
-        )
-        .catch((exp) =>
-        console.log(`게시글 스크랩 여부 조회에 실패했습니다: ${exp}`)
-      );
-    },
-    setPostLike(store, { postId }){
-      axios
-        .get(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.like + `?postId=${postId}&userId=${store.state.loginUser.id}`)
-        .then((response) =>
-          store.commit("setPostLike", { like: response.data })
-        )
-        .catch((exp) =>
-        console.log(`게시글 좋아요 여부 조회에 실패했습니다: ${exp}`)
-      );
-    },
     setCommentUsers(store, { commentUserIds }) {
       axios
       .post(SERVER.URL + SERVER.ROUTES.commentUsers, {
-        commentUserIds,
+        userIdSet: commentUserIds,
       })
       .then((response) =>
         store.commit("setCommentUsers", { commentUsers: response.data })
@@ -366,6 +319,49 @@ export default new Vuex.Store({
       .catch((exp) =>
         console.log(`댓글 작성자 조회에 실패했습니다: ${exp}`)
       );
+    },
+    setCommentLikes(store, { commentIds }) {
+      axios
+      .post(SERVER.URL + SERVER.ROUTES.commentLikes, {
+        commentIdSet: commentIds,
+        userId: store.state.loginUser.id,
+      })
+      .then((response) =>
+        store.commit("setCommentLikes", { commentLikes: response.data })
+      )
+      .catch((exp) =>
+        console.log(`댓글 좋아요 조회에 실패했습니다: ${exp}`)
+      );
+    },
+    setPostScrap(store, { postId }){
+      axios
+        .get(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.scrap + `?postId=${postId}&userId=${store.state.loginUser.id}`)
+        .then((response) => {
+          store.commit("setPostScrap", { scrap: response.data })
+        })
+        .catch((exp) => {
+          if(exp.response.status == 404) {
+            store.commit("setPostScrap", { scrap: exp.response.data });
+          }
+          else {
+            console.log(`게시글 스크랩 여부 조회에 실패했습니다: ${exp}`)
+          }
+        });
+    },
+    setPostLike(store, { postId }){
+      axios
+        .get(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.like + `?postId=${postId}&userId=${store.state.loginUser.id}`)
+        .then((response) => {
+          store.commit("setPostLike", { like: response.data })
+        })
+        .catch((exp) => {
+          if(exp.response.status == 404) {
+            store.commit("setPostLike", { like: exp.response.data });
+          }
+          else {
+            console.log(`게시글 좋아요 여부 조회에 실패했습니다: ${exp}`)
+          }
+        });
     },
     follow(store, { follow_id }){
       axios
@@ -382,15 +378,13 @@ export default new Vuex.Store({
           console.log(`팔로우에 실패했습니다: ${exp}`)
         });
     },
-    cancelFollow(store, { follow_id }){
+    cancelFollow(store, { followId }){
       axios
-        .delete(SERVER.URL + SERVER.ROUTES.follow, {
-          user_id: store.state.loginUser.id,
-          follow_id,
-        })
+        .delete(SERVER.URL + SERVER.ROUTES.follow
+          + `?userId=${store.state.loginUser.id}&followId=${followId}`)
         .then(() => {
           // 이 부분은 필요없나? 헷갈림
-          const index = store.state.isFollowingList.findIndex(element => element.follow_id == follow_id);
+          const index = store.state.isFollowingList.findIndex(element => element.follow_id == followId);
           store.commit("setIsFollowing", { index, isFollowing: false });
         })
         .catch((exp) => {
@@ -400,59 +394,91 @@ export default new Vuex.Store({
     likePost(store, { postId }){
       axios
         .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.like, {
-          user_id: store.state.loginUser.id,
-          post_id: postId,
+          userId: store.state.loginUser.id,
+          postId: postId,
+        })
+        .then((response) => {
+          store.commit("setPostLike", { like: response.data })
         })
         .catch((exp) => {
-          console.log(`게시글 좋아요에 실패했습니다: ${exp}`)
+          if(exp.response.status == 409) {
+            console.log("이미 존재하는 게시글 좋아요 정보가 있습니다.");
+          }
+          else {
+            console.log(`게시글 좋아요에 실패했습니다: ${exp}`)
+          }
         });
     },
     cancelLikePost(store, { postId }){
       axios
-        .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.like, {
-          user_id: store.state.loginUser.id,
-          post_id: postId,
+        .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.like
+          + `?userId=${store.state.loginUser.id}&postId=${postId}`)
+        .then((response) => {
+          store.commit("setPostLike", { like: response.data })
         })
         .catch((exp) => {
-          console.log(`게시글 좋아요 취소에 실패했습니다: ${exp}`)
+          if(exp.response.status == 404) {
+            console.log("게시글 좋아요 정보가 존재하지 않습니다.");
+          }
+          else {
+            console.log(`게시글 좋아요 취소에 실패했습니다: ${exp}`)
+          }
         });
     },
     scrapPost(store, { postId }){
       axios
         .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.scrap, {
-          user_id: store.state.loginUser.id,
-          post_id: postId,
+          userId: store.state.loginUser.id,
+          postId,
+        })
+        .then((response) => {
+          store.commit("setPostScrap", { scrap: response.data })
         })
         .catch((exp) => {
-          console.log(`게시글 스크랩에 실패했습니다: ${exp}`)
+          if(exp.response.status == 409) {
+            console.log("이미 존재하는 게시글 스크랩 정보가 있습니다.");
+          }
+          else {
+            console.log(`게시글 스크랩에 실패했습니다: ${exp}`)
+          }
         });
     },
     cancelScrapPost(store, { postId }){
       axios
-        .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.scrap, {
-          user_id: store.state.loginUser.id,
-          post_id: postId,
+        .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.scrap
+          + `?userId=${store.state.loginUser.id}&postId=${postId}`)
+        .then((response) => {
+          store.commit("setPostScrap", { scrap: response.data })
         })
         .catch((exp) => {
-          console.log(`게시글 스크랩 취소에 실패했습니다: ${exp}`)
+          if(exp.response.status == 404) {
+            console.log("게시글 스크랩 정보가 존재하지 않습니다.");
+          }
+          else {
+            console.log(`게시글 스크랩 취소에 실패했습니다: ${exp}`)
+          }
         });
     },
     createComment(store, payload) {
       axios
         .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment, {
           text: payload.message,
-          user_id: store.state.loginUser.id,
-          post_id: payload.postId,
+          userId: store.state.loginUser.id,
+          postId: payload.postId,
+          commentId: payload.commentId,
         })
+        .then(() =>
+          store.dispatch("setPostComments", { postId: payload.postId })
+        )
         .catch((exp) => {
           console.log(`댓글 작성에 실패했습니다: ${exp}`)
         });
     },
     deleteComment(store, payload) {
       axios
-        .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment + payload.commetId)
-        .then((response) =>
-          store.commit("setPostComments", { comments: response.data })
+        .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment + payload.commentId)
+        .then(() =>
+          store.dispatch("setPostComments", { postId: payload.postId })
         )
         .catch((exp) =>
           console.log(`댓글 삭제에 실패했습니다: ${exp}`)
@@ -461,21 +487,34 @@ export default new Vuex.Store({
     likeComment(store, payload) {
       axios
         .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment + SERVER.ROUTES.like, {
-          user_id: store.state.loginUser.id,
-          comment_id: payload.commentId,
+          userId: store.state.loginUser.id,
+          commentId: payload.commentId,
+        })
+        .then(() => {
+          // store.commit("setCommentLike", { userId: store.state.loginUser.id, like: true })
+          store.commit("setCommentLike", { commentId: payload.commentId });
         })
         .catch((exp) => {
-          console.log(`댓글 좋아요에 실패했습니다: ${exp}`)
+          if(exp.response.status == 409) {
+            console.log("이미 존재하는 댓글 좋아요 정보가 있습니다.");
+          }
+          else{
+            console.log(`댓글 좋아요에 실패했습니다: ${exp}`)}
         });
     },
     cancelLikeComment(store, payload) {
       axios
-        .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment + SERVER.ROUTES.like, {
-          user_id: store.state.loginUser.id,
-          comment_id: payload.commentId,
+        .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment + SERVER.ROUTES.like
+          + `?userId=${store.state.loginUser.id}&commentId=${payload.commentId}`)
+        .then(() => {
+          store.commit("setCommentLikeCancel", { commentId: payload.commentId, userId: store.state.loginUser.id })
         })
         .catch((exp) => {
-          console.log(`댓글 좋아요 취소에 실패했습니다: ${exp}`)
+          if(exp.response.status == 404) {
+            console.log("존재하는 댓글 좋아요 정보가 없습니다.");
+          }
+          else
+            console.log(`댓글 좋아요 취소에 실패했습니다: ${exp}`);
         });
     },
 

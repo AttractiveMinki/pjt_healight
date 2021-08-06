@@ -6,10 +6,10 @@
       </slot>
       <div class="input-wrapper">
       <slot name="input">
-        <input v-model="message" type="text" placeholder="댓글 달기..">
+        <input v-model="message" type="text" :placeholder="placeholderMsg">
       </slot>
       </div>
-      <button :class="{ disabled:!message }" @click="$emit('write', this.message)">
+      <button :class="{ disabled:!message }" @click="writeComment">
         <slot name="button">작성</slot>
       </button>
     </div>
@@ -20,6 +20,7 @@
 import UserImage from "@/components/UserImage.vue";
 export default {
     name: "InputMessage",
+    props: [ 'placeholderMsg' ],
     data() {
         return {
             message: "",
@@ -29,6 +30,12 @@ export default {
       loginUser() {
         return this.$store.state.loginUser;
       }
+    },
+    methods: {
+      writeComment() {
+        this.$emit('write', this.message);
+        this.message = "";
+      },
     },
     components: { UserImage },
 }

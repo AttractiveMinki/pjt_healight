@@ -34,8 +34,8 @@ public class ChallengeController {
 	
 	@ApiOperation(value = "함께 챌린지 만들기")
 	@PostMapping("/with")
-	public Object makeWith(@RequestBody WithChallengeIp withInput) {
-		if(withChallengeService.makeWith(withInput)) {
+	public Object makeWith(@RequestBody WithChallengeIp withChallengeIp) {
+		if(withChallengeService.makeWith(withChallengeIp)) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

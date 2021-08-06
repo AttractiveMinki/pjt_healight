@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.ssafy.kiwi.model.domain.entity.Post;
 import com.ssafy.kiwi.model.domain.entity.Comment;
 import com.ssafy.kiwi.model.domain.entity.LikeUser;
+import com.ssafy.kiwi.model.domain.entity.Scrap;
 
 public interface CommunityService {
 	
@@ -31,5 +32,24 @@ public interface CommunityService {
 	boolean likeComment(LikeUser likeUser);
 
 	// 댓글 좋아요 취소
-	boolean cancelLikeComment(LikeUser likeUser);
+	boolean cancelLikeComment(int userId, int commentId);
+
+	// 게시글 좋아요
+	boolean likePost(LikeUser likeUser);
+
+	// 게시글 좋아요 취소
+	boolean cancelLikePost(int userId, int postId);
+
+	// 게시글 스크랩
+	boolean scrapPost(Scrap scrap);
+
+	// 게시글 스크랩 취소
+	boolean cancelScrapPost(int userId, int postId);
+
+	// 게시글 스크랩 여부 조회
+	boolean getScrap(int postId, int userId);
+
+	// 게시글 좋아요 여부 조회
+	boolean getLike(int postId, int userId);
+
 }

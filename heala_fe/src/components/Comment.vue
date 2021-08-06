@@ -9,20 +9,23 @@
                 <span class="comment-user-name">{{ commentUser.name }}</span>
                 {{ text }}
                 <div class="comment-info">
-                <button class="comment-button">{{ createdAt }}</button>
-                <button class="comment-button">추천 {{ likes }}개</button>
-                <button v-if="!commentId" class="comment-button comment-reply">답글 달기</button>
-                <button v-if="userId == loginUser.id" @click="showModal = true" class="comment-button comment-delete">삭제</button>
-                <modal v-if="showModal" @yes="deleteComment" @no="showModal = false">
-                    <div slot="header">댓글 삭제</div>
-                    <div slot="body">댓글을 삭제하시겠습니까?</div>
-                </modal>
+                    <button class="comment-button">{{ createdAt }}</button>
+                    <button class="comment-button">추천 {{ likes }}개</button>
+                    <button v-if="!commentId" @click="showReplyModal = true" class="comment-button comment-reply">답글 달기</button>
+                    <modal v-if="showReplyModal" @yes="replyComment" @no="showReplyModal = false">
+                        <div slot="header">답글</div>
+                        <div slot="body">답글을 작성하시겠습니까?</div>
+                    </modal>
+                    <button v-if="userId == loginUser.id" @click="showDeleteModal = true" class="comment-button comment-delete">삭제</button>
+                    <modal v-if="showDeleteModal" @yes="deleteComment" @no="showDeleteModal = false">
+                        <div slot="header">댓글 삭제</div>
+                        <div slot="body">댓글을 삭제하시겠습니까?</div>
+                    </modal>
                 </div>
             </div>
-            <star :like="likeUI" @cancelStar="cancelStar" @star="star" class="star"></star>
+            <star :like="like" @cancelStar="cancelStar" @star="star" class="star"></star>
         </div>
     </div>
-    <!-- <div>{{ childrenComment }}</div> -->
     <div v-if="childrenComment">
         <comment 
             v-for="childComment in childrenComment"
@@ -43,8 +46,8 @@ export default {
     props: [ 'id', 'text', 'likes', 'createdAt', 'commentId', 'userId', 'postId', 'childrenComment'],
     data() {
         return {
-            likeUI: this.$store.state.commentLikes.find(like => like.commentId == this.id).like,
-            showModal: false,
+            showReplyModal: false,
+            showDeleteModal: false,
         }
     },
     computed: {
@@ -54,18 +57,24 @@ export default {
         commentUser() {
             return this.$store.state.commentUsers.find(user => user.id == this.userId);
         },
+        like() {
+            return this.$store.state.commentLikes.find(commentId => commentId == this.id) > -1;
+        },
     },
     methods: {
         cancelStar() {
-            this.likeUI = 0;
-            this.$store.dispatch("cancelLikeComment", { commentId: this.commentId });
+            this.$store.dispatch("cancelLikeComment", { commentId: this.id });
         },
         star() {
-            this.likeUI = 1;
-            this.$store.dispatch("likeComment", { commentId: this.commentId });
+            this.$store.dispatch("likeComment", { commentId: this.id });
+        },
+        replyComment() {
+            this.showReplyModal = false;
+            this.$emit('reply', this.id);
         },
         deleteComment() {
-            this.$store.dispatch("deleteComment", { commentId: this.commentId });
+            this.showDeleteModal = false;
+            this.$store.dispatch("deleteComment", { commentId: this.id, postId: this.postId });
         },
     },
     components: { UserImage, Star, Modal, },

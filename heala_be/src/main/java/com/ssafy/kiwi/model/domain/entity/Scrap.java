@@ -10,19 +10,14 @@ import javax.persistence.*;
 @Builder
 @Getter
 @ToString
-@Table(name = "like_users")
-public class LikeUser {
+public class Scrap {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "user_id")
     private int userId;
 
     @Column(name = "post_id")
-    private Integer postId;
-
-    @Column(name = "comment_id")
-    private Integer commentId;
+    private int postId;
 }

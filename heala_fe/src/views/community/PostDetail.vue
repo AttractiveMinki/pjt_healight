@@ -12,9 +12,9 @@
             <img :src="require(`@/assets/image/${post.image}`)" alt="" class="post-image">
         </div>
         <div class="icon-wrapper">
-            <star :like="likeUI" @cancelStar="cancelStar" @star="star"></star>
-            <font-awesome-icon :icon="['far', 'comment']" class="icon" />
-            <font-awesome-icon :icon="['fas', 'bookmark']" v-if="scrapUI" @click="cancelScrap" class="icon icon-bookmark" />
+            <star :like="postLike" @cancelStar="cancelStar" @star="star"></star>
+            <font-awesome-icon :icon="['far', 'comment']" @click="newComment" class="icon" />
+            <font-awesome-icon :icon="['fas', 'bookmark']" v-if="postScrap" @click="cancelScrap" class="icon icon-bookmark" />
             <font-awesome-icon :icon="['far', 'bookmark']" v-else @click="scrap" class="icon icon-bookmark" />
         </div>
         <el-row>
@@ -31,12 +31,13 @@
               v-for="comment in comments"
               v-bind="comment"
               v-bind:key="comment.id"
+              @reply="reply"
             ></comment>
         </div>
         <div class="rest"></div>
     </div>
     <el-row>
-        <input-message @write="createComment"></input-message>
+        <input-message :placeholderMsg="placeholderMsg" @write="createComment"></input-message>
     </el-row>
   </div>
 </template>
@@ -52,8 +53,9 @@ export default {
     name: "PostDetail",
     data() {
         return {
-            likeUI: this.$store.state.postLike.like,
-            scrapUI: this.$store.state.postScrap.scrap,
+            // scrapUI: this.$store.state.postScrap,
+            replyCommentId: Number,
+            placeholderMsg: "댓글을 입력해주세요",
         }
     },
     computed: {
@@ -66,6 +68,12 @@ export default {
         postUser() {
             return this.$store.state.postUser;
         },
+        postLike() {
+            return this.$store.state.postLike;
+        },
+        postScrap() {
+            return this.$store.state.postScrap;
+        },
     },
     created() {
         let postId = this.$route.params.id;
@@ -76,11 +84,9 @@ export default {
     },
     methods: {
         cancelStar() {
-            this.likeUI = 0;
             this.$store.dispatch("cancelLikePost", { postId: this.post.id });
         },
         star() {
-            this.likeUI = 1;
             this.$store.dispatch("likePost", { postId: this.post.id });
         },
         cancelScrap() {
@@ -91,8 +97,16 @@ export default {
             this.scrapUI = 1;
             this.$store.dispatch("scrapPost", { postId: this.post.id });
         },
+        reply(id) {
+            this.replyCommentId = id;
+            this.placeholderMsg = "답글을 입력해주세요";
+        },
+        newComment() {
+            this.replyCommentId = false;
+            this.placeholderMsg = "댓글을 입력해주세요";
+        },
         createComment(message) {
-            this.$store.dispatch("createComment", { message });
+            this.$store.dispatch("createComment", { message, postId: this.post.id, commentId: this.replyCommentId });
         },
     },
     components: { InputMessage, PostHeader, Star, UserImage, Comment },

@@ -3,6 +3,7 @@ package com.ssafy.kiwi.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.ssafy.kiwi.model.domain.entity.Scrap;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -56,6 +57,60 @@ public class CommunityController {
 		return new ResponseEntity<>(communityService.getPostComments(postId), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "게시글 스크랩 여부 조회")
+	@GetMapping("/post/scrap")
+	public Object getPostScrap(@RequestParam int postId, @RequestParam int userId){
+		if(communityService.getScrap(postId, userId)){
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+	}
+
+	@ApiOperation(value = "게시글 좋아요 여부 조회")
+	@GetMapping("/post/like")
+	public Object getPostLike(@RequestParam int postId, @RequestParam int userId){
+		if(communityService.getLike(postId, userId)){
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+	}
+
+	@ApiOperation(value = "게시글 좋아요")
+	@PostMapping("/post/like")
+	public Object likePost(@RequestBody LikeUser likeUser){
+		if(communityService.likePost(likeUser)){
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.CONFLICT);
+	}
+
+	@ApiOperation(value = "게시글 좋아요 취소")
+	@DeleteMapping("/post/like")
+	public Object cancelLikePost(@RequestParam int userId, @RequestParam int postId){
+		if(communityService.cancelLikePost(userId, postId)){
+			return new ResponseEntity<>(false, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
+	@ApiOperation(value = "게시글 스크랩")
+	@PostMapping("/post/scrap")
+	public Object scrapPost(@RequestBody Scrap scrap){
+		if(communityService.scrapPost(scrap)){
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.CONFLICT);
+	}
+
+	@ApiOperation(value = "게시글 스크랩 취소")
+	@DeleteMapping("/post/scrap")
+	public Object cancelScrapPost(@RequestParam int userId, @RequestParam int postId){
+		if(communityService.cancelScrapPost(userId, postId)){
+			return new ResponseEntity<>(false, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
 	@ApiOperation(value = "댓글 작성")
 	@PostMapping("/post/comment")
 	public Object makeComment(@RequestBody Comment comment){
@@ -64,7 +119,7 @@ public class CommunityController {
 	}
 
 	@ApiOperation(value = "댓글 삭제")
-	@PostMapping("/post/comment/{commentId}")
+	@DeleteMapping("/post/comment/{commentId}")
 	public Object deleteComment(@PathVariable int commentId){
 		communityService.deleteComment(commentId);
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -74,16 +129,16 @@ public class CommunityController {
 	@PostMapping("/post/comment/like")
 	public Object likeComment(@RequestBody LikeUser likeUser){
 		if(communityService.likeComment(likeUser)){
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(true, HttpStatus.OK);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
 
-	@ApiOperation(value = "댓글 좋아요")
+	@ApiOperation(value = "댓글 좋아요 취소")
 	@DeleteMapping("/post/comment/like")
-	public Object cancelLkeComment(@RequestBody LikeUser likeUser){
-		if(communityService.cancelLikeComment(likeUser)){
-			return new ResponseEntity<>(HttpStatus.OK);
+	public Object cancelLkeComment(@RequestParam int userId, @RequestParam int commentId){
+		if(communityService.cancelLikeComment(userId, commentId)){
+			return new ResponseEntity<>(false, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}

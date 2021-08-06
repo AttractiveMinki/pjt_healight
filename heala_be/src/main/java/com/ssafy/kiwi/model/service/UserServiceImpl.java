@@ -5,18 +5,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-import com.ssafy.kiwi.model.domain.entity.Badge;
-import com.ssafy.kiwi.model.domain.entity.Follow;
-import com.ssafy.kiwi.model.domain.repository.FollowRepository;
+import com.ssafy.kiwi.model.domain.entity.*;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ssafy.kiwi.model.domain.entity.User;
-import com.ssafy.kiwi.model.domain.entity.UserBadge;
+import com.ssafy.kiwi.model.domain.repository.FollowRepository;
+import com.ssafy.kiwi.model.domain.repository.LikeUserRepository;
 import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
+
 import com.ssafy.kiwi.model.dto.ProfileIp;
 import com.ssafy.kiwi.model.dto.UserSimpleOp;
 
@@ -29,6 +28,7 @@ public class UserServiceImpl implements UserService {
     final private UserRepository userRepository;
     final private UserBadgeRepository userbadgeRepository;
     final private FollowRepository followRepository;
+    final private LikeUserRepository likeUserRepository;
     
     //아이디 중복 검사
 	@Override
@@ -101,13 +101,13 @@ public class UserServiceImpl implements UserService {
 
 	//프로필 편집 반영하기
 	@Override
-	public boolean updateUser(int userId, ProfileIp userRequest) throws IllegalStateException, IOException {
+	public boolean updateUser(int userId, ProfileIp profileIp) throws IllegalStateException, IOException {
 		User updateUser = getUserProfile(userId);
 		boolean user_update = false;
 		boolean badge_update = false;
-		User user = userRequest.getUser();
-		List<UserBadge> badges = userRequest.getBadges();
-		MultipartFile image = userRequest.getImage();
+		User user = profileIp.getUser();
+		List<UserBadge> badges = profileIp.getBadges();
+		MultipartFile image = profileIp.getImage();
 
 		//프로필 사진 변경
 		//null exception 나니까 프론트랑 어떻게 처리할지 상의하기
@@ -162,7 +162,12 @@ public class UserServiceImpl implements UserService {
 
 	// 유저 간단 정보 여러 명 불러오기
 	@Override
-	public List<UserSimpleOp> getUserSimpleInfoAll(Set<Integer> userIdSet) {
+	public List<UserSimpleOp> getUserSimpleInfoAll(List<Integer> userIdSet) {
 		return userRepository.getUserSimpleInfoByIds(userIdSet);
+	}
+
+	@Override
+	public List<Integer> getAllLikeCommentByUserId(List<Integer> commentIdSet, int userId) {
+		return likeUserRepository.getAllLikeUserByUserId(commentIdSet, userId);
 	}
 }
