@@ -3,7 +3,7 @@
     <el-row>
       <router-link :to="{ name: 'home' }" class="text-decoration-none">
         <el-col :span="5">
-          []<font-awesome-icon icon="home" color="#ADEC6E" />
+          <font-awesome-icon icon="home" color="#ADEC6E" />
         </el-col>
       </router-link>
       <router-link :to="{ name: 'CommunityMain' }" class="text-decoration-none">
@@ -33,7 +33,7 @@
 <script>
 export default {
   name: "Footer",
-
+  
 }
 </script>
 
