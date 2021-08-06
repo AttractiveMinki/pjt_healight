@@ -114,11 +114,11 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "유저 한 명 간단 정보 불러오기")
-	@GetMapping("/simple/{userId}")
-	public Object getUserSimpleInfoOne(@PathVariable int userId){
+	@GetMapping("/simple")
+	public Object getUserSimpleInfoOne(@RequestParam int userId){
 		UserSimpleOp userSimpleOp = userService.getUserSimpleInfo(userId);
 		if(userSimpleOp != null){
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(userSimpleOp, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}

@@ -192,6 +192,9 @@ export default new Vuex.Store({
     setPostDetail: (state, payload) => {
       state.postDetail = payload.post;
     },
+    setPostUser: (state, payload) => {
+      state.postUser = payload.postUser;
+    },
     setPostComments: (state, payload) => {
       state.comments = payload.comments;
     },
@@ -211,8 +214,6 @@ export default new Vuex.Store({
       state.postLike = payload.like;
     },
     setCommentLike: (state, payload) => {
-      // const index = state.commentLikes.findIndex(element => element.userId == payload.userId);
-      // state.commentLikes[index] = payload.commentLike;
       state.commentLikes.push(payload.commentId);
     },
     setCommentLikeCancel: (state, payload) => {
@@ -263,12 +264,24 @@ export default new Vuex.Store({
     setPostDetail(store, { postId }) {
       axios
         .get(SERVER.URL + SERVER.ROUTES.post + postId)
-        .then((response) =>
-          store.commit("setPostDetail", { post: response.data })
-        )
+        .then((response) => {
+          store.commit("setPostDetail", { post: response.data });
+          store.dispatch("setPostUser", { userId: response.data.userId });
+        })
         .catch((exp) => {
           console.log(`게시글 조회에 실패했습니다: ${exp}`);
         });
+    },
+    setPostUser(store, payload) {
+      axios
+        .get(SERVER.URL + SERVER.ROUTES.postUser
+          + `?userId=${payload.userId}`)
+        .then((response) => {
+          store.commit("setPostUser", { postUser: response.data })
+        })
+        .catch((exp) => {
+          console.log(`게시글 작성자 조회에 실패했습니다: ${exp}`);
+        })
     },
     setPostComments(store, { postId }){
       axios
