@@ -102,13 +102,14 @@
         </el-row>
       </router-link>
     </div>  
-    
+    <Footer />
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/my_page/Navbar"
 import { mapState } from "vuex"
+import Footer from "@/components/home/Footer"
 
 export default {
   name: "Profile",
@@ -122,6 +123,7 @@ export default {
   },
   components: {
     Navbar,
+    Footer,
   },
   computed: {
     ...mapState([

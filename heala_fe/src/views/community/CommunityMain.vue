@@ -65,11 +65,13 @@
           </el-col>
         </el-col>
       </el-col>
-    </el-row>    
+    </el-row> 
+    <Footer />   
   </div>
 </template>
 
 <script>
+import Footer from "@/components/home/Footer"
 import { mapState, mapActions } from "vuex"
 
 export default {
@@ -80,6 +82,9 @@ export default {
       },
       isvisible: false,
     }
+  },
+  components: {
+    Footer,
   },
   methods: {
     ...mapActions([
