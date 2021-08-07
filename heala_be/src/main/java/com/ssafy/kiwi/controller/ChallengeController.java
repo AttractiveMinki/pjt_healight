@@ -95,4 +95,11 @@ public class ChallengeController {
 			@RequestParam(value="withChallengeId", required=true) int withChallengeId) {
 		return new ResponseEntity<>(withChallengeService.resultMyChallenge(userId, withChallengeId), HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "마이 챌린지 인증사진 모아보기.")
+	@GetMapping("/my/photo")
+	public Object photoMyChallenge(@RequestParam(value="userId", required=true) int userId,
+			@RequestParam(value="withChallengeId", required=true) int withChallengeId) {
+		return new ResponseEntity<>(withChallengeService.photoMyChallenge(userId, withChallengeId), HttpStatus.OK);		
+	}
 }

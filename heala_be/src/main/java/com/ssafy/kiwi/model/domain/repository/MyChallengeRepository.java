@@ -18,4 +18,5 @@ public interface MyChallengeRepository extends JpaRepository<MyChallenge, Intege
 	Optional<MyChallenge> getMyChallengeByUserIdAndWithChallengeId(int userId, int withChallengeId);
 	
 	int countByWithChallengeId(int withChallengeId);
+	
 }
