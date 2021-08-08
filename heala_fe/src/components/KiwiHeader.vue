@@ -4,14 +4,16 @@
       <div class="title">
         <slot name="title">마음</slot>
       </div>
-      <font-awesome-icon icon="ellipsis-v" />
+      <div class="ellipsis">
+        <slot name="ellipsis"></slot>
+      </div>
       <hr>
   </div>
 </template>
 
 <script>
 export default {
-    name: "PostHeader",
+    name: "KiwiHeader",
     data() {
         return {
             
@@ -36,7 +38,15 @@ export default {
   font-weight: bold;
   display: inline-block;
 }
+.ellipsis {
+  width: 5px;
+  display: inline-block;
+}
 hr {
   margin: 18px 18px 0px 18px;
+  border-top: 1px solid #bbb;
+  border-right: 0px;
+  border-bottom: 0px;
+  border-left: 0px;
 }
 </style>
