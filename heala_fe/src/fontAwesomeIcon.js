@@ -9,12 +9,14 @@ import {
   faEllipsisV,
   faArrowLeft,
   faBookmark as fasBookmark,
-  faStar as fasStar
+  faStar as fasStar,
+  faSearch
 } from "@fortawesome/free-solid-svg-icons";
 import { 
   faBookmark as farBookmark,
   faStar as farStar,
-  faComment as farComment
+  faComment as farComment,
+  faEnvelope,
 } from "@fortawesome/free-regular-svg-icons";
 
 // 주엽 #@
@@ -25,8 +27,8 @@ import { faStar, faBell, faImages, faPlusSquare } from "@fortawesome/free-regula
 
 // 한길 #@
 // 불러온 아이콘을 라이브러리에 담습니다.
-library.add(faEllipsisV, faArrowLeft, fasBookmark, fasStar);
-library.add(farBookmark, farStar, farComment);
+library.add(faEllipsisV, faArrowLeft, fasBookmark, fasStar, faSearch);
+library.add(farBookmark, farStar, farComment, faEnvelope);
 
 // 주엽 #@
 // 불러온 아이콘을 라이브러리에 담습니다.

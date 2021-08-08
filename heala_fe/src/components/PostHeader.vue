@@ -25,7 +25,6 @@ export default {
   position: absolute;
   top: 0px;
   left: 0px;
-  /* border-bottom-color: darkgray; */
   width: 100%;
   padding: 15px 0px;
   margin: 0px;
