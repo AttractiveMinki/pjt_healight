@@ -236,16 +236,21 @@ export default new Vuex.Store({
       state.feeds = feeds
     },
     SET_USERID: function (state, res) {
-      state.userid = res.userid
+      // state.userid = res.userid
+      // localStorage.setItem('userid', res.userid); // 백엔드에서 보내주는 양식에 맞게 수정하면 끝
+      localStorage.setItem('userid', res.data); // 백엔드에서 보내주는 양식에 맞게 수정하면 끝
     },
-    SET_USERNAME: function (state, res) {
-      state.username = res.username
+    SET_USERNAME: function (state, data) {
+      state.username = data.identity
+      localStorage.setItem('username', data.identity);
     },
     INIT_USERID: function (state) {
       state.userid = ""
+      localStorage.setItem('userid', '');
     },
     INIT_USERNAME: function (state) {
       state.username = ""
+      localStorage.setItem('username', '');
     },
     // SET_CHECKIDENTITY: function (state) {
     //   state.check_identity = false
@@ -543,7 +548,7 @@ export default new Vuex.Store({
           console.log(res)
           console.log("로그인 요청 성공")
           commit("SET_USERID", res)
-          commit("SET_USERNAME", res)
+          commit("SET_USERNAME", data)
           // commit("SET_TOKEN", res.data.token) // jwt 사용시 적용
           // commit("GET_USERNAME") // 가서 디코딩하기
           // commit("GET_USERID") // 가서 디코딩하기
