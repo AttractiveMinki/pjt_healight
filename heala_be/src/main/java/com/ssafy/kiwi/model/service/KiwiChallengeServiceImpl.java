@@ -40,13 +40,16 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 			mission.put("badgeId", km.getBadge_id());
 			
 			//userId에 맞는 미션 성공 여부 찾기
+			boolean complete = false;
 			Collection<KiwiUser> kiwi_user = km.getKiwiUser();
 			for(KiwiUser ku : kiwi_user) {
 				if(ku.getUserId()==userId) {
 					mission.put("completeDate", ku.getCompleteDate());
+					complete = true;
 					break;
 				}
 			}
+			if(!complete) mission.put("completeDate", null);
 			missions.add(mission);
 		}
 		return missions;
