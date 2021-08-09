@@ -60,6 +60,9 @@ public class UserController {
 	public Object login(@RequestBody User user) {
 		Optional<User> userOpt = userService.login(user.getIdentity(), user.getPassword());
 		if (userOpt.isPresent()) {
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("id", userOpt.get().getId());
+			response.put("name", userOpt.get().getName());
 			return new ResponseEntity<>(userOpt.get().getId(), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
