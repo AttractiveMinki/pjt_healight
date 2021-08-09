@@ -64,11 +64,12 @@ export default new Vuex.Store({
     // 원석 #@
 
     // 주엽 #@
-    username: "",
-    userid: 1,
+    userName: "",
+    userId: 1,
     currentPageId: 0,
     currentPageCategory: 0,
     profileSelectedCategory: 1,
+    selectedRouter: "",
     // check_email: true,
     // check_identity: true,
 
@@ -183,9 +184,9 @@ export default new Vuex.Store({
     // 원석 #@
 
     // 주엽 #@
-    isLoggedIn: function (state) {
+    isLoggedIn: function () {
       // authToken이 있으면 True, 없으면 False
-      return state.userid === "" ? true : false
+      return localStorage.getItem('userId') === "" ? true : false
     },
   },
   mutations: {
@@ -236,16 +237,21 @@ export default new Vuex.Store({
       state.feeds = feeds
     },
     SET_USERID: function (state, res) {
-      state.userid = res.userid
+      // state.userid = res.userid
+      // localStorage.setItem('userid', res.userid); // 백엔드에서 보내주는 양식에 맞게 수정하면 끝
+      localStorage.setItem('userId', res.data); // 백엔드에서 보내주는 양식에 맞게 수정하면 끝
     },
-    SET_USERNAME: function (state, res) {
-      state.username = res.username
+    SET_USERNAME: function (state, data) {
+      state.userName = data.identity
+      localStorage.setItem('userName', data.identity);
     },
     INIT_USERID: function (state) {
-      state.userid = ""
+      state.userId = ""
+      localStorage.setItem('userId', '');
     },
     INIT_USERNAME: function (state) {
-      state.username = ""
+      state.userName = ""
+      localStorage.setItem('userName', '');
     },
     // SET_CHECKIDENTITY: function (state) {
     //   state.check_identity = false
@@ -540,10 +546,10 @@ export default new Vuex.Store({
       console.log(data)
       axios.post(SERVER.URL + SERVER.ROUTES.login, data)
         .then((res) => {
-          console.log(res)
-          console.log("로그인 요청 성공")
+          // console.log(res)
+          // console.log("로그인 요청 성공")
           commit("SET_USERID", res)
-          commit("SET_USERNAME", res)
+          commit("SET_USERNAME", data)
           // commit("SET_TOKEN", res.data.token) // jwt 사용시 적용
           // commit("GET_USERNAME") // 가서 디코딩하기
           // commit("GET_USERID") // 가서 디코딩하기

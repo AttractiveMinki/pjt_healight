@@ -211,13 +211,12 @@ export default {
   },
   methods: {
     getKiwiHealthChallenge: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}` + this.$store.state.userid)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}` + localStorage.getItem('userId'))
         .then((res) => {
           console.log(res)
-          this.users = res.data
         })
         .catch((err) => {
-          console.error(err)
+          console.error(err.response.data)
         })
     },
   },

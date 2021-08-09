@@ -209,13 +209,12 @@ export default {
   },
   methods: {
     getKiwiDietChallenge: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiDietChallenge}` + this.$store.state.userid)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiDietChallenge}` + localStorage.getItem('userId'))
         .then((res) => {
           console.log(res)
-          this.users = res.data
         })
         .catch((err) => {
-          console.error(err)
+          console.error(err.response.data)
         })
     },
   },

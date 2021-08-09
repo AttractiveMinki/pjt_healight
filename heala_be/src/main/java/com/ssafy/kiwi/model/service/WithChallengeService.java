@@ -5,6 +5,7 @@ import java.util.*;
 import com.ssafy.kiwi.model.domain.entity.CertifyImage;
 import com.ssafy.kiwi.model.domain.entity.MyChallenge;
 import com.ssafy.kiwi.model.domain.entity.WithChallenge;
+import com.ssafy.kiwi.model.dto.CertifyImageOp;
 import com.ssafy.kiwi.model.dto.WithChallengeIp;
 
 
@@ -26,12 +27,15 @@ public interface WithChallengeService {
 
 	public Object getMyChallenge(int userId);
 
+	// 함께 챌린지 참여하기
+	public void joinWithChallenge(int withChallengeId, int userId);
+	
 	// 마이 챌린지 - 인증하기
 	public boolean certifyMyChallenge(CertifyImage certifyImage);
 
 	// 마이 챌린지 - 결과보기
 	public Object resultMyChallenge(int userId, int withChallengeId);
-	
-	// 함께 챌린지 참여하기
-	public void joinWithChallenge(int withChallengeId, int userId);
+
+	// 마이 챌린지 - 인증사진 모아보기
+	public List<CertifyImageOp> photoMyChallenge(int userId, int withChallengeId);
 }

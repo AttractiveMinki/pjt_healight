@@ -92,14 +92,12 @@ export default {
       this.$router.go(-1)
     },
     getWithDetail: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?userId=${this.$store.state.userid}&withChallengeId=${this.$store.state.currentPageCategory}`)
-      // axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?challengeId=${this.$store.state.currentPageCategory}&userId=${this.$store.state.userid}`) // 원본
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?userId=${localStorage.getItem('userId')}&withChallengeId=${this.$store.state.currentPageCategory}`)
+      // axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?challengeId=${this.$store.state.currentPageCategory}&userId=${this.$store.state.userId}`) // 원본
         .then((res) => {
-          console.log(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?userId=${this.$store.state.userid}&withChallengeId=${this.$store.state.currentPageCategory}`)
           this.datas = res.data
         })
         .catch((err) => {
-          // console.log(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?userId=${this.$store.state.userid}&withChallengeId=${this.$store.state.currentPageCategory}`)
           console.log(err)
         })
     },

@@ -8,7 +8,7 @@
         <font-awesome-icon :icon="['far', 'bell']" style="margin: 2vw" />
       </span>
     </div> -->
-    <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect">
+    <el-menu mode="horizontal">
       <el-row class="display-flex justify-content-space-between align-items">
         <el-col :span="18">
           <el-menu-item index="1" class="display-flex"><span class="display-flex align-items"><font-awesome-icon icon="arrow-left" class="padding-left cursor-pointer" style="margin: 2vw" @click="goBack()"/></span><span class="text-title padding-left">{{ username }}spartakim</span></el-menu-item>
