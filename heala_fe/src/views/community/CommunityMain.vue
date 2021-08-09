@@ -81,6 +81,8 @@ export default {
       data: {
       },
       isvisible: false,
+      userId: "",
+      userName: "",
     }
   },
   components: {
@@ -90,20 +92,17 @@ export default {
     ...mapActions([
       'logout',
     ]),
+    getUserInfo: function () {
+     this.userId = localStorage.getItem('userId')
+     this.userName = localStorage.getItem('userName')
+    },
   },
-  // created: function () {
-  //   if (this.$store.getters.isLoggedIn) {
-  //     console.log()
-  //    this.getFeeds()
-  //   } else {
-  //     this.$router.push({ name: 'Login'})
-  //   }
-  // },
+  mounted: function () {
+    this.getUserInfo()
+  },
   computed: {
     ...mapState([
       "feeds",
-      "username",
-      "userid"
     ])
   },
 }
