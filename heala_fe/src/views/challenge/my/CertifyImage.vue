@@ -22,7 +22,7 @@
         <div class="certify-image-wrapper"
             v-for="(image, i) in data.images"
             v-bind:key="i">
-            <img :src="require(`@/assets/image/${image}`)" alt="" class="certify-image">
+            <img :src="require(`@/assets/image/${image}`)" alt="@/assets/image/error.jpg" class="certify-image">
         </div>
         </div>
       </div>
