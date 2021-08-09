@@ -183,7 +183,7 @@ export default new Vuex.Store({
     // 원석 #@
 
     // 주엽 #@
-    isLoggedIn: function (state) {
+    isLoggedIn: function () {
       // authToken이 있으면 True, 없으면 False
       return localStorage.getItem('userId') === "" ? true : false
     },
