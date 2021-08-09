@@ -1,6 +1,9 @@
 <template>
   <div>
-    <PostHeader />
+    <kiwi-header>
+        <template v-slot:title>게시물 상세</template>
+        <template v-slot:ellipsis><font-awesome-icon icon="ellipsis-v" /></template>
+    </kiwi-header>
     <div class="post-container">
         <div class="post-title">
             {{ post.title }}
@@ -44,7 +47,7 @@
 
 <script>
 import InputMessage from "@/components/InputMessage.vue";
-import PostHeader from "@/components/PostHeader.vue";
+import KiwiHeader from "@/components/KiwiHeader.vue";
 import Star from "@/components/Star.vue";
 import UserImage from "@/components/UserImage.vue";
 import Comment from "@/components/Comment.vue";
@@ -109,7 +112,7 @@ export default {
             this.$store.dispatch("createComment", { message, postId: this.post.id, commentId: this.replyCommentId });
         },
     },
-    components: { InputMessage, PostHeader, Star, UserImage, Comment },
+    components: { InputMessage, KiwiHeader, Star, UserImage, Comment },
 }
 </script>
 
