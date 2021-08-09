@@ -14,6 +14,7 @@ export default {
     commentUsers: "/user/comment/",
     commentLikes: "/user/comment/like",
     postUser: "/user/simple",
+    myChallengePhoto: "/challenge/my/photo",
 
     // 원석 #@
 

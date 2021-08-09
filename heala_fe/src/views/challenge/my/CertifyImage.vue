@@ -6,10 +6,10 @@
     <div class="certify-image-container">
       <div class="challenge-info">  
         <div class="challenge-title">
-        {{ title }}
+        {{ withChallenge.title }}
         </div>
         <div class="challenge-term">
-        {{ startDate }} - {{ endDate }}
+        {{ withChallenge.startDate }} - {{ withChallenge.endDate }}
         </div>
       </div>
         <div class="certify-wrapper"
@@ -20,9 +20,9 @@
         </div>
       <div class="certify-images-wrapper">
         <div class="certify-image-wrapper"
-            v-for="(image, i) in data.images"
-            v-bind:key="i">
-            <img :src="require(`@/assets/image/${image}`)" alt="@/assets/image/error.jpg" class="certify-image">
+            v-for="(images) in data.list"
+            v-bind:key="images.id">
+            <img :src="require(`@/assets/image/${images.image}`)" alt="@/assets/image/error.jpg" class="certify-image">
         </div>
         </div>
       </div>
@@ -33,35 +33,70 @@
 <script>
 import KiwiHeader from "@/components/KiwiHeader";
 
+import axios from "axios"
+import SERVER from "@/api/drf.js"
+
 export default {
     name: "CertifyImage",
     data() {
         return {
-            title: "임시 데이터: 챌린지 이름",
-            startDate: "21/07/20",
-            endDate: "21/08/02",
+            userId: 1, // local Storage 에서 얻어오도록 변경
+            withChallengeId: Number,
+            withChallenge: {
+                title: "임시 데이터: 챌린지 이름",
+                startDate: "21/07/20",
+                endDate: "21/08/02",
+            },
             certifyData: [
                 {
                     date: "21/07/20",
-                    images: [
-                        "cat.jpg",
-                        "cat.jpg",
-                        "cat.jpg",
-                        "cat.jpg",
-                        "cat.jpg",
+                    list: [
+                        {
+                            id: 1,
+                            image: "cat.jpg",
+                        },
                     ],
                 },
                 {
                     date: "21/07/21",
-                    images: [
-                        "cat.jpg",
-                        "cat.jpg",
-                        "cat.jpg",
-                        "cat.jpg",
-                        "cat.jpg",
-                    ]
+                    list: [
+                        {
+                            id: 2,
+                            image: "error.png",
+                        },
+                    ],
                 }
             ]
+        }
+    },
+    created() {
+        // this.userId = localStorage.getItem("userId");
+        this.withChallengeId = this.$route.params.withChallengeId;
+        this.getWithChallengInfo();
+        this.getImages();
+    },
+    methods: {
+        getWithChallengInfo() {
+            axios
+                .get(SERVER.URL + SERVER.ROUTES.getWithDetail
+                    + `?userId=${this.userId}&withChallengeId=${this.withChallengeId}`)
+                .then((response) =>
+                    this.withChallenge = response.data.withChallenge
+                )
+                .catch((exp) => 
+                    console.log(`인증사진 불러오기에 실패했습니다: ${exp}`)
+                );
+        },
+        getImages() {
+            axios
+                .get(SERVER.URL + SERVER.ROUTES.myChallengePhoto
+                    + `?userId=${this.userId}&withChallengeId=${this.withChallengeId}`)
+                .then((response) =>
+                    this.certifyData = response.data
+                )
+                .catch((exp) => 
+                    console.log(`인증사진 불러오기에 실패했습니다: ${exp}`)
+                );
         }
     },
     components: { KiwiHeader }

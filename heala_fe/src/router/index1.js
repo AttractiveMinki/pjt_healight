@@ -14,7 +14,7 @@ export default [
         component: FollowExample,
     },
     {
-        path: "/challenge/:id/image",
+        path: "/challenge/:withChallengeId/image",
         name: "CertifyImage",
         component: CertifyImage,
     }
