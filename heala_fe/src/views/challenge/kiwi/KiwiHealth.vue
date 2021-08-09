@@ -211,7 +211,7 @@ export default {
   },
   methods: {
     getKiwiHealthChallenge: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}` + localStorage.getItem('userid'))
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}` + localStorage.getItem('userId'))
         .then((res) => {
           console.log(res)
         })

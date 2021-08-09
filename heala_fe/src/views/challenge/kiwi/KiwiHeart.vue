@@ -209,7 +209,7 @@ export default {
 
   methods: {
     getKiwiHeartChallenge: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHeartChallenge}` + localStorage.getItem('userid'))
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHeartChallenge}` + localStorage.getItem('userId'))
         .then((res) => {
           console.log(res)
         })
