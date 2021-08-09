@@ -11,7 +11,7 @@ export default {
   name: "SendToMain",
   methods: {
     sendMain: function () {
-      if (this.$store.state.userid){
+      if (localStorage.getItem('userId')){
         router.push({ name: "CommunityMain" })
         // 홈피드 생기면 변경
       }
