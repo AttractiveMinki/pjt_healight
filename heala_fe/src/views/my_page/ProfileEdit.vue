@@ -96,8 +96,9 @@ export default {
           else if (error.response.status == 400){
             this.error.check_identity = "이미 존재하는 아이디입니다."
           }
-          else
-            alert("통신에 실패하였습니다.")
+          else{
+            this.error.check_identity = "통신에 실패하였습니다."
+          }
       })
     },
     checkForm() {
