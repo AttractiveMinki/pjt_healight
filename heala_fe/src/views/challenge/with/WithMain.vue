@@ -33,21 +33,28 @@
           </el-col>
         </el-row>
         <el-col class="community-box">
-          <el-col :span="24" v-for="(with_challenge, idx) in with_challenges" :key="idx" class="community-inside ">
-            <div v-if="with_challenge.category == 0">
-              <div @click="SetCurrentPageId(with_challenge.id)">
-                <router-link :to="{ name: 'WithDetail' , params: { id: with_challenge.id } }" class="text-decoration-none">
+          <!-- {{ withChallenges}} -->
+          <el-col :span="24" v-for="(value, idx) in withChallenges" :key="idx" class="community-inside ">
+            <!-- {{ value }} -->
+            <div v-if="value.withChallenge.category == 0">
+              <div @click="SetCurrentPageId(value.withChallenge.id)">
+                <router-link :to="{ name: 'WithDetail' , params: { id: value.withChallenge.id } }" class="text-decoration-none">
                   <el-col :span="18" class="margin-left-10">
-                    <div class="text-align-start text-title">{{ with_challenge.title }}</div>
+                    <div class="text-align-start text-title">{{ value.withChallenge.title }}</div>
                     <br>
-                    <div class="text-align-start text-content">{{ with_challenge.introduction }}</div>
-                    <el-col class="display-flex justify-content-space-between"><span class="community-title">{{ with_challenge.start_date  }}</span> <span class="fix-width"><font-awesome-icon :icon="['far', 'star']" class="padding-right"/>{{ with_challenge.end_date  }}</span></el-col>
+                    <div class="text-align-start text-content">{{ value.withChallenge.introduction }}</div>
+                    <div class="text-overflow">
+                      <span v-for="(hashtag, idx2) in value.hashtags" :key="idx2">
+                        <span class="text-align-start text-hashtag">#{{ hashtag }}</span>
+                      </span>
+                    </div>
+                    <el-col class="display-flex justify-content-space-between"><span class="community-title">{{ value.withChallenge.startDate }}</span> <span class="fix-width"><font-awesome-icon :icon="['far', 'star']" class="padding-right"/>{{ value.withChallenge.endDate }}</span></el-col>
                   </el-col>
                   <el-col :span="6">
-                    {{ with_challenge.image }}
+                    {{ value.withChallenge.image }}
                     <el-image class="margin-left-10"
                       style="width: 100%; height: 80px"
-                      :src="with_challenge.image" 
+                      :src="value.withChallenge.image" 
                       >
                     </el-image>
                   </el-col>
@@ -72,6 +79,11 @@ import { mapState } from "vuex"
 
 export default {
   name: "WithMain",
+  data: () => {
+    return {
+      withChallenges: [],
+    };
+  },
   components: {
     Navbar,
     ChallengeContainerWith,
@@ -80,12 +92,12 @@ export default {
   methods: {
     SetCurrentPageId: function (getId) {
       this.$store.state.currentPageId = getId
-      this.$store.state.currentPageCategory = 0
     },
     getWithHealthChallenge: function () {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithHealthChallenge}`)
         .then((res) => {
-          console.log(res)
+          this.withChallenges = res.data
+          // console.log(this.withChallenges)
         })
         .catch((err) => {
           console.log(err)
@@ -94,12 +106,13 @@ export default {
   },
   computed: {
     ...mapState([
-      "with_challenges",
       "recent_challenges",
     ])
   },
   mounted: function () {
     this.getWithHealthChallenge()
+    this.$store.state.selectedRouter = 3
+    this.$store.state.currentPageCategory = 0
   },
 }
 </script>
@@ -180,6 +193,17 @@ export default {
     display: -webkit-box; /* 유연하게 height 증감시킬 수 있는 flex-box 형태로 변환*/
     -webkit-line-clamp: 2; /* 보여줄 줄 수 */
     -webkit-box-orient: vertical; /* 플렉스 박스의 방향 설정(가로) */
+  }
+  .text-hashtag {
+    font-size: small;
+    width: 100%;
+    margin-bottom: 3px;
+    display: contents; 
+  }
+  .text-overflow {
+    white-space : nowrap ; /* 한 줄 제한*/
+    overflow : hidden ; /* 넘어가는 글자 숨기기 */
+    text-overflow: ellipsis ; /* 말 줄임표 추가 */
   }
   .padding-1 {
     padding: 1%;
