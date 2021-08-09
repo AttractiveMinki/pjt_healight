@@ -49,8 +49,12 @@ export default {
     },
   },
   watch: {
-    selectedRouter: function () {
-      console.log(this.selectedRouter, 'watching')
+    selectedRouter: {
+      handler: 'changeRouter',
+      immediate: true,
+      // changeRouter: function () {
+      //   console.log(this.selectedRouter, 'watching')
+      // },
     },
   },
 }

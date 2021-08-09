@@ -17,8 +17,8 @@
     </el-row>
     <h1>전체</h1>
     <div>
-      {{ username }}님, 환영합니다!
-      {{ userid}}
+      {{ userName }}님, 환영합니다!
+      {{ userId}}
       <div>
         <button @click="logout"> 로그아웃</button>
       </div>
