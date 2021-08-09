@@ -1,5 +1,6 @@
 package com.ssafy.kiwi.controller;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +49,7 @@ public class FeedController {
 	
 	@ApiOperation(value = "홈 피드 보기")
 	@GetMapping("/home/{userId}")
-	public Object getPostList(@PathVariable int userId) {
-		return new ResponseEntity<>(feedService.getPostList(userId), HttpStatus.OK);
+	public Object getPostList(@PathVariable int userId, int page) {
+		return new ResponseEntity<>(feedService.getPostList(userId, page), HttpStatus.OK);
 	}
 }

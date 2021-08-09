@@ -2,6 +2,9 @@ package com.ssafy.kiwi.model.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.ssafy.kiwi.model.domain.entity.Post;
 
 public interface FeedService {
@@ -13,5 +16,5 @@ public interface FeedService {
 	public boolean delete(int postId, int userId);
 	
 	// 자신이 팔로우 하고 있는 사람들의 Post 목록을 가져옴(공개 범위가 전체로 되어있는 것 + 양쪽 팔로우를 하고 있는 경우 친구 공개 Post까지)
-	public List<Post> getPostList(int userId);
+	public List<Post> getPostList(int userId, int page);
 }
