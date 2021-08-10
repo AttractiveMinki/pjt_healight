@@ -14,7 +14,7 @@
         </div>
       </el-col>
       <el-col :span="12">
-        <el-progress type="circle" :percentage="parseFloat(((diet.calory / recommend.calory) * 100).toFixed(2))" :stroke-width="24" :color="colors"></el-progress>
+        <el-progress type="circle" :percentage="parseFloat(((diet.calory / recommend.calory) * 100).toFixed(2))" :stroke-width="24" :color="colors" style="margin: 1vw"></el-progress>
       </el-col>
     </el-row>
     <div id="line"></div>
@@ -150,7 +150,7 @@ export default {
 
 <style scoped>
   #line {
-    margin: 2vh;
+    margin: 2vh 0vh;
     width: 100%;
     height: 5px;
     background: #F2F2F2;

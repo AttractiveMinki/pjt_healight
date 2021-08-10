@@ -60,8 +60,8 @@
 
     <hr>
     <el-row style="text-align: start">
-      <span id="challenge-certifyinfo" style="margin: 2%" v-for="(idx, hashtag) in value.hashtags" :key="idx">
-        <span class="text-hashtag-detail">#{{ value.hashtags[hashtag] }}</span> 
+      <span id="challenge-certifyinfo" style="margin: 2%" v-for="(hashtag, idx) in value.hashtags" :key="idx">
+        <span class="text-hashtag-detail">#{{ hashtag }}</span> 
       </span>
     </el-row>
 

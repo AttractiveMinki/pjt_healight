@@ -6,7 +6,7 @@
 
     <!-- <input type="text" class='get-input bg-gray' id="foodName" v-model="data.foodName" > -->
     <input type="text" id="foodName" v-model="foodName" style="margin-right: 2vw">
-    <el-button @click="getFoodInfo()">음식 추가</el-button>
+    <el-button @click="getFoodInfo()">음식 등록</el-button>
     <hr>
 
     <h2>직접 입력하기</h2>
