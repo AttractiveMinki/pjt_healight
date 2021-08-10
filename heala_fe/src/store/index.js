@@ -529,12 +529,12 @@ export default new Vuex.Store({
 
     // 주엽 #@
     signup: function (context, data) {
-      console.log(SERVER.URL)
-      console.log(SERVER.ROUTES.signup)
-      console.log(data)
+      // console.log(SERVER.URL)
+      // console.log(SERVER.ROUTES.signup)
+      // console.log(data)
       axios.post(SERVER.URL + SERVER.ROUTES.signup, data)
         .then(() => {
-          router.push({ name: "Login" })
+          router.push({ name: "SignupSuccess" })
       })
         .catch((err) => {
           console.log(err)
