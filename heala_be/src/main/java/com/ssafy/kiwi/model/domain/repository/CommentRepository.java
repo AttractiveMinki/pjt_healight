@@ -8,7 +8,9 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
+	
     List<Comment> findAllByPostId(int postId);
+    List<Comment> findAllByUserId(int userId);
 
     @Transactional
     void deleteAllByCommentId(int commentId);
@@ -16,4 +18,5 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
     // 댓글 갯수 세기
     @Query(value = "SELECT COUNT(*) FROM comment WHERE post_id = :postId", nativeQuery =  true) 
     int countCommentByPostId(int postId);
+
 }
