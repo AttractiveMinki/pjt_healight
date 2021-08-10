@@ -65,7 +65,8 @@ export default {
       let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.VUE_APP_APISDATA_API_KEY; /* Service Key*/
       queryParams += '&' + encodeURIComponent('desc_kor') + '=' + this.foodName; /* */
       console.log('queryParams', url + queryParams)
-      axios.get(`${proxy_url}/${url}?ServiceKey=${process.env.VUE_APP_APISDATA_API_KEY}&desc_kor=${this.foodName}`)
+      // axios.get(`${proxy_url}/${url}?ServiceKey=${process.env.VUE_APP_APISDATA_API_KEY}&desc_kor=${this.foodName}`)
+      axios.get(`${url}?ServiceKey=${process.env.VUE_APP_APISDATA_API_KEY}&desc_kor=${this.foodName}`)
         .then(res => {
           console.log(res)
         })
