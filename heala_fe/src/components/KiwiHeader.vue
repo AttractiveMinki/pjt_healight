@@ -1,6 +1,6 @@
 <template>
   <div class="header-container">
-      <font-awesome-icon icon="arrow-left" />
+      <font-awesome-icon icon="arrow-left" @click="goBack()"/>
       <div class="title">
         <slot name="title">마음</slot>
       </div>
@@ -18,6 +18,11 @@ export default {
         return {
             
         }
+    },
+    methods: {
+      goBack(){
+        this.$router.go(-1);
+      }
     },
 }
 </script>
