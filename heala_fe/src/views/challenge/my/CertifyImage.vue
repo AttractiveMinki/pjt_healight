@@ -55,13 +55,25 @@ export default {
                             id: 1,
                             image: "cat.jpg",
                         },
+                        {
+                            id: 2,
+                            image: "cat.jpg",
+                        },
+                        {
+                            id: 3,
+                            image: "cat.jpg",
+                        },
+                        {
+                            id: 4,
+                            image: "cat.jpg",
+                        },
                     ],
                 },
                 {
                     date: "21/07/21",
                     list: [
                         {
-                            id: 2,
+                            id: 5,
                             image: "error.png",
                         },
                     ],
