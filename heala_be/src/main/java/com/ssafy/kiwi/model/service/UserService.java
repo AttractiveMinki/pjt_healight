@@ -42,4 +42,7 @@ public interface UserService {
 
 	// 댓글 전체 좋아요 정보 가져오기
     List<Integer> getAllLikeCommentByUserId(List<Integer> commentIdSet, int userId);
+
+    // 유저 exp 정보 가져오기
+	Integer getUserExpByUserId(int userId);
 }

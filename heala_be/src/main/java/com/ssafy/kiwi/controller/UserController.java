@@ -131,6 +131,16 @@ public class UserController {
 		return new ResponseEntity<>(userSimpleOpList, HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "유저 exp 정보 불러오기")
+	@GetMapping("/exp")
+	public Object getUserExpByUserId(@RequestParam int userId) {
+		Integer exp = userService.getUserExpByUserId(userId);
+		if(exp != null){
+			return new ResponseEntity<>(exp, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
 	@ApiOperation(value = "댓글 전체 좋아요 여부 불러오기")
 	@PostMapping("/comment/like")
 	public Object getAllCommentLikeUserByUserId(@RequestBody CommentIdSetIp commentIdSetIp){

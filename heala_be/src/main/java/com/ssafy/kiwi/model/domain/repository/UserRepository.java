@@ -27,4 +27,7 @@ public interface UserRepository extends JpaRepository<User,Integer>{
 
     @Query(value = "SELECT new com.ssafy.kiwi.model.dto.UserSimpleOp(u.id, u.name, u.image) FROM User u WHERE u.id IN (:userIdSet)")
 	List<UserSimpleOp> getUserSimpleInfoByIds(List<Integer> userIdSet);
+
+    @Query(value = "SELECT u.exp FROM User u WHERE u.id = :userId")
+	Integer getUserExpByUserId(int userId);
 }
