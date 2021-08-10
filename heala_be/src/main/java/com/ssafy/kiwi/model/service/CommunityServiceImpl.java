@@ -117,6 +117,12 @@ public class CommunityServiceImpl implements CommunityService {
 		}
 		return false;
 	}
+	
+	// 댓글 개수 세기
+	@Override
+	public int countComment(int postId) {
+		return commentRepository.countCommentByPostId(postId);
+	}
 
 	// 게시글 좋아요
 	@Override
@@ -185,4 +191,5 @@ public class CommunityServiceImpl implements CommunityService {
 		}
 		return false;
 	}
+
 }

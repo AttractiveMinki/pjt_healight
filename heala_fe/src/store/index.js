@@ -69,7 +69,7 @@ export default new Vuex.Store({
     currentPageId: 0,
     currentPageCategory: 0,
     profileSelectedCategory: 1,
-    selectedRouter: "",
+    selectedRouter: 0,
     // check_email: true,
     // check_identity: true,
 
@@ -244,6 +244,9 @@ export default new Vuex.Store({
     SET_USERNAME: function (state, data) {
       state.userName = data.identity
       localStorage.setItem('userName', data.identity);
+    },
+    SET_USERNAME2: function (state, data) {
+      state.userName = data.identity
     },
     INIT_USERID: function (state) {
       state.userId = ""
@@ -528,13 +531,14 @@ export default new Vuex.Store({
     // 원석 #@
 
     // 주엽 #@
-    signup: function (context, data) {
-      console.log(SERVER.URL)
-      console.log(SERVER.ROUTES.signup)
-      console.log(data)
+    signup: function ({ commit }, data) {
+      // console.log(SERVER.URL)
+      // console.log(SERVER.ROUTES.signup)
+      // console.log(data)
       axios.post(SERVER.URL + SERVER.ROUTES.signup, data)
         .then(() => {
-          router.push({ name: "Login" })
+          commit("SET_USERNAME2", data)
+          router.push({ name: "SignupSuccess" })
       })
         .catch((err) => {
           console.log(err)

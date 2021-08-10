@@ -8,8 +8,11 @@
         <div v-else>하루 권장 섭취량을 달성했습니다.</div>
       </el-col>
     </el-row>
+    <router-link :to="{ name: 'DietRecordCreate' }" class="text-decoration-none">
+      <div id="submit" style="background-color: #ADEC6E; color: black; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">식단 추가하기</div>
+    </router-link>
 
-    <el-button>음식 추가</el-button>
+
   </div>
 </template>
 
@@ -17,7 +20,7 @@
 import Navbar from "@/components/my_page/Navbar"
 
 export default {
-  name: "DietRecord",
+  name: "DietRecordDetail",
   components: {
     Navbar,
   },
@@ -52,7 +55,7 @@ export default {
         {color: '#1989fa', percentage: 80},
         {color: '#ADEC6E', percentage: 100},
         {color: '#F57053', percentage: 101},
-      ]
+      ],
     }
   },
   methods: {
@@ -78,7 +81,6 @@ export default {
 </script>
 
 <style scoped>
-
   #submit {
     position: fixed;
     bottom: 0rem;

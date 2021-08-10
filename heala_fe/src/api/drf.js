@@ -22,6 +22,7 @@ export default {
     signup: "/user/signup/",
     login: "/user/login/",
     community: "/community/",
+    feedpost: "/feed/post/",
     checkEmail: "/user/checkemail/",
     checkIdentity: "/user/checkidentity/",
     withmake: "/challenge/with/",
@@ -35,5 +36,6 @@ export default {
     getWithDietChallenge: "/challenge/with?category=1",
     getWithHeartChallenge: "/challenge/with?category=2",
     getWithDetail: "/challenge/with/detail",
+    joinWithChallenge: "/challenge/with/join",
   }
 }
