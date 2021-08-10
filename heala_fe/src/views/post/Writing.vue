@@ -86,7 +86,12 @@
         <label for="input-radio9" style="cursor: pointer;">자신</label>
         <input @click="scope_click" type="radio" id="input-radio9" v-model="scope" value="2" style="display: none;"/>
       </el-col>
-      <el-col :span="9"></el-col>
+      <el-col :span="5"></el-col>
+      <el-col :span="3" class="scope" style="font-size: 13px;">
+        <label for="input-radio10" style="cursor: pointer;">익명</label>
+        <input @click="anonymous_click" id="input-radio10" v-model="anonymous" style="display: none;" />
+      </el-col>
+      <el-col :span="1"></el-col>
     </el-row><hr>
     <!-- 내용 -->
     <el-input type="textarea" rows="15" placeholder="글내용을 작성해주세요" v-model="contents"></el-input><hr>
@@ -101,7 +106,7 @@
 </template>
 
 <script>
-
+import SERVER from "@/api/drf.js"
 import axios from 'axios';
 
 export default {
@@ -128,8 +133,13 @@ export default {
       formData.append("title", this.title);
       formData.append("contents", this.contents);
       formData.append("hashtag", this.hashtag);
+      if (this.anonymous == false) {
+        formData.append("anonymous", false);
+      } else {
+        formData.append("anonymous", true);
+      }
       // 서버로 FormData 전송
-      axios.post("http://localhost:8080/feed/post", formData, { headers: {'Content-Type' : 'multipart/form-data'}})
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.feedpost}`, formData, { headers: {'Content-Type' : 'multipart/form-data'}})
         .then(response => {
           if(response.status === 200) {
             console.log("등록 완료");
@@ -140,6 +150,10 @@ export default {
         });
     },
     category_click(e) {
+      if (this.anonymous != false && e.target.defaultValue != 2) {
+        alert('마음 카테고리만 익명을 사용할 수 있습니다.')
+        return
+      }
       for(var i = 0; i < 3; i++) {
         document.getElementsByClassName("category")[i].style.fontWeight = "normal";
         document.getElementsByClassName("category")[i].style.color = "black";
@@ -166,6 +180,22 @@ export default {
       dom.style.fontWeight = "bold";
       dom.style.color = "#ADEC6E";
     },
+    anonymous_click(e) {
+      if (this.category != 2 && this.anonymous == false) {
+        alert('마음 카테고리만 익명을 사용할 수 있습니다.')
+        return
+      }
+      let dom = e.target.parentNode;
+      if (this.anonymous != false) {
+        this.anonymous = false
+        dom.style.fontWeight = "normal";
+        dom.style.color = "black";
+      } else {
+        this.anonymous = true
+        dom.style.fontWeight = "bold";
+        dom.style.color = "#ADEC6E";
+      }
+    },
     goBack: function () {
       this.$router.go(-1)
     },
@@ -181,6 +211,7 @@ export default {
       hashtag: "",
       dialogVisible: {"first":false, "second":false, "third":false, "fourth":false, "fifth":false},
       imgUrl: {"first":"", "second":"", "third":"", "fourth":"", "fifth":""},
+      anonymous: "",
     }; 
   },
 };
