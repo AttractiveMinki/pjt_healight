@@ -51,8 +51,8 @@
         <div class="certify-image-wrapper"
           v-for="(index, i) in certifyImageLimit"
           v-bind:key="i">
-          <img v-show="index < 5" :src="require(`@/assets/image/${resultData.certifyImage[index].image}`)" alt="@/assets/image/error.jpg" class="certify-image">
-          <div v-show="index == 5" class="certify-image-link-text">
+          <img v-show="i < 5" :src="require(`@/assets/image/${resultData.certifyImage[index].image}`)" alt="@/assets/image/error.jpg" class="certify-image">
+          <div v-show="i == 5" class="certify-image-link-text">
             전체사진<br>보러가기
           </div>
         </div>
@@ -63,12 +63,15 @@
 
 <script>
 import KiwiHeader from "@/components/KiwiHeader";
+import SERVER from "@/api/drf.js";
+import axios from "axios";
 
 export default {
     name: "Result",
     data() {
         return {
-            certifyImageLimit: [0, 1, 2, 3, 4, 5],
+            userId: 1,
+            certifyImageLimit: [0, 0, 0, 0, 0, 0],
             resultData: {
                 achievement: 1,
                 point: 1700,
@@ -121,34 +124,59 @@ export default {
         }
     },
     created() {
+        // user setting
+        // this.userId = localStorage.getItem("userId");
         // 결과 정보 불러오기 + certifyImageLimit 세팅
-
-        // user exp 정보 불러오기
-
-        // user level 계산
-        this.setLevel(this.userData.exp);
+        this.getResultData();
+        // user exp 정보 불러오기 + level 계산
+        this.getUserData();
     },
     methods: {
-        setLevel(exp) {
-          for (let i = 0; i < 100; i++) {
-            if(exp > 10000 * i){
-              exp -= 10000 * i;
-              continue;
-            }
-            let levelOne = Math.floor(exp / (1000 * i));
-            this.level = (i - 1) * 10 + levelOne;
-            this.levelNeedExp = 1000 * i;
-            this.levelExp = exp % (1000 * i);
-            this.levelPercent = Math.floor(this.levelExp / this.levelNeedExp * 100);
-            break;
+      getResultData() {
+        axios
+          .get(SERVER.URL + SERVER.ROUTES.myChallengeResult
+          + `?userId=${this.userId}&withChallengeId=${this.$route.params.withChallengeId}`)
+          .then((response) => {
+            this.resultData = response.data;
+            let arrLength = this.resultData.certifyImage.length < 6 ? this.resultData.certifyImage.length : 6;
+            this.certifyImageLimit = Array.from({length: arrLength}, () => 0);
+          })
+          .catch((exp) => {
+            console.log(`챌린지 결과 불러오기에 실패했습니다: ${exp}`)
+          })
+      },
+      getUserData() {
+        axios
+          .get(SERVER.URL + SERVER.ROUTES.userExp
+          + `?userId=${this.userId}`)
+          .then((response) => {
+            this.userData.exp = response.data;
+            this.setLevel(this.userData.exp);
+          })
+          .catch((exp) => {
+            console.log(`사용자 exp 불러오기에 실패했습니다: ${exp}`)
+          })
+      },
+      setLevel(exp) {
+        for (let i = 0; i < 100; i++) {
+          if(exp >= 10000 * i){
+            exp -= 10000 * i;
+            continue;
           }
-        },
-        achievementCheck() {
-          return this.resultData.achievement != 0 && this.resultData.achievement != 100;
-        },
-        expCheck() {
-          return this.levelPercent != 0 && this.levelPercent != 100;
-        },
+          let levelOne = Math.floor(exp / (1000 * i));
+          this.level = (i - 1) * 10 + levelOne;
+          this.levelNeedExp = 1000 * i;
+          this.levelExp = exp % (1000 * i);
+          this.levelPercent = Math.floor(this.levelExp / this.levelNeedExp * 100);
+          break;
+        }
+      },
+      achievementCheck() {
+        return this.resultData.achievement != 0 && this.resultData.achievement != 100;
+      },
+      expCheck() {
+        return this.levelPercent != 0 && this.levelPercent != 100;
+      },
     },
     components: { KiwiHeader },
 }
