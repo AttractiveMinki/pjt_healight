@@ -230,8 +230,11 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		Optional<WithChallenge> withChallenge = withChallengeRepository.findWithChallengeById(withChallengeId);
 		//챌린지 달성률 : 매일 인증 가정
 		long days = (withChallenge.get().getEndDate().getTime() - withChallenge.get().getStartDate().getTime()) / (24*60*60*1000);
+		System.out.println("days" + days);
 		long totalCnt = days * withChallenge.get().getCertifyDay();
+		System.out.println(totalCnt);
 		int certifyCnt = certifyImageRepository.countByUserIdAndWithChallengeId(userId, withChallengeId);
+		System.out.println("certifyCnt" + certifyCnt);
 		double achievement = (double)certifyCnt / (double)totalCnt * 100;
 		map.put("achievement", Math.floor(achievement*10)/10.0);
 		//획득 포인트
