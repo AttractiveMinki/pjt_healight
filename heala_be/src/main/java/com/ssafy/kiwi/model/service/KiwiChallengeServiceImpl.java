@@ -12,10 +12,10 @@ import com.ssafy.kiwi.model.domain.entity.KiwiUser;
 import com.ssafy.kiwi.model.domain.entity.Post;
 import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.repository.CommentRepository;
+import com.ssafy.kiwi.model.domain.repository.CommunityRepository;
 import com.ssafy.kiwi.model.domain.repository.KiwiChallengeRepository;
 import com.ssafy.kiwi.model.domain.repository.KiwiMissionRepository;
 import com.ssafy.kiwi.model.domain.repository.KiwiUserRepository;
-import com.ssafy.kiwi.model.domain.repository.PostRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -27,9 +27,9 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	final private KiwiChallengeRepository kiwiChallengeRepository;
 	final private KiwiMissionRepository kiwiMissionRepository;
 	final private KiwiUserRepository kiwiUserRepository;
-	final private PostRepository postRepository;
 	final private UserRepository userRepository;
 	final private CommentRepository commentRepository;
+	final private CommunityRepository communityRepository;
 
 	final private WithChallengeService withChallengeService;
 	
@@ -95,8 +95,11 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 			else if(missionId%10==4) {
 				
 			}
-			else if(missionId%10==5) {
-				
+			else if(missionId%10==5) { //한 게시글에 좋아요 15개 받기
+				if(missionLike(category, userId, missionId, 15)) {
+					return completed(userId, missionId);
+				}
+				else return false;
 			}
 			else if(missionId%10==6) {
 				
@@ -154,7 +157,7 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 
 	//미션 성공 여부 확인 - 작성 게시글 수
 	private boolean missionWrite(int category, int userId, int missionId, int num) {
-		long cnt = postRepository.countByCategoryAndUserId(category, userId);
+		long cnt = communityRepository.countByCategoryAndUserId(category, userId);
 		System.out.println("cnt : "+cnt);
 		if(cnt>=num) {
 			return saveMissionUser(missionId, userId);
@@ -171,7 +174,7 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 			if(cnt==count) {
 				return saveMissionUser(missionId, userId);
 			}
-			Post post = postRepository.getById(c.getPostId());
+			Post post = communityRepository.getById(c.getPostId());
 			if(post.getCategory() == category) cnt++;
 		}
 		return false;
@@ -184,6 +187,15 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 			if((int)map.get("category") == category) {
 				return saveMissionUser(missionId, userId);
 			}
+		}
+		return false;
+	}
+	
+	//미션 성공 여부 확인 - 한 게시글 좋아요 개수 파악
+	private boolean missionLike(int category, int userId, int missionId, int likes) {
+		int maxLike = communityRepository.getMaxLikeByCategoryAndUserId(category, userId);
+		if(maxLike >= likes) {
+			return saveMissionUser(missionId, userId);
 		}
 		return false;
 	}
