@@ -19,7 +19,9 @@ import ProfilePhysInfo from "@/views/my_page/ProfilePhysInfo";
 import Scrap from "@/views/my_page/showmore/Scrap";
 import ChangePassword from "@/views/my_page/showmore/ChangePassword";
 import DietRecord from "@/views/my_page/record/DietRecord";
-import DietRecordMake from "@/views/my_page/record/DietRecordMake";
+import DietRecordDetail from "@/views/my_page/record/DietRecordDetail";
+import DietRecordCreate from "@/views/my_page/record/DietRecordCreate";
+import DietRecordCalender from "@/views/my_page/record/DietRecordCalender";
 import WeightCalender from "@/views/my_page/record/WeightCalender";
 import KiwiMain from "@/views/challenge/kiwi/KiwiMain"
 import KiwiHealth from "@/views/challenge/kiwi/KiwiHealth"
@@ -141,9 +143,19 @@ export default [
     component: DietRecord,
   },
   {
-    path: "/profile/dietRecordmake",
-    name: "DietRecordMake",
-    component: DietRecordMake,
+    path: "/profile/dietrecorddetail",
+    name: "DietRecordDetail",
+    component: DietRecordDetail,
+  },
+  {
+    path: "/profile/dietrecordcreate",
+    name: "DietRecordCreate",
+    component: DietRecordCreate,
+  },
+  {
+    path: "/profile/dietrecordcalender",
+    name: "DietRecordCalender",
+    component: DietRecordCalender,
   },
   {
     path: "/profile/weightcalender",

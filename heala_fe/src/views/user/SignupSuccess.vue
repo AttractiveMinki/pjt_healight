@@ -3,7 +3,8 @@
     <div>
       heala-logos
     </div>
-    <h1>회원 가입을 축하합니다!</h1>
+    <h1>{{ userName }} 회원님</h1>
+    <h1>가입을 축하합니다!</h1>
     <br>
     <h2>내 손 안의 건강 SNS, kiwi</h2>
     <h2>지금 시작해보세요!</h2>
@@ -14,6 +15,7 @@
 
 <script>
 import router from "@/router/index.js"
+import { mapState } from 'vuex'
 
 export default {
   name: "SignupSuccess",
@@ -21,6 +23,11 @@ export default {
     gotoLogin() {
       router.push({ name: "Login" })
     },
+  },
+  computed: {
+    ...mapState([
+      "userName",
+    ])
   },
 }
 </script>
