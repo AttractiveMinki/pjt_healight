@@ -17,7 +17,7 @@
     </el-row>
     <el-row style="text-align: start; padding: 2vw">
       <el-col :span="12">
-        <span style="font-size: 14px; font-weight: bold; padding: 1px"> <!-- {{ user.username }} --> 스파르타꾹스</span>
+        <span style="font-size: 14px; font-weight: bold; padding: 1px"> <!-- {{ user.username }} --> 스파르타꾹스 </span>
         <span style="font-size: 11px"> Lv. <!-- {{ user.userid }} -->77</span>
       </el-col>
     </el-row>
@@ -67,6 +67,8 @@
 </template>
 
 <script>
+import SERVER from "@/api/drf.js"
+import axios from 'axios';
 import Navbar from "@/components/my_page/Navbar"
 import Category from "@/components/my_page/profile/Category"
 import Footer from "@/components/home/Footer"
@@ -80,6 +82,7 @@ export default {
       name: "",
       identity: "",
       introduction: "",
+      badges: [],
     };
   },
   components: {
@@ -91,6 +94,24 @@ export default {
     ...mapState([
       "profileSelectedCategory",
     ])
+  },
+  mounted() {
+    // 프로필 기존 정보 불러오기
+    axios.get(`${SERVER.URL}${SERVER.ROUTES.userProfile}${localStorage.getItem('userId')}`)
+      .then(response => {     
+        // this.image = require("@/assets/img/profile/" + response.data.image);
+        this.identity = response.data.identity;
+        this.name = response.data.name;
+        this.introduction = response.data.introduction;
+        this.badges = response.data.badges;
+
+        this.originalIdentity = response.data.identity;
+        // console.log(this.badges)
+      })
+      .catch(error => {
+        console.log(error);
+        console.error(error.response.data);
+      });
   },
 }
 </script>
