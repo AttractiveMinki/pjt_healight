@@ -245,6 +245,9 @@ export default new Vuex.Store({
       state.userName = data.identity
       localStorage.setItem('userName', data.identity);
     },
+    SET_USERNAME2: function (state, data) {
+      state.userName = data.identity
+    },
     INIT_USERID: function (state) {
       state.userId = ""
       localStorage.setItem('userId', '');
@@ -528,12 +531,13 @@ export default new Vuex.Store({
     // 원석 #@
 
     // 주엽 #@
-    signup: function (context, data) {
+    signup: function ({ commit }, data) {
       // console.log(SERVER.URL)
       // console.log(SERVER.ROUTES.signup)
       // console.log(data)
       axios.post(SERVER.URL + SERVER.ROUTES.signup, data)
         .then(() => {
+          commit("SET_USERNAME2", data)
           router.push({ name: "SignupSuccess" })
       })
         .catch((err) => {
