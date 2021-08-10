@@ -2,15 +2,15 @@
   <div>
     <el-row style="padding-top: 1vh">
       <el-col :span="8">
-        <div @click="changeProgileSelectedCategory(1)" class="align-text-center" style="height: 4vh">운동</div> 
+        <div @click="changeProgileSelectedCategory(1)" class="align-text-center cursor-pointer" style="height: 4vh">운동</div> 
         <div v-if="profileSelectedCategory == 1" id="square"></div>
       </el-col>
       <el-col :span="8">
-        <div @click="changeProgileSelectedCategory(2)" class="align-text-center" style="height: 4vh">식단</div> 
+        <div @click="changeProgileSelectedCategory(2)" class="align-text-center cursor-pointer" style="height: 4vh">식단</div> 
         <div v-if="profileSelectedCategory == 2" id="square"></div>
       </el-col>
       <el-col :span="8">
-        <div @click="changeProgileSelectedCategory(3)" class="align-text-center" style="height: 4vh">마음</div> 
+        <div @click="changeProgileSelectedCategory(3)" class="align-text-center cursor-pointer" style="height: 4vh">마음</div> 
         <div v-if="profileSelectedCategory == 3" id="square"></div>
       </el-col>
     </el-row>
@@ -79,5 +79,8 @@ export default {
     display: inline-flex;
     text-align: center;
     align-items: center;
+  }
+  .cursor-pointer {
+    cursor: pointer;
   }
 </style>

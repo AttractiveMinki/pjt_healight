@@ -30,7 +30,17 @@
       <!-- 대표 뱃지 설정 -->
       <el-row type="flex" align="middle" style="margin-bottom: 20px;">
         <el-col :span="6" style="font-weight: bold; font-size: 13px;">대표 뱃지 설정</el-col>
-        <el-col :span="18"><div style="font-size: 13px; color: #606266;">최대 6개 설정 가능합니다</div></el-col>
+        <el-col :span="18">
+          <span v-for="(badge, idx) in badges" :key="idx" >
+            <span :class="{selected: badge.selected == true}" class="margin-2" @click="selectBadge(badge)">
+              <!-- {{ badge.badge.id}}
+              이름: {{ badge.badge.name}} -->
+              {{ badge.badge.image}}
+            </span>
+          </span>
+          <br>
+          <div style="font-size: 13px; color: #606266;">최대 6개 설정 가능합니다</div>
+          </el-col>
       </el-row>
     </div>
     <button id="submit" class="get-input" @click="submit()" :disabled="!isSubmit" :class="{disabled : !isSubmit}">저장</button>
@@ -71,7 +81,7 @@ export default {
       
       // 서버로 FormData 전송
       // axios.patch("http://localhost:8080/user/profile", formData , { headers: {'Content-Type' : 'multipart/form-data'}})
-      axios.patch(`${SERVER.URL}${SERVER.ROUTES.userProfile}${this.$store.state.userid}`, formData , { headers: {'Content-Type' : 'multipart/form-data'}})
+      axios.patch(`${SERVER.URL}${SERVER.ROUTES.userProfile}${localStorage.getItem('userId')}`, formData , { headers: {'Content-Type' : 'multipart/form-data'}})
         .then(response => {
           if(response.status === 200) {
             alert('설정 변경이 완료되었습니다.');
@@ -115,6 +125,22 @@ export default {
       });
       this.isSubmit = isSubmit;
     },
+    selectBadge(badge) {
+      let number = 0
+      for (let i = 0; i < this.badges.length; i++) {
+        if (this.badges[i].selected == true) {
+          number += 1
+        }
+      }
+
+      if (badge.selected == true) {
+        badge.selected = false
+      } else {
+        if (number < 6) {
+          badge.selected = true
+        }
+      }
+    },
   },
   components: {
     Navbar,
@@ -143,16 +169,13 @@ export default {
   },
   mounted() {
     // 프로필 기존 정보 불러오기
-    axios.get(`${SERVER.URL}${SERVER.ROUTES.userProfile}${this.$store.state.userid}`)
+    axios.get(`${SERVER.URL}${SERVER.ROUTES.userProfile}${localStorage.getItem('userId')}`)
       .then(response => {     
         // this.image = require("@/assets/img/profile/" + response.data.image);
         this.identity = response.data.identity;
         this.name = response.data.name;
         this.introduction = response.data.introduction;
         this.badges = response.data.badges;
-
-        this.originalIdentity = response.data.identity;
-        // console.log(this.badges)
       })
       .catch(error => {
         console.log(error);
@@ -208,5 +231,11 @@ export default {
     height: 50px;
     background-color: #ADEC6E;
     color: white;
+  }
+  .selected {
+    border: 2px #7EE01D solid;
+  }
+  .margin-2 {
+    margin: 2px;
   }
 </style>
