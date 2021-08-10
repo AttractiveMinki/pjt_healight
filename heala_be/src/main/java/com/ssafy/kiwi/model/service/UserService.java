@@ -14,6 +14,9 @@ public interface UserService {
 	Optional<User> checkId(String identity);
 	Optional<User> checkEmail(String email);
 	void signUp(User user);
+	
+	//회원 탈퇴
+	boolean delete(User user);
 
 	//로그인
 	Optional<User> login(String identity, String password);
