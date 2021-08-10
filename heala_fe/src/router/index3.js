@@ -1,5 +1,7 @@
 import Signup from "@/views/user/Signup"
 import Login from "@/views/user/Login"
+import SignupSuccess from "@/views/user/SignupSuccess"
+import Withdrawal from "@/views/user/Withdrawal"
 import CommunityMain from "@/views/community/CommunityMain"
 import Health from "@/views/community/Health"
 import Diet from "@/views/community/Diet"
@@ -42,6 +44,16 @@ export default [
     path: "/user/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/user/signupsuccess",
+    name: "SignupSuccess",
+    component: SignupSuccess,
+  },
+  {
+    path: "/user/withdrawal",
+    name: "Withdrawal",
+    component: Withdrawal,
   },
   {
     path: "/community/Communitymain",
