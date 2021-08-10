@@ -1,5 +1,6 @@
 package com.ssafy.kiwi.model.service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.transaction.Transactional;
@@ -78,57 +79,53 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 				if(missionWrite(category, userId, missionId, 1)) {
 					return completed(userId, missionId);
 				}
-				else return false;
 			}
 			else if(missionId%10==2) { //댓글 5개 작성
 				if(missionComment(category, userId, missionId, 5)) {
 					return completed(userId, missionId);
 				}
-				else return false;
 			}
 			else if(missionId%10==3) { //챌린지 1회 참가
 				if(missionChallengeJoin(category, userId, missionId, 1)) {
 					return completed(userId, missionId);
 				}
-				else return false; 
 			}
-			else if(missionId%10==4) {
-				
+			else if(missionId%10==4) { //챌린지 1회 달성
+				if(missionChallengeCompleted(category, userId, missionId, 1)) {
+					return completed(userId, missionId);
+				}
 			}
 			else if(missionId%10==5) { //한 게시글에 좋아요 15개 받기
 				if(missionLike(category, userId, missionId, 15)) {
 					return completed(userId, missionId);
 				}
-				else return false;
 			}
 			else if(missionId%10==6) { //정보 게시글 5개 작성
 				if(missionWriteInfo(category, userId, missionId, 1, 5)) {
 					return completed(userId, missionId);
 				}
-				else return false;
 			}
 			else if(missionId%10==7) { //게시글 10개 작성
 				if(missionWrite(category, userId, missionId, 10)) {
 					return completed(userId, missionId);
 				}
-				else return false;
 			}
 			else if(missionId%10==8) { //전체 게시글 좋아요 총합 100개 받기
 				if(missionLikeTotal(category, userId, missionId, 100)) {
 					return completed(userId, missionId);
 				}
-				else return false;
 			}
-			else if(missionId%10==9) {
-				
+			else if(missionId%10==9) { //챌린지 3회 달성
+				if(missionChallengeCompleted(category, userId, missionId, 3)) {
+					return completed(userId, missionId);
+				}
 			}
-			else {//게시글 25개 작성
+			else if(missionId%10==0){//게시글 25개 작성
 				if(missionWrite(category, userId, missionId, 25)) {
 					return completed(userId, missionId);
 				}
-				else return false;
 			}
-			
+			else return false;
 		}
 		return null;
 	}
@@ -171,6 +168,16 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 		else return false;
 	}
 	
+	//미션 성공 여부 확인 - 정보 게시글 작성 수 확인
+	private boolean missionWriteInfo(int category, int userId, int missionId, int subCategory, int num) {
+		long cnt = communityRepository.countByCategoryAndUserIdAndSubCategory(category, userId, subCategory);
+		System.out.println("cnt : "+cnt);
+		if(cnt>=num) {
+			return saveMissionUser(missionId, userId);
+		}
+		else return false;
+	}
+	
 	//미션 성공 여부 확인 - 작성 댓글 수
 	//추후 프록시로 구현하여 성능 향상 예정
 	private boolean missionComment(int category, int userId, int missionId, int num) {
@@ -182,17 +189,6 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 			}
 			Post post = communityRepository.getById(c.getPostId());
 			if(post.getCategory() == category) cnt++;
-		}
-		return false;
-	}
-	
-	//미션 성공 여부 확인 - 챌린지 참가 여부
-	private boolean missionChallengeJoin(int category, int userId, int missionId, int num) {
-		List<Map<String,Object>> myChallengeList = withChallengeService.getMyChallenge(userId);
-		for (Map<String,Object> map : myChallengeList) {
-			if((int)map.get("category") == category) {
-				return saveMissionUser(missionId, userId);
-			}
 		}
 		return false;
 	}
@@ -216,13 +212,32 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 		return false;
 	}
 	
-	//미션 성공 여부 확인 - 정보 게시글 작성 수 확인
-	private boolean missionWriteInfo(int category, int userId, int missionId, int subCategory, int num) {
-		long cnt = communityRepository.countByCategoryAndUserIdAndSubCategory(category, userId, subCategory);
-		System.out.println("cnt : "+cnt);
-		if(cnt>=num) {
-			return saveMissionUser(missionId, userId);
+	//미션 성공 여부 확인 - 챌린지 참가 여부
+	private boolean missionChallengeJoin(int category, int userId, int missionId, int num) {
+		List<Map<String,Object>> myChallengeList = withChallengeService.getMyChallenge(userId);
+		for (Map<String,Object> map : myChallengeList) {
+			if((int)map.get("category") == category) {
+				return saveMissionUser(missionId, userId);
+			}
 		}
-		else return false;
+		return false;
+	}
+	
+	//미션 성공 여부 확인 - 챌린지 성공 여부
+	private boolean missionChallengeCompleted(int category, int userId, int missionId, int num) {
+		List<Map<String,Object>> myChallengeList = withChallengeService.getMyChallenge(userId);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-ddd");
+		Date today = new Date();
+		int cnt = 0;
+		for (Map<String,Object> map : myChallengeList) {
+			if(((int)map.get("category")==category) && ((double)map.get("achievement")>=85)) {
+				//현재 기준 챌린지 종료 여부 확인
+				String end = dateFormat.format(map.get("endDate"));
+				int diff = end.compareTo(dateFormat.format(today));
+				if(diff<0) cnt++;
+			}
+			if(cnt >= num) return saveMissionUser(missionId, userId);					
+		}
+		return false;
 	}
 }
