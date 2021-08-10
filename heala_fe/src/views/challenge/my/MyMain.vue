@@ -2,63 +2,65 @@
   <div>
     <Navbar />
     <ChallengeContainerMy />
+    {{ values }}
     <el-row class="community">
       <el-col :span="24" style="text-align: end; padding: 1px;" class="community-title">
         <i class="margin-left-10 el-icon-arrow-right"></i>
+        <!-- v-if with_challenge.achievement == true 이런식 혹은 endDate가 현재 날짜보다 미래일 때 -->
         <span>진행중인 챌린지</span>
       </el-col>
-      <!-- 이하 내가 참가하고 있는 챌린지 명단을 받아온 뒤에 갱신 -->
+
       <el-col class="community-box">
-        <el-col :span="24" v-for="(with_challenge, idx) in with_challenges" :key="idx" class="community-inside ">
-          <div v-if="with_challenge.category == 0">
-            <div @click="SetCurrentPageId(with_challenge.id)">
-              <el-col :span="18" class="margin-left-10">
-                <router-link :to="{ name: 'WithDetail' , params: { id: with_challenge.id } }" class="text-decoration-none">
-                  <div class="text-align-start text-title">{{ with_challenge.title }}</div>
-                  <br>
-                  <div class="text-align-start text-content">{{ with_challenge.introduction }}</div>
-                  <el-col class="display-flex justify-content-space-between"><span class="community-title">{{ with_challenge.start_date  }}</span> <span class="fix-width"><font-awesome-icon :icon="['far', 'star']" class="padding-right"/>{{ with_challenge.end_date  }}</span></el-col>
-                </router-link>
-                <div style="display: flex; justify-content: start; align-items: center; padding-left: 10px;">
-                  <img class="image" src="@/assets/img/writing_upload.png" alt="" @click="dialogVisible.first = true">
-                  <el-dialog :visible.sync="dialogVisible.first" width="95%">
-                    <img :src="imgUrl.first" alt="" width="99%">
-                  </el-dialog>
-                  <img class="image" src="@/assets/img/writing_upload.png" alt="" @click="dialogVisible.second = true">
-                  <el-dialog :visible.sync="dialogVisible.second" width="95%">
-                    <img :src="imgUrl.second" alt="" width="99%">
-                  </el-dialog>
-                  <img class="image" src="@/assets/img/writing_upload.png" alt="" @click="dialogVisible.third = true">
-                  <el-dialog :visible.sync="dialogVisible.third" width="95%">
-                    <img :src="imgUrl.third" alt="" width="99%">
-                  </el-dialog>
-                  <img class="image" src="@/assets/img/writing_upload.png" alt="" @click="dialogVisible.fourth = true">
-                  <el-dialog :visible.sync="dialogVisible.fourth" width="95%">
-                    <img :src="imgUrl.fourth" alt="" width="99%">
-                  </el-dialog>
-                  <button class="my-pictures-button">내 인증사진 모아보기</button>
-                  
+        <el-col :span="24" v-for="(with_challenge, idx) in values" :key="idx" class="community-inside ">
+          <div @click="SetCurrentPageId(with_challenge.id)">
+            <el-col :span="18" class="margin-left-10">
+              <router-link :to="{ name: 'WithDetail' , params: { id: with_challenge.id } }" class="text-decoration-none">
+                <div class="text-align-start text-title">{{ with_challenge.title }}</div>
+                <div class="text-align-start text-overflow">
+                  <span v-for="(hashtag, idx1) in with_challenge.hashtag" :key="idx1" class="text-hashtag">
+                    <span>#{{ hashtag }} </span>
+                  </span>
                 </div>
-              </el-col>
+                <el-col style="text-align: start"><span>{{ with_challenge.startDate }} ~ {{ with_challenge.endDate  }}</span></el-col>
+              </router-link>
+              <div style="display: flex; justify-content: start; align-items: center; padding-left: 10px;">
+                <img class="image" src="@/assets/img/writing_upload.png" alt="" @click="dialogVisible.first = true">
+                <el-dialog :visible.sync="dialogVisible.first" width="95%">
+                  <img :src="imgUrl.first" alt="" width="99%">
+                </el-dialog>
+                <img class="image" src="@/assets/img/writing_upload.png" alt="" @click="dialogVisible.second = true">
+                <el-dialog :visible.sync="dialogVisible.second" width="95%">
+                  <img :src="imgUrl.second" alt="" width="99%">
+                </el-dialog>
+                <img class="image" src="@/assets/img/writing_upload.png" alt="" @click="dialogVisible.third = true">
+                <el-dialog :visible.sync="dialogVisible.third" width="95%">
+                  <img :src="imgUrl.third" alt="" width="99%">
+                </el-dialog>
+                <img class="image" src="@/assets/img/writing_upload.png" alt="" @click="dialogVisible.fourth = true">
+                <el-dialog :visible.sync="dialogVisible.fourth" width="95%">
+                  <img :src="imgUrl.fourth" alt="" width="99%">
+                </el-dialog>
+                <button class="my-pictures-button">내 인증사진 모아보기</button>
                 
-                <!-- 인증하기 -->
-                <!-- <div style="display: flex; justify-content: start; align-items: center; padding-left: 10px;">
-                  <label class="input-file-button" for="input-file">+</label>
-                  <input type="file" id="input-file" style="display: none;" @change="selectFile"/>
-                  <img class="image" src="../../assets/img/writing_upload.png" alt="" @click="dialogVisible.first = true">
-                </div> -->
-                <el-col :span="6">
-                  <label class="input-file-button" for="input-file">+</label>
-                  <input type="file" id="input-file" style="display: none;" @change="selectFile"/>
-                  {{ with_challenge.image }}
-                  <el-image class="margin-left-10"
-                    style="width: 100%; height: 80px"
-                    :src="with_challenge.image" 
-                    >
-                  </el-image>
-                </el-col>
+              </div>
+            </el-col>
               
-            </div>
+              <!-- 인증하기 -->
+              <!-- <div style="display: flex; justify-content: start; align-items: center; padding-left: 10px;">
+                <label class="input-file-button" for="input-file">+</label>
+                <input type="file" id="input-file" style="display: none;" @change="selectFile"/>
+                <img class="image" src="../../assets/img/writing_upload.png" alt="" @click="dialogVisible.first = true">
+              </div> -->
+              <el-col :span="6">
+                <label class="input-file-button" for="input-file">+</label>
+                <input type="file" id="input-file" style="display: none;" @change="selectFile"/>
+                {{ with_challenge.image }}
+                <el-image class="margin-left-10"
+                  style="width: 100%; height: 80px"
+                  :src="with_challenge.image" 
+                  >
+                </el-image>
+              </el-col>
           </div>
         </el-col>
       </el-col>
@@ -72,6 +74,7 @@ import Navbar from "@/components/challenge/Navbar"
 import ChallengeContainerMy from "@/components/challenge/my/ChallengeContainerMy"
 import Footer from "@/components/home/Footer"
 import { mapState } from "vuex"
+import SERVER from "@/api/drf.js"
 import axios from 'axios';
 
 export default {
@@ -147,11 +150,25 @@ export default {
       dom.style.fontWeight = "bold";
       dom.style.color = "#ADEC6E";
     },
+    getMyChallenge: function () {
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getMyChallenge}${localStorage.getItem('userId')}`)
+        .then((res) => {
+          console.log(res)
+          this.values = res.data
+          // console.log(this.withChallenges)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
   },
   computed: {
     ...mapState([
       "with_challenges",
     ])
+  },
+  mounted: function () {
+    this.getMyChallenge()
   },
   data: () => {
     return {
@@ -164,6 +181,7 @@ export default {
       hashtag: "",
       dialogVisible: {"first":false, "second":false, "third":false, "fourth":false, "fifth":false},
       imgUrl: {"first":"", "second":"", "third":"", "fourth":"", "fifth":""},
+      values: "",
     }; 
   },
 }
@@ -214,6 +232,18 @@ export default {
     display: -webkit-box; /* 유연하게 height 증감시킬 수 있는 flex-box 형태로 변환*/
     -webkit-line-clamp: 2; /* 보여줄 줄 수 */
     -webkit-box-orient: vertical; /* 플렉스 박스의 방향 설정(가로) */
+  }
+  .text-overflow {
+    white-space : nowrap ; /* 한 줄 제한*/
+    overflow : hidden ; /* 넘어가는 글자 숨기기 */
+    text-overflow: ellipsis ; /* 말 줄임표 추가 */
+  }
+  .text-hashtag {
+    font-size: small;
+    color: #1A8EFA;
+    width: 100%;
+    margin-bottom: 3px;
+    display: contents;
   }
   .my-pictures-button {
     width: 25vw;
