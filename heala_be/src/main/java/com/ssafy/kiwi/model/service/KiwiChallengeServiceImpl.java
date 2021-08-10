@@ -2,11 +2,16 @@ package com.ssafy.kiwi.model.service;
 
 import java.util.*;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
+import com.ssafy.kiwi.model.domain.entity.Comment;
 import com.ssafy.kiwi.model.domain.entity.KiwiMission;
 import com.ssafy.kiwi.model.domain.entity.KiwiUser;
+import com.ssafy.kiwi.model.domain.entity.Post;
 import com.ssafy.kiwi.model.domain.entity.User;
+import com.ssafy.kiwi.model.domain.repository.CommentRepository;
 import com.ssafy.kiwi.model.domain.repository.KiwiChallengeRepository;
 import com.ssafy.kiwi.model.domain.repository.KiwiMissionRepository;
 import com.ssafy.kiwi.model.domain.repository.KiwiUserRepository;
@@ -24,6 +29,7 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	final private KiwiUserRepository kiwiUserRepository;
 	final private PostRepository postRepository;
 	final private UserRepository userRepository;
+	final private CommentRepository commentRepository;
 
 	
 	//키위 챌린지 목록 조회
@@ -63,6 +69,7 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	}
 
 	//키위 챌린지 미션 성공 여부 확인
+	@Transactional
 	@Override
 	public Object completeKiwiMission(int category, int userId, int missionId) {
 		if(missionId <= 30) {
@@ -73,7 +80,10 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 				else return false;
 			}
 			else if(missionId%10==2) {
-				
+				if(missionComment(category, userId, missionId, 5)) {
+					return completed(userId, missionId);
+				}
+				else return false;
 			}
 			else if(missionId%10==3) {
 				
@@ -110,7 +120,9 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 		return null;
 	}
 
-	//미션 성공시
+	
+
+	//미션 성공시 리턴값
 	private Object completed(int userId, int missionId) {
 		Map<String, Object> mission = new HashMap<>();
 		//완료날짜 담기
@@ -127,19 +139,38 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 		userRepository.save(user);
 		return mission;
 	}
+	
+	//미션 성공시 mission_user 테이블에 성공 내역 저장
+	private boolean saveMissionUser(int missionId, int userId) {
+		KiwiUser missionUser = new KiwiUser();
+		missionUser.setMissionId(missionId);
+		missionUser.setUserId(userId);
+		kiwiUserRepository.save(missionUser);
+		return true;
+	}
 
 	//미션 성공 여부 확인 - 작성 게시글 수
 	private boolean missionWrite(int category, int userId, int missionId, int num) {
 		long cnt = postRepository.countByCategoryAndUserId(category, userId);
 		System.out.println("cnt : "+cnt);
 		if(cnt>=num) {
-			KiwiUser missionUser = new KiwiUser();
-			missionUser.setMissionId(missionId);
-			missionUser.setUserId(userId);
-			kiwiUserRepository.save(missionUser);
-			return true;
+			return saveMissionUser(missionId, userId);
 		}
 		else return false;
 	}
 	
+	//미션 성공 여부 확인 - 작성 댓글 수
+	//추후 프록시로 구현하여 성능 향상 예정
+	private boolean missionComment(int category, int userId, int missionId, int count) {
+		List<Comment> comments = commentRepository.findAllByUserId(userId);
+		int cnt = 0;
+		for (Comment c : comments) {
+			if(cnt==count) {
+				return saveMissionUser(missionId, userId);
+			}
+			Post post = postRepository.getById(c.getPostId());
+			if(post.getCategory() == category) cnt++;
+		}
+		return false;
+	}
 }

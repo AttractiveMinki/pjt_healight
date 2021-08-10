@@ -41,4 +41,8 @@ public class Comment {
     public void decreaseLikes() {
         this.likes -= 1;
     }
+    
+//    @ManyToOne
+//	@JoinColumn(name="post_id", insertable = false, updatable = false)
+//    private Post post;
 }
