@@ -65,44 +65,52 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	//키위 챌린지 미션 성공 여부 확인
 	@Override
 	public Object completeKiwiMission(int category, int userId, int missionId) {
-		switch (missionId) {
-		case 1:
-			if(missionWrite(category, userId, missionId, 1)) {
-				return completed(userId, missionId);
+		if(missionId <= 30) {
+			if(missionId%10==1) { //게시글 1개 작성
+				if(missionWrite(category, userId, missionId, 1)) {
+					return completed(userId, missionId);
+				}
+				else return false;
 			}
-			else return false;
-		case 2:
-	
-			break;
-		case 3:
-	
-			break;
-		case 4:
-	
-			break;
-		case 5:
-	
-			break;
-		case 6:
-	
-			break;
-		case 7:
-			if(missionWrite(category, userId, missionId, 1)) {
-				return completed(userId, missionId);
+			else if(missionId%10==2) {
+				
 			}
-			else return false;
-		case 8:
-	
-			break;
-		case 9:
-	
-			break;
-
+			else if(missionId%10==3) {
+				
+			}
+			else if(missionId%10==4) {
+				
+			}
+			else if(missionId%10==5) {
+				
+			}
+			else if(missionId%10==6) {
+				
+			}
+			else if(missionId%10==7) { //게시글 10개 작성
+				if(missionWrite(category, userId, missionId, 10)) {
+					return completed(userId, missionId);
+				}
+				else return false;
+			}
+			else if(missionId%10==8) {
+				
+			}
+			else if(missionId%10==9) {
+				
+			}
+			else {//게시글 25개 작성
+				if(missionWrite(category, userId, missionId, 25)) {
+					return completed(userId, missionId);
+				}
+				else return false;
+			}
+			
 		}
 		return null;
 	}
 
-	
+	//미션 성공시
 	private Object completed(int userId, int missionId) {
 		Map<String, Object> mission = new HashMap<>();
 		//완료날짜 담기
