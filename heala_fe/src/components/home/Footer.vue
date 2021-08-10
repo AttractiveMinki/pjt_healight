@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
   name: "Footer",
   data: () => {
@@ -44,6 +46,11 @@ export default {
       // this.selectedRouter = num
       this.$store.state.selectedRouter = num
     },
+  },
+  computed: {
+    ...mapState([
+      "selectedRouter",
+    ])
   },
   // watch: {
   //   selectedRouter: {

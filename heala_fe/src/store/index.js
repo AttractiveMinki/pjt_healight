@@ -69,7 +69,7 @@ export default new Vuex.Store({
     currentPageId: 0,
     currentPageCategory: 0,
     profileSelectedCategory: 1,
-    selectedRouter: "",
+    selectedRouter: 0,
     // check_email: true,
     // check_identity: true,
 

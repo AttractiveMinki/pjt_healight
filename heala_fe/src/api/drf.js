@@ -35,5 +35,6 @@ export default {
     getWithDietChallenge: "/challenge/with?category=1",
     getWithHeartChallenge: "/challenge/with?category=2",
     getWithDetail: "/challenge/with/detail",
+    joinWithChallenge: "/challenge/with/join",
   }
 }
