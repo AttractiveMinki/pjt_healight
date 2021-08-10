@@ -101,8 +101,11 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 				}
 				else return false;
 			}
-			else if(missionId%10==6) {
-				
+			else if(missionId%10==6) { //정보 게시글 5개 작성
+				if(missionWriteInfo(category, userId, missionId, 1, 5)) {
+					return completed(userId, missionId);
+				}
+				else return false;
 			}
 			else if(missionId%10==7) { //게시글 10개 작성
 				if(missionWrite(category, userId, missionId, 10)) {
@@ -170,11 +173,11 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	
 	//미션 성공 여부 확인 - 작성 댓글 수
 	//추후 프록시로 구현하여 성능 향상 예정
-	private boolean missionComment(int category, int userId, int missionId, int count) {
+	private boolean missionComment(int category, int userId, int missionId, int num) {
 		List<Comment> comments = commentRepository.findAllByUserId(userId);
 		int cnt = 0;
 		for (Comment c : comments) {
-			if(cnt==count) {
+			if(cnt==num) {
 				return saveMissionUser(missionId, userId);
 			}
 			Post post = communityRepository.getById(c.getPostId());
@@ -184,7 +187,7 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	}
 	
 	//미션 성공 여부 확인 - 챌린지 참가 여부
-	private boolean missionChallengeJoin(int category, int userId, int missionId, int count) {
+	private boolean missionChallengeJoin(int category, int userId, int missionId, int num) {
 		List<Map<String,Object>> myChallengeList = withChallengeService.getMyChallenge(userId);
 		for (Map<String,Object> map : myChallengeList) {
 			if((int)map.get("category") == category) {
@@ -211,5 +214,15 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 			return saveMissionUser(missionId, userId);
 		}
 		return false;
+	}
+	
+	//미션 성공 여부 확인 - 정보 게시글 작성 수 확인
+	private boolean missionWriteInfo(int category, int userId, int missionId, int subCategory, int num) {
+		long cnt = communityRepository.countByCategoryAndUserIdAndSubCategory(category, userId, subCategory);
+		System.out.println("cnt : "+cnt);
+		if(cnt>=num) {
+			return saveMissionUser(missionId, userId);
+		}
+		else return false;
 	}
 }
