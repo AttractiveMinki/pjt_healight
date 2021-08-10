@@ -25,7 +25,7 @@ public interface WithChallengeService {
 
 	public WithChallenge getByChallengeId(int challengeId);
 
-	public Object getMyChallenge(int userId);
+	public List<Map<String, Object>> getMyChallenge(int userId);
 
 	// 함께 챌린지 참여하기
 	public void joinWithChallenge(int withChallengeId, int userId);

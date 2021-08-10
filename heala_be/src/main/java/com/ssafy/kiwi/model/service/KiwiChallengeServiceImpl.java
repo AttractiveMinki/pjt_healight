@@ -31,6 +31,7 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	final private UserRepository userRepository;
 	final private CommentRepository commentRepository;
 
+	final private WithChallengeService withChallengeService;
 	
 	//키위 챌린지 목록 조회
 	@Override
@@ -79,14 +80,17 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 				}
 				else return false;
 			}
-			else if(missionId%10==2) {
+			else if(missionId%10==2) { //댓글 5개 작성
 				if(missionComment(category, userId, missionId, 5)) {
 					return completed(userId, missionId);
 				}
 				else return false;
 			}
-			else if(missionId%10==3) {
-				
+			else if(missionId%10==3) { //챌린지 1회 참가
+				if(missionChallengeJoin(category, userId, missionId, 1)) {
+					return completed(userId, missionId);
+				}
+				else return false; 
 			}
 			else if(missionId%10==4) {
 				
@@ -120,9 +124,8 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 		return null;
 	}
 
-	
 
-	//미션 성공시 리턴값
+	//미션 성공시 Response 값
 	private Object completed(int userId, int missionId) {
 		Map<String, Object> mission = new HashMap<>();
 		//완료날짜 담기
@@ -170,6 +173,17 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 			}
 			Post post = postRepository.getById(c.getPostId());
 			if(post.getCategory() == category) cnt++;
+		}
+		return false;
+	}
+	
+	//미션 성공 여부 확인 - 챌린지 참가 여부
+	private boolean missionChallengeJoin(int category, int userId, int missionId, int count) {
+		List<Map<String,Object>> myChallengeList = withChallengeService.getMyChallenge(userId);
+		for (Map<String,Object> map : myChallengeList) {
+			if((int)map.get("category") == category) {
+				return saveMissionUser(missionId, userId);
+			}
 		}
 		return false;
 	}

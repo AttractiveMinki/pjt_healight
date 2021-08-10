@@ -172,7 +172,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 
 	//[마이 챌린지] 챌린지 목록 조회하기
 	@Override
-	public Object getMyChallenge(int userId) {
+	public List<Map<String, Object>> getMyChallenge(int userId) {
 		//함께 챌린지 id 리스트 가져오기
 		List<MyChallenge> myChallengeIdList = getByUserid(userId);
 		//응답할 리스트 만들기
@@ -190,6 +190,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 			}
 			//필요한 정보만 맵에 담아 리스트에 저장
 			Map<String,Object> map = new HashMap<>();
+			map.put("category", nowChallenge.getCategory());
 			map.put("title", nowChallenge.getTitle());
 			map.put("startDate", nowChallenge.getStartDate());
 			map.put("endDate", nowChallenge.getEndDate());
