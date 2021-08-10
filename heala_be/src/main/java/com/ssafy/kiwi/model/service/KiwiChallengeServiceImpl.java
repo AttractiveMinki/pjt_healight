@@ -110,8 +110,11 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 				}
 				else return false;
 			}
-			else if(missionId%10==8) {
-				
+			else if(missionId%10==8) { //전체 게시글 좋아요 총합 100개 받기
+				if(missionLikeTotal(category, userId, missionId, 100)) {
+					return completed(userId, missionId);
+				}
+				else return false;
 			}
 			else if(missionId%10==9) {
 				
@@ -126,7 +129,7 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 		}
 		return null;
 	}
-
+	
 
 	//미션 성공시 Response 값
 	private Object completed(int userId, int missionId) {
@@ -195,6 +198,16 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	private boolean missionLike(int category, int userId, int missionId, int likes) {
 		int maxLike = communityRepository.getMaxLikeByCategoryAndUserId(category, userId);
 		if(maxLike >= likes) {
+			return saveMissionUser(missionId, userId);
+		}
+		return false;
+	}
+	
+	//미션 성공 여부 확인 - 전체 게시글 좋아요 총합 개수 파악
+	private boolean missionLikeTotal(int category, int userId, int missionId, int likes) {
+		int sumLike = communityRepository.getSumLikeByCategoryAndUserId(category, userId);
+		System.out.println(sumLike);
+		if(sumLike >= likes) {
 			return saveMissionUser(missionId, userId);
 		}
 		return false;

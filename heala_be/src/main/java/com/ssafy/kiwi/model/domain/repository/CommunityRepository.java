@@ -17,5 +17,7 @@ public interface CommunityRepository extends JpaRepository<Post,Integer>{
 	
 	@Query(value = "select max(p.likes) from Post p where p.category = :category and p.userId = :userId")
 	int getMaxLikeByCategoryAndUserId(int category, int userId);
+	@Query(value = "select sum(p.likes) from Post p where p.category = :category and p.userId = :userId")
+	int getSumLikeByCategoryAndUserId(int category, int userId);
 	
 }
