@@ -33,6 +33,9 @@ public interface CommunityService {
 
 	// 댓글 좋아요 취소
 	boolean cancelLikeComment(int userId, int commentId);
+	
+	// 댓글 개수 세기
+	int countComment(int postId);
 
 	// 게시글 좋아요
 	boolean likePost(LikeUser likeUser);
