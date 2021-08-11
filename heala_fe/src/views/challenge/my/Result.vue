@@ -52,7 +52,7 @@
           v-for="(index, i) in certifyImageLimit"
           v-bind:key="i">
           <img v-show="i < 5" :src="require(`@/assets/image/${resultData.certifyImage[index].image}`)" alt="@/assets/image/error.jpg" class="certify-image">
-          <div v-show="i == 5" class="certify-image-link-text">
+          <div v-show="i == 5" class="certify-image-link-text" @click="goToCertifyImage">
             전체사진<br>보러가기
           </div>
         </div>
@@ -176,6 +176,9 @@ export default {
       },
       expCheck() {
         return this.levelPercent != 0 && this.levelPercent != 100;
+      },
+      goToCertifyImage() {
+        this.$router.push({ name: 'CertifyImage', params: { withChallengeId: this.$route.params.withChallengeId } });
       },
     },
     components: { KiwiHeader },
