@@ -17,7 +17,7 @@
     </el-row>
     <h1>전체</h1>
     <div>
-      {{ userName }}님, 환영합니다!
+      {{ userIdentity }}님, 환영합니다!
       {{ userId}}
       <div>
         <button @click="logout"> 로그아웃</button>
@@ -82,7 +82,7 @@ export default {
       },
       isvisible: false,
       userId: "",
-      userName: "",
+      userIdentity: "",
     }
   },
   components: {
@@ -94,7 +94,7 @@ export default {
     ]),
     getUserInfo: function () {
      this.userId = localStorage.getItem('userId')
-     this.userName = localStorage.getItem('userName')
+     this.userIdentity = localStorage.getItem('userIdentity')
     },
   },
   mounted: function () {

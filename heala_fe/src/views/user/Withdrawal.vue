@@ -15,7 +15,11 @@
           <span class="el-icon-chat-line-round text-align:right" @click="toggleIcon"></span>
         </div>
       </el-col>
-      <button class="bg-green get-input join-button-setting" @click="Withdrawal(data)">회원 탈퇴하기</button>
+      <button class="bg-green get-input join-button-setting" @click="showDeleteModal = true">회원 탈퇴하기</button>
+      <modal v-if="showDeleteModal" @yes="Withdrawal(data)" @no="showDeleteModal = false">
+          <template v-slot:header>회원 탈퇴</template>
+          <template v-slot:body>정말 회원탈퇴하시겠습니까?</template>
+      </modal>
     </el-row>
     <br>
 
@@ -24,8 +28,8 @@
 
 <script>
 import SERVER from "@/api/drf.js"
-import router from "@/router/index.js"
 import axios from "axios"
+import Modal from "@/components/Modal.vue";
 
 export default {
   name: "Withdrawal",
@@ -46,12 +50,16 @@ export default {
       }
     },
     Withdrawal(data) {
-      axios.post(SERVER.URL + SERVER.ROUTES.login, data)
+      console.log(SERVER.URL + SERVER.ROUTES.withdrawal, data)
+      axios.delete(SERVER.URL + SERVER.ROUTES.withdrawal, data)
         .then(() => {
-          console.log('존재하는 아이디')
+          console.log('회원 삭제 완료')
+
           // 아이디 삭제 요청을 보낸다.
       })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err)
+          console.error(err.response.data)
           alert('아이디나 비밀번호가 일치하지 않습니다.')
       })
     },
@@ -59,33 +67,14 @@ export default {
   data: function () {
     return {
       data: {
-        identity: '',
-        password: '',
+        identity: "",
+        password: "",
       },
       isvisible: false,
+      showDeleteModal: false,
     }
   },
-    login: function ({ commit }, data) {
-      // event.preventDefault()
-      console.log(data)
-      axios.post(SERVER.URL + SERVER.ROUTES.login, data)
-        .then((res) => {
-          // console.log(res)
-          // console.log("로그인 요청 성공")
-          commit("SET_USERID", res)
-          commit("SET_USERNAME", data)
-          // commit("SET_TOKEN", res.data.token) // jwt 사용시 적용
-          // commit("GET_USERNAME") // 가서 디코딩하기
-          // commit("GET_USERID") // 가서 디코딩하기
-          // dispatch("verifyUser", data) // 관리자 권한 검증
-          router.push({ name: "CommunityMain" }) // 홈 피드 구현 후 변경
-      })
-        .catch((err) => {
-          console.log("로그인 에러 발생")
-          console.log(err)
-          console.error(err.response.data)
-      })
-    },
+  components: { Modal, }
 }
 </script>
 

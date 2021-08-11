@@ -3,7 +3,7 @@
     <div>
       heala-logos
     </div>
-    <h1>{{ userName }} 회원님</h1>
+    <h1>{{ userIdentity }} 회원님</h1>
     <h1>가입을 축하합니다!</h1>
     <br>
     <h2>내 손 안의 건강 SNS, kiwi</h2>
@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     ...mapState([
-      "userName",
+      "userIdentity",
     ])
   },
 }

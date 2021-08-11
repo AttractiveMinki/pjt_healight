@@ -148,7 +148,7 @@ export default {
       
     },
     createChallenge: function (data) {
-      axios.post(`${SERVER.URL}${SERVER.ROUTES.withmake}`, data)
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.withMake}`, data)
         .then(() => {
           alert('성공적으로 글이 작성되었습니다.')
           router.push({ name: "WithMain" })

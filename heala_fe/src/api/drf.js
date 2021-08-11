@@ -25,10 +25,9 @@ export default {
     signup: "/user/signup/",
     login: "/user/login/",
     community: "/community/",
-    feedpost: "/feed/post/",
     checkEmail: "/user/checkemail/",
     checkIdentity: "/user/checkidentity/",
-    withmake: "/challenge/with/",
+    withMake: "/challenge/with/",
     userProfile: "/user/profile/",
     getKiwiChallenge: "/challenge/kiwi/",
     getKiwiHealthChallenge: "/challenge/kiwi/0/",
@@ -41,5 +40,6 @@ export default {
     getWithDetail: "/challenge/with/detail",
     getMyChallenge: "/challenge/my/",
     joinWithChallenge: "/challenge/with/join",
+    withdrawal: "/user",
   }
 }

@@ -88,7 +88,7 @@
       </el-col>
       <el-col :span="5"></el-col>
       <el-col :span="3" class="scope" style="font-size: 13px;">
-        <label for="input-radio10" style="cursor: pointer;">익명</label>
+        <label v-if="category==2" for="input-radio10" style="cursor: pointer;">익명</label>
         <input @click="anonymous_click" id="input-radio10" v-model="anonymous" style="display: none;" />
       </el-col>
       <el-col :span="1"></el-col>
@@ -133,13 +133,13 @@ export default {
       formData.append("title", this.title);
       formData.append("contents", this.contents);
       formData.append("hashtag", this.hashtag);
-      if (this.anonymous == false) {
+      if (this.anonymous == false || this.category != 2) {
         formData.append("anonymous", false);
       } else {
         formData.append("anonymous", true);
       }
       // 서버로 FormData 전송
-      axios.post(`${SERVER.URL}${SERVER.ROUTES.feedpost}`, formData, { headers: {'Content-Type' : 'multipart/form-data'}})
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.feedPost}`, formData, { headers: {'Content-Type' : 'multipart/form-data'}})
         .then(response => {
           if(response.status === 200) {
             console.log("등록 완료");
@@ -150,10 +150,10 @@ export default {
         });
     },
     category_click(e) {
-      if (this.anonymous != false && e.target.defaultValue != 2) {
-        alert('마음 카테고리만 익명을 사용할 수 있습니다.')
-        return
-      }
+      // if (this.anonymous != false && e.target.defaultValue != 2) {
+      //   alert('마음 카테고리만 익명을 사용할 수 있습니다.')
+      //   return
+      // }
       for(var i = 0; i < 3; i++) {
         document.getElementsByClassName("category")[i].style.fontWeight = "normal";
         document.getElementsByClassName("category")[i].style.color = "black";
@@ -181,10 +181,10 @@ export default {
       dom.style.color = "#ADEC6E";
     },
     anonymous_click(e) {
-      if (this.category != 2 && this.anonymous == false) {
-        alert('마음 카테고리만 익명을 사용할 수 있습니다.')
-        return
-      }
+      // if (this.category != 2 && this.anonymous == false) {
+      //   alert('마음 카테고리만 익명을 사용할 수 있습니다.')
+      //   return
+      // }
       let dom = e.target.parentNode;
       if (this.anonymous != false) {
         this.anonymous = false
