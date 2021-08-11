@@ -1,6 +1,7 @@
 import PostDetail from "@/views/community/PostDetail";
 import FollowExample from "@/views/FollowExample";
 import CertifyImage from "@/views/challenge/my/CertifyImage";
+import Result from "@/views/challenge/my/Result";
 
 export default [
     {
@@ -17,5 +18,10 @@ export default [
         path: "/challenge/:withChallengeId/image",
         name: "CertifyImage",
         component: CertifyImage,
-    }
+    },
+    {
+        path: "/challenge/:withChallengeId/result",
+        name: "Result",
+        component: Result,
+    },
 ]

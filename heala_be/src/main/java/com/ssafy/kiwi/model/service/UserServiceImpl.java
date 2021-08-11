@@ -170,4 +170,9 @@ public class UserServiceImpl implements UserService {
 	public List<Integer> getAllLikeCommentByUserId(List<Integer> commentIdSet, int userId) {
 		return likeUserRepository.getAllLikeUserByUserId(commentIdSet, userId);
 	}
+
+	@Override
+	public Integer getUserExpByUserId(int userId) {
+		return userRepository.getUserExpByUserId(userId);
+	}
 }
