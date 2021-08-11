@@ -6,15 +6,16 @@ export default {
   URL: SERVER_URL,
   ROUTES: {
     // 한길 #@
-    follow: "/user/follow/",
+    follow: "/user/follow",
     post: "/community/post/",
-    comment: "/comment/",
-    like: "/like/",
-    scrap: "/scrap/",
-    commentUsers: "/user/comment/",
+    comment: "/comment",
+    like: "/like",
+    scrap: "/scrap",
+    commentUsers: "/user/comment",
     commentLikes: "/user/comment/like",
     postUser: "/user/simple",
     myChallengePhoto: "/challenge/my/photo",
+    feedPost: "/feed/post",
 
     // 원석 #@
 
