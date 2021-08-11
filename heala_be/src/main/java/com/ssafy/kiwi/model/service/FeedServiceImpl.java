@@ -75,6 +75,8 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public Map<String, Object> getUserFeed(int userId, int myId) {
 		int num = followRepository.countFollowState(userId, myId);
+		if(num==2) num = 1; //맞팔인 경우
+		else num = 0; //그 외 경우
 		List<Post> postList = feedRepository.getLimitByUserId(userId, num);
 		Map<String, Object> map = getFeedPost(postList, getFeedInfo(userId));
 		return map;
