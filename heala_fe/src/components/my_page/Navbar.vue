@@ -22,7 +22,10 @@
             <el-menu-item index="2-2">
               <router-link :to="{ name: 'ChangePassword' }" class="text-decoration-none">비밀번호 변경</router-link>
             </el-menu-item>
-            <el-menu-item index="2-3" @click="logout">로그아웃</el-menu-item>
+            <el-menu-item index="2-3">
+              <router-link :to="{ name: 'Withdrawal' }" class="text-decoration-none">회원 탈퇴하기</router-link>
+            </el-menu-item>
+            <el-menu-item index="2-4" @click="logout">로그아웃</el-menu-item>
             <!-- <el-menu-item index="2-4">신고</el-menu-item> -->
           </el-submenu>
           <!-- <el-menu-item index="3">

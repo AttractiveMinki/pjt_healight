@@ -8,8 +8,7 @@
         <div style="text-align:start; margin: 2vh 2vw;">
           <div>
             <!-- challenge.content -->
-            <!-- {{ datas }}
-            {{ users }} -->
+            <!-- {{ challenges }} -->
             운동 챌린지입니다.
           </div>
           <div>
@@ -17,19 +16,20 @@
             500point
           </div>
         </div>
+        {{ challenges }}
         <el-row class="set-circle-line" style="margin-bottom: 4vh; font-size: 11px" width="20px">
           <el-col :span="4" style="margin-top: 1vh">
             <div id="circle">
               <!-- {{ mission.content }} 미션 내용 -->
-              <!-- {{ datas[0].mission.content }} -->
+              <!-- {{ challenges[0].mission.content }} -->
               <div>게시글 10개 쓰기</div>
               <!-- v-if mission_user.comple_date 미션 완료 날짜가0 있다면 -->
-              <!-- {{ datas[0].mission_user.complete_date }} -->
+              <!-- {{ challenges[0].mission_user.complete_date }} -->
               <div>21-08-02</div>
             </div>
             1
           </el-col>
-          <el-col :span="4">
+          <el-col :span="4" @click="setSelectedMissionId(1)">
             <div id="circle">
               <div>댓글 10개 달기</div>
               <div></div>
@@ -202,8 +202,8 @@ export default {
   name: "KiwiHealth",
   data: function () {
     return {
-      datas: [],
-      users: [],
+      challenges: [],
+      selectedMissionId: "",
     }
   },
   components: {
@@ -214,10 +214,17 @@ export default {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}` + localStorage.getItem('userId'))
         .then((res) => {
           console.log(res)
+          this.challenges = res.data
         })
         .catch((err) => {
           console.error(err.response.data)
         })
+    },
+    certifyMission: function () {
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}${localStorage.getItem('userId')}/${this.selectedMissionId}`)
+    },
+    setSelectedMissionId: function (num) {
+      this.selectedMissionId = num
     },
   },
   mounted: function () {
