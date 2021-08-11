@@ -1,20 +1,21 @@
 package com.ssafy.kiwi.model.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.kiwi.model.domain.entity.Follow;
+import com.ssafy.kiwi.model.domain.entity.Badge;
 import com.ssafy.kiwi.model.domain.entity.Post;
+import com.ssafy.kiwi.model.domain.entity.User;
+import com.ssafy.kiwi.model.domain.entity.UserBadge;
 import com.ssafy.kiwi.model.domain.repository.FeedRepository;
 import com.ssafy.kiwi.model.domain.repository.FollowRepository;
+import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
+import com.ssafy.kiwi.model.domain.repository.UserRepository;
+import com.ssafy.kiwi.model.dto.PostSimpleOp;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +25,8 @@ public class FeedServiceImpl implements FeedService {
 
 	final private FeedRepository feedRepository;
 	final private FollowRepository followRepository;
+	final private UserRepository userRepository;
+	final private UserBadgeRepository userBadgeRepository;
 	
 	// 글 작성
 	@Override
@@ -57,6 +60,49 @@ public class FeedServiceImpl implements FeedService {
 		Page<Post> postPage = feedRepository.getByFollowAndAccess(onewayfollowIdList, followForFollowIdList, PageRequest.of(page, 10, Sort.by("created_at").descending()));
 		List<Post> postList = postPage.getContent();
 		return postList;
+	}
+
+	//개인 피드 정보 - 게시글 제외
+	public Map<String, Object> getFeedInfo(int userId){
+		User user = userRepository.getById(userId);
+		Map<String, Object> map = new HashMap<>();
+		map.put("id", user.getId());
+		map.put("identity", user.getIdentity());
+		map.put("image", user.getImage());
+		map.put("name", user.getName());
+		map.put("exp", user.getExp());
+		map.put("introduction", user.getIntroduction());
+		//대표 배지
+		List<Badge> selectedBadge = new ArrayList<>();
+		for(UserBadge ub : userBadgeRepository.getBySelectedAndUserId(userId)) {
+			selectedBadge.add(ub.getBadge());
+		}
+		map.put("badge", selectedBadge);		
+		//팔로잉, 팔로워 수
+		int following = followRepository.countByUserId(userId);
+		int follower = followRepository.countByFollowId(userId);
+		map.put("following", following);
+		map.put("follower", follower);
+		return map;
+	}
+	
+	//개인 피드 (본인)
+	@Override
+	public Object getMyFeed(int userId) {
+		Map<String, Object> map = getFeedInfo(userId);
+		List<Post> postList = feedRepository.getByUserId(userId);
+		List<PostSimpleOp> exerciseList = new ArrayList<>();
+		List<PostSimpleOp> foodList = new ArrayList<>();
+		List<PostSimpleOp> heartList = new ArrayList<>();
+		for(Post p : postList) {
+			if(p.getCategory() == 0) exerciseList.add(new PostSimpleOp(p.getId(), p.getImage()));
+			else if(p.getCategory() == 1) foodList.add(new PostSimpleOp(p.getId(), p.getImage()));
+			else heartList.add(new PostSimpleOp(p.getId(), p.getImage()));
+		}
+		map.put("exercise", exerciseList);
+		map.put("food", foodList);
+		map.put("heart", heartList);
+		return map;
 	}
 
 }
