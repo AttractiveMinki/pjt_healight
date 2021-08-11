@@ -50,10 +50,10 @@ public class UserServiceImpl implements UserService {
 	
 	//회원 탈퇴
 	@Override
-	public boolean delete(User user) {
-		Optional<User> userOpt = userRepository.getUserByIdentityAndPassword(user.getIdentity(), user.getPassword());
-		if (userOpt.isPresent()) {
-			userRepository.deleteById(userOpt.get().getId());
+	public boolean delete(int userId) {
+		Optional<User> user = Optional.of(userRepository.getById(userId));
+		if (user.isPresent()) {
+			userRepository.deleteById(user.get().getId());
 			return true;
 		} else {
 			return false;
