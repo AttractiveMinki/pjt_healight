@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.kiwi.model.domain.entity.Comment;
+import com.ssafy.kiwi.model.domain.entity.KiwiChallenge;
 import com.ssafy.kiwi.model.domain.entity.KiwiMission;
 import com.ssafy.kiwi.model.domain.entity.KiwiUser;
 import com.ssafy.kiwi.model.domain.entity.Post;
@@ -239,5 +240,13 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 			if(cnt >= num) return saveMissionUser(missionId, userId);					
 		}
 		return false;
+	}
+	
+	//-------------------------admin---------------------------
+	//키위 챌린지 추가
+	@Override
+	public boolean makeKiwi(List<KiwiMission> kiwiMission) {
+		kiwiMissionRepository.saveAll(kiwiMission);
+		return true;
 	}
 }
