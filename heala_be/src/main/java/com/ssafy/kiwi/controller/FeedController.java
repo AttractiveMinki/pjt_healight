@@ -41,15 +41,28 @@ public class FeedController {
 		}
 	}
 
-	@ApiOperation(value = "배지 보관함 보기")
-	@GetMapping("/badge/{userId}")
-	public Object getBadge(@PathVariable int userId) {
-		return new ResponseEntity<>(userService.getBadge(userId), HttpStatus.OK);
-	}
-	
 	@ApiOperation(value = "홈 피드 보기")
 	@GetMapping("/home/{userId}")
 	public Object getPostList(@PathVariable int userId, int page) {
 		return new ResponseEntity<>(feedService.getPostList(userId, page), HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "배지 보관함 보기")
+	@GetMapping("/{userId}/badge")
+	public Object getBadge(@PathVariable int userId) {
+		return new ResponseEntity<>(userService.getBadge(userId), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "개인 피드 보기 (본인피드)")
+	@GetMapping("/{userId}/my")
+	public Object getMyFeed(@PathVariable int userId) {
+		return new ResponseEntity<>(feedService.getMyFeed(userId), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "개인 피드 보기 (타인피드)")
+	@GetMapping("/{userId}/{myId}")
+	public Object getUserFeed(@PathVariable int userId, @PathVariable int myId) {
+		return new ResponseEntity<>(feedService.getUserFeed(userId, myId), HttpStatus.OK);
+	}
+	
 }

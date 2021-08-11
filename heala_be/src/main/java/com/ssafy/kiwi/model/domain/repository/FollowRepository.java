@@ -21,5 +21,14 @@ public interface FollowRepository extends JpaRepository<Follow, Integer> {
     // 서로 follow 하고 있는 Follow 객체의 id 리스트 반환(양방향)
     @Query(value = "select follow_id from follow WHERE follow_id in (SELECT user_id FROM follow WHERE follow_id = :userId) and user_id = :userId", nativeQuery = true)
     List<Integer> getFollowForFollowByUserId(int userId);
+
+    //팔로잉수
+	int countByUserId(int userId);
+	//팔로워수
+	int countByFollowId(int followId);
+	
+	//맞팔 확인
+	@Query(value="select count(*) from Follow where (userId = :userId and followId = :myId) or (userId = :myId and followId = :userId)")
+	int countFollowState(int userId, int myId);
     
 }
