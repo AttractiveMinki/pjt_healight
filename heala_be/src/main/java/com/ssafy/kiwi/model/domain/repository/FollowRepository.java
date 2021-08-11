@@ -26,5 +26,9 @@ public interface FollowRepository extends JpaRepository<Follow, Integer> {
 	int countByUserId(int userId);
 	//팔로워수
 	int countByFollowId(int followId);
+	
+	//맞팔 확인
+	@Query(value="select count(*) from Follow where (userId = :userId and followId = :myId) or (userId = :myId and followId = :userId)")
+	int countFollowState(int userId, int myId);
     
 }

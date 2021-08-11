@@ -55,8 +55,14 @@ public class FeedController {
 	
 	@ApiOperation(value = "개인 피드 보기 (본인피드)")
 	@GetMapping("/{userId}/my")
-	public Object getUserFeed(@PathVariable int userId) {
+	public Object getMyFeed(@PathVariable int userId) {
 		return new ResponseEntity<>(feedService.getMyFeed(userId), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "개인 피드 보기 (타인피드)")
+	@GetMapping("/{userId}/{myId}")
+	public Object getUserFeed(@PathVariable int userId, @PathVariable int myId) {
+		return new ResponseEntity<>(feedService.getUserFeed(userId, myId), HttpStatus.OK);
 	}
 	
 }

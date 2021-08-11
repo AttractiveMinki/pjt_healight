@@ -88,9 +88,29 @@ public class FeedServiceImpl implements FeedService {
 	
 	//개인 피드 (본인)
 	@Override
-	public Object getMyFeed(int userId) {
+	public Map<String, Object> getMyFeed(int userId) {
 		Map<String, Object> map = getFeedInfo(userId);
 		List<Post> postList = feedRepository.getByUserId(userId);
+		List<PostSimpleOp> exerciseList = new ArrayList<>();
+		List<PostSimpleOp> foodList = new ArrayList<>();
+		List<PostSimpleOp> heartList = new ArrayList<>();
+		for(Post p : postList) {
+			if(p.getCategory() == 0) exerciseList.add(new PostSimpleOp(p.getId(), p.getImage()));
+			else if(p.getCategory() == 1) foodList.add(new PostSimpleOp(p.getId(), p.getImage()));
+			else heartList.add(new PostSimpleOp(p.getId(), p.getImage()));
+		}
+		map.put("exercise", exerciseList);
+		map.put("food", foodList);
+		map.put("heart", heartList);
+		return map;
+	}
+
+	//개인 피드 (타인)
+	@Override
+	public Map<String, Object> getUserFeed(int userId, int myId) {
+		Map<String, Object> map = getFeedInfo(userId);
+		int num = followRepository.countFollowState(userId, myId);
+		List<Post> postList = feedRepository.getLimitByUserId(userId, num);
 		List<PostSimpleOp> exerciseList = new ArrayList<>();
 		List<PostSimpleOp> foodList = new ArrayList<>();
 		List<PostSimpleOp> heartList = new ArrayList<>();

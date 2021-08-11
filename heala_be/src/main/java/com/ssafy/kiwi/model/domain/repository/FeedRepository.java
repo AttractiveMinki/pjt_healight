@@ -16,4 +16,8 @@ public interface FeedRepository extends JpaRepository<Post,Integer>{
 	Page<Post> getByFollowAndAccess(List<Integer> onewayfollowIdList, List<Integer> followForFollowIdList, Pageable pageable);
 
 	List<Post> getByUserId(int userId);
+
+	//공개범위에 따른 Post 목록 반환
+	@Query(value = "SELECT p FROM Post p WHERE (p.access BETWEEN 0 AND :num) AND p.userId = :userId")
+	List<Post> getLimitByUserId(int userId, int num);
 }
