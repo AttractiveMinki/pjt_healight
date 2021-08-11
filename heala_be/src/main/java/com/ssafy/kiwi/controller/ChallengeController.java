@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.kiwi.model.domain.entity.CertifyImage;
+import com.ssafy.kiwi.model.domain.entity.KiwiMission;
 import com.ssafy.kiwi.model.dto.WithChallengeIp;
 import com.ssafy.kiwi.model.service.KiwiChallengeService;
 import com.ssafy.kiwi.model.service.WithChallengeService;
@@ -109,4 +110,5 @@ public class ChallengeController {
 			@RequestParam(value="withChallengeId", required=true) int withChallengeId) {
 		return new ResponseEntity<>(withChallengeService.photoMyChallenge(userId, withChallengeId), HttpStatus.OK);		
 	}
+	
 }
