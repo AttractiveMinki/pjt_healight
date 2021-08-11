@@ -3,11 +3,12 @@
     <ChallengeContainerKiwiDetail 
       category=3
     />
-    <el-row>
+<el-row>
       <el-col :span="24" class="community">
         <div style="text-align:start; margin: 2vh 2vw;">
           <div>
             <!-- challenge.content -->
+            <!-- {{ challenges }} -->
             기간 한정 챌린지입니다.
           </div>
           <div>
@@ -15,175 +16,107 @@
             500point
           </div>
         </div>
-        {{ challenges }}
-        <el-row class="set-circle-line" style="margin-bottom: 4vh; font-size: 11px" width="20px">
-          <el-col :span="4" style="margin-top: 1vh">
-            <div id="circle">
+        <el-row class="set-circle-line" style="margin-bottom: 40vw; font-size: 12px">
+          <el-col :span="8" style="margin-top: 1vh;">
+            <div id="circle" style="display: grid; align-items: center;">
               <!-- {{ mission.content }} 미션 내용 -->
               <!-- {{ challenges[0].mission.content }} -->
-              <div>게시글 10개 쓰기</div>
+              <div class="challenge-content">{{ challenges[0].content }}</div>
+              <span v-if="challenges[0].completeDate" class="complete"> Complete </span>
               <!-- v-if mission_user.comple_date 미션 완료 날짜가0 있다면 -->
               <!-- {{ challenges[0].mission_user.complete_date }} -->
-              <div>21-08-02</div>
             </div>
-            1
+            <div>1</div>
+            <div>{{ challenges[0].completeDate }}</div>
+            <button v-if="challenges[0].completeDate == null" class="button-setting" @click="certifyMission(challenges[0].id)">달성 확인</button>
+            <!-- <span v-else> 완료! </span> -->
           </el-col>
-          <el-col :span="4">
-            <div id="circle">
-              <div>댓글 10개 달기</div>
-              <div></div>
+          <el-col :span="8" @click="setSelectedMissionId(1)">
+            <div id="circle" style="display: grid; align-items: center">
+              <div class="challenge-content">{{ challenges[1].content }}</div>
+              <span v-if="challenges[1].completeDate" class="complete"> Complete </span>
             </div>
-            2
+            <div>2</div>
+            <div>{{ challenges[1].completeDate }}</div>
+            <button v-if="challenges[1].completeDate == null" class="button-setting" @click="certifyMission(challenges[1].id)">달성 확인</button>
           </el-col>
-          <el-col :span="4" style="margin-top: 2vh">
-            <div id="circle">
-
+          <el-col :span="8" style="margin-top: 2vh">
+            <div id="circle" style="display: grid; align-items: center">
+              <div class="challenge-content">{{ challenges[2].content }}</div>
+              <span v-if="challenges[2].completeDate" class="complete"> Complete </span>
             </div>
-            3
-          </el-col>
-          <el-col :span="4">
-            <div id="circle">
-
-            </div>
-            4
-          </el-col>
-          <el-col :span="4" style="margin-top: 3vh">
-            <div id="circle">
-
-            </div>
-            5
+            <div>3</div>
+            <div>{{ challenges[2].completeDate }}</div>
+            <button v-if="challenges[2].completeDate == null" class="button-setting" @click="certifyMission(challenges[2].id)">달성 확인</button>
           </el-col>
         </el-row>
-        <el-row class="set-circle-line" style="margin-bottom: 4vh; font-size: 11px">
-          <el-col :span="4" style="margin-top: 3vh">
-            <div id="circle">
-              <!-- {{ mission.content }} 미션 내용 -->
-              <!-- v-if mission_user.comple_date 미션 완료 날짜가0 있다면 -->
+        <el-row class="set-circle-line" style="margin-bottom: 40vw; font-size: 11px">
+          <el-col :span="8" style="margin-top: 3vh">
+            <div id="circle" style="display: grid; align-items: center">
+              <div class="challenge-content">{{ challenges[5].content }}</div>
+              <span v-if="challenges[5].completeDate" class="complete"> Complete </span>
             </div>
-            10
+            <div>6</div>
+            <div>{{ challenges[5].completeDate }}</div>
+            <button v-if="challenges[5].completeDate == null" class="button-setting" @click="certifyMission(challenges[5].id)">달성 확인</button>
           </el-col>
-          <el-col :span="4" style="margin-top: 2vh">
-            <div id="circle">
-
+          <el-col :span="8" style="margin-top: 1vh">
+            <div id="circle" style="display: grid; align-items: center">
+              <div class="challenge-content">{{ challenges[4].content }}</div>
+              <span v-if="challenges[4].completeDate" class="complete"> Complete </span>
             </div>
-            9
+            <div>5</div>
+            <div>{{ challenges[4].completeDate }}</div>
+            <button v-if="challenges[4].completeDate == null" class="button-setting" @click="certifyMission(challenges[4].id)">달성 확인</button>
           </el-col>
-          <el-col :span="4">
-            <div id="circle">
-
+          <el-col :span="8">
+            <div id="circle" style="display: grid; align-items: center">
+              <div class="challenge-content">{{ challenges[3].content }}</div>
+              <span v-if="challenges[3].completeDate" class="complete"> Complete </span>
             </div>
-            8
-          </el-col>
-          <el-col :span="4" style="margin-top: 2vh">
-            <div id="circle">
-
-            </div>
-            7
-          </el-col>
-          <el-col :span="4" style="margin-bottom: 2vh">
-            <div id="circle">
-
-            </div>
-            6
+            <div>4</div>
+            <div>{{ challenges[3].completeDate }}</div>
+            <button v-if="challenges[3].completeDate == null" class="button-setting" @click="certifyMission(challenges[3].id)">달성 확인</button>
           </el-col>
         </el-row>
-        <el-row class="set-circle-line" style="margin-bottom: 4vh; font-size: 11px">
-          <el-col :span="4" style="margin-bottom: 15px">
-            <div id="circle">
-              <!-- {{ mission.content }} 미션 내용 -->
-              <!-- v-if mission_user.comple_date 미션 완료 날짜가0 있다면 -->
+        <el-row class="set-circle-line" style="margin-bottom: 40vw; font-size: 11px">
+          <el-col :span="8" style="margin-bottom: 15px">
+            <div id="circle" style="display: grid; align-items: center">
+              <div class="challenge-content">{{ challenges[6].content }}</div>
+              <span v-if="challenges[6].completeDate" class="complete"> Complete </span>
             </div>
-            11
+            <div>7</div>
+            <div>{{ challenges[6].completeDate }}</div>
+            <button v-if="challenges[6].completeDate == null" class="button-setting" @click="certifyMission(challenges[6].id)">달성 확인</button>
           </el-col>
-          <el-col :span="4" style="margin-top: 1vh">
-            <div id="circle">
-
+          <el-col :span="8" style="margin-top: 1vh">
+            <div id="circle" style="display: grid; align-items: center">
+              <div class="challenge-content">{{ challenges[7].content }}</div>
+              <span v-if="challenges[7].completeDate" class="complete"> Complete </span>
             </div>
-            12
+            <div>8</div>
+            <div>{{ challenges[7].completeDate }}</div>
+            <button v-if="challenges[7].completeDate == null" class="button-setting" @click="certifyMission(challenges[7].id)">달성 확인</button>
           </el-col>
-          <el-col :span="4" style="margin-top: 2vh">
-            <div id="circle">
-
+          <el-col :span="8" style="margin-top: 2vh">
+            <div id="circle" style="display: grid; align-items: center">
+              <div class="challenge-content">{{ challenges[8].content }}</div>
+              <span v-if="challenges[8].completeDate" class="complete"> Complete </span>
             </div>
-            13
-          </el-col>
-          <el-col :span="4" style="margin-top: 1vh">
-            <div id="circle">
-
-            </div>
-            14
-          </el-col>
-          <el-col :span="4" style="margin-top: 3vh">
-            <div id="circle">
-
-            </div>
-            15
+            <div>9</div>
+            <div>{{ challenges[8].completeDate }}</div>
+            <button v-if="challenges[8].completeDate == null" class="button-setting" @click="certifyMission(challenges[8].id)">달성 확인</button>
           </el-col>
         </el-row>
-        <el-row class="set-circle-line" style="margin-bottom: 4vh; font-size: 11px">
-          <el-col :span="4" style="margin-top: 3vh">
-            <div id="circle">
-              <!-- {{ mission.content }} 미션 내용 -->
-              <!-- v-if mission_user.comple_date 미션 완료 날짜가0 있다면 -->
+        <el-row class="set-circle-line" style="margin-bottom: 10vw; font-size: 11px">
+          <el-col :span="8" style="margin-top: 3vh">
+            <div id="circle" style="display: grid; align-items: center">
+              <div class="challenge-content">{{ challenges[9].content }}</div>
+              <span v-if="challenges[9].completeDate" class="complete"> Complete </span>
             </div>
-            20
-          </el-col>
-          <el-col :span="4" style="margin-top: 2vh">
-            <div id="circle">
-
-            </div>
-            19
-          </el-col>
-          <el-col :span="4">
-            <div id="circle">
-
-            </div>
-            18
-          </el-col>
-          <el-col :span="4" style="margin-top: 2vh">
-            <div id="circle">
-
-            </div>
-            17
-          </el-col>
-          <el-col :span="4" style="margin-bottom: 2vh">
-            <div id="circle">
-
-            </div>
-            16
-          </el-col>
-        </el-row>
-        <el-row class="set-circle-line" style="margin-bottom: 4vh; font-size: 11px">
-          <el-col :span="4" style="margin-bottom: 15px">
-            <div id="circle">
-              <!-- {{ mission.content }} 미션 내용 -->
-              <!-- v-if mission_user.comple_date 미션 완료 날짜가0 있다면 -->
-            </div>
-            21
-          </el-col>
-          <el-col :span="4" style="margin-top: 1vh">
-            <div id="circle">
-
-            </div>
-            22
-          </el-col>
-          <el-col :span="4" style="margin-top: 2vh">
-            <div id="circle">
-
-            </div>
-            23
-          </el-col>
-          <el-col :span="4" style="margin-top: 1vh">
-            <div id="circle">
-
-            </div>
-            24
-          </el-col>
-          <el-col :span="4" style="margin-top: 3vh">
-            <div id="circle">
-
-            </div>
-            25
+            <div>10</div>
+            <div>{{ challenges[9].completeDate }}</div>
+            <button v-if="challenges[9].completeDate == null" class="button-setting" @click="certifyMission(challenges[9].id)">달성 확인</button>
           </el-col>
         </el-row>
       </el-col>
@@ -218,6 +151,19 @@ export default {
           console.error(err.response.data)
         })
     },
+    certifyMission: function (missionId) {
+      // 주소 이상하고, 챌린지 성공 실패 기준을 몰라 보류중
+      // axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}${localStorage.getItem('userId')}/${missionId}`)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}${localStorage.getItem('userId')}/{missionId}?missionId=${missionId}`)
+        .then((res) => {
+          console.log(res)
+          // 챌린지 성공!
+        })
+        .catch((err) => {
+          console.log(err)
+          // 챌린지 실패
+        })
+    },
   },
   mounted: function () {
     this.getKiwiSpecialChallenge()
@@ -228,10 +174,11 @@ export default {
 
 <style scoped>
   #circle {
-    border-radius: 50px;
-    width: 50px;
-    height: 50px;
-    background: #ADEC6E;
+    border-radius: 50%;
+    width: 25vw;
+    height: 25vw;
+    background: #EAEAEA;
+    padding: 1vw;
   }
   .community {
     padding: 5px;
@@ -246,5 +193,23 @@ export default {
     display: flex;
     justify-content: space-between;
     height: 60px;
+  }
+  .button-setting {
+    border-width: 0px;
+    border-radius: 5px;
+    background: #ADEC6E;
+    color: white;
+    width: 80%;
+    cursor: pointer;
+  }
+  .complete {
+    color: red;
+    font-weight: bold;
+    border: red 3px solid;
+    border-radius: 5px;
+    transform: rotate(-40deg);
+  }
+  .challenge-content {
+    font-weight: bold;
   }
 </style>
