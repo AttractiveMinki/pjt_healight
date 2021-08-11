@@ -2,7 +2,6 @@ package com.ssafy.kiwi.model.service;
 
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -17,20 +16,16 @@ import com.ssafy.kiwi.model.domain.repository.CommunityRepository;
 import com.ssafy.kiwi.model.domain.repository.LikeUserRepository;
 import com.ssafy.kiwi.model.domain.repository.ScrapRepository;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 public class CommunityServiceImpl implements CommunityService {
 	
-	@Autowired
-	private CommunityRepository communityRepository;
-
-	@Autowired
-	private CommentRepository commentRepository;
-
-	@Autowired
-	private LikeUserRepository likeUserRepository;
-
-	@Autowired
-	private ScrapRepository scrapRepository;
+	final private CommunityRepository communityRepository;
+	final private CommentRepository commentRepository;
+	final private LikeUserRepository likeUserRepository;
+	final private ScrapRepository scrapRepository;
 
 	// 커뮤니티 전체 글 목록 가져오기
 	@Override
