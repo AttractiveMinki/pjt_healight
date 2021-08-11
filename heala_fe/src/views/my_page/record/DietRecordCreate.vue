@@ -60,7 +60,7 @@ export default {
   methods: {
     getFoodInfo() {
       // let request = require('request');
-      let proxy_url = 'https://cors-anywhere.herokuapp.com'
+      // let proxy_url = 'https://cors-anywhere.herokuapp.com'
       let url = 'http://apis.data.go.kr/1470000/FoodNtrIrdntInfoService/getFoodNtrItdntList';
       let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.VUE_APP_APISDATA_API_KEY; /* Service Key*/
       queryParams += '&' + encodeURIComponent('desc_kor') + '=' + this.foodName; /* */
