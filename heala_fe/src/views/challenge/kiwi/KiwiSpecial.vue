@@ -15,14 +15,15 @@
             500point
           </div>
         </div>
+        {{ challenges }}
         <el-row class="set-circle-line" style="margin-bottom: 4vh; font-size: 11px" width="20px">
           <el-col :span="4" style="margin-top: 1vh">
             <div id="circle">
               <!-- {{ mission.content }} 미션 내용 -->
-              <!-- {{ datas[0].mission.content }} -->
+              <!-- {{ challenges[0].mission.content }} -->
               <div>게시글 10개 쓰기</div>
               <!-- v-if mission_user.comple_date 미션 완료 날짜가0 있다면 -->
-              <!-- {{ datas[0].mission_user.complete_date }} -->
+              <!-- {{ challenges[0].mission_user.complete_date }} -->
               <div>21-08-02</div>
             </div>
             1
@@ -200,26 +201,21 @@ export default {
   name: "KiwiHealth",
   data: function () {
     return {
-      datas: [],
+      challenges: [],
     }
   },
   components: {
     ChallengeContainerKiwiDetail,
   },
   methods: {
-    // 서버와 연결 아직 안 됨.. user_id가 아직 없는 문제 + CORS 에러 발생하는 듯.
     getKiwiSpecialChallenge: function () {
-      console.log('monted 실행')
-      // console.log(this.$store.state.user_id)
-      // axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiChallenge}${this.$store.state.user_id}`)
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiSpecialChallenge}1`)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiSpecialChallenge}`+ localStorage.getItem('userId'))
         .then((res) => {
-          this.datas = res
-          alert('성공')
+          console.log(res)
+          this.challenges = res.data
         })
         .catch((err) => {
           console.error(err.response.data)
-          alert('실패')
         })
     },
   },

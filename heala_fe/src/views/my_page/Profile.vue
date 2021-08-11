@@ -17,7 +17,7 @@
     </el-row>
     <el-row style="text-align: start; padding: 2vw">
       <el-col :span="12">
-        <span style="font-size: 14px; font-weight: bold; padding: 1px"> <!-- {{ user.username }} --> 스파르타꾹스</span>
+        <span style="font-size: 14px; font-weight: bold; padding: 1px"> <!-- {{ user.username }} --> 스파르타꾹스 </span>
         <span style="font-size: 11px"> Lv. <!-- {{ user.userid }} -->77</span>
       </el-col>
     </el-row>
@@ -26,10 +26,10 @@
         <span style="font-size: 13px"><!-- {{ user.content }} -->나는야 스파르타꾹스. 유튜브 많이 보러 와주세요</span>
       </el-col>
     </el-row>
-    <el-row style="text-align: space-between">
+    <el-row style="text-align: space-between; font-size: 12px">
       <el-col :span="12">
-        <span style="padding: 2vw"> <span style="font-weight: bold; padding: 1vw">231<!-- {{ user.following }} --></span>팔로잉</span>  
-        <span style="padding: 2vw"> <span style="font-weight: bold; padding: 1vw">583<!-- {{ user.follower }} --></span>팔로워</span>
+        <span style="padding: 2vw"> <span style="font-weight: bold; font-size: 13px; padding: 1vw">231<!-- {{ user.following }} --></span>팔로잉</span>  
+        <span style="padding: 2vw"> <span style="font-weight: bold; font-size: 13px; padding: 1vw">583<!-- {{ user.follower }} --></span>팔로워</span>
       </el-col>
     </el-row>
     <div id="underline"></div>
@@ -44,7 +44,7 @@
       <el-dialog  width="95%">
         <img alt="" width="99%">
       </el-dialog>
-      <img class="image" src="@/assets/image/heart/heart_silver.png" alt="herat badge" style="width: 10vw; padding: 2vw">
+      <img class="image" src="@/assets/image/heart/heart_silver.png" alt="heart badge" style="width: 10vw; padding: 2vw">
       <el-dialog width="95%">
         <img alt="" width="99%">
       </el-dialog>
@@ -67,6 +67,8 @@
 </template>
 
 <script>
+import SERVER from "@/api/drf.js"
+import axios from 'axios';
 import Navbar from "@/components/my_page/Navbar"
 import Category from "@/components/my_page/profile/Category"
 import Footer from "@/components/home/Footer"
@@ -80,6 +82,7 @@ export default {
       name: "",
       identity: "",
       introduction: "",
+      badges: [],
     };
   },
   components: {
@@ -91,6 +94,24 @@ export default {
     ...mapState([
       "profileSelectedCategory",
     ])
+  },
+  mounted() {
+    // 프로필 기존 정보 불러오기
+    axios.get(`${SERVER.URL}${SERVER.ROUTES.userProfile}${localStorage.getItem('userId')}`)
+      .then(response => {     
+        // this.image = require("@/assets/img/profile/" + response.data.image);
+        this.identity = response.data.identity;
+        this.name = response.data.name;
+        this.introduction = response.data.introduction;
+        this.badges = response.data.badges;
+
+        this.originalIdentity = response.data.identity;
+        // console.log(this.badges)
+      })
+      .catch(error => {
+        console.log(error);
+        console.error(error.response.data);
+      });
   },
 }
 </script>

@@ -8,10 +8,10 @@
         <font-awesome-icon :icon="['far', 'bell']" style="margin: 2vw" />
       </span>
     </div> -->
-    <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect">
+    <el-menu mode="horizontal">
       <el-row class="display-flex justify-content-space-between align-items">
         <el-col :span="18">
-          <el-menu-item index="1" class="display-flex"><span class="display-flex align-items"><font-awesome-icon icon="arrow-left" class="padding-left cursor-pointer" style="margin: 2vw" @click="goBack()"/></span><span class="text-title padding-left">{{ username }}spartakim</span></el-menu-item>
+          <el-menu-item index="1" class="display-flex"><span class="display-flex align-items"><font-awesome-icon icon="arrow-left" class="padding-left cursor-pointer" style="margin: 2vw" @click="goBack()"/></span><span class="text-title padding-left">{{ username }}</span></el-menu-item>
         </el-col>
         <el-col :span="6" class="padding-right">
           <el-submenu index="2">
@@ -22,7 +22,10 @@
             <el-menu-item index="2-2">
               <router-link :to="{ name: 'ChangePassword' }" class="text-decoration-none">비밀번호 변경</router-link>
             </el-menu-item>
-            <el-menu-item index="2-3" @click="logout">로그아웃</el-menu-item>
+            <el-menu-item index="2-3">
+              <router-link :to="{ name: 'Withdrawal' }" class="text-decoration-none">회원 탈퇴하기</router-link>
+            </el-menu-item>
+            <el-menu-item index="2-4" @click="logout">로그아웃</el-menu-item>
             <!-- <el-menu-item index="2-4">신고</el-menu-item> -->
           </el-submenu>
           <!-- <el-menu-item index="3">
@@ -37,7 +40,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex"
+import { mapActions } from "vuex"
 
 export default {
   name: "Navbar",
@@ -49,10 +52,10 @@ export default {
       'logout',
     ]),
   },
-  computed: {
-    ...mapState([
-      "username",
-    ])
+  data: () => {
+    return {
+      username: localStorage.getItem('userName')
+    };
   },
 }
 </script>

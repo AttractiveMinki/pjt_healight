@@ -55,11 +55,38 @@ public class UserController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "본인 인증(아이디, 비밀번호 일치 확인)")
+	@PostMapping("/checkAuthorization")
+	public Object authorize(@RequestBody User user) {
+		Optional<User> userOpt = userService.login(user.getIdentity(), user.getPassword());
+		boolean check = false;
+		if (userOpt.isPresent()) {
+			check = true;
+			return new ResponseEntity<>(check, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(check, HttpStatus.UNAUTHORIZED);
+		}
+	}
+	
+	@ApiOperation(value = "회원 탈퇴")
+	@DeleteMapping("/{userId}")
+	public Object delete(@PathVariable int userId) {
+		boolean isPresent = userService.delete(userId);
+		if (isPresent) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // 401: 권한 없음
+		}
+	}
+	
 	@ApiOperation(value = "로그인 하기.")
 	@PostMapping("/login")
 	public Object login(@RequestBody User user) {
 		Optional<User> userOpt = userService.login(user.getIdentity(), user.getPassword());
 		if (userOpt.isPresent()) {
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("id", userOpt.get().getId());
+			response.put("name", userOpt.get().getName());
 			return new ResponseEntity<>(userOpt.get().getId(), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -129,6 +156,16 @@ public class UserController {
 	public Object getAllUserSimpleInfoByUserId(@RequestBody UserIdSetIp userIdSetIp){
 		List<UserSimpleOp> userSimpleOpList = userService.getUserSimpleInfoAll(userIdSetIp.getUserIdSet());
 		return new ResponseEntity<>(userSimpleOpList, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "유저 exp 정보 불러오기")
+	@GetMapping("/exp")
+	public Object getUserExpByUserId(@RequestParam int userId) {
+		Integer exp = userService.getUserExpByUserId(userId);
+		if(exp != null){
+			return new ResponseEntity<>(exp, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	@ApiOperation(value = "댓글 전체 좋아요 여부 불러오기")

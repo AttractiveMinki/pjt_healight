@@ -11,7 +11,8 @@
               <div class="text-align-start">{{ data[0].introduction }}</div>
             </el-col>
             <el-col :span="6">
-              image
+              <img v-if="image == data[0].image" src="@/assets/img/profile/user.png" alt="profile_image" width="70" height="70" style="border-radius: 50%;">
+              <img v-else :src="image" alt="image" width="70" height="70" style="border-radius: 50%;"><br>
               <!-- {{ data[0].image }} -->
             </el-col>
           </router-link>
@@ -25,7 +26,8 @@
               <div class="text-align-start">{{ data[1].introduction }}</div>
             </el-col>
             <el-col :span="6">
-              image
+              <img v-if="image == data[1].image" src="@/assets/img/profile/user.png" alt="profile_image" width="70" height="70" style="border-radius: 50%;">
+              <img v-else :src="image" alt="image" width="70" height="70" style="border-radius: 50%;"><br>
               <!-- {{ data[1].image }} -->
             </el-col>
           </router-link>
@@ -39,7 +41,8 @@
               <div class="text-align-start">{{ data[2].introduction }}</div>
             </el-col>
             <el-col :span="6">
-              image
+              <img v-if="image == data[2].image" src="@/assets/img/profile/user.png" alt="profile_image" width="70" height="70" style="border-radius: 50%;">
+              <img v-else :src="image" alt="image" width="70" height="70" style="border-radius: 50%;"><br>
               <!-- {{ data[2].image }} -->
             </el-col>
           </router-link>
@@ -53,69 +56,13 @@
               <div class="text-align-start">{{ data[3].introduction }}</div>
             </el-col>
             <el-col :span="6">
-              image
+              <img v-if="image == data[3].image" src="@/assets/img/profile/user.png" alt="profile_image" width="70" height="70" style="border-radius: 50%;">
+              <img v-else :src="image" alt="image" width="70" height="70" style="border-radius: 50%;"><br>
               <!-- {{ data[3].image }} -->
             </el-col>
           </router-link>
         </el-row>
       </el-col>
-      <!-- <el-col :span="24" class="community-box">
-        <el-row>
-          <router-link :to="{ name: 'KiwiSpecial' }" class="text-decoration-none">
-            <el-col :span="18" class="community-inside">
-              <div class="text-align-start text-title">기간 한정</div>
-              <div class="text-align-start text-title">챌린지</div>
-              <div class="text-align-start">기간 한정 챌린지에 도전해보세요!</div>
-              <div class="text-align-end">참가자 수:</div>
-            </el-col>
-            <el-col :span="6">
-              image
-            </el-col>
-          </router-link>
-        </el-row>
-      </el-col>
-      <el-col :span="24" class="community-box">
-        <el-row>
-          <router-link :to="{ name: 'KiwiHealth' }" class="text-decoration-none">
-            <el-col :span="18" class="community-inside">
-              <div class="text-align-start text-title">운동</div>
-              <div class="text-align-start text-title">챌린지</div>
-              <div class="text-align-start">운동 챌린지에 도전해보세요!</div>
-            </el-col>
-            <el-col :span="6">
-              image
-            </el-col>
-          </router-link>
-        </el-row>
-      </el-col>
-      <el-col :span="24" class="community-box">
-        <el-row>
-          <router-link :to="{ name: 'KiwiDiet' }" class="text-decoration-none"> 
-            <el-col :span="18" class="community-inside">
-              <div class="text-align-start text-title">식단</div>
-              <div class="text-align-start text-title">챌린지</div>
-              <div class="text-align-start">식단 챌린지에 도전해보세요!</div>
-            </el-col>
-            <el-col :span="6">
-              image
-            </el-col>
-          </router-link>
-        </el-row>
-      </el-col>
-      <el-col :span="24" class="community-box">
-        <el-row>
-          <router-link :to="{ name: 'KiwiHeart' }" class="text-decoration-none">
-            <el-col :span="18" class="community-inside">
-              <div class="text-align-start text-title">마음</div>
-              <div class="text-align-start text-title">챌린지</div>
-              <div class="text-align-start">마음 챌린지에 도전해보세요!</div>
-            </el-col>
-            <el-col :span="6">
-              image
-            </el-col>
-          </router-link>
-        </el-row>
-      </el-col> -->
     </el-row>
    <Footer />
   </div>
@@ -207,7 +154,7 @@ export default {
     padding: 5px;
     border-radius: 5px;
     /* width: 100%; */
-    height: 14vh;
+    height: 13vh;
     border: 1.5px solid darkgrey;
   }
 </style>

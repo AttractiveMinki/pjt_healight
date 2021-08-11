@@ -20,10 +20,10 @@
           <el-col :span="4" style="margin-top: 1vh">
             <div id="circle">
               <!-- {{ mission.content }} 미션 내용 -->
-              <!-- {{ datas[0].mission.content }} -->
+              <!-- {{ challenges[0].mission.content }} -->
               <div>게시글 10개 쓰기</div>
               <!-- v-if mission_user.comple_date 미션 완료 날짜가0 있다면 -->
-              <!-- {{ datas[0].mission_user.complete_date }} -->
+              <!-- {{ challenges[0].mission_user.complete_date }} -->
               <div>21-08-02</div>
             </div>
             1
@@ -201,7 +201,7 @@ export default {
   name: "KiwiHealth",
   data: function () {
     return {
-      datas: [],
+      challenges: [],
     }
   },
   components: {
@@ -209,13 +209,13 @@ export default {
   },
   methods: {
     getKiwiDietChallenge: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiDietChallenge}` + this.$store.state.userid)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiDietChallenge}` + localStorage.getItem('userId'))
         .then((res) => {
           console.log(res)
-          this.users = res.data
+          this.challenges = res.data
         })
         .catch((err) => {
-          console.error(err)
+          console.error(err.response.data)
         })
     },
   },

@@ -7,10 +7,14 @@
         <div style="font-size:18px"> <span style="font-weight: bold">{{ diet.calory }}kcal </span> / {{ recommend.calory }}</div>
         <div style="font-size:18px; color: #289B2D">{{ (100 - (diet.calory / recommend.calory) * 100).toFixed(2)}}% 남음</div>
         <br>
-        <div>2021.07.20</div>
+        <div>
+          <router-link :to="{ name: 'DietRecordCalender' }" class="text-decoration-none cursor-pointer">
+            <i class="el-icon-date"></i> {{ year }} / {{ month }} / {{ date }}
+          </router-link>
+        </div>
       </el-col>
       <el-col :span="12">
-        <el-progress type="circle" :percentage="((diet.calory / recommend.calory) * 100).toFixed(2)" :stroke-width="24" :color="colors"></el-progress>
+        <el-progress type="circle" :percentage="parseFloat(((diet.calory / recommend.calory) * 100).toFixed(2))" :stroke-width="24" :color="colors" style="margin: 1vw"></el-progress>
       </el-col>
     </el-row>
     <div id="line"></div>
@@ -21,7 +25,7 @@
         <div style="margin: 0.5vh"><span style="font-size:18px; font-weight: bold">{{ diet.carbohydrate }}g</span><span style="font-size:13px;"> / {{ recommend.carbohydrate }}</span></div>
       </el-col>
       <el-col :span="11">
-        <el-progress :stroke-width="24" :percentage="((diet.carbohydrate / recommend.carbohydrate) * 100).toFixed(2)" :color="colors"></el-progress>
+        <el-progress :stroke-width="24" :percentage="parseFloat(((diet.carbohydrate / recommend.carbohydrate) * 100).toFixed(2))" :color="colors" style="margin: 0.5vh"></el-progress>
       </el-col>
     </el-row>
 
@@ -31,7 +35,7 @@
         <div style="margin: 0.5vh"><span style="font-size:18px; font-weight: bold">{{ diet.protein }}g</span><span style="font-size:13px;"> / {{ recommend.protein }}</span></div>
       </el-col>
       <el-col :span="11">
-        <el-progress :stroke-width="24" :percentage="((diet.protein / recommend.protein) * 100).toFixed(2)" :color="colors"></el-progress>
+        <el-progress :stroke-width="24" :percentage="parseFloat(((diet.protein / recommend.protein) * 100).toFixed(2))" :color="colors"></el-progress>
       </el-col>
     </el-row>
 
@@ -41,7 +45,7 @@
         <div style="margin: 0.5vh"><span style="font-size:18px; font-weight: bold">{{ diet.fat }}g</span><span style="font-size:13px;"> / {{ recommend.fat }}</span></div>
       </el-col>
       <el-col :span="11">
-        <el-progress :stroke-width="24" :percentage="((diet.fat / recommend.fat) * 100).toFixed(2) " :color="colors"></el-progress>
+        <el-progress :stroke-width="24" :percentage="parseFloat(((diet.fat / recommend.fat) * 100).toFixed(2))" :color="colors"></el-progress>
       </el-col>
     </el-row>
 
@@ -51,11 +55,11 @@
         <div style="margin: 0.5vh"><span style="font-size:18px; font-weight: bold">{{ diet.sodium }}mg</span><span style="font-size:13px;"> / {{ recommend.sodium }}</span></div>
       </el-col>
       <el-col :span="11">
-        <el-progress :stroke-width="24" :percentage="((diet.sodium / recommend.sodium) * 100).toFixed(2)" :color="colors"></el-progress>
+        <el-progress :stroke-width="24" :percentage="parseFloat(((diet.sodium / recommend.sodium) * 100).toFixed(2))" :color="colors"></el-progress>
       </el-col>
     </el-row>
-    <router-link :to="{ name: 'DietRecordMake' }" class="text-decoration-none">
-      <div id="submit" style="background-color: #ADEC6E; color: black; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">식단 기록하기</div>
+    <router-link :to="{ name: 'DietRecordDetail' }" class="text-decoration-none cursor-pointer">
+      <div id="submit" style="background-color: #ADEC6E; color: black; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">식단 기록보기</div>
     </router-link>
   </div>
 </template>
@@ -79,7 +83,7 @@ export default {
       // }
       diet: {
         calory: 1800,
-        carbohydrate: 140, // 탄수화물
+        carbohydrate: 141, // 탄수화물
         protein: 48,
         fat: 17,
         sodium: 2300, // 나트륨
@@ -99,7 +103,12 @@ export default {
         {color: '#1989fa', percentage: 80},
         {color: '#ADEC6E', percentage: 100},
         {color: '#F57053', percentage: 101},
-      ]
+      ],
+      today: "",
+      year: "", // 년도
+      month: "",  // 월
+      date: "", // 날짜
+      day: "",
     }
   },
   methods: {
@@ -114,8 +123,23 @@ export default {
     //       console.error(err.response.data)
     //   })
     // },
+    getDate() {
+      let today = new Date();   
+
+      let year = today.getFullYear(); // 년도
+      let month = today.getMonth() + 1;  // 월
+      let date = today.getDate();  // 날짜
+      let day = today.getDay();  // 요일,
+
+      this.today = today
+      this.year = year
+      this.month = month
+      this.date = date
+      this.day = day
+    },
   },
-  mounted: {
+  mounted() {
+    this.getDate()
     // getScrapFeeds() {},
     // 사용자 성별, 신장, 체중
     // 가지고와서 하루 권장섭취량 계산
@@ -126,7 +150,7 @@ export default {
 
 <style scoped>
   #line {
-    margin: 2vh;
+    margin: 2vh 0vh;
     width: 100%;
     height: 5px;
     background: #F2F2F2;
@@ -134,5 +158,12 @@ export default {
   #submit {
     position: fixed;
     bottom: 0rem;
+  }
+  .text-decoration-none {
+    text-decoration: none;
+    color: black;
+  }
+  .cursor-pointer {
+    cursor: pointer;
   }
 </style>

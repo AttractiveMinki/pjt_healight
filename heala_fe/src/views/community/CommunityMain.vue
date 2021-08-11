@@ -17,8 +17,8 @@
     </el-row>
     <h1>전체</h1>
     <div>
-      {{ username }}님, 환영합니다!
-      {{ userid}}
+      {{ userIdentity }}님, 환영합니다!
+      {{ userId}}
       <div>
         <button @click="logout"> 로그아웃</button>
       </div>
@@ -81,6 +81,8 @@ export default {
       data: {
       },
       isvisible: false,
+      userId: "",
+      userIdentity: "",
     }
   },
   components: {
@@ -90,20 +92,17 @@ export default {
     ...mapActions([
       'logout',
     ]),
+    getUserInfo: function () {
+     this.userId = localStorage.getItem('userId')
+     this.userIdentity = localStorage.getItem('userIdentity')
+    },
   },
-  // created: function () {
-  //   if (this.$store.getters.isLoggedIn) {
-  //     console.log()
-  //    this.getFeeds()
-  //   } else {
-  //     this.$router.push({ name: 'Login'})
-  //   }
-  // },
+  mounted: function () {
+    this.getUserInfo()
+  },
   computed: {
     ...mapState([
       "feeds",
-      "username",
-      "userid"
     ])
   },
 }

@@ -73,7 +73,14 @@ public class ChallengeController {
 		return new ResponseEntity<>(kiwiChallengeService.getKiwiMission(category, userId), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "키위 챌린지 미션 성공 여부 확인하기.")
+	@GetMapping("/kiwi/{category}/{userId}/{missionId}")
+	public Object completeKiwiMission(@PathVariable int category, @PathVariable int userId,
+			@RequestParam(value="missionId", required=true) int missionId) {
+		return new ResponseEntity<>(kiwiChallengeService.completeKiwiMission(category, userId, missionId), HttpStatus.OK);
+	}
 	
+			
 	@ApiOperation(value = "마이 챌린지 목록 조회하기.")
 	@GetMapping("/my/{userId}")
 	public Object getMyChallenge(@PathVariable int userId) {
@@ -92,7 +99,14 @@ public class ChallengeController {
 	@ApiOperation(value = "마이 챌린지 결과 조회하기.")
 	@GetMapping("/my/result")
 	public Object resultMyChallenge(@RequestParam(value="userId", required=true) int userId,
-			@RequestParam(value="withChallengeId", required=true) int withChallengeId) {
+			@PathVariable int withChallengeId) {
 		return new ResponseEntity<>(withChallengeService.resultMyChallenge(userId, withChallengeId), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "마이 챌린지 인증사진 모아보기.")
+	@GetMapping("/my/photo")
+	public Object photoMyChallenge(@RequestParam(value="userId", required=true) int userId,
+			@RequestParam(value="withChallengeId", required=true) int withChallengeId) {
+		return new ResponseEntity<>(withChallengeService.photoMyChallenge(userId, withChallengeId), HttpStatus.OK);		
 	}
 }

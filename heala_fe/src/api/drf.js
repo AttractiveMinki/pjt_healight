@@ -6,14 +6,18 @@ export default {
   URL: SERVER_URL,
   ROUTES: {
     // 한길 #@
-    follow: "/user/follow/",
+    follow: "/user/follow",
     post: "/community/post/",
-    comment: "/comment/",
-    like: "/like/",
-    scrap: "/scrap/",
-    commentUsers: "/user/comment/",
+    comment: "/comment",
+    like: "/like",
+    scrap: "/scrap",
+    commentUsers: "/user/comment",
     commentLikes: "/user/comment/like",
     postUser: "/user/simple",
+    myChallengePhoto: "/challenge/my/photo",
+    myChallengeResult: "/challenge/my/result",
+    userExp: "/user/exp",
+    feedPost: "/feed/post",
 
     // 원석 #@
 
@@ -23,7 +27,7 @@ export default {
     community: "/community/",
     checkEmail: "/user/checkemail/",
     checkIdentity: "/user/checkidentity/",
-    withmake: "/challenge/with/",
+    withMake: "/challenge/with/",
     userProfile: "/user/profile/",
     getKiwiChallenge: "/challenge/kiwi/",
     getKiwiHealthChallenge: "/challenge/kiwi/0/",
@@ -34,5 +38,8 @@ export default {
     getWithDietChallenge: "/challenge/with?category=1",
     getWithHeartChallenge: "/challenge/with?category=2",
     getWithDetail: "/challenge/with/detail",
+    getMyChallenge: "/challenge/my/",
+    joinWithChallenge: "/challenge/with/join",
+    withdrawal: "/user",
   }
 }

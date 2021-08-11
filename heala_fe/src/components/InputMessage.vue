@@ -2,11 +2,12 @@
   <div>
     <div class="input-message-container">
       <slot name="image">
-        <user-image :image="loginUser.image"></user-image>
+        <user-image :image="image"></user-image>
       </slot>
       <div class="input-wrapper">
       <slot name="input">
-        <input v-model="message" type="text" :placeholder="placeholderMsg">
+        <!-- <input v-model="message" type="text" :placeholder="placeholderMsg"> -->
+        <textarea id="textarea" v-model="message" type="text" :placeholder="placeholderMsg" @input="resize"></textarea>
       </slot>
       </div>
       <button :class="{ disabled:!message }" @click="writeComment">
@@ -24,17 +25,26 @@ export default {
     data() {
         return {
             message: "",
+            image: "blue.jpg", // 나중에 변경
         }
     },
-    computed: {
-      loginUser() {
-        return this.$store.state.loginUser;
-      }
+    created() {
+      // this.image = localStorage.getItem("image");
+    },
+    mounted() {
+      this.$nextTick(() => {
+        this.$el.setAttribute("style", "height",
+        `${this.$el.scrollHeight}px`);
+      });
     },
     methods: {
       writeComment() {
         this.$emit('write', this.message);
         this.message = "";
+      },
+      resize(event) {
+        event.target.style.height = "16px";
+        event.target.style.height = `${event.target.scrollHeight}px`;
       },
     },
     components: { UserImage },
@@ -57,12 +67,13 @@ export default {
   margin: 5px auto auto 10px;
   width: calc(100% - 90px);
 }
-input {
+#textarea {
   border: none;
+  resize: none;
   width: 100%;
-  word-break: break-all;
+  height: 18px;
 }
-input:focus {
+#textarea:focus {
     outline: none;
 }
 button {

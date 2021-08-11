@@ -9,13 +9,15 @@
     <div id="square" class="margin-line"></div>
     <el-row>
       <el-col :span="6" class="community">
-        <span style="font-weight: bold">챌린지</span> <br>
-        <span style="font-weight: bold">대표 이미지</span>
+        <span style="font-weight: bold; font-size: 15px">챌린지</span> <br>
+        <span style="font-weight: bold; font-size: 15px">대표 이미지</span>
       </el-col>
       <el-col :span="18">
         <!-- <img :src="image" alt="profile_image" width="92" height="92" style="border-radius: 50%;"><br>
         <label for="image" class="btn-file"><span style="font-size: 13px; font-weight: bold; color: #ADEC6E;">챌린지 대표 이미지 변경</span><input name="image" type="file" @change="selectFile" id="change_image"/></label> -->
-        <input type="text" v-model="data.title" style="width:90%" placeholder="대표 이미지 URL을 입력하세요.">
+      <img v-if="data.image == ''" src="@/assets/img/profile/user.png" alt="profile_image" width="92" height="92" style="border-radius: 50%;">
+      <img v-else :src="data.image" alt="profile_image" width="92" height="92" style="border-radius: 50%;"><br>
+      <label for="image" class="btn-file"><span style="font-size: 13px; font-weight: bold; color: #ADEC6E;">챌린지 대표 이미지 변경</span><input name="image" type="file" @change="selectFile" id="change_image"/></label>
       </el-col>
     </el-row>
     <div id="square" class="margin-line"></div>
@@ -41,7 +43,7 @@
     <div id="square" class="margin-line"></div>
     <el-row>
       <el-col :span="6" class="community">
-        <span style="font-weight: bold">챌린지 기간</span>
+        <span style="font-weight: bold; font-size: 15px">챌린지 기간</span>
       </el-col>
       <el-col :span="18">
         <input type="date" style="width:35%" v-model="data.start_date" placeholder="시작 날짜를 선택하세요." onfocus="(this.type='date')" id="date">
@@ -61,7 +63,7 @@
     <div id="square" class="margin-line"></div>
     <el-row>
       <el-col :span="6" class="community">
-        <span style="font-weight: bold">챌린지 소개</span>
+        <span style="font-weight: bold; font-size: 15px">챌린지 소개</span>
       </el-col>
      <el-col :span="18" type="flex">
         <textarea style="width:90%; height:150px" v-model="data.introduction" placeholder="예) 매일 꾸준한 운동으로 기초 체력을 기릅시다!"></textarea>
@@ -148,7 +150,20 @@ export default {
       
     },
     createChallenge: function (data) {
-      axios.post(`${SERVER.URL}${SERVER.ROUTES.withmake}`, data)
+      // FormData에 전송할 데이터 저장
+      var formData  = new FormData();
+      var imgFile = document.getElementById("change_image");
+      formData.append("image", imgFile.files[0]);
+      formData.append("title", data.name);
+      formData.append("category", data.category);
+      formData.append("start_date", data.start_date);
+      formData.append("end_date", data.end_date);
+      formData.append("certify_info", data.certify_info);
+      formData.append("introduction", data.introduction);
+      formData.append("user_id", data.user_id);
+      formData.append("hashtags", data.hashtags);
+      console.log(formData)
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.withMake}`, formData , { headers: {'Content-Type' : 'multipart/form-data'}})
         .then(() => {
           alert('성공적으로 글이 작성되었습니다.')
           router.push({ name: "WithMain" })
@@ -159,32 +174,13 @@ export default {
           console.error(err)
         })
     },
-    // selectFile(e) {
-    //   const file = e.target.files[0];
-    //   this.image = URL.createObjectURL(file);
-    // },
-    // submit() {
-    //   // FormData에 전송할 데이터 저장
-    //   var formData  = new FormData();
-    //   var imgFile = document.getElementById("change_image");
-    //   formData.append("image", imgFile.files[0]);
-    //   formData.append("name", this.name);
-    //   formData.append("identity", this.identity);
-    //   formData.append("introduction", this.introduction);
-    //   // 서버로 FormData 전송
-    //   axios.patch("http://localhost:8080/user/profile", formData , { headers: {'Content-Type' : 'multipart/form-data'}})
-    //     .then(response => {
-    //       if(response.status === 200) {
-    //         console.log("등록 완료");
-    //       }
-    //     })
-    //     .catch(error => {
-    //       console.log(error);
-    //     });
-    // },
+    selectFile(e) {
+      console.log(e)
+      const file = e.target.files[0];
+      this.data.image = URL.createObjectURL(file);
+      console.log(this.data.image)
+    },
   },
-  watch: {
-  }
 }
 </script>
 
@@ -196,6 +192,29 @@ export default {
   }
   #category {
     border-width: 0px;
+  }
+  #change_image:hover, #submit {
+    cursor: pointer;
+  }
+
+  .btn-file{
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
   }
   .cursor-pointer {
     cursor: pointer;

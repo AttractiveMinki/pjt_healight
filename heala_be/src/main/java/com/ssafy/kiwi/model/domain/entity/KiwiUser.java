@@ -2,14 +2,27 @@ package com.ssafy.kiwi.model.domain.entity;
 
 import java.sql.Date;
 
-import javax.persistence.*;
-import lombok.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
 @Getter
+@Setter
 @Table(name="mission_user")
 public class KiwiUser {
 
@@ -17,7 +30,8 @@ public class KiwiUser {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="complete_date")
+	@CreationTimestamp
+	@Column(name = "complete_date")
 	private Date completeDate;
 
 	@Column(name="user_id")
@@ -25,4 +39,5 @@ public class KiwiUser {
 	
 	@Column(name="mission_id")
 	private int missionId;
+	
 }

@@ -1,5 +1,7 @@
 import Signup from "@/views/user/Signup"
 import Login from "@/views/user/Login"
+import SignupSuccess from "@/views/user/SignupSuccess"
+import Withdrawal from "@/views/user/Withdrawal"
 import CommunityMain from "@/views/community/CommunityMain"
 import Health from "@/views/community/Health"
 import Diet from "@/views/community/Diet"
@@ -17,7 +19,9 @@ import ProfilePhysInfo from "@/views/my_page/ProfilePhysInfo";
 import Scrap from "@/views/my_page/showmore/Scrap";
 import ChangePassword from "@/views/my_page/showmore/ChangePassword";
 import DietRecord from "@/views/my_page/record/DietRecord";
-import DietRecordMake from "@/views/my_page/record/DietRecordMake";
+import DietRecordDetail from "@/views/my_page/record/DietRecordDetail";
+import DietRecordCreate from "@/views/my_page/record/DietRecordCreate";
+import DietRecordCalender from "@/views/my_page/record/DietRecordCalender";
 import WeightCalender from "@/views/my_page/record/WeightCalender";
 import KiwiMain from "@/views/challenge/kiwi/KiwiMain"
 import KiwiHealth from "@/views/challenge/kiwi/KiwiHealth"
@@ -25,8 +29,14 @@ import KiwiDiet from "@/views/challenge/kiwi/KiwiDiet"
 import KiwiHeart from "@/views/challenge/kiwi/KiwiHeart"
 import KiwiSpecial from "@/views/challenge/kiwi/KiwiSpecial"
 import MyMain from "@/views/challenge/my/MyMain"
+import SendToMain from "@/components/SendToMain"
 
 export default [
+  {
+    path: "/",
+    name: "SendToMain",
+    component: SendToMain,
+  },
   {
     path: "/user/signup",
     name: "Signup",
@@ -36,6 +46,16 @@ export default [
     path: "/user/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/user/signupsuccess",
+    name: "SignupSuccess",
+    component: SignupSuccess,
+  },
+  {
+    path: "/user/withdrawal",
+    name: "Withdrawal",
+    component: Withdrawal,
   },
   {
     path: "/community/Communitymain",
@@ -123,9 +143,19 @@ export default [
     component: DietRecord,
   },
   {
-    path: "/profile/dietRecordmake",
-    name: "DietRecordMake",
-    component: DietRecordMake,
+    path: "/profile/dietrecorddetail",
+    name: "DietRecordDetail",
+    component: DietRecordDetail,
+  },
+  {
+    path: "/profile/dietrecordcreate",
+    name: "DietRecordCreate",
+    component: DietRecordCreate,
+  },
+  {
+    path: "/profile/dietrecordcalender",
+    name: "DietRecordCalender",
+    component: DietRecordCalender,
   },
   {
     path: "/profile/weightcalender",
