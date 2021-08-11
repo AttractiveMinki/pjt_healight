@@ -25,7 +25,7 @@ public class AdminController {
 	final private KiwiChallengeService kiwiChallengeService;
 	
 	@ApiOperation(value = "키위 챌린지 추가하기.")
-	@PostMapping("/kiwi/add")
+	@PostMapping("/kiwi")
 	public Object makeKiwi(@RequestBody List<KiwiMission> kiwiMission) {
 		if(kiwiChallengeService.makeKiwi(kiwiMission)) {
 			return new ResponseEntity<>(HttpStatus.OK);
