@@ -55,11 +55,24 @@ public class UserController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "본인 인증(아이디, 비밀번호 일치 확인)")
+	@PostMapping("/checkAuthorization")
+	public Object authorize(@RequestBody User user) {
+		Optional<User> userOpt = userService.login(user.getIdentity(), user.getPassword());
+		boolean check = false;
+		if (userOpt.isPresent()) {
+			check = true;
+			return new ResponseEntity<>(check, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(check, HttpStatus.UNAUTHORIZED);
+		}
+	}
+	
 	@ApiOperation(value = "회원 탈퇴")
-	@DeleteMapping
-	public Object delete(@RequestBody User user) {
-		boolean authorized = userService.delete(user);
-		if (authorized) {
+	@DeleteMapping("/{userId}")
+	public Object delete(@PathVariable int userId) {
+		boolean isPresent = userService.delete(userId);
+		if (isPresent) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // 401: 권한 없음

@@ -16,7 +16,7 @@ public interface UserService {
 	void signUp(User user);
 	
 	//회원 탈퇴
-	boolean delete(User user);
+	boolean delete(int userId);
 
 	//로그인
 	Optional<User> login(String identity, String password);
