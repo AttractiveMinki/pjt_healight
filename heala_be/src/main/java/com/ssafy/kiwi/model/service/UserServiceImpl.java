@@ -47,6 +47,18 @@ public class UserServiceImpl implements UserService {
 	public void signUp(User user) {
 		userRepository.save(user);
 	}
+	
+	//회원 탈퇴
+	@Override
+	public boolean delete(User user) {
+		Optional<User> userOpt = userRepository.getUserByIdentityAndPassword(user.getIdentity(), user.getPassword());
+		if (userOpt.isPresent()) {
+			userRepository.deleteById(userOpt.get().getId());
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	//로그인
 	@Override
@@ -171,8 +183,12 @@ public class UserServiceImpl implements UserService {
 		return likeUserRepository.getAllLikeUserByUserId(commentIdSet, userId);
 	}
 
+<<<<<<< HEAD
 	@Override
 	public Integer getUserExpByUserId(int userId) {
 		return userRepository.getUserExpByUserId(userId);
 	}
+=======
+
+>>>>>>> 7aacbef59921dc6308a9fea7f6f0fc8d979f59ad
 }

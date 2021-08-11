@@ -6,4 +6,6 @@ public interface KiwiChallengeService {
 
 	Object getKiwiMission(int category, int user_id);
 
+	Object completeKiwiMission(int category, int userId, int missionId);
+
 }

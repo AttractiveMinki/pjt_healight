@@ -2,17 +2,17 @@ package com.ssafy.kiwi.model.service;
 
 import java.util.*;
 
-import com.ssafy.kiwi.model.domain.entity.Comment;
-import com.ssafy.kiwi.model.domain.entity.LikeUser;
-import com.ssafy.kiwi.model.domain.entity.Scrap;
-import com.ssafy.kiwi.model.domain.repository.CommentRepository;
-import com.ssafy.kiwi.model.domain.repository.LikeUserRepository;
-import com.ssafy.kiwi.model.domain.repository.ScrapRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.kiwi.model.domain.entity.Comment;
+import com.ssafy.kiwi.model.domain.entity.LikeUser;
 import com.ssafy.kiwi.model.domain.entity.Post;
+import com.ssafy.kiwi.model.domain.entity.Scrap;
+import com.ssafy.kiwi.model.domain.repository.CommentRepository;
 import com.ssafy.kiwi.model.domain.repository.CommunityRepository;
+import com.ssafy.kiwi.model.domain.repository.LikeUserRepository;
+import com.ssafy.kiwi.model.domain.repository.ScrapRepository;
 
 @Service
 public class CommunityServiceImpl implements CommunityService {
@@ -117,6 +117,12 @@ public class CommunityServiceImpl implements CommunityService {
 		}
 		return false;
 	}
+	
+	// 댓글 개수 세기
+	@Override
+	public int countComment(int postId) {
+		return commentRepository.countCommentByPostId(postId);
+	}
 
 	// 게시글 좋아요
 	@Override
@@ -185,4 +191,5 @@ public class CommunityServiceImpl implements CommunityService {
 		}
 		return false;
 	}
+
 }

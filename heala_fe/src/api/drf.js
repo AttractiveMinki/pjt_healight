@@ -17,6 +17,7 @@ export default {
     myChallengePhoto: "/challenge/my/photo",
     myChallengeResult: "/challenge/my/result",
     userExp: "/user/exp",
+    feedPost: "/feed/post",
 
     // 원석 #@
 
@@ -24,6 +25,7 @@ export default {
     signup: "/user/signup/",
     login: "/user/login/",
     community: "/community/",
+    feedpost: "/feed/post/",
     checkEmail: "/user/checkemail/",
     checkIdentity: "/user/checkidentity/",
     withmake: "/challenge/with/",
@@ -37,5 +39,7 @@ export default {
     getWithDietChallenge: "/challenge/with?category=1",
     getWithHeartChallenge: "/challenge/with?category=2",
     getWithDetail: "/challenge/with/detail",
+    getMyChallenge: "/challenge/my/",
+    joinWithChallenge: "/challenge/with/join",
   }
 }

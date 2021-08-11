@@ -2,7 +2,7 @@
   <div>
     <kiwi-header>
         <template v-slot:title>게시물 상세</template>
-        <template v-slot:ellipsis><font-awesome-icon icon="ellipsis-v" /></template>
+        <template v-if="userCheck()" v-slot:ellipsis><font-awesome-icon icon="ellipsis-v" @click="showMenu = true"/></template>
     </kiwi-header>
     <div class="post-container">
         <div class="post-title">
@@ -42,23 +42,39 @@
     <el-row>
         <input-message :placeholderMsg="placeholderMsg" @write="createComment"></input-message>
     </el-row>
+    <div v-if="showMenu" class="menu-background" @click="showMenu = false"></div>
+    <div v-if="showMenu" class="menu-list">
+        <!-- <div class="menu">수정하기</div> -->
+        <div class="menu" @click="showDeleteModal = true">삭제하기</div>
+    </div>
+    <modal v-if="showDeleteModal" @yes="deletePost()" @no="showDeleteModal = false">
+        <template v-slot:header>게시글 삭제</template>
+        <template v-slot:body>게시글을 삭제하시겠습니까?</template>
+    </modal>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import SERVER from "@/api/drf.js";
+
 import InputMessage from "@/components/InputMessage.vue";
 import KiwiHeader from "@/components/KiwiHeader.vue";
 import Star from "@/components/Star.vue";
 import UserImage from "@/components/UserImage.vue";
 import Comment from "@/components/Comment.vue";
+import Modal from "@/components/Modal.vue";
 
 export default {
     name: "PostDetail",
     data() {
         return {
             // scrapUI: this.$store.state.postScrap,
+            userId: 1,
             replyCommentId: Number,
             placeholderMsg: "댓글을 입력해주세요",
+            showMenu: false,
+            showDeleteModal: false,
         }
     },
     computed: {
@@ -79,6 +95,7 @@ export default {
         },
     },
     created() {
+        // this.userId = localStorage.getItem("userId");
         let postId = this.$route.params.id;
         this.$store.dispatch("setPostDetail", { postId });
         this.$store.dispatch("setPostComments", { postId });
@@ -111,8 +128,25 @@ export default {
         createComment(message) {
             this.$store.dispatch("createComment", { message, postId: this.post.id, commentId: this.replyCommentId });
         },
+        userCheck() {
+            return this.post.userId == this.userId;
+        },
+        deletePost() {
+            this.showDeleteModal = false;
+            this.showMenu = false;
+            axios
+              .delete(SERVER.URL + SERVER.ROUTES.feedPost
+              + `?userId=${this.userId}&postId=${this.post.id}`)
+              .then(() => {
+
+              })
+              .catch((exp) => {
+                  console.log(`게시글 삭제에 실패했습니다: ${exp}`)
+              });
+            this.$router.go(-1);
+        },
     },
-    components: { InputMessage, KiwiHeader, Star, UserImage, Comment },
+    components: { InputMessage, KiwiHeader, Star, UserImage, Comment, Modal, },
 }
 </script>
 
@@ -191,5 +225,28 @@ export default {
 }
 .rest {
     height: 60px;
+}
+.menu-background {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(0, 0, 0, .5);
+    transition: opacity .3s ease;
+}
+.menu-list {
+    position: fixed;
+    bottom: 0px;
+    border-top: 1px solid;
+}
+.menu {
+    width: 100vw;
+    padding: 15px;
+    border-bottom: 1px solid;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    box-sizing: border-box;
+    background-color: #94EC3C;
 }
 </style>

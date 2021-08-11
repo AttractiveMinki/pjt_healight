@@ -142,4 +142,10 @@ public class CommunityController {
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
+	
+	@ApiOperation(value = "댓글 개수 세기")
+	@GetMapping("/post/comment/count/{postId}")
+	public Object countComment(@PathVariable int postId){
+		return new ResponseEntity<>(communityService.countComment(postId), HttpStatus.OK);
+	}
 }

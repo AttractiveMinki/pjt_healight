@@ -55,11 +55,25 @@ public class UserController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "회원 탈퇴")
+	@DeleteMapping
+	public Object delete(@RequestBody User user) {
+		boolean authorized = userService.delete(user);
+		if (authorized) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // 401: 권한 없음
+		}
+	}
+	
 	@ApiOperation(value = "로그인 하기.")
 	@PostMapping("/login")
 	public Object login(@RequestBody User user) {
 		Optional<User> userOpt = userService.login(user.getIdentity(), user.getPassword());
 		if (userOpt.isPresent()) {
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("id", userOpt.get().getId());
+			response.put("name", userOpt.get().getName());
 			return new ResponseEntity<>(userOpt.get().getId(), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

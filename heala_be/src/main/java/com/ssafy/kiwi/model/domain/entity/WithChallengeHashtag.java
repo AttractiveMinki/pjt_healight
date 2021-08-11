@@ -37,4 +37,6 @@ public class WithChallengeHashtag {
 	@JoinColumn(name="challenge_hashtag_id", insertable = false, updatable = false)
 	private ChallengeHashtag challengehashtag;
 	
+	
+	
 }
