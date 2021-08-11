@@ -7,7 +7,7 @@ export default {
   ROUTES: {
     // 한길 #@
     follow: "/user/follow",
-    post: "/community/post",
+    post: "/community/post/",
     comment: "/comment",
     like: "/like",
     scrap: "/scrap",
