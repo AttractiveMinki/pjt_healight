@@ -29,6 +29,7 @@
 <script>
 import SERVER from "@/api/drf.js"
 import axios from "axios"
+import router from "@/router/index.js"
 import Modal from "@/components/Modal.vue";
 
 export default {
@@ -51,9 +52,24 @@ export default {
     },
     Withdrawal(data) {
       console.log(SERVER.URL + SERVER.ROUTES.withdrawal, data)
-      axios.delete(SERVER.URL + SERVER.ROUTES.withdrawal, data)
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.withdrawal}/checkAuthorization`, data)
         .then(() => {
-          console.log('회원 삭제 완료')
+          console.log('회원 인증 완료')
+          if (localStorage.getItem('userIdentity') == data.identity) {
+            axios.delete(`${SERVER.URL}${SERVER.ROUTES.withdrawal}/${localStorage.getItem('userId')}`)
+            .then((res) => {
+              console.log(res)
+              alert('삭제가 완료되었습니다. 그동안 이용해주셔서 감사합니다.')
+              router.push({ name: "Login" })
+            })
+            .catch((err) => {
+              console.log(err.response.data)
+            })
+          } else {
+            alert('현재 접속한 아이디와 탈퇴하는 아이디가 다릅니다. 재접속 후 시도해주세요.')
+          }
+          this.showDeleteModal = false
+
 
           // 아이디 삭제 요청을 보낸다.
       })
@@ -61,6 +77,7 @@ export default {
           console.log(err)
           console.error(err.response.data)
           alert('아이디나 비밀번호가 일치하지 않습니다.')
+          this.showDeleteModal = false
       })
     },
   },

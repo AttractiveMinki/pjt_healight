@@ -561,8 +561,8 @@ export default new Vuex.Store({
       axios.post(SERVER.URL + SERVER.ROUTES.login, data)
         .then((res) => {
           commit("SET_USERID", res)
-          // commit("SET_USERNICKNAME", data)
-          commit("SET_USERIDENTITY", res)
+          // commit("SET_USERNICKNAME", res)
+          commit("SET_USERIDENTITY", data)
 
           // commit("SET_TOKEN", res.data.token) // jwt 사용시 적용
           // dispatch("verifyUser", data) // 관리자 권한 검증

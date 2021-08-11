@@ -183,12 +183,9 @@ public class UserServiceImpl implements UserService {
 		return likeUserRepository.getAllLikeUserByUserId(commentIdSet, userId);
 	}
 
-<<<<<<< HEAD
 	@Override
 	public Integer getUserExpByUserId(int userId) {
 		return userRepository.getUserExpByUserId(userId);
 	}
-=======
 
->>>>>>> 7aacbef59921dc6308a9fea7f6f0fc8d979f59ad
 }
