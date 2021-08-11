@@ -8,6 +8,15 @@
         <div v-else>하루 권장 섭취량을 달성했습니다.</div>
       </el-col>
     </el-row>
+    <el-row style="display: flex; justify-content: center">
+      <el-col :span="20">
+        <div v-for="(value, idx) in values" :key="idx" style="margin: 4vw">
+          <div class="food-box">
+            {{ value.food }}
+          </div>
+        </div>
+      </el-col>
+    </el-row>
     <router-link :to="{ name: 'DietRecordCreate' }" class="text-decoration-none">
       <div id="submit" style="background-color: #ADEC6E; color: black; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">식단 추가하기</div>
     </router-link>
@@ -56,13 +65,39 @@ export default {
         {color: '#ADEC6E', percentage: 100},
         {color: '#F57053', percentage: 101},
       ],
+      values: [
+        {
+          food: "초코우유",
+          calory:300,
+          carbohydrate:100,
+          protein:40,
+          fat:14,
+          sodium:50,
+        },
+        {
+          food: "잡곡밥",
+          calory:300,
+          carbohydrate:200,
+          protein:40,
+          fat:14,
+          sodium:50,
+        },
+        {
+          food: "부대찌개",
+          calory:802,
+          carbohydrate:300,
+          protein:40,
+          fat:14,
+          sodium:700,
+        },
+      ],
     }
   },
   methods: {
-    // getScrapFeeds: function () {
-    //   axios.get(`${SERVER.URL}${SERVER.ROUTES.getScrapFeeds}`)
+    // getDietRecord: function () {
+    //   axios.get(`${SERVER.URL}${SERVER.ROUTES.getDietRecord}`)
     //     .then((res) => {
-    //       feeds = res
+    //       values = res
     //   })
     //     .catch((err) => {
     //       alert("에러가 발생했습니다.")
@@ -72,7 +107,7 @@ export default {
     // },
   },
   mounted: {
-    // getScrapFeeds() {},
+    // getDietRecord() {},
     // 사용자 성별, 신장, 체중
     // 가지고와서 하루 권장섭취량 계산
     // 오늘 섭취한 칼로리 탄단지 나트륨 계산 후 돌려주기
@@ -84,5 +119,12 @@ export default {
   #submit {
     position: fixed;
     bottom: 0rem;
+  }
+  .food-box {
+    border: #F3F3F3 3px solid;
+    box-shadow: 1px 1px 1px 1px gray;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 18px;
   }
 </style>
