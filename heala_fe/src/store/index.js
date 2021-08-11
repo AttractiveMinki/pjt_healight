@@ -572,6 +572,7 @@ export default new Vuex.Store({
           console.log("로그인 에러 발생")
           console.log(err)
           console.error(err.response.data)
+          alert('존재하지 않는 회원이거나, 비밀번호가 일치하지 않습니다.')
       })
     },
     logout: function ({ commit }) {

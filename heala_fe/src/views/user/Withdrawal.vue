@@ -60,6 +60,9 @@ export default {
             .then((res) => {
               console.log(res)
               alert('삭제가 완료되었습니다. 그동안 이용해주셔서 감사합니다.')
+              localStorage.setItem('userIdentity', '')
+              localStorage.setItem('userId', '')
+              localStorage.setItem('userNickname', '')
               router.push({ name: "Login" })
             })
             .catch((err) => {
