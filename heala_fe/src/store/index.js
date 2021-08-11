@@ -561,8 +561,8 @@ export default new Vuex.Store({
       axios.post(SERVER.URL + SERVER.ROUTES.login, data)
         .then((res) => {
           commit("SET_USERID", res)
-          // commit("SET_USERNICKNAME", data)
-          commit("SET_USERIDENTITY", res)
+          // commit("SET_USERNICKNAME", res)
+          commit("SET_USERIDENTITY", data)
 
           // commit("SET_TOKEN", res.data.token) // jwt 사용시 적용
           // dispatch("verifyUser", data) // 관리자 권한 검증
@@ -572,6 +572,7 @@ export default new Vuex.Store({
           console.log("로그인 에러 발생")
           console.log(err)
           console.error(err.response.data)
+          alert('존재하지 않는 회원이거나, 비밀번호가 일치하지 않습니다.')
       })
     },
     logout: function ({ commit }) {
