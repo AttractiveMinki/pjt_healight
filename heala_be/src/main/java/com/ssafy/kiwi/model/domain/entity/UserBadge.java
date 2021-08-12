@@ -23,7 +23,7 @@ public class UserBadge {
 
 	//다대일 : badge의 id와 연결
 	@ManyToOne
-	@JoinColumn(name="id", insertable=false, updatable=false)
+	@JoinColumn(name="badge_id", insertable=false, updatable=false)
 	private Badge badge;
 	
 }
