@@ -2,7 +2,6 @@
   <div>
     <Navbar />
     <ChallengeContainerMy />
-    {{ values }}
     <el-row class="community">
       <el-col :span="24" style="text-align: end; padding: 1px;" class="community-title">
         <i class="margin-left-10 el-icon-arrow-right"></i>

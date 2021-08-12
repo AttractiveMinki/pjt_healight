@@ -71,6 +71,7 @@ export default new Vuex.Store({
     currentPageCategory: 0,
     profileSelectedCategory: 1,
     selectedRouter: 0,
+    selectedSubCategory: 0,
     // check_email: true,
     // check_identity: true,
 
