@@ -53,6 +53,7 @@ public class FeedController {
 		return new ResponseEntity<>(userService.getBadge(userId), HttpStatus.OK);
 	}
 	
+	
 	@ApiOperation(value = "개인 피드 보기 (본인피드)")
 	@GetMapping("/{userId}/my")
 	public Object getMyFeed(@PathVariable int userId) {
@@ -64,6 +65,7 @@ public class FeedController {
 	public Object getUserFeed(@PathVariable int userId, @PathVariable int myId) {
 		return new ResponseEntity<>(feedService.getUserFeed(userId, myId), HttpStatus.OK);
 	}
+	
 	
 	@ApiOperation(value = "본인 팔로워 목록 보기")
 	@GetMapping("/{userId}/my/follower")
@@ -77,5 +79,11 @@ public class FeedController {
 			@RequestParam(value="myId", required=true) int myId,
 			@RequestParam(value="show", required=true) String follower) {
 		return new ResponseEntity<>(feedService.getFollower(userId, myId), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "본인 팔로잉 목록 보기")
+	@GetMapping("/{userId}/my/following")
+	public Object getMyFollowing(@PathVariable int userId) {
+		return new ResponseEntity<>(feedService.getFollowing(userId, userId), HttpStatus.OK);
 	}
 }
