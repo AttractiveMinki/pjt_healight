@@ -43,8 +43,8 @@ public class ChallengeController {
 	
 	@ApiOperation(value = "함께 챌린지 목록 가져오기")
 	@GetMapping("/with")
-	public ResponseEntity<List<Map<String,Object>>> getWithList(@RequestParam int category) {
-		return new ResponseEntity<>(withChallengeService.getWithList(category), HttpStatus.OK);
+	public ResponseEntity<List<Map<String,Object>>> getWithList(@RequestParam int category, int page) {
+		return new ResponseEntity<>(withChallengeService.getWithList(category, page), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "함께 챌린지 상세 정보 가져오기")

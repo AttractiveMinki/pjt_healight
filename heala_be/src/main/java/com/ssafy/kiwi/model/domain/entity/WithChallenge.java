@@ -8,7 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
 import java.sql.Date;
@@ -55,6 +58,10 @@ public class WithChallenge {
 	
 	@Column(name = "kiwi_point")
 	private int kiwiPoint;
+	
+	@CreationTimestamp
+	@Column(name = "created_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") 
+	public Date createdAt;
 	
 	
 	public WithChallenge(String image, String title, int category, Date start_date, Date end_date,

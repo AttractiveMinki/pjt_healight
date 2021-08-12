@@ -3,11 +3,15 @@ package com.ssafy.kiwi.model.service;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.kiwi.model.domain.entity.CertifyImage;
 import com.ssafy.kiwi.model.domain.entity.ChallengeHashtag;
 import com.ssafy.kiwi.model.domain.entity.MyChallenge;
+import com.ssafy.kiwi.model.domain.entity.Post;
 import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.entity.WithChallenge;
 import com.ssafy.kiwi.model.domain.entity.WithChallengeHashtag;
@@ -81,14 +85,15 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 
 	//[함께 챌린지] 함께 챌린지 목록 가져오기
 	@Override
-	public List<Map<String, Object>> getWithList(int category) {
+	public List<Map<String, Object>> getWithList(int category, int page) {
 		// 반환할 Map<String, Object> 리스트 생성
 		// "withChallenge", "hashtags"
 		List<Map<String,Object>> response = new LinkedList<Map<String,Object>>();
 		Map<String,Object> map; 
 		
 		// 카테고리에 해당하는 함께 챌린지 목록 가져오기
-		List<WithChallenge> withChallengeList = withChallengeRepository.getByCategory(category);
+		Page<WithChallenge> withChallengePage= withChallengeRepository.getByCategory(category, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
+		List<WithChallenge> withChallengeList = withChallengePage.getContent();
 		
 		for (int i = 0, size=withChallengeList.size(); i < size; i++) {
 			map = new HashMap<String, Object>();

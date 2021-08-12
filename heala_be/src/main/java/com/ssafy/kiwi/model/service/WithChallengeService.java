@@ -16,7 +16,7 @@ public interface WithChallengeService {
 	public boolean makeWith(WithChallengeIp withChallengeIp);
 
 	// 함께 챌린지 - 목록 만들기
-	public List<Map<String, Object>> getWithList(int category);
+	public List<Map<String, Object>> getWithList(int category, int page);
 	
 	// Id에 해당하는 함께 챌린지 상세 정보 가져오기(소개, 인증) 
 	public Map<String, Object> getWithChallengeDetail(int withChallengeId, int userId);
