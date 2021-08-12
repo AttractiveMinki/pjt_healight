@@ -203,6 +203,10 @@ export default {
     cursor: pointer;
   }
   .complete {
+    position: absolute;
+    margin-top: 11vw;
+    margin-left: 2vw;
+    width: 20vw;
     color: red;
     font-weight: bold;
     border: red 3px solid;
