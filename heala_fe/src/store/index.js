@@ -66,7 +66,7 @@ export default new Vuex.Store({
     // 주엽 #@
     userIdentity: "",
     userId: 1,
-    userNickname: "",
+    userName: "",
     currentPageId: 0,
     currentPageCategory: 0,
     profileSelectedCategory: 1,
@@ -249,9 +249,9 @@ export default new Vuex.Store({
     SET_USERIDENTITY2: function (state, data) {
       state.userIdentity = data.identity
     },
-    SET_USERNICKNAME: function (state, data) {
-      state.userNickname = data.userNickname
-      localStorage.setItem('userNickname', data.userNickname);
+    SET_USERNAME: function (state, data) {
+      state.userName = data.userName
+      localStorage.setItem('userName', data.userName);
     },
     INIT_USERID: function (state) {
       state.userId = ""
@@ -261,9 +261,9 @@ export default new Vuex.Store({
       state.userIdentity = ""
       localStorage.setItem('userIdentity', '');
     },
-    INIT_USERNICKNAME: function (state) {
-      state.userNickname = ""
-      localStorage.setItem('userNickname', '');
+    INIT_USERNAME: function (state) {
+      state.userName = ""
+      localStorage.setItem('userName', '');
     },
     // SET_CHECKIDENTITY: function (state) {
     //   state.check_identity = false
@@ -561,7 +561,7 @@ export default new Vuex.Store({
       axios.post(SERVER.URL + SERVER.ROUTES.login, data)
         .then((res) => {
           commit("SET_USERID", res)
-          // commit("SET_USERNICKNAME", res)
+          // commit("SET_USERNAME", res)
           commit("SET_USERIDENTITY", data)
 
           // commit("SET_TOKEN", res.data.token) // jwt 사용시 적용
@@ -578,7 +578,7 @@ export default new Vuex.Store({
     logout: function ({ commit }) {
       commit("INIT_USERID")
       commit("INIT_USERIDENTITY")
-      // commit("INIT_USERNICKNAME")
+      // commit("INIT_USERNAME")
       router.push({ name: "Login" })
     },
 

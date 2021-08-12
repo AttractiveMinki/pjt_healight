@@ -17,8 +17,8 @@
     </el-row>
     <el-row style="text-align: start; padding: 2vw">
       <el-col :span="12">
-        <span style="font-size: 14px; font-weight: bold; padding: 1px"> <!-- {{ user.username }} --> 스파르타꾹스 </span>
-        <span style="font-size: 11px"> Lv. <!-- {{ user.userid }} -->77</span>
+        <span style="font-size: 14px; font-weight: bold; padding: 1px"> <!-- {{ user.userName }} --> 스파르타꾹스 </span>
+        <span style="font-size: 11px"> Lv. <!-- {{ user.userId }} -->77</span>
       </el-col>
     </el-row>
     <el-row style="text-align: start; padding: 2vw">
