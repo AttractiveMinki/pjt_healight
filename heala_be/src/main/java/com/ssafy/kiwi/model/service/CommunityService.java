@@ -11,10 +11,10 @@ import com.ssafy.kiwi.model.domain.entity.Scrap;
 public interface CommunityService {
 	
 	// 전체 글 목록 반환하기
-	List<Post> getAllPostList();
+	List<Post> getAllPostList(int page);
 
 	// 카테고리(운동,식단,마음)와 서브 카테고리(일반, Best, 정보, 질문)에 따라 글 목록 반환하기
-	List<Post> getPostList(int category, int subCategory);
+	List<Post> getPostList(int category, int subCategory, int page);
 
 	// 커뮤니티 글 가져오기
 	Optional<Post> getPost(int postId);
