@@ -8,18 +8,8 @@
       <input name="image" type="file" @change="selectFile" id="change_image"/>
     </label>
     <button @click="submit()">제출하기</button>
-
-    
-    <div v-for="(value, idx) in data.result" :key="idx" >
-      {{ value.recognition_words }}
-        <!-- <span v-for="word, idx2 in find_words" :key="idx2">
-          <span v-if="value.recognition_words.find(word)">
-            {{ word }}찾았쥬
-          </span>
-        </span> -->
-      <!-- <span v-if="value.recognition_words in find_words">
-        영양성분찾았쥬
-      </span> -->
+    <div v-for="food, idx in current_foods" :key="idx">
+      {{ idx }} : {{ food }}
     </div>
   </div>
 </template>
@@ -36,29 +26,62 @@ export default {
       this.image = URL.createObjectURL(file);
     },
     submit: function () {
-      console.log('들어왔쥬')
       let formData = new FormData();
       let imgFile = document.getElementById('change_image');
       formData.append('image', imgFile.files[0])
-      console.log(process.env.VUE_APP_OCR_REST_API_KEY)
-
       axios.post(`${SERVER.ROUTES.OCR}`, formData , { headers: {'Content-Type' : 'multipart/form-data', 'Authorization': `KakaoAK ${process.env.VUE_APP_OCR_REST_API_KEY}`}})
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         this.data = res.data
+        this.findNutrient(this.data)
       })
       .catch((err) => {
         console.log(err)
       })
+    },
+    findNutrient: function (value) {
+      for (let nutrient of value.result) {
+        if (this.reserve_info != -1) {
+          let regex = /[^0-9]/g;				// 숫자가 아닌 문자열을 선택하는 정규식
+          this.set_number[this.reserve_info] = nutrient.recognition_words[0].replace(regex, "")
+          this.reserve_info = -1
+          continue
+        }
+        for (let i = 0; i < 5; i++) {
+          if (nutrient.recognition_words[0] == this.find_words[i]) {
+            this.reserve_info = i
+            break
+          }
+        }
+      }
+      this.setNutrient()
+    },
+    setNutrient: function () {
+      this.current_foods['calory'] = this.set_number[0]
+      this.current_foods['carbohydrate'] = this.set_number[1]
+      this.current_foods['protein'] = this.set_number[2]
+      this.current_foods['fat'] = this.set_number[3]
+      this.current_foods['sodium'] = this.set_number[4]
     },
   },
   data: () => {
     return {
       image: "",
       data: [],
+      temp_word: "",
+      reserve_info: -1,
       find_words: [
-        '칼로리', '나트륨', '탄수화물', '지방', '단백질'
-      ]
+        '칼로리', '탄수화물', '단백질', '지방', '나트륨'
+      ],
+      set_number: [0, 0, 0, 0, 0],
+      current_foods: {
+        name: "",
+        calory: "",
+        carbohydrate: "", // 탄수화물
+        protein: "",
+        fat: "",
+        sodium: "", // 나트륨
+      },
     };
   },
 }
