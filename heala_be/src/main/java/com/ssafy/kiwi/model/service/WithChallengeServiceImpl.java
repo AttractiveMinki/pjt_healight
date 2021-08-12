@@ -58,27 +58,30 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 				.build();
 		myChallengeRepository.save(myChallenge);
 
-		// challenge_hashtag 테이블에 insert
-		String hashtags = withChallengeIp.getChallengeHashtag().getWord();
-		StringTokenizer st = new StringTokenizer(hashtags," ");
-		
-		int challengeHashtagId;
-		while(st.hasMoreTokens()) {
-			String hashtag = st.nextToken().replace("#", "");
-			Optional<ChallengeHashtag> checkHashtag = challengeHashtagRepository.getChallengeHashtagByWord(hashtag);
-			if(!checkHashtag.isPresent()){
-				ChallengeHashtag challengeHashtag = new ChallengeHashtag(hashtag);
-				challengeHashtagId = challengeHashtagRepository.save(challengeHashtag).getId();
-			} else {
-				challengeHashtagId = checkHashtag.get().getId();
-			}
+		// hashtag가 있는 경우 challenge_hashtag 테이블에 insert
+		if (withChallengeIp.getChallengeHashtag() != null) {
+			String hashtags = withChallengeIp.getChallengeHashtag().getWord();
+			StringTokenizer st = new StringTokenizer(hashtags," ");
 			
-			// with_challenge_hashtag 테이블에 각 id 값 insert
-			WithChallengeHashtag withChallengeHashtag = WithChallengeHashtag.builder()
-														.withChallengeId(withChallengeId)
-														.challengeHashtagId(challengeHashtagId).build();
-			withChallengeHashtagRepository.save(withChallengeHashtag);
-		} 
+			int challengeHashtagId;
+			while(st.hasMoreTokens()) {
+				String hashtag = st.nextToken().replace("#", "");
+				Optional<ChallengeHashtag> checkHashtag = challengeHashtagRepository.getChallengeHashtagByWord(hashtag);
+				if(!checkHashtag.isPresent()){
+					ChallengeHashtag challengeHashtag = new ChallengeHashtag(hashtag);
+					challengeHashtagId = challengeHashtagRepository.save(challengeHashtag).getId();
+				} else {
+					challengeHashtagId = checkHashtag.get().getId();
+				}
+				
+				// with_challenge_hashtag 테이블에 각 id 값 insert
+				WithChallengeHashtag withChallengeHashtag = WithChallengeHashtag.builder()
+															.withChallengeId(withChallengeId)
+															.challengeHashtagId(challengeHashtagId).build();
+				withChallengeHashtagRepository.save(withChallengeHashtag);
+			} 
+		}
+		
 		return true;
 	}
 
