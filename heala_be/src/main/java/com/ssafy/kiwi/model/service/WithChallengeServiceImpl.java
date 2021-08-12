@@ -3,6 +3,9 @@ package com.ssafy.kiwi.model.service;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.kiwi.model.domain.entity.CertifyImage;
@@ -43,7 +46,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		WithChallenge withchallenge = (WithChallenge) withChallengeIp.getWithChallenge();
 		
 			// 키위 점수 계산하기(1일: 100 point)
-		int diffDays = (int)(withchallenge.getEndDate().getTime() - withchallenge.getStartDate().getTime())/(24*60*60*1000);
+		int diffDays = (int)((withchallenge.getEndDate().getTime() - withchallenge.getStartDate().getTime())/(24*60*60*1000));
 		int kiwiPoint = diffDays * 100;
 		withchallenge.setKiwiPoint(kiwiPoint);
 
@@ -55,40 +58,44 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 				.build();
 		myChallengeRepository.save(myChallenge);
 
-		// challenge_hashtag 테이블에 insert
-		String hashtags = withChallengeIp.getChallengeHashtag().getWord();
-		StringTokenizer st = new StringTokenizer(hashtags," ");
-		
-		int challengeHashtagId;
-		while(st.hasMoreTokens()) {
-			String hashtag = st.nextToken().replace("#", "");
-			Optional<ChallengeHashtag> checkHashtag = challengeHashtagRepository.getChallengeHashtagByWord(hashtag);
-			if(!checkHashtag.isPresent()){
-				ChallengeHashtag challengeHashtag = new ChallengeHashtag(hashtag);
-				challengeHashtagId = challengeHashtagRepository.save(challengeHashtag).getId();
-			} else {
-				challengeHashtagId = checkHashtag.get().getId();
-			}
+		// hashtag가 있는 경우 challenge_hashtag 테이블에 insert
+		if (withChallengeIp.getChallengeHashtag() != null) {
+			String hashtags = withChallengeIp.getChallengeHashtag().getWord();
+			StringTokenizer st = new StringTokenizer(hashtags," ");
 			
-			// with_challenge_hashtag 테이블에 각 id 값 insert
-			WithChallengeHashtag withChallengeHashtag = WithChallengeHashtag.builder()
-														.withChallengeId(withChallengeId)
-														.challengeHashtagId(challengeHashtagId).build();
-			withChallengeHashtagRepository.save(withChallengeHashtag);
-		} 
+			int challengeHashtagId;
+			while(st.hasMoreTokens()) {
+				String hashtag = st.nextToken().replace("#", "");
+				Optional<ChallengeHashtag> checkHashtag = challengeHashtagRepository.getChallengeHashtagByWord(hashtag);
+				if(!checkHashtag.isPresent()){
+					ChallengeHashtag challengeHashtag = new ChallengeHashtag(hashtag);
+					challengeHashtagId = challengeHashtagRepository.save(challengeHashtag).getId();
+				} else {
+					challengeHashtagId = checkHashtag.get().getId();
+				}
+				
+				// with_challenge_hashtag 테이블에 각 id 값 insert
+				WithChallengeHashtag withChallengeHashtag = WithChallengeHashtag.builder()
+															.withChallengeId(withChallengeId)
+															.challengeHashtagId(challengeHashtagId).build();
+				withChallengeHashtagRepository.save(withChallengeHashtag);
+			} 
+		}
+		
 		return true;
 	}
 
 	//[함께 챌린지] 함께 챌린지 목록 가져오기
 	@Override
-	public List<Map<String, Object>> getWithList(int category) {
+	public List<Map<String, Object>> getWithList(int category, int page) {
 		// 반환할 Map<String, Object> 리스트 생성
 		// "withChallenge", "hashtags"
 		List<Map<String,Object>> response = new LinkedList<Map<String,Object>>();
 		Map<String,Object> map; 
 		
 		// 카테고리에 해당하는 함께 챌린지 목록 가져오기
-		List<WithChallenge> withChallengeList = withChallengeRepository.getByCategory(category);
+		Page<WithChallenge> withChallengePage= withChallengeRepository.getByCategory(category, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
+		List<WithChallenge> withChallengeList = withChallengePage.getContent();
 		
 		for (int i = 0, size=withChallengeList.size(); i < size; i++) {
 			map = new HashMap<String, Object>();
