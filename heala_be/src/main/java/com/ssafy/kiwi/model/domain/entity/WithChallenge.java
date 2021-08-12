@@ -7,9 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
@@ -19,8 +18,7 @@ import java.sql.Date;
 @DynamicInsert
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-//@Entity(name = "WithChallenge")
+@Entity(name = "WithChallenge")
 @Builder
 @Getter
 @Setter
@@ -88,6 +86,15 @@ public class WithChallenge {
 		this.endDate = endDate;
 		this.userId = userId;
 	}
+	
+    /**
+     * insert 되기전 (persist 되기전) 실행된다.
+     * */
+    @PrePersist
+    public void prePersist() {
+        this.certifyDay = 7;
+        this.certifyWeek = 1;
+    }
 	
 	
 }
