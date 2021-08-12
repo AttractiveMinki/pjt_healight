@@ -1,7 +1,7 @@
 <template>
   <div id="footer" style="display: grid; align-items: center">
     <el-row>
-      <router-link :to="{ name: 'home' }" class="text-decoration-none" @click.native="changeRouter(0)" :class="{selected: this.$store.state.selectedRouter == 0}">
+      <router-link :to="{ name: 'HomeFeed' }" class="text-decoration-none" @click.native="changeRouter(0)" :class="{selected: this.$store.state.selectedRouter == 0}">
         <el-col :span="5">
           <font-awesome-icon icon="home"/>
         </el-col>

@@ -5,10 +5,10 @@
         {{ title }}
       </div>
       <div class="post-time">
-        {{ createdAt.split(" ")[0] }}
+        {{ createdAt }}
       </div>
       <div class="post-image-wrapper">
-        <img :src="require(`@/assets/image/${postImage}`)" alt="" class="post-image">
+        <img :src="require(`@/assets/image/${image}`)" alt="" class="post-image">
       </div>
       <div class="icon-wrapper">
         <star :like="postLike" @cancelStar="cancelStar" @star="star"></star>
@@ -34,46 +34,98 @@
 import Star from "@/components/Star";
 import UserImage from "@/components/UserImage";
 
+import axios from "axios";
+import SERVER from "@/api/drf.js";
+
 export default {
     name: "Post",
+    props: [ "id", "title", "createdAt", "image", "likes", "anonymous", "category", "subCategory", "access", "content", "userId"],
     data() {
         return {
-            postId: 1,
-            title: "임시 제목",
-            createdAt: "21/08/08 21:19",
-            postImage: "cat.jpg",
-            likes: 0,
-            anonymouse: 0,
-            category: 1,
-            subCategory: 2,
-            access: 0,
-            content: "기본 데이터입니다. 기본 데이터입니다. 기본 데이터입니다. 기본 데이터입니다. 기본 데이터입니다. 기본 데이터입니다.",
-            userId: 2,
+            currentUserId: 1,
             userImage: "blue.jpg",
             userName: "유저 1",
             commentCount: 1,
-            postLike: true,
-            postScrap: true,
+            postLike: Boolean,
+            postScrap: Boolean,
 
             elipsis: true,
         }
     },
+    created() {
+      // this.currentUserId = localStorage.getItem("userId");
+      // user 불러오기
+      this.getUser();
+      // 댓글 개수 불러오기
+      this.getCommentCount();
+      // postLike 불러오기
+      this.getPostLike();
+      // postScrap 불러오기
+      this.getPostScrap();
+    },
     methods: {
         star() {
-
+          axios.post(SERVER.URL + SERVER.ROUTES.postLike, {
+            userId: this.currentUserId,
+            postId: this.id,
+          });
+          this.postLike = true;
         },
         cancelStar() {
-
+          axios.delete(SERVER.URL + SERVER.ROUTES.postLike
+          + `?userId=${this.currentUserId}&postId=${this.id}`);
+          this.postLike = false;
         },
         scrap() {
-
+          axios.post(SERVER.URL + SERVER.ROUTES.postScrap, {
+            userId: this.currentUserId,
+            postId: this.id,
+          });
+          this.postScrap = true;
         },
         cancelScrap() {
-
+          axios.delete(SERVER.URL + SERVER.ROUTES.postScrap
+          + `?userId=${this.currentUserId}&postId=${this.id}`);
+          this.postScrap = false;
         },
         newComment() {
-
+          // 댓글 더보기 창으로 이동
         },
+        async getUser() {
+          try {
+            const response = await axios.get(SERVER.URL + SERVER.ROUTES.postUser + `?userId=${this.userId}`);
+            let user = response.data;
+            this.userImage = user.image;
+            this.userName = user.name;
+          } catch(exp) {
+            console.log(exp);
+          }
+        },
+        async getCommentCount() {
+          try {
+            const response = await axios.get(SERVER.URL + SERVER.ROUTES.commentCount + this.id);
+            this.commentCount = response.data;
+          } catch(exp) {
+            console.log(exp);
+          }
+        },
+        async getPostScrap() {
+          try {
+            const response = await axios.get(SERVER.URL + SERVER.ROUTES.postScrap + `?postId=${this.id}&userId=${this.currentUserId}`);
+            this.postScrap = response.data;
+          } catch(exp) {
+            this.postScrap = exp.response.data;
+          }
+        },
+        async getPostLike() {
+          try {
+            const response = await axios.get(SERVER.URL + SERVER.ROUTES.postLike + `?postId=${this.id}&userId=${this.currentUserId}`);
+            this.postLike = response.data;
+            return response.data;
+          } catch(exp) {
+            console.log(exp);
+          }
+        }
     },
     components: {
         Star,

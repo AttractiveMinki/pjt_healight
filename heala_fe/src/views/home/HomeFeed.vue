@@ -8,31 +8,70 @@
         <font-awesome-icon :icon="['far', 'bell']" class="icon" />
       </div>
     </div>
-    <div class="post-wrapper">
-      <post></post>
+    <div v-for="(post, index) in postData" v-bind:key="index" class="post-wrapper">
+      <post v-bind="post"></post>
     </div>
-    <div class="post-wrapper">
-      <post></post>
-    </div>
-    <div class="post-wrapper">
-      <post></post>
-    </div>
+    <infinite-loading @infinite="infiniteHandler" spineer="waveDots">
+      <div slot="no-more"></div>
+    </infinite-loading>
+    <div class="rest"></div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import Post from "@/components/home/Post";
+import InfiniteLoading from "vue-infinite-loading";
+import Footer from "@/components/home/Footer";
+
+import axios from "axios";
+import SERVER from "@/api/drf.js";
 
 export default {
     data() {
       return {
-
+        userId: 1,
+        postData: [],
+        limit: 0,
       }
     },
+    created() {
+      // this.userId = localStorage.getItem("userId");
+      this.getPostData();
+    },
     methods: {
+      async getPostData() {
+        try {
+          const response = await axios.get(SERVER.URL + SERVER.ROUTES.getFeedPostData + this.userId + `?page=${this.limit}`);
+          this.postData = response.data;
+        } catch(exp) {
+          console.log(exp);
+        }
+      },
+      async infiniteHandler($state) {
+        const EACH_LEN = 10;
+
+        const response = await axios.get(SERVER.URL + SERVER.ROUTES.getFeedPostData + this.userId + `?page=${this.limit}`);
+        setTimeout(() => {
+          if(response.data.length) {
+            this.postData = this.postData.concat(response.data);
+            $state.loaded();
+            this.limit += 1;
+
+            if(response.data.length < EACH_LEN) {
+              $state.complete();
+            }
+          }
+          else {
+            $state.complete();
+          }
+        }, 300);
+      }
     },
     components: {
       Post,
+      InfiniteLoading,
+      Footer,
     }
 }
 </script>
@@ -64,5 +103,8 @@ export default {
 }
 .post-wrapper {
   margin: 0px 0px 15px 0px;
+}
+.rest {
+  height: 48px;
 }
 </style>

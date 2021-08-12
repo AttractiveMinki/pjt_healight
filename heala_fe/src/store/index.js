@@ -343,7 +343,7 @@ export default new Vuex.Store({
       axios
       .post(SERVER.URL + SERVER.ROUTES.commentLikes, {
         commentIdSet: commentIds,
-        userId: store.state.loginUser.id,
+        userId: localStorage.getItem("userId"),
       })
       .then((response) =>
         store.commit("setCommentLikes", { commentLikes: response.data })
@@ -359,12 +359,7 @@ export default new Vuex.Store({
           store.commit("setPostScrap", { scrap: response.data })
         })
         .catch((exp) => {
-          if(exp.response.status == 404) {
-            store.commit("setPostScrap", { scrap: exp.response.data });
-          }
-          else {
-            console.log(`게시글 스크랩 여부 조회에 실패했습니다: ${exp}`)
-          }
+          console.log(`게시글 스크랩 여부 조회에 실패했습니다: ${exp}`);
         });
     },
     setPostLike(store, { postId }){
@@ -374,18 +369,13 @@ export default new Vuex.Store({
           store.commit("setPostLike", { like: response.data })
         })
         .catch((exp) => {
-          if(exp.response.status == 404) {
-            store.commit("setPostLike", { like: exp.response.data });
-          }
-          else {
-            console.log(`게시글 좋아요 여부 조회에 실패했습니다: ${exp}`)
-          }
+          console.log(`게시글 좋아요 여부 조회에 실패했습니다: ${exp}`);
         });
     },
     follow(store, { follow_id }){
       axios
         .post(SERVER.URL + SERVER.ROUTES.follow, {
-          user_id: store.state.loginUser.id,
+          user_id: localStorage.getItem("userId"),
           follow_id,
         })
         .then(() => {
@@ -400,7 +390,7 @@ export default new Vuex.Store({
     cancelFollow(store, { followId }){
       axios
         .delete(SERVER.URL + SERVER.ROUTES.follow
-          + `?userId=${store.state.loginUser.id}&followId=${followId}`)
+          + `?userId=${localStorage.getItem("userId")}&followId=${followId}`)
         .then(() => {
           // 이 부분은 필요없나? 헷갈림
           const index = store.state.isFollowingList.findIndex(element => element.follow_id == followId);
@@ -413,7 +403,8 @@ export default new Vuex.Store({
     likePost(store, { postId }){
       axios
         .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.like, {
-          userId: store.state.loginUser.id,
+          // userId: store.state.loginUser.id,
+          userId: localStorage.getItem("userId"),
           postId: postId,
         })
         .then((response) => {
@@ -431,7 +422,7 @@ export default new Vuex.Store({
     cancelLikePost(store, { postId }){
       axios
         .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.like
-          + `?userId=${store.state.loginUser.id}&postId=${postId}`)
+          + `?userId=${localStorage.getItem("userId")}&postId=${postId}`)
         .then((response) => {
           store.commit("setPostLike", { like: response.data })
         })
@@ -447,7 +438,7 @@ export default new Vuex.Store({
     scrapPost(store, { postId }){
       axios
         .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.scrap, {
-          userId: store.state.loginUser.id,
+          userId: localStorage.getItem("userId"),
           postId,
         })
         .then((response) => {
@@ -465,7 +456,7 @@ export default new Vuex.Store({
     cancelScrapPost(store, { postId }){
       axios
         .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.scrap
-          + `?userId=${store.state.loginUser.id}&postId=${postId}`)
+          + `?userId=${localStorage.getItem("userId")}&postId=${postId}`)
         .then((response) => {
           store.commit("setPostScrap", { scrap: response.data })
         })
@@ -482,7 +473,7 @@ export default new Vuex.Store({
       axios
         .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment, {
           text: payload.message,
-          userId: store.state.loginUser.id,
+          userId: localStorage.getItem("userId"),
           postId: payload.postId,
           commentId: payload.commentId,
         })
@@ -506,7 +497,7 @@ export default new Vuex.Store({
     likeComment(store, payload) {
       axios
         .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment + SERVER.ROUTES.like, {
-          userId: store.state.loginUser.id,
+          userId: localStorage.getItem("userId"),
           commentId: payload.commentId,
         })
         .then(() => {
@@ -524,7 +515,7 @@ export default new Vuex.Store({
     cancelLikeComment(store, payload) {
       axios
         .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment + SERVER.ROUTES.like
-          + `?userId=${store.state.loginUser.id}&commentId=${payload.commentId}`)
+          + `?userId=${localStorage.getItem("userId")}&commentId=${payload.commentId}`)
         .then(() => {
           store.commit("setCommentLikeCancel", { commentId: payload.commentId, userId: store.state.loginUser.id })
         })
