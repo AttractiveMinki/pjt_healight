@@ -48,4 +48,5 @@ public interface UserService {
 
     // 유저 exp 정보 가져오기
 	Integer getUserExpByUserId(int userId);
+	
 }

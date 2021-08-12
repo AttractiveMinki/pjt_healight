@@ -174,6 +174,7 @@ public class UserController {
 		List<Integer> likeCommentList = userService.getAllLikeCommentByUserId(commentIdSetIp.getCommentIdSet(), commentIdSetIp.getUserId());
 		return new ResponseEntity<>(likeCommentList, HttpStatus.OK);
 	}
+	
 }
 
 
