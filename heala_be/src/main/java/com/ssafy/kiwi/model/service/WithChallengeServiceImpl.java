@@ -46,7 +46,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		WithChallenge withchallenge = (WithChallenge) withChallengeIp.getWithChallenge();
 		
 			// 키위 점수 계산하기(1일: 100 point)
-		int diffDays = (int)(withchallenge.getEndDate().getTime() - withchallenge.getStartDate().getTime())/(24*60*60*1000);
+		int diffDays = (int)((withchallenge.getEndDate().getTime() - withchallenge.getStartDate().getTime())/(24*60*60*1000));
 		int kiwiPoint = diffDays * 100;
 		withchallenge.setKiwiPoint(kiwiPoint);
 
