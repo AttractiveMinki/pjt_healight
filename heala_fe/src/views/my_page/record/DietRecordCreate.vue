@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <Navbar />
     <h1>먹은 음식 등록</h1>
     <h2>검색해서 입력하기</h2>
@@ -9,14 +9,19 @@
     <el-button @click="getFoodInfo()">음식 등록</el-button>
     <hr>
     <h2>영양정보 사진으로 입력하기</h2>
-    <img v-if="image == ''" src="@/assets/img/profile/user.png" alt="profile_image" width="92" height="92" style="border-radius: 50%;">
-    <img v-else :src="image" alt="profile_image" width="92" height="92" style="border-radius: 50%;"><br>
-    <label for="image" class="btn-file">
-      <span style="font-size: 13px; font-weight: bold; color: #ADEC6E;">영양성분사진 등록</span>
-      <input name="image" type="file" @change="selectFile" id="change_image"/>
-    </label>
+    <div style="font-size: 13px">제품 뒷편에 있는</div>
+    <div style="font-size: 13px">영양정보 사진을 첨부해보세요!</div>
+    <br>
     <div>
-      <button @click="submit()">제출하기</button>
+      <img v-if="image == ''" src="@/assets/img/profile/user.png" alt="profile_image" width="92" height="92" style="border-radius: 50%;">
+      <img v-else :src="image" alt="profile_image" width="92" height="92"><br>
+      <label for="image" class="btn-file">
+        <span style="font-size: 13px; font-weight: bold; color: #ADEC6E;">영양성분사진 등록</span>
+        <input name="image" type="file" @change="selectFile" id="change_image"/>
+      </label>
+    </div>
+    <div>
+      <button class="bg-green get-input join-button-setting" @click="submit()">하단 자동입력</button>
     </div>
 
     <h2>직접 입력하기</h2>
@@ -74,14 +79,6 @@ export default {
         '칼로리', '탄수화물', '단백질', '지방', '나트륨'
       ],
       set_number: [0, 0, 0, 0, 0],
-      current_foods: {
-        name: "",
-        calory: "",
-        carbohydrate: "", // 탄수화물
-        protein: "",
-        fat: "",
-        sodium: "", // 나트륨
-      },
     }
   },
   methods: {
@@ -163,11 +160,11 @@ export default {
       this.setNutrient()
     },
     setNutrient: function () {
-      this.current_foods['calory'] = this.set_number[0]
-      this.current_foods['carbohydrate'] = this.set_number[1]
-      this.current_foods['protein'] = this.set_number[2]
-      this.current_foods['fat'] = this.set_number[3]
-      this.current_foods['sodium'] = this.set_number[4]
+      this.foods['calory'] = this.set_number[0]
+      this.foods['carbohydrate'] = this.set_number[1]
+      this.foods['protein'] = this.set_number[2]
+      this.foods['fat'] = this.set_number[3]
+      this.foods['sodium'] = this.set_number[4]
     },
   },
 }
@@ -184,11 +181,6 @@ export default {
   }
   .btn-file input[type=file] {
     position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
     text-align: right;
     filter: alpha(opacity=0);
     opacity: 0;
@@ -218,6 +210,13 @@ export default {
     height: 40px;
     margin-bottom: 20px;
     padding: 0px 2px;
+  }
+  .bg-green {
+    background: #ADEC6E;
+    border-width: 0px;
+    border-radius: 5px;
+    color: black;
+    /* color: #99a9bf; */
   }
   .join-button-setting {
     margin-top: 30px;
