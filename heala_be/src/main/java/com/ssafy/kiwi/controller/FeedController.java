@@ -70,4 +70,12 @@ public class FeedController {
 	public Object getMyFollower(@PathVariable int userId) {
 		return new ResponseEntity<>(feedService.getFollower(userId, userId), HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "타인 팔로워 목록 보기")
+	@GetMapping("/{userId}/feed")
+	public Object getOtherFollower(@PathVariable int userId,
+			@RequestParam(value="myId", required=true) int myId,
+			@RequestParam(value="show", required=true) String follower) {
+		return new ResponseEntity<>(feedService.getFollower(userId, myId), HttpStatus.OK);
+	}
 }

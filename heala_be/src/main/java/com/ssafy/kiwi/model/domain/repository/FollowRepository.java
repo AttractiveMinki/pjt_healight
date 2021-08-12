@@ -25,14 +25,10 @@ public interface FollowRepository extends JpaRepository<Follow, Integer> {
     
     
 
-    //팔로잉수
+    // 팔로잉수
 	int countByUserId(int userId);
-	//팔로워수
+	// 팔로워수
 	int countByFollowId(int followId);
-	
-	//맞팔 확인
-	@Query(value="select count(*) from Follow where (userId = :userId and followId = :myId) or (userId = :myId and followId = :userId)")
-	int countFollowState(int userId, int myId);
 	
     // 팔로워 : 나를 follow 하고 있는 Follow 객체의 id 리스트 반환
     @Query(value = "select user_id from follow WHERE follow_id = :userId", nativeQuery = true)
@@ -44,5 +40,9 @@ public interface FollowRepository extends JpaRepository<Follow, Integer> {
 
     // 내가 상대를 팔로우 하는지 확인 (1:팔로잉, 0:팔로우하지 않음)
 	int countByFollowIdAndUserId(int id, int myId);
+	
+	// 맞팔 확인 (2:맞팔)
+	@Query(value="select count(*) from Follow where (userId = :userId and followId = :myId) or (userId = :myId and followId = :userId)")
+	int countFollowState(int userId, int myId);
     
 }

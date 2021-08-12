@@ -11,6 +11,7 @@ public class UserFollowOp {
 	private String identity;
 	private String name;
 	private String image;
+	//내 기준 팔로잉 상태 여부
 	private boolean follow = false;
 	
 	public UserFollowOp(int id, String identity, String name, String image) {
