@@ -188,4 +188,11 @@ public class UserServiceImpl implements UserService {
 		return userRepository.getUserExpByUserId(userId);
 	}
 
+	//id로 유저 존재여부 확인
+	@Override
+	public boolean existId(int id) {
+		if(userRepository.countById(id)==1) return true;
+		else return false;
+	}
+
 }

@@ -16,6 +16,7 @@ import com.ssafy.kiwi.model.domain.repository.FollowRepository;
 import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
 import com.ssafy.kiwi.model.dto.PostSimpleOp;
+import com.ssafy.kiwi.model.dto.UserFollowOp;
 
 import lombok.RequiredArgsConstructor;
 
@@ -120,6 +121,30 @@ public class FeedServiceImpl implements FeedService {
 		map.put("food", foodList);
 		map.put("heart", heartList);
 		return map;
+	}
+	
+	//팔로워 목록
+	@Override
+	public List<UserFollowOp> getFollower(int userId, int myId) {
+		List<Integer> follower = followRepository.getFollowerIdsByUserId(userId); //id
+		List<UserFollowOp> followers = userRepository.getUserFollowOpByIds(follower); //유저 정보
+		for(UserFollowOp ufo : followers) { //팔로잉 여부 확인
+			int id = ufo.getId();
+			if(followRepository.countByFollowIdAndUserId(id, myId)==1) ufo.setFollow(true);
+		}
+		return followers;
+	}
+
+	//팔로잉 목록
+	@Override
+	public List<UserFollowOp> getFollowing(int userId, int myId) {
+		List<Integer> following = followRepository.getFollowingIdsByUserId(userId); //id
+		List<UserFollowOp> followings = userRepository.getUserFollowOpByIds(following); //유저 정보
+		for(UserFollowOp ufo : followings) { //팔로잉 여부 확인
+			int id = ufo.getId();
+			if(followRepository.countByFollowIdAndUserId(id, myId)==1) ufo.setFollow(true);
+		}
+		return followings;
 	}
 
 }
