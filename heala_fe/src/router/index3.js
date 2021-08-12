@@ -30,6 +30,7 @@ import KiwiHeart from "@/views/challenge/kiwi/KiwiHeart"
 import KiwiSpecial from "@/views/challenge/kiwi/KiwiSpecial"
 import MyMain from "@/views/challenge/my/MyMain"
 import SendToMain from "@/components/SendToMain"
+import OCRTest from "@/components/my_page/profile/OCRTest"
 
 export default [
   {
@@ -191,5 +192,10 @@ export default [
     path: "/challenge/my/mymain",
     name: "MyMain",
     component: MyMain,
+  },
+  {
+    path: "/test/OCRTest",
+    name: "OCRTest",
+    component: OCRTest,
   },
 ]
