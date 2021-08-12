@@ -35,4 +35,7 @@ public interface UserRepository extends JpaRepository<User,Integer>{
     //팔로잉, 팔로워 목록
     @Query(value = "SELECT new com.ssafy.kiwi.model.dto.UserFollowOp(u.id, u.identity, u.name, u.image) FROM User u WHERE u.id IN (:userIdSet)")
     List<UserFollowOp> getUserFollowOpByIds(List<Integer> userIdSet);
+
+    //id로 유저 존재여부 확인 (1:존재, 0:미존재)
+	int countById(int id);
 }

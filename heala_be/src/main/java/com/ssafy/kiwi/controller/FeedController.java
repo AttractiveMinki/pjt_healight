@@ -84,8 +84,11 @@ public class FeedController {
 	public Object getOtherFollower(@PathVariable int userId,
 			@RequestParam(value="myId", required=true) int myId,
 			@RequestParam(value="show", required=true) String follow) {
-		if(follow.equals("follower")) return new ResponseEntity<>(feedService.getFollower(userId, myId), HttpStatus.OK);
-		else if(follow.equals("following")) return new ResponseEntity<>(feedService.getFollowing(userId, myId), HttpStatus.OK);
+		if(userService.existId(myId) && userService.existId(userId)) {
+			if(follow.equals("follower")) return new ResponseEntity<>(feedService.getFollower(userId, myId), HttpStatus.OK);
+			else if(follow.equals("following")) return new ResponseEntity<>(feedService.getFollowing(userId, myId), HttpStatus.OK);			
+			else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	
