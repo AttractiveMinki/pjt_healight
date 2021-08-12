@@ -141,7 +141,6 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	//미션 성공시 Response 값
 	@Transactional
 	private Object completed(int userId, int missionId) {
-		System.out.println("----------------------------------");
 		Map<String, Object> mission = new HashMap<>();
 		//완료날짜 담기
 		KiwiUser ku = kiwiUserRepository.getByUserIdAndMissionId(userId, missionId);
@@ -151,7 +150,6 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 		int point = km.getPoint();
 		mission.put("point", point);
 		//배지 획득 가능한 경우
-		System.out.println("배지 아이디 : " + km.getBadge_id());
 		if(km.getBadge_id()!=null && km.getBadge_id()>0) {
 			//배지 정보 담기 (id, 이름, 이미지)
 			Badge badge = badgeRepository.getById(km.getBadge_id());
@@ -270,6 +268,13 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	@Override
 	public boolean makeKiwi(List<KiwiMission> kiwiMission) {
 		kiwiMissionRepository.saveAll(kiwiMission);
+		return true;
+	}
+
+	//배지 추가
+	@Override
+	public boolean makeBadge(List<Badge> badge) {
+		badgeRepository.saveAll(badge);
 		return true;
 	}
 }
