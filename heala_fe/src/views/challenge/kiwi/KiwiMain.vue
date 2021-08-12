@@ -54,6 +54,8 @@
             <el-col :span="18" class="community-inside">
               <div class="text-align-start text-title">{{ data[3].name }}</div>
               <div class="text-align-start">{{ data[3].introduction }}</div>
+              <br>
+              <div>기간: {{ data[3].startDate }} ~ {{ data[3].endDate }}</div>
             </el-col>
             <el-col :span="6">
               <img v-if="image == data[3].image" src="@/assets/img/profile/user.png" alt="profile_image" width="70" height="70" style="border-radius: 50%;">

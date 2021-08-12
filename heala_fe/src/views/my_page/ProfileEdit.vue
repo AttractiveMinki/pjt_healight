@@ -115,8 +115,7 @@ export default {
       if (this.identity.length == 0)
         this.error.identity = "아이디를 입력해주세요."
       else this.error.identity = false;
-
-      if (this.originalIdentity != this.identity && this.identity.length <= 1)
+      if (this.originalIdentity != this.identity && this.identity.length >= 1)
         this.error.check_identity = "아이디 중복 확인 버튼을 눌러주세요."
       
       let isSubmit = true;
@@ -163,7 +162,7 @@ export default {
   },
   watch: {
     identity: function() {
-      this.error.check_identity = "아이디 중복 확인 버튼을 눌러주세요."
+      this.error.check_identity = false
       this.checkForm();
     },
   },
@@ -176,6 +175,8 @@ export default {
         this.name = response.data.name;
         this.introduction = response.data.introduction;
         this.badges = response.data.badges;
+
+        this.originalIdentity = response.data.identity;
       })
       .catch(error => {
         console.log(error);
