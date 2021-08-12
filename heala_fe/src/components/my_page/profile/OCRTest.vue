@@ -7,7 +7,9 @@
       <span style="font-size: 13px; font-weight: bold; color: #ADEC6E;">프로필 사진 변경</span>
       <input name="image" type="file" @change="selectFile" id="change_image"/>
     </label>
-    <button @click="submit()">제출하기</button>
+    <div>
+      <button @click="submit()">제출하기</button>
+    </div>
     <div v-for="food, idx in current_foods" :key="idx">
       {{ idx }} : {{ food }}
     </div>
@@ -111,5 +113,4 @@ export default {
     cursor: inherit;
     display: block;
   }
-
 </style>
