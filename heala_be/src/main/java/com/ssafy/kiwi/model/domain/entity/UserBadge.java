@@ -12,15 +12,18 @@ import lombok.*;
 @NoArgsConstructor
 @Setter
 public class UserBadge {
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	private boolean selected;
 	private int user_id;
+	private int badge_id;
 
 	//다대일 : badge의 id와 연결
 	@ManyToOne
-	@JoinColumn(name="badge_id")
+	@JoinColumn(name="badge_id", insertable=false, updatable=false)
 	private Badge badge;
 	
 }

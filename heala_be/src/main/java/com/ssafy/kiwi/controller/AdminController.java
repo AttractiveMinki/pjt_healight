@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.kiwi.model.domain.entity.Badge;
 import com.ssafy.kiwi.model.domain.entity.KiwiMission;
 import com.ssafy.kiwi.model.service.KiwiChallengeService;
 
@@ -28,6 +29,15 @@ public class AdminController {
 	@PostMapping("/kiwi")
 	public Object makeKiwi(@RequestBody List<KiwiMission> kiwiMission) {
 		if(kiwiChallengeService.makeKiwi(kiwiMission)) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
+	}
+	
+	@ApiOperation(value = "배지 추가하기.")
+	@PostMapping("/badge")
+	public Object makeBadge(@RequestBody List<Badge> badge) {
+		if(kiwiChallengeService.makeBadge(badge)) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
