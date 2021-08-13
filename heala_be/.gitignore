@@ -12,6 +12,8 @@ target/
 .settings
 .springBeans
 .sts4-cache
+src/main/resources/aws.properties
+src/main/resources/datasource.properties
 
 ### IntelliJ IDEA ###
 .idea
