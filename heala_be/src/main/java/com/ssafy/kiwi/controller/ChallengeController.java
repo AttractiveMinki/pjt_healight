@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.kiwi.model.domain.entity.CertifyImage;
+import com.ssafy.kiwi.model.domain.entity.KiwiMission;
 import com.ssafy.kiwi.model.dto.WithChallengeIp;
 import com.ssafy.kiwi.model.service.KiwiChallengeService;
 import com.ssafy.kiwi.model.service.WithChallengeService;
@@ -43,8 +44,8 @@ public class ChallengeController {
 	
 	@ApiOperation(value = "함께 챌린지 목록 가져오기")
 	@GetMapping("/with")
-	public ResponseEntity<List<Map<String,Object>>> getWithList(@RequestParam int category) {
-		return new ResponseEntity<>(withChallengeService.getWithList(category), HttpStatus.OK);
+	public ResponseEntity<List<Map<String,Object>>> getWithList(@RequestParam int category, int page) {
+		return new ResponseEntity<>(withChallengeService.getWithList(category, page), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "함께 챌린지 상세 정보 가져오기")
@@ -109,4 +110,5 @@ public class ChallengeController {
 			@RequestParam(value="withChallengeId", required=true) int withChallengeId) {
 		return new ResponseEntity<>(withChallengeService.photoMyChallenge(userId, withChallengeId), HttpStatus.OK);		
 	}
+	
 }

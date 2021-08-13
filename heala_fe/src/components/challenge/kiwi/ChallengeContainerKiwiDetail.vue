@@ -13,7 +13,7 @@
       <h1>기간 한정 챌린지</h1>
     </div>
     <div class="display-flex justify-content-space-between align-items">
-      <span><font-awesome-icon icon="arrow-left" class="padding-left cursor-pointer" @click="goBack()"/></span>
+      <span><font-awesome-icon icon="arrow-left" class="padding-left cursor-pointer" style="margin: 2vw" @click="goBack()"/></span>
       <span class="text-title">챌린지 상세</span>
       <!-- <button class="button-color">작성</button> -->
       <span id="block"></span>
@@ -66,5 +66,9 @@ export default {
     font-size: 22px;
     font-weight: bold;
   }
-
+  .text-title {
+    font-weight: bold; 
+    font-size: 25px;
+    margin-bottom: 5px;
+  }
 </style>

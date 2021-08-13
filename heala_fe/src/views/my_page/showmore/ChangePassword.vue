@@ -29,7 +29,7 @@
       </el-row>
       <div class="error-text" v-if="error.passwordConfirm">{{ error.passwordConfirm }}</div>
 
-      <button class="get-input bg-green join-button-setting" @click="passwordChange(data)" :disabled="!isSubmit" :class="{disabled : !isSubmit}">비빌번호 변경하기</button>
+      <button class="get-input bg-green join-button-setting" @click="passwordChange(data)" :disabled="!isSubmit" :class="{disabled : !isSubmit}">비밀번호 변경하기</button>
   </div>
 </template>
 

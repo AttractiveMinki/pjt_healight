@@ -76,12 +76,10 @@
         </el-col>
       </el-row>
 
-      <router-link :to="{ name: '' }" class="text-decoration-none">
+      <router-link :to="{ name: 'DietRecord' }" class="text-decoration-none">
         <el-row class="community-inside">
           <el-col :span="18">
-            <router-link :to="{ name: 'DietRecord' }" class="text-decoration-none">
             <div>식단 기록하기</div>
-            </router-link>
           </el-col>
           <el-col :span="6">
             <!-- 그림 자리 -->
@@ -89,12 +87,10 @@
         </el-row>
       </router-link>
 
-      <router-link :to="{ name: '' }" class="text-decoration-none">
+      <router-link :to="{ name: 'WeightCalender' }" class="text-decoration-none">
         <el-row class="community-inside">
           <el-col :span="18">
-            <router-link :to="{ name: 'WeightCalender' }" class="text-decoration-none">
               <div>체중 기록하기</div>
-            </router-link>
           </el-col>
           <el-col :span="6">
             <!-- 그림 자리 -->

@@ -17,11 +17,9 @@
     </el-row>
     <h1>전체</h1>
     <div>
-      {{ userIdentity }}님, 환영합니다!
-      {{ userId}}
-      <div>
-        <button @click="logout"> 로그아웃</button>
-      </div>
+      <!-- {{ userIdentity }}님, 환영합니다!
+      {{ userId }} -->
+      <!-- {{ communityArticles }} -->
     </div>
     <el-row>
       <el-col :span="24">hashtag</el-col>
@@ -34,7 +32,7 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="24" class="community">
+      <el-col :span="24" class="community article-bottom-padding">
         <el-col :span="12" class="text-align-start padding-1">
           <span>BEST 게시글</span>
         </el-col>
@@ -44,67 +42,101 @@
         </el-col>
         <el-col :span="24">
           <hr>
-          <el-col :span="22" v-for="(feed, idx) in feeds" :key="idx" >
-            <router-link :to="{ name: 'PostDetail',  id: feed.id }" class="text-decoration-none align-self">
+          <el-col :span="22" v-for="(article, idx) in communityArticles" :key="idx" >
+            <router-link :to="{ name: 'PostDetail',  id: article.id }" class="text-decoration-none align-self">
               <el-col :span="6">
-                <!-- {{ feed.image }} -->
+                {{ article.image }}
                 <el-image class="margin-left-10"
                   style="width: 100%; height: 80px"
-                  :src="feed.image" 
+                  :src="article.image" 
                   >
                 </el-image>
               </el-col>
               <el-col :span="15" class="margin-left-10">
-                
-                <div class="text-align-start text-title">{{ feed.title }}</div>
-                <div class="text-align-start text-content"><i class="el-icon-user-solid"></i>{{ feed.user_id }}</div>
-                <div class="text-align-start text-content">{{ feed.content }}</div>
-                <el-col class="display-flex justify-content-space-between"><span class="community-title">{{ feed.created_at }}</span> <span class="fix-width"><font-awesome-icon :icon="['far', 'star']" class="padding-right"/>{{ feed.likes }}</span></el-col>
+                <div class="text-align-start text-title">{{ article.title }}</div>
+                <div class="text-align-start text-content"><i class="el-icon-user-solid"></i>{{ article.userId }}</div>
+                <div class="text-align-start text-content">{{ article.content }}</div>
+                <el-col class="display-flex justify-content-space-between">
+                  <span class="community-title">
+                    <div>
+                      {{ article.createdAt.split('T')[0].replace('-', '/').replace('-', '/') }}
+                    </div>
+                    <div>
+                      {{ article.createdAt.split('T')[1].split('.')[0].split(':')[0] }} : {{ article.createdAt.split('T')[1].split('.')[0].split(':')[1] }}
+                    </div>
+                   </span> 
+                  <span class="fix-width">
+                    <font-awesome-icon :icon="['far', 'star']" class="padding-right"/>{{ article.likes }}
+                  </span>
+                </el-col>
               </el-col>
             </router-link>
           </el-col>
         </el-col>
       </el-col>
     </el-row> 
+    
     <Footer />   
   </div>
 </template>
 
 <script>
 import Footer from "@/components/home/Footer"
-import { mapState, mapActions } from "vuex"
+import SERVER from "@/api/drf.js"
+import axios from 'axios'
 
 export default {
   name: "CommunityMain",
   data: function () {
     return {
-      data: {
-      },
-      isvisible: false,
-      userId: "",
-      userIdentity: "",
+      communityArticles: [],
+      selectedSubCategory: 0,
     }
   },
   components: {
     Footer,
   },
   methods: {
-    ...mapActions([
-      'logout',
-    ]),
-    getUserInfo: function () {
-     this.userId = localStorage.getItem('userId')
-     this.userIdentity = localStorage.getItem('userIdentity')
+    // getUserInfo: function () {
+    //  this.userId = localStorage.getItem('userId')
+    //  this.userIdentity = localStorage.getItem('userIdentity')
+    // },
+    getCommunityInfo: function () {
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.community}`)
+        .then ((res) => {
+          this.communityArticles = res.data
+        })
+        .catch ((err) => {
+          console.log(err)
+        })
     },
+
+    // async await 연습..
+
+    // axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}` + localStorage.getItem('userId'))
+    // getCommunityInfo: function () {
+    //   let url = `${SERVER.URL}${SERVER.ROUTES.community}`
+    //   return fetch(url).then(function(response) {
+    //     return response
+    //   });
+    // },
+    // getInfo: async function () {
+    //   let result = await this.getCommunityInfo()
+    //   console.log(result)
+    // },
+
   },
   mounted: function () {
-    this.getUserInfo()
+    this.getCommunityInfo()
+    // this.getUserInfo()
+    // this.getInfo()
+    this.$store.state.selectedSubCategory = 0
   },
-  computed: {
-    ...mapState([
-      "feeds",
-    ])
-  },
+  // computed: {
+  //   ...mapState([
+  //     "feeds",
+  //   ])
+  // },
 }
 </script>
 
@@ -119,12 +151,11 @@ export default {
     color: black;
   }
   .community {
-    margin-left: 10%;
     border-radius: 5px;
-    /* border-width: 0px; */
-    width: 80%;
-    height: 1000px;
+    width: 100%;
+    height: calc(65vh);
     border: 1px gray solid;
+    overflow : scroll;
   }
   .justify-content-space-between {
     justify-content: space-between;
@@ -189,5 +220,8 @@ export default {
   }
   .padding-right {
     padding-right: 5px;
+  }
+  .article-bottom-padding {
+    padding-bottom: 3rem;
   }
 </style>

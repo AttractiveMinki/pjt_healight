@@ -13,4 +13,9 @@ public class WithChallengeIp {
 	WithChallenge withChallenge;
 	ChallengeHashtag challengeHashtag;
 	
+	public WithChallengeIp(WithChallenge withChallenge) {
+		super();
+		this.withChallenge = withChallenge;
+	}
+	
 }

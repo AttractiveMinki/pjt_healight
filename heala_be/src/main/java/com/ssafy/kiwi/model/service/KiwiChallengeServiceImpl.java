@@ -7,16 +7,21 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.kiwi.model.domain.entity.Badge;
 import com.ssafy.kiwi.model.domain.entity.Comment;
+import com.ssafy.kiwi.model.domain.entity.KiwiChallenge;
 import com.ssafy.kiwi.model.domain.entity.KiwiMission;
 import com.ssafy.kiwi.model.domain.entity.KiwiUser;
 import com.ssafy.kiwi.model.domain.entity.Post;
 import com.ssafy.kiwi.model.domain.entity.User;
+import com.ssafy.kiwi.model.domain.entity.UserBadge;
+import com.ssafy.kiwi.model.domain.repository.BadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.CommentRepository;
 import com.ssafy.kiwi.model.domain.repository.CommunityRepository;
 import com.ssafy.kiwi.model.domain.repository.KiwiChallengeRepository;
 import com.ssafy.kiwi.model.domain.repository.KiwiMissionRepository;
 import com.ssafy.kiwi.model.domain.repository.KiwiUserRepository;
+import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +36,8 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	final private UserRepository userRepository;
 	final private CommentRepository commentRepository;
 	final private CommunityRepository communityRepository;
+	final private BadgeRepository badgeRepository;
+	final private UserBadgeRepository userBadgeRepository;
 
 	final private WithChallengeService withChallengeService;
 	
@@ -132,6 +139,7 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	
 
 	//미션 성공시 Response 값
+	@Transactional
 	private Object completed(int userId, int missionId) {
 		Map<String, Object> mission = new HashMap<>();
 		//완료날짜 담기
@@ -141,6 +149,18 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 		KiwiMission km = kiwiMissionRepository.getById(missionId);
 		int point = km.getPoint();
 		mission.put("point", point);
+		//배지 획득 가능한 경우
+		if(km.getBadge_id()!=null && km.getBadge_id()>0) {
+			//배지 정보 담기 (id, 이름, 이미지)
+			Badge badge = badgeRepository.getById(km.getBadge_id());
+			mission.put("badgeImage", badge.getImage());
+			mission.put("badgeName", badge.getName());
+			UserBadge ub = new UserBadge();
+			ub.setSelected(false);
+			ub.setBadge_id(km.getBadge_id());
+			ub.setUser_id(userId);
+			userBadgeRepository.save(ub);
+		}
 		//포인트 적립
 		User user = userRepository.getById(userId);
 		int exp = user.getExp() + point;
@@ -150,6 +170,7 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	}
 	
 	//미션 성공시 mission_user 테이블에 성공 내역 저장
+	@Transactional
 	private boolean saveMissionUser(int missionId, int userId) {
 		KiwiUser missionUser = new KiwiUser();
 		missionUser.setMissionId(missionId);
@@ -224,6 +245,7 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	}
 	
 	//미션 성공 여부 확인 - 챌린지 성공 여부
+	@Transactional
 	private boolean missionChallengeCompleted(int category, int userId, int missionId, int num) {
 		List<Map<String,Object>> myChallengeList = withChallengeService.getMyChallenge(userId);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-ddd");
@@ -239,5 +261,20 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 			if(cnt >= num) return saveMissionUser(missionId, userId);					
 		}
 		return false;
+	}
+	
+	//-------------------------admin---------------------------
+	//키위 챌린지 추가
+	@Override
+	public boolean makeKiwi(List<KiwiMission> kiwiMission) {
+		kiwiMissionRepository.saveAll(kiwiMission);
+		return true;
+	}
+
+	//배지 추가
+	@Override
+	public boolean makeBadge(List<Badge> badge) {
+		badgeRepository.saveAll(badge);
+		return true;
 	}
 }

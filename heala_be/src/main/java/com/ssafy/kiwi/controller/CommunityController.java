@@ -32,15 +32,14 @@ public class CommunityController {
 	
 	@ApiOperation(value = "커뮤니티 전체 글 목록 가져오기")
 	@GetMapping
-	public ResponseEntity<List<Post>> getAllPostList() {
-		List<Post> postList = communityService.getAllPostList();
-		return new ResponseEntity<>(postList, HttpStatus.OK);
+	public ResponseEntity<List<Post>> getAllPostList(int page) {
+		return new ResponseEntity<>(communityService.getAllPostList(page), HttpStatus.OK);
 	} 
 	
 	@ApiOperation(value = "카테고리와 서브 카테고리에 맞는 글 목록 가져오기")
 	@GetMapping("/category")
-	public Object getPostList(@RequestParam int category, @RequestParam int subCategory) {
-		List<Post> postList = communityService.getPostList(category, subCategory);
+	public Object getPostList(@RequestParam int category, @RequestParam int subCategory, int page) {
+		List<Post> postList = communityService.getPostList(category, subCategory, page);
 		return new ResponseEntity<>(postList, HttpStatus.OK);
 	}
 	

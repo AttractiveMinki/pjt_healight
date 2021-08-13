@@ -66,11 +66,12 @@ export default new Vuex.Store({
     // 주엽 #@
     userIdentity: "",
     userId: 1,
-    userNickname: "",
+    userName: "",
     currentPageId: 0,
     currentPageCategory: 0,
     profileSelectedCategory: 1,
     selectedRouter: 0,
+    selectedSubCategory: 0,
     // check_email: true,
     // check_identity: true,
 
@@ -249,9 +250,9 @@ export default new Vuex.Store({
     SET_USERIDENTITY2: function (state, data) {
       state.userIdentity = data.identity
     },
-    SET_USERNICKNAME: function (state, data) {
-      state.userNickname = data.userNickname
-      localStorage.setItem('userNickname', data.userNickname);
+    SET_USERNAME: function (state, data) {
+      state.userName = data.userName
+      localStorage.setItem('userName', data.userName);
     },
     INIT_USERID: function (state) {
       state.userId = ""
@@ -261,9 +262,9 @@ export default new Vuex.Store({
       state.userIdentity = ""
       localStorage.setItem('userIdentity', '');
     },
-    INIT_USERNICKNAME: function (state) {
-      state.userNickname = ""
-      localStorage.setItem('userNickname', '');
+    INIT_USERNAME: function (state) {
+      state.userName = ""
+      localStorage.setItem('userName', '');
     },
     // SET_CHECKIDENTITY: function (state) {
     //   state.check_identity = false
@@ -561,8 +562,8 @@ export default new Vuex.Store({
       axios.post(SERVER.URL + SERVER.ROUTES.login, data)
         .then((res) => {
           commit("SET_USERID", res)
-          // commit("SET_USERNICKNAME", data)
-          commit("SET_USERIDENTITY", res)
+          // commit("SET_USERNAME", res)
+          commit("SET_USERIDENTITY", data)
 
           // commit("SET_TOKEN", res.data.token) // jwt 사용시 적용
           // dispatch("verifyUser", data) // 관리자 권한 검증
@@ -572,12 +573,13 @@ export default new Vuex.Store({
           console.log("로그인 에러 발생")
           console.log(err)
           console.error(err.response.data)
+          alert('존재하지 않는 회원이거나, 비밀번호가 일치하지 않습니다.')
       })
     },
     logout: function ({ commit }) {
       commit("INIT_USERID")
       commit("INIT_USERIDENTITY")
-      // commit("INIT_USERNICKNAME")
+      // commit("INIT_USERNAME")
       router.push({ name: "Login" })
     },
 

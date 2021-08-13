@@ -42,5 +42,6 @@ export default {
     getMyChallenge: "/challenge/my/",
     joinWithChallenge: "/challenge/with/join",
     withdrawal: "/user",
+    OCR: "https://dapi.kakao.com/v2/vision/text/ocr",
   }
 }

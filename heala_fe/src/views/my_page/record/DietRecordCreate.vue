@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <Navbar />
     <h1>먹은 음식 등록</h1>
     <h2>검색해서 입력하기</h2>
@@ -8,6 +8,21 @@
     <input type="text" id="foodName" v-model="foodName" style="margin-right: 2vw">
     <el-button @click="getFoodInfo()">음식 등록</el-button>
     <hr>
+    <h2>영양정보 사진으로 입력하기</h2>
+    <div style="font-size: 13px">제품 뒷편에 있는</div>
+    <div style="font-size: 13px">영양정보 사진을 첨부해보세요!</div>
+    <br>
+    <div>
+      <img v-if="image == ''" src="@/assets/img/profile/user.png" alt="profile_image" width="92" height="92" style="border-radius: 50%;">
+      <img v-else :src="image" alt="profile_image" width="92" height="92"><br>
+      <label for="image" class="btn-file">
+        <span style="font-size: 13px; font-weight: bold; color: #ADEC6E;">영양성분사진 등록</span>
+        <input name="image" type="file" @change="selectFile" id="change_image"/>
+      </label>
+    </div>
+    <div>
+      <button class="bg-green get-input join-button-setting" @click="submit()">하단 자동입력</button>
+    </div>
 
     <h2>직접 입력하기</h2>
     <el-row>
@@ -55,6 +70,15 @@ export default {
         sodium: "", // 나트륨
       },
       foodName: "",
+
+      image: "",
+      data: [],
+      temp_word: "",
+      reserve_info: -1,
+      find_words: [
+        '칼로리', '탄수화물', '단백질', '지방', '나트륨'
+      ],
+      set_number: [0, 0, 0, 0, 0],
     }
   },
   methods: {
@@ -99,13 +123,72 @@ export default {
         .catch(() => {
           console.log('추가 실패')
         })
-
+    },
+    selectFile(e) {
+      const file = e.target.files[0];
+      this.image = URL.createObjectURL(file);
+    },
+    submit: function () {
+      let formData = new FormData();
+      let imgFile = document.getElementById('change_image');
+      formData.append('image', imgFile.files[0])
+      axios.post(`${SERVER.ROUTES.OCR}`, formData , { headers: {'Content-Type' : 'multipart/form-data', 'Authorization': `KakaoAK ${process.env.VUE_APP_OCR_REST_API_KEY}`}})
+      .then((res) => {
+        // console.log(res)
+        this.data = res.data
+        this.findNutrient(this.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    findNutrient: function (value) {
+      for (let nutrient of value.result) {
+        if (this.reserve_info != -1) {
+          let regex = /[^0-9]/g;				// 숫자가 아닌 문자열을 선택하는 정규식
+          this.set_number[this.reserve_info] = nutrient.recognition_words[0].replace(regex, "")
+          this.reserve_info = -1
+          continue
+        }
+        for (let i = 0; i < 5; i++) {
+          if (nutrient.recognition_words[0] == this.find_words[i]) {
+            this.reserve_info = i
+            break
+          }
+        }
+      }
+      this.setNutrient()
+    },
+    setNutrient: function () {
+      this.foods['calory'] = this.set_number[0]
+      this.foods['carbohydrate'] = this.set_number[1]
+      this.foods['protein'] = this.set_number[2]
+      this.foods['fat'] = this.set_number[3]
+      this.foods['sodium'] = this.set_number[4]
     },
   },
 }
 </script>
 
 <style scoped>
+  #change_image:hover, #submit {
+    cursor: pointer;
+  }
+  
+  .btn-file{
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-file input[type=file] {
+    position: absolute;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+  }
   .introduce-text-align-start {
     display: block;
     color: black;
@@ -127,6 +210,13 @@ export default {
     height: 40px;
     margin-bottom: 20px;
     padding: 0px 2px;
+  }
+  .bg-green {
+    background: #ADEC6E;
+    border-width: 0px;
+    border-radius: 5px;
+    color: black;
+    /* color: #99a9bf; */
   }
   .join-button-setting {
     margin-top: 30px;

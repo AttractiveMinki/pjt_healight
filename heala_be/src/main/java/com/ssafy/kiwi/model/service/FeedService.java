@@ -7,12 +7,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.ssafy.kiwi.model.domain.entity.Post;
+import com.ssafy.kiwi.model.dto.UserFollowOp;
 
 public interface FeedService {
 
 	// 글 작성
 	public void post(Post post);
-
 	// 글 삭제
 	public boolean delete(int postId, int userId);
 	
@@ -21,7 +21,11 @@ public interface FeedService {
 
 	// 개인 피드 (본인)
 	public Map<String, Object> getMyFeed(int userId);
-
 	// 개인 피드 (타인)
 	public Map<String, Object> getUserFeed(int userId, int myId);
+
+	// 팔로워 목록 가져오기
+	public List<UserFollowOp> getFollower(int userId, int myId);
+	// 팔로잉 목록 가져오기
+	public List<UserFollowOp> getFollowing(int userId, int myId);
 }

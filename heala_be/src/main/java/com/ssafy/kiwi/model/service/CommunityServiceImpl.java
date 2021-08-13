@@ -2,7 +2,9 @@ package com.ssafy.kiwi.model.service;
 
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.kiwi.model.domain.entity.Comment;
@@ -14,27 +16,24 @@ import com.ssafy.kiwi.model.domain.repository.CommunityRepository;
 import com.ssafy.kiwi.model.domain.repository.LikeUserRepository;
 import com.ssafy.kiwi.model.domain.repository.ScrapRepository;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 public class CommunityServiceImpl implements CommunityService {
 	
-	@Autowired
-	private CommunityRepository communityRepository;
-
-	@Autowired
-	private CommentRepository commentRepository;
-
-	@Autowired
-	private LikeUserRepository likeUserRepository;
-
-	@Autowired
-	private ScrapRepository scrapRepository;
+	final private CommunityRepository communityRepository;
+	final private CommentRepository commentRepository;
+	final private LikeUserRepository likeUserRepository;
+	final private ScrapRepository scrapRepository;
 
 	// 커뮤니티 전체 글 목록 가져오기
 	@Override
-	public List<Post> getAllPostList() {
+	public List<Post> getAllPostList(int page) {
 		final int access = 0; // 전체 공개: 0
 		
-		List<Post> postList = communityRepository.getPostByAccess(access);
+		Page<Post> postPage = communityRepository.getPostByAccess(access, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
+		List<Post> postList = postPage.getContent();
 		return postList;
 	}
 	
@@ -43,16 +42,17 @@ public class CommunityServiceImpl implements CommunityService {
 
 	// 카테고리와 서브 카테고리에 맞는 글 목록 가져오기
 	@Override
-	public List<Post> getPostList(int category, int subCategory) {
-		List<Post> postList;
+	public List<Post> getPostList(int category, int subCategory, int page) {
+		Page<Post> postPage;
 		final int access = 0; // 전체 공개: 0
 		
 		// Best 게시글: 3
 		if (subCategory == 3) { 
-			postList = communityRepository.getPostByCategoryAndAccessAndLikesGreaterThan(category, access, CRITERION);
+			postPage = communityRepository.getPostByCategoryAndAccessAndLikesGreaterThan(category, access, CRITERION, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
 		} else {
-			postList = communityRepository.getPostByCategoryAndSubCategoryAndAccess(category, subCategory, access);
+			postPage = communityRepository.getPostByCategoryAndSubCategoryAndAccess(category, subCategory, access, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
 		}
+		List<Post> postList = postPage.getContent();
 		return postList;
 	}
 
