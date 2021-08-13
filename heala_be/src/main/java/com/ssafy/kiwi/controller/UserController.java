@@ -130,15 +130,15 @@ public class UserController {
 
 	@ApiOperation(value = "팔로우 취소하기.")
 	@DeleteMapping("/follow")
-	public Object cancelFollow(@RequestBody Follow follow) {
-		Optional<Follow> oldFollow = userService.findFirstByFollowIdAndUserId(follow.getFollowId(), follow.getUserId());
+	public Object cancelFollow(@RequestParam int followId, @RequestParam int userId) {
+		Optional<Follow> oldFollow = userService.findFirstByFollowIdAndUserId(followId, userId);
 
-		// 있으면 follow 관계 저장
+		// 있으면 follow 관계 삭제
 		if(oldFollow.isPresent()) {
 			userService.delete(oldFollow.get());
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
-		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	@ApiOperation(value = "유저 한 명 간단 정보 불러오기")
