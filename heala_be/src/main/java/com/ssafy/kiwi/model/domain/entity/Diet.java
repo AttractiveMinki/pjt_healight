@@ -21,7 +21,7 @@ public class Diet {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private double calorie;
+	private double calory;
 	private double carbohydrate;
 	private double protein;
 	private double fat;
