@@ -66,19 +66,21 @@ public class FeedServiceImpl implements FeedService {
 	
 	//개인 피드 (본인)
 	@Override
-	public Map<String, Object> getMyFeed(int userId) {
-		List<Post> postList = feedRepository.getByUserId(userId);
+	public Map<String, Object> getMyFeed(int userId, int page) {
+		Page<Post> postPage = feedRepository.getByUserId(userId, PageRequest.of(page, 30, Sort.by("createdAt").descending()));
+		List<Post> postList = postPage.getContent();
 		Map<String, Object> map = getFeedPost(postList, getFeedInfo(userId));
 		return map;
 	}
 
 	//개인 피드 (타인)
 	@Override
-	public Map<String, Object> getUserFeed(int userId, int myId) {
+	public Map<String, Object> getUserFeed(int userId, int myId, int page) {
 		int num = followRepository.countFollowState(userId, myId);
 		if(num==2) num = 1; //맞팔인 경우
 		else num = 0; //그 외 경우
-		List<Post> postList = feedRepository.getLimitByUserId(userId, num);
+		Page<Post> postPage = feedRepository.getLimitByUserId(userId, num, PageRequest.of(page, 30, Sort.by("createdAt").descending()));
+		List<Post> postList = postPage.getContent();
 		Map<String, Object> map = getFeedPost(postList, getFeedInfo(userId));
 		return map;
 	}
