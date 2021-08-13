@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.ssafy.kiwi.model.service.DietService;
 
 import io.swagger.annotations.ApiOperation;
@@ -26,5 +27,6 @@ public class DietController {
 	@GetMapping("/{userId}/today")
 	public Object getToday(@PathVariable int userId) {
 		return new ResponseEntity<>(dietService.getToday(userId), HttpStatus.OK);
+
 	}
 }
