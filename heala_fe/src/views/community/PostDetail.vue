@@ -160,7 +160,7 @@ export default {
     font-size: 14px;
     font-weight: bold;
     margin: 10px 0px 10px 5px;
-    width: calc(100% - 40px);
+    width: calc(100% - 60px);
     text-align: left;
     display: inline-block;
 }

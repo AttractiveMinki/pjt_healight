@@ -1,5 +1,6 @@
 import PostDetail from "@/views/community/PostDetail";
 import FollowExample from "@/views/FollowExample";
+import HomeFeed from "@/views/home/HomeFeed";
 import CertifyImage from "@/views/challenge/my/CertifyImage";
 import Result from "@/views/challenge/my/Result";
 
@@ -8,6 +9,11 @@ export default [
         path: "/community/post/:id",
         name: "PostDetail",
         component: PostDetail,
+    },
+    {
+        path: "/home/feed",
+        name: "HomeFeed",
+        component: HomeFeed,
     },
     {
         path: "/followexample",

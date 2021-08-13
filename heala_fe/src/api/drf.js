@@ -19,6 +19,10 @@ export default {
     myChallengeResult: "/challenge/my/result",
     userExp: "/user/exp",
     feedPost: "/feed/post",
+    getFeedPostData: "/feed/home/",
+    commentCount: "/community/post/comment/count/",
+    postScrap: "/community/post/scrap",
+    postLike: "/community/post/like",
 
     // 원석 #@
 

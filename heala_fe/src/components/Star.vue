@@ -9,6 +9,20 @@
 export default {
     name: "Star",
     props: [ 'like' ],
+    // data() {
+    //   return {
+    //     likeUI: this.like,
+    //   }
+    // },
+    // created() {
+    //   this.likeUI = this.like;
+    // },
+    // methods: {
+    //   star() {
+    //     this.$emit('star');
+    //     this.likeUI = true;
+    //   }
+    // },
 }
 </script>
 
