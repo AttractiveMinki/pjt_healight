@@ -1,6 +1,8 @@
 package com.ssafy.kiwi.model.service;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 
@@ -48,12 +50,20 @@ public class ImageServer {
     }
     
     public String registerImageIntoServer(MultipartFile file) throws IOException {
-    	s3Client.putObject(new PutObjectRequest(bucket, file.getOriginalFilename(), file.getInputStream(), null)
+  
+    	String fileName = makeFileName();
+    	s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
     			.withCannedAcl(CannedAccessControlList.PublicRead));
-    	return s3Client.getUrl(bucket, file.getOriginalFilename()).toString();
+    	return fileName;
 	}
     
-    
+    public String makeFileName() {
+    	SimpleDateFormat format = new SimpleDateFormat ("yyyyMMdd/HHmmss");
+    	Date currentTime = new Date();
+    	String time = format.format(currentTime);
+    	double dValue = Math.random();
+    	return time+dValue;
+    }
     
     
 }
