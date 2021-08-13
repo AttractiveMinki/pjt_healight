@@ -8,6 +8,7 @@
         <font-awesome-icon :icon="['far', 'bell']" class="icon" />
       </div>
     </div>
+    <div class="header-height"></div>
     <div v-for="(post, index) in postData" v-bind:key="index" class="post-wrapper">
       <post v-bind="post"></post>
     </div>
@@ -44,6 +45,7 @@ export default {
         try {
           const response = await axios.get(SERVER.URL + SERVER.ROUTES.getFeedPostData + this.userId + `?page=${this.limit}`);
           this.postData = response.data;
+          this.limit += 1;
         } catch(exp) {
           console.log(exp);
         }

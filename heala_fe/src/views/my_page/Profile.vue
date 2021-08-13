@@ -34,6 +34,11 @@
     </el-row>
     <div id="underline"></div>
 
+    <!-- FollowList -->
+    <div class="follow-list-container">
+      <follow-list></follow-list>
+    </div>
+
     <el-row style="text-align: start">
       <!-- 배지 뭐갖고있는지 계산 -->
       <img class="image" src="@/assets/image/health/health_challenge.png" alt="health badge" style="width: 10vw; padding: 2vw">
@@ -72,6 +77,7 @@ import axios from 'axios';
 import Navbar from "@/components/my_page/Navbar"
 import Category from "@/components/my_page/profile/Category"
 import Footer from "@/components/home/Footer"
+import FollowList from "@/components/my_page/FollowList"
 import { mapState } from "vuex"
 
 export default {
@@ -89,6 +95,7 @@ export default {
     Navbar,
     Category,
     Footer,
+    FollowList,
   },
   computed: {
     ...mapState([
@@ -135,6 +142,10 @@ export default {
     height: 5px;
     background: #C4C4C4;
     /* background: linear-gradient(90deg, #C4C4C4 50%, gray 50%) 반반 나눠서 색칠하기*/
+  }
+
+  .follow-list-container {
+    position: relative;
   }
   
   .text-decoration-none {
