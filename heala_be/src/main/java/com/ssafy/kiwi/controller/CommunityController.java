@@ -63,7 +63,7 @@ public class CommunityController {
 		if(communityService.getScrap(postId, userId)){
 			return new ResponseEntity<>(true, HttpStatus.OK);
 		}
-		return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(false, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "게시글 좋아요 여부 조회")
@@ -72,7 +72,7 @@ public class CommunityController {
 		if(communityService.getLike(postId, userId)){
 			return new ResponseEntity<>(true, HttpStatus.OK);
 		}
-		return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(false, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "게시글 좋아요")
