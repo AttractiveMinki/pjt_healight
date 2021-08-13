@@ -125,8 +125,9 @@ public class FeedServiceImpl implements FeedService {
 	
 	//팔로워 목록
 	@Override
-	public List<UserFollowOp> getFollower(int userId, int myId) {
-		List<Integer> follower = followRepository.getFollowerIdsByUserId(userId); //id
+	public List<UserFollowOp> getFollower(int userId, int myId, int page) {
+		Page<Integer> followerPage = followRepository.getFollowerIdsByUserId(userId, PageRequest.of(page, 15)); //id
+		List<Integer> follower = followerPage.getContent();
 		List<UserFollowOp> followers = userRepository.getUserFollowOpByIds(follower); //유저 정보
 		for(UserFollowOp ufo : followers) { //팔로잉 여부 확인
 			int id = ufo.getId();
@@ -137,8 +138,9 @@ public class FeedServiceImpl implements FeedService {
 
 	//팔로잉 목록
 	@Override
-	public List<UserFollowOp> getFollowing(int userId, int myId) {
-		List<Integer> following = followRepository.getFollowingIdsByUserId(userId); //id
+	public List<UserFollowOp> getFollowing(int userId, int myId, int page) {
+		Page<Integer> followingPage = followRepository.getFollowingIdsByUserId(userId, PageRequest.of(page, 15)); //id
+		List<Integer> following = followingPage.getContent();
 		List<UserFollowOp> followings = userRepository.getUserFollowOpByIds(following); //유저 정보
 		for(UserFollowOp ufo : followings) { //팔로잉 여부 확인
 			int id = ufo.getId();

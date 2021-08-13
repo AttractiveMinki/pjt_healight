@@ -25,7 +25,7 @@ public interface FeedService {
 	public Map<String, Object> getUserFeed(int userId, int myId);
 
 	// 팔로워 목록 가져오기
-	public List<UserFollowOp> getFollower(int userId, int myId);
+	public List<UserFollowOp> getFollower(int userId, int myId, int page);
 	// 팔로잉 목록 가져오기
-	public List<UserFollowOp> getFollowing(int userId, int myId);
+	public List<UserFollowOp> getFollowing(int userId, int myId, int page);
 }
