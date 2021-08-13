@@ -42,4 +42,8 @@ public class Post {
 	
 	@Column(name = "user_id")
 	public int userId;
+
+    public void increaseLikes() { this.likes += 1; }
+
+	public void decreaseLikes() { this.likes -= 1; }
 }

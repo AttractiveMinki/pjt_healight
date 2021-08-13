@@ -91,12 +91,12 @@ public class CommunityServiceImpl implements CommunityService {
 		if(likeUserRepository.findByUserIdAndCommentId(likeUser.getUserId(), likeUser.getCommentId()).isPresent()){
 			return false;
 		}
-//		Optional<Comment> comment = commentRepository.findById(likeUser.getCommentId());
-//		if(comment.isPresent()){
-//			Comment newComment = comment.get();
-//			newComment.increaseLikes();
-//			commentRepository.save(newComment);
-//		}
+		Optional<Comment> comment = commentRepository.findById(likeUser.getCommentId());
+		if(comment.isPresent()){
+			Comment newComment = comment.get();
+			newComment.increaseLikes();
+			commentRepository.save(newComment);
+		}
 		likeUserRepository.save(likeUser);
 		return true;
 	}
@@ -107,12 +107,12 @@ public class CommunityServiceImpl implements CommunityService {
 		Optional<LikeUser> oldLikeUser = likeUserRepository.findByUserIdAndCommentId(userId, commentId);
 		if(oldLikeUser.isPresent()){
 			likeUserRepository.deleteById(oldLikeUser.get().getId());
-//			Optional<Comment> comment = commentRepository.findById(commentId);
-//			if(comment.isPresent()){
-//				Comment newComment = comment.get();
-//				newComment.decreaseLikes();
-//				commentRepository.save(newComment);
-//			}
+			Optional<Comment> comment = commentRepository.findById(commentId);
+			if(comment.isPresent()){
+				Comment newComment = comment.get();
+				newComment.decreaseLikes();
+				commentRepository.save(newComment);
+			}
 			return true;
 		}
 		return false;
@@ -133,6 +133,12 @@ public class CommunityServiceImpl implements CommunityService {
 		if(getLike(likeUser.getPostId(), likeUser.getUserId())) {
 			return false;
 		}
+		Optional<Post> post = communityRepository.findById(likeUser.getPostId());
+		if(post.isPresent()){
+			Post newPost = post.get();
+			newPost.increaseLikes();
+			communityRepository.save(newPost);
+		}
 		likeUserRepository.save(likeUser);
 		return true;
 	}
@@ -143,6 +149,12 @@ public class CommunityServiceImpl implements CommunityService {
 		Optional<LikeUser> oldLikeUser = likeUserRepository.getByUserIdAndPostId(userId, postId);
 		if(oldLikeUser.isPresent()){
 			likeUserRepository.deleteById(oldLikeUser.get().getId());
+			Optional<Post> post = communityRepository.findById(postId);
+			if(post.isPresent()){
+				Post newPost = post.get();
+				newPost.decreaseLikes();
+				communityRepository.save(newPost);
+			}
 			return true;
 		}
 		return false;
