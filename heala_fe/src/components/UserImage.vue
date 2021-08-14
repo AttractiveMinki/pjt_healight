@@ -1,5 +1,5 @@
 <template>
-  <div class="user-image-wrapper">
+  <div class="user-image-wrapper" v-bind:style="{ width: width + 'px', height: height + 'px'}">
     <img :src="require(`@/assets/image/${image}`)" alt="@/assets/image/user.png" class="user-image">
   </div>
 </template>
@@ -7,7 +7,7 @@
 <script>
 export default {
     name: "UserImage",
-    props: [ 'image' ],
+    props: [ "image", "width", "height" ],
 }
 </script>
 

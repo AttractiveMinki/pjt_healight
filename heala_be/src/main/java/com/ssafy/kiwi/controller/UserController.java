@@ -59,12 +59,10 @@ public class UserController {
 	@PostMapping("/checkAuthorization")
 	public Object authorize(@RequestBody User user) {
 		Optional<User> userOpt = userService.login(user.getIdentity(), user.getPassword());
-		boolean check = false;
 		if (userOpt.isPresent()) {
-			check = true;
-			return new ResponseEntity<>(check, HttpStatus.OK);
+			return new ResponseEntity<>(true, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(check, HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
 		}
 	}
 	
@@ -113,30 +111,17 @@ public class UserController {
 	@ApiOperation(value = "팔로우하기.")
 	@PostMapping("/follow")
 	public Object follow(@RequestBody Follow follow) {
-		int userId = follow.getUserId();
-		int followId = follow.getFollowId();
-		// userId 와 followId 에 해당하는 유저가 있는지 검사
-		Optional<User> user = userService.getUser(userId);
-		Optional<User> followUser = userService.getUser(followId);
-
-		// 있으면 follow 관계 저장
-		if(user.isPresent() && followUser.isPresent()) {
-			Follow newFollow = new Follow(followId, userId);
-			userService.saveFollow(newFollow);
-			return new ResponseEntity<>(HttpStatus.OK);
+		if(userService.follow(follow.getUserId(), follow.getFollowId())) {
+			return new ResponseEntity<>(true, HttpStatus.OK);
 		}
-		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
 
 	@ApiOperation(value = "팔로우 취소하기.")
 	@DeleteMapping("/follow")
 	public Object cancelFollow(@RequestParam int followId, @RequestParam int userId) {
-		Optional<Follow> oldFollow = userService.findFirstByFollowIdAndUserId(followId, userId);
-
-		// 있으면 follow 관계 삭제
-		if(oldFollow.isPresent()) {
-			userService.delete(oldFollow.get());
-			return new ResponseEntity<>(HttpStatus.OK);
+		if(userService.cancelFollow(userId, followId)){
+			return new ResponseEntity<>(false, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}

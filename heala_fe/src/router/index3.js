@@ -114,7 +114,7 @@ export default [
     component: WithDetailReview,
   },
   {
-    path: "/profile",
+    path: "/profile/:id",
     name: "Profile",
     component: Profile,
   },

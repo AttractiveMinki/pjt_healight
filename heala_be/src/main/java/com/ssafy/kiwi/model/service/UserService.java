@@ -33,11 +33,6 @@ public interface UserService {
 	//프로필 편집
 	Map<String, Object> getProfile(int user_id);
 	boolean updateUser(int userId, ProfileIp profileIp) throws IllegalStateException, IOException;
-	
-	//팔로우, 언팔로우
-	Follow saveFollow(Follow follow);
-	Optional<Follow> findFirstByFollowIdAndUserId(int followId, int userId);
-	void delete(Follow follow);
 
 	// 유저 간단 정보 가져오기
     UserSimpleOp getUserSimpleInfo(int userId);
@@ -51,5 +46,8 @@ public interface UserService {
 	
 	// id로 유저 정보 조회 (true:존재, false:없는 id)
 	boolean existId(int id);
-	
+
+	// 팔로우, 언팔로우
+    boolean follow(int userId, int followId);
+	boolean cancelFollow(int userId, int followId);
 }

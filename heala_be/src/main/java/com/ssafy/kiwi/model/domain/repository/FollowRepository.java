@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface FollowRepository extends JpaRepository<Follow, Integer> {
 
-    Optional<Follow> findFirstByFollowIdAndUserId(int followId, int userId);
+    Optional<Follow> findByFollowIdAndUserId(int followId, int userId);
     
     // id가 userId에 해당하는 Follow 객체 반환 
     List<Follow> getFollowByUserId(int userId);
@@ -46,5 +46,5 @@ public interface FollowRepository extends JpaRepository<Follow, Integer> {
 	// 맞팔 확인 (2:맞팔)
 	@Query(value="select count(*) from Follow where (userId = :userId and followId = :myId) or (userId = :myId and followId = :userId)")
 	int countFollowState(int userId, int myId);
-    
+
 }
