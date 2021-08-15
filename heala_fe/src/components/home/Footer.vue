@@ -22,7 +22,7 @@
         </el-col>
       </router-link>
       <span @click="changeRouter(4)">
-        <router-link :to="{ name: 'Profile', params: { id: userId } }" :v-model="selectedRouter" :class="{selected: this.$store.state.selectedRouter == 4}" class="text-decoration-none" >
+        <router-link :to="{ name: 'Profile', params: { id: userId } }" :v-model="selectedRouter" :class="{selected: this.$store.state.selectedRouter == 4}" class="text-decoration-none color-black" >
           <el-col :span="5">
             <font-awesome-icon icon="user" />
           </el-col>
@@ -58,6 +58,7 @@ export default {
   created () {
     this.userId = localStorage.getItem('userId')
   },
+
   // watch: {
   //   selectedRouter: {
   //     handler: 'changeRouter',

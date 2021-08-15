@@ -33,7 +33,7 @@ export default {
     checkEmail: "/user/checkemail/",
     checkIdentity: "/user/checkidentity/",
     withMake: "/challenge/with/",
-    userProfile: "/user/profile/",
+    userProfile: "/feed/",
     getKiwiChallenge: "/challenge/kiwi/",
     getKiwiHealthChallenge: "/challenge/kiwi/0/",
     getKiwiDietChallenge: "/challenge/kiwi/1/",

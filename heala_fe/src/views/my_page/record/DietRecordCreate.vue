@@ -199,11 +199,6 @@ export default {
     margin-left: 10%;
     text-align: start;
   }
-  .bg-green {
-    background: #ADEC6E;
-    color: white;
-    /* color: #99a9bf; */
-  }
   .bg-gray {
     background: #F0F0F0;
   }

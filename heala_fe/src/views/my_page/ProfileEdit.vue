@@ -1,7 +1,24 @@
 <template>
   <div>
     <Navbar />
-    <div style="font-weight: bold; font-size: 20px; margin-bottom: 30px;">프로필 편집</div>
+    <el-row>
+      <el-col :span="24">
+        <span style="font-weight: bold; font-size: 20px; margin-bottom: 30px;">프로필 편집</span>
+      </el-col>
+    </el-row>
+    <el-row class="justify-content-right">
+      <!-- <el-col :span="18">
+        <span>
+          d
+        </span>
+      </el-col>
+      <el-col :span="6"> -->
+      <!-- 회원 탈퇴하기 -->
+      <router-link :to="{ name: 'Withdrawal' }">
+        <span id="submitwithdrawal" class="go-withdrawal">회원 탈퇴</span>
+      </router-link>
+      <!-- </el-col> -->
+    </el-row>
     <div>
       <!-- 프로필 사진 -->
       <img v-if="image == ''" src="@/assets/img/profile/user.png" alt="profile_image" width="92" height="92" style="border-radius: 50%;">
@@ -42,6 +59,8 @@
           <div style="font-size: 13px; color: #606266;">최대 6개 설정 가능합니다</div>
           </el-col>
       </el-row>
+      <br>
+
     </div>
     <button id="submit" class="get-input" @click="submit()" :disabled="!isSubmit" :class="{disabled : !isSubmit}">저장</button>
 
@@ -215,6 +234,10 @@ export default {
     cursor: inherit;
     display: block;
   }
+  .justify-content-right {
+    display: grid;
+    justify-content: right;
+  }
   .error-text {
     color: red;
     margin-bottom: 10px;
@@ -225,13 +248,25 @@ export default {
     cursor: default !important;
   }
   .get-input {
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 50px;
     background-color: #ADEC6E;
     color: white;
+  }
+  .go-withdrawal {
+    display: inline;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    width: 100%;
+    height: 3vh;
+    background-color: red;
+    color: white;
+    padding: 1vw;
+    margin: 2vw;
   }
   .selected {
     border: 2px #7EE01D solid;

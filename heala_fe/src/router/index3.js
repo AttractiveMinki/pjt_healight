@@ -16,6 +16,7 @@ import WithMainHeart from "@/views/challenge/with/WithMainHeart"
 import Profile from "@/views/my_page/Profile";
 import ProfileTodoList from "@/views/my_page/ProfileTodoList";
 import ProfilePhysInfo from "@/views/my_page/ProfilePhysInfo";
+import ProfileBadgeContainer from "@/views/my_page/ProfileBadgeContainer";
 import Scrap from "@/views/my_page/showmore/Scrap";
 import ChangePassword from "@/views/my_page/showmore/ChangePassword";
 import DietRecord from "@/views/my_page/record/DietRecord";
@@ -31,6 +32,7 @@ import KiwiSpecial from "@/views/challenge/kiwi/KiwiSpecial"
 import MyMain from "@/views/challenge/my/MyMain"
 import SendToMain from "@/components/SendToMain"
 import OCRTest from "@/components/my_page/profile/OCRTest"
+import PageNotFound from "@/components/home/PageNotFound"
 
 export default [
   {
@@ -114,14 +116,19 @@ export default [
     component: WithDetailReview,
   },
   {
-    path: "/profile",
+    path: "/profile/:id",
     name: "Profile",
     component: Profile,
   },
   {
-    path: "/profiletodolist",
+    path: "/profiletodolist/:id",
     name: "ProfileTodoList",
     component: ProfileTodoList,
+  },
+  {
+    path: "/profilebadgecontainer/:id",
+    name: "ProfileBadgeContainer",
+    component: ProfileBadgeContainer,
   },
   {
     path: "/profile/physinfo",
@@ -197,5 +204,10 @@ export default [
     path: "/test/OCRTest",
     name: "OCRTest",
     component: OCRTest,
+  },
+  {
+    path: "/*",
+    name: "PageNotFound",
+    component: PageNotFound,
   },
 ]
