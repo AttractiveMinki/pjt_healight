@@ -71,7 +71,7 @@ export default {
   border: none;
   resize: none;
   width: 100%;
-  height: 18px;
+  height: 16px;
 }
 #textarea:focus {
     outline: none;

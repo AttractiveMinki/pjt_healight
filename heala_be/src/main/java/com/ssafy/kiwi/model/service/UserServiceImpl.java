@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 	//회원 탈퇴
 	@Override
 	public boolean delete(int userId) {
-		Optional<User> user = Optional.of(userRepository.getById(userId));
+		Optional<User> user = userRepository.findById(userId);
 		if (user.isPresent()) {
 			userRepository.deleteById(user.get().getId());
 			return true;
@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
 	//프로필 편집 조회하기
 	@Override
 	public Map<String, Object> getProfile(int userId) {
-		Optional<User> userOpt = Optional.of(userRepository.getUserById(userId));
+		Optional<User> userOpt = userRepository.findById(userId);
 		Map<String, Object> response = new HashMap<>();
 		if(userOpt.isPresent()) {
 			response.put("image", userOpt.get().getImage());
@@ -157,18 +157,34 @@ public class UserServiceImpl implements UserService {
 		}
 		return false;
 	}
-	
-	//팔로우
-	@Override
-	public Follow saveFollow(Follow follow) { return followRepository.save(follow); }
 
-	//팔로우 관계 찾기
+	// 팔로우
 	@Override
-	public Optional<Follow> findFirstByFollowIdAndUserId(int followId, int userId) { return followRepository.findFirstByFollowIdAndUserId(followId, userId); }
+	public boolean follow(int userId, int followId) {
+		// userId 와 followId 에 해당하는 유저가 있는지 검사
+		Optional<User> user = userRepository.findById(userId);
+		Optional<User> followUser = userRepository.findById(followId);
+		if(!user.isPresent() || !followUser.isPresent()) {
+			return false;
+		}
 
-	//언팔로우
+		if(followRepository.findByFollowIdAndUserId(followId, userId).isPresent()){
+			return false;
+		}
+
+		Follow follow = new Follow(followId, userId);
+		followRepository.save(follow);
+		return true;
+	}
+
+	// 언팔로우
 	@Override
-	public void delete(Follow follow) { followRepository.delete(follow); }
+	public boolean cancelFollow(int userId, int followId) {
+		Optional<Follow> follow = followRepository.findByFollowIdAndUserId(followId, userId);
+		if(!follow.isPresent()) return false;
+		followRepository.delete(follow.get());
+		return true;
+	}
 
 	// 유저 간단 정보(아이디, 이름, 프로필사진) 불러오기
 	@Override

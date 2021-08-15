@@ -188,20 +188,14 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public boolean getScrap(int postId, int userId) {
 		Optional<Scrap> scrap = scrapRepository.getByUserIdAndPostId(userId, postId);
-		if(scrap.isPresent()){
-			return true;
-		}
- 		return false;
+		return scrap.isPresent();
 	}
 
 	// 게시글 좋아요 여부 조회
 	@Override
 	public boolean getLike(int postId, int userId) {
 		Optional<LikeUser> likeUser = likeUserRepository.getByUserIdAndPostId(userId, postId);
-		if(likeUser.isPresent()){
-			return true;
-		}
-		return false;
+		return likeUser.isPresent();
 	}
 
 }

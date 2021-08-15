@@ -23,6 +23,8 @@ export default {
     commentCount: "/community/post/comment/count/",
     postScrap: "/community/post/scrap",
     postLike: "/community/post/like",
+    feed: "/feed/",
+    followList: "/followList",
 
     // 원석 #@
 

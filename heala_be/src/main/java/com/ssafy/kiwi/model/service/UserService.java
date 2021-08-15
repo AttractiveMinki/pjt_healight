@@ -3,7 +3,6 @@ package com.ssafy.kiwi.model.service;
 import java.io.IOException;
 import java.util.*;
 
-import com.ssafy.kiwi.model.domain.entity.Follow;
 import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.dto.ProfileIp;
 import com.ssafy.kiwi.model.dto.UserFollowOp;
@@ -34,11 +33,6 @@ public interface UserService {
 	//프로필 편집
 	Map<String, Object> getProfile(int user_id);
 	boolean updateUser(int userId, ProfileIp profileIp) throws IllegalStateException, IOException;
-	
-	//팔로우, 언팔로우
-	Follow saveFollow(Follow follow);
-	Optional<Follow> findFirstByFollowIdAndUserId(int followId, int userId);
-	void delete(Follow follow);
 
 	// 유저 간단 정보 가져오기
     UserSimpleOp getUserSimpleInfo(int userId);
@@ -55,5 +49,8 @@ public interface UserService {
 	
 	// 단어를 identity나 name에 포함하는 유저 검색
 	List<UserFollowOp> getUserListByWord(int userId, String word, int page);
-	
+
+	// 팔로우, 언팔로우
+    boolean follow(int userId, int followId);
+	boolean cancelFollow(int userId, int followId);
 }

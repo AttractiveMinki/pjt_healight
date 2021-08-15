@@ -65,27 +65,14 @@ public class FeedController {
 		return new ResponseEntity<>(feedService.getUserFeed(userId, myId, page), HttpStatus.OK);
 	}
 	
-	
-	@ApiOperation(value = "본인 팔로워 목록 보기")
-	@GetMapping("/{userId}/my/follower")
-	public Object getMyFollower(@PathVariable int userId, int page) {
-		return new ResponseEntity<>(feedService.getFollower(userId, userId, page), HttpStatus.OK);
-	}
-	
-	@ApiOperation(value = "본인 팔로잉 목록 보기")
-	@GetMapping("/{userId}/my/following")
-	public Object getMyFollowing(@PathVariable int userId, int page) {
-		return new ResponseEntity<>(feedService.getFollowing(userId, userId, page), HttpStatus.OK);
-	}
-	
-	@ApiOperation(value = "타인 팔로워 / 팔로잉 목록 보기")
-	@GetMapping("/{userId}/feed")
+	@ApiOperation(value = "팔로워 / 팔로잉 목록 보기")
+	@GetMapping("/{userId}/followList")
 	public Object getOtherFollower(@PathVariable int userId,
 			@RequestParam(value="myId", required=true) int myId,
-			@RequestParam(value="show", required=true) String follow, int page) {
+			@RequestParam(value="type", required=true) int follow, int page) {
 		if(userService.existId(myId) && userService.existId(userId)) {
-			if(follow.equals("follower")) return new ResponseEntity<>(feedService.getFollower(userId, myId, page), HttpStatus.OK);
-			else if(follow.equals("following")) return new ResponseEntity<>(feedService.getFollowing(userId, myId, page), HttpStatus.OK);			
+			if(follow == 1) return new ResponseEntity<>(feedService.getFollowing(userId, myId, page), HttpStatus.OK);
+			else if(follow == 2) return new ResponseEntity<>(feedService.getFollower(userId, myId, page), HttpStatus.OK);
 			else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

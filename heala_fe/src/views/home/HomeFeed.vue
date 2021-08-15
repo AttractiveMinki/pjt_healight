@@ -8,11 +8,13 @@
         <font-awesome-icon :icon="['far', 'bell']" class="icon" />
       </div>
     </div>
+    <div class="header-height"></div>
     <div v-for="(post, index) in postData" v-bind:key="index" class="post-wrapper">
       <post v-bind="post"></post>
     </div>
     <infinite-loading @infinite="infiniteHandler" spineer="waveDots">
       <div slot="no-more"></div>
+      <div slot="no-results"></div>
     </infinite-loading>
     <div class="rest"></div>
     <Footer></Footer>
@@ -50,13 +52,13 @@ export default {
       },
       async infiniteHandler($state) {
         const EACH_LEN = 10;
+        this.limit += 1;
 
         const response = await axios.get(SERVER.URL + SERVER.ROUTES.getFeedPostData + this.userId + `?page=${this.limit}`);
         setTimeout(() => {
           if(response.data.length) {
             this.postData = this.postData.concat(response.data);
             $state.loaded();
-            this.limit += 1;
 
             if(response.data.length < EACH_LEN) {
               $state.complete();

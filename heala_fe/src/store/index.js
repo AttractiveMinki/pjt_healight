@@ -373,34 +373,6 @@ export default new Vuex.Store({
           console.log(`게시글 좋아요 여부 조회에 실패했습니다: ${exp}`);
         });
     },
-    follow(store, { follow_id }){
-      axios
-        .post(SERVER.URL + SERVER.ROUTES.follow, {
-          user_id: localStorage.getItem("userId"),
-          follow_id,
-        })
-        .then(() => {
-          // 이 부분은 필요없나? 헷갈림
-          const index = store.state.isFollowingList.findIndex(element => element.follow_id == follow_id);
-          store.commit("setIsFollowing", { index, isFollowing: true });
-        })
-        .catch((exp) => {
-          console.log(`팔로우에 실패했습니다: ${exp}`)
-        });
-    },
-    cancelFollow(store, { followId }){
-      axios
-        .delete(SERVER.URL + SERVER.ROUTES.follow
-          + `?userId=${localStorage.getItem("userId")}&followId=${followId}`)
-        .then(() => {
-          // 이 부분은 필요없나? 헷갈림
-          const index = store.state.isFollowingList.findIndex(element => element.follow_id == followId);
-          store.commit("setIsFollowing", { index, isFollowing: false });
-        })
-        .catch((exp) => {
-          console.log(`팔로우 취소에 실패했습니다: ${exp}`)
-        });
-    },
     likePost(store, { postId }){
       axios
         .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.like, {

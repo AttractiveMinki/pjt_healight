@@ -1,8 +1,8 @@
 <template>
   <div>
-    <button class="following" v-if="isFollowing" @click="following">팔로잉</button>
+    <button class="following" v-if="isFollowing" @click="clickFollowing">팔로잉</button>
     <button class="follow" @click="follow" v-else>팔로우</button>
-    <!-- $store.state.userid 확인해보고 비어있으면 팔로우 눌렀을 때 로그인하시겠습니까? 모달 뜨도록 구현 -->
+    <!-- $store.state.userid 확인해보고 비어있으면 팔로우 눌렀을 때 로그인 화면으로 이동 -->
     <modal v-if="showModal" @yes="cancelFollow" @no="showModal = false">
         <div slot="header">팔로우 취소</div>
         <div slot="body">팔로우를 취소하시겠습니까?</div>
@@ -12,39 +12,59 @@
 
 <script>
 import Modal from "@/components/Modal";
+import axios from "axios";
+import SERVER from "@/api/drf.js";
+
 export default {
     name: 'follow',
-    props: {
-        InitialIsFollowing: {
-            required: true
-        },
-        follow_id: {
-            required: true
-        },
-    },
+    props: [ 'following', 'followId', 'isFeedFollow' ],
     data() {
         return {
-            isFollowing: this.InitialIsFollowing,
+            userId: 1,
+            isFollowing: this.following,
             showModal: false,
+            feedFollow: this.isFeedFollow,
         }
     },
+    created() {
+        this.userId = localStorage.getItem("userId");
+    },
     methods: {
-        follow() {
+        clickFollowing() {
+            if(this.feedFollow) {
+                this.showModal = true;
+            }
+            else {
+                this.cancelFollow();
+            }
+        },
+        async follow() {
             this.isFollowing = true;
-            this.$store.dispatch("follow", { follow_id: this.follow_id });
+            try{
+                await axios.post(SERVER.URL + SERVER.ROUTES.follow, {
+                    userId: this.userId,
+                    followId: this.followId,
+                });
+            }
+            catch(e) {
+                this.isFollowing = false;
+            }
         },
-        following() {
-            this.showModal = true;
-        },
-        cancelFollow() {
-            this.showModal = false;
+        async cancelFollow() {
+            if(this.feedFollow) this.showModal = false;
             this.isFollowing = false;
-            this.$store.dispatch("cancelFollow", { follow_id: this.follow_id });
+            try{
+                await axios.delete(SERVER.URL + SERVER.ROUTES.follow
+                + `?userId=${this.userId}&followId=${this.followId}`);
+            }
+            catch(e) {
+                this.isFollowing = true;
+            }
         }
     },
     components: {
-        Modal
-    },
+        Modal,
+    }
 }
 </script>
 
@@ -61,8 +81,8 @@ button:hover{
 	cursor: pointer;
 }
 button.following{
-    color:#fff;
-	background:#1a8efa;
+    color: rgb(71, 71, 71);
+	background:#ADEC6E;
 	border:none;
 	/* box-shadow: 0 4px 16px rgba(0,79,255,0.3); */
 	/* transition:0.3s; */
@@ -72,12 +92,12 @@ button.following{
 	/* transform: translate(-50%,-50%); */
 }
 button.following:active {
-    background: #107bdf;
+    background: #9cd464;
 }
 button.follow {
     background:#fff;
     color:#444444;
-    border-color: #1a8efa;
+    border-color: #ADEC6E;
 }
 button.follow:active {
     background: #95ccff;
