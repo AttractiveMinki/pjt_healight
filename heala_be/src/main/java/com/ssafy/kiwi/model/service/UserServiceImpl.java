@@ -123,15 +123,10 @@ public class UserServiceImpl implements UserService {
 		boolean badge_update = false;
 		User user = profileIp.getUser();
 		List<UserBadge> badges = profileIp.getBadges();
-		MultipartFile image = profileIp.getImage();
 
 		//프로필 사진 변경
-		//null exception 나니까 프론트랑 어떻게 처리할지 상의하기
-		if(!image.isEmpty()) {
-			String fileName = image.getOriginalFilename();
-			Path path = Paths.get("../../../../../../../../heala_fe/src/assets/image/profile/" + image.getOriginalFilename());
-			image.transferTo(path);
-			updateUser.setImage(fileName);
+		if(StringUtils.hasLength(user.getImage())) {
+			updateUser.setImage(user.getImage());
 			user_update = true;
 		}
 		//프로필 사진 외 정보 변경
