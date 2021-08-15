@@ -8,13 +8,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.kiwi.model.domain.entity.Badge;
+import com.ssafy.kiwi.model.domain.entity.Hashtag;
 import com.ssafy.kiwi.model.domain.entity.Post;
+import com.ssafy.kiwi.model.domain.entity.PostHashtag;
 import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.entity.UserBadge;
 import com.ssafy.kiwi.model.domain.repository.FeedRepository;
 import com.ssafy.kiwi.model.domain.repository.FollowRepository;
+import com.ssafy.kiwi.model.domain.repository.HashtagRepository;
+import com.ssafy.kiwi.model.domain.repository.PostHashtagRepository;
 import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
+import com.ssafy.kiwi.model.dto.PostIp;
 import com.ssafy.kiwi.model.dto.PostSimpleOp;
 import com.ssafy.kiwi.model.dto.UserFollowOp;
 
@@ -28,11 +33,35 @@ public class FeedServiceImpl implements FeedService {
 	final private FollowRepository followRepository;
 	final private UserRepository userRepository;
 	final private UserBadgeRepository userBadgeRepository;
+	final private HashtagRepository hashtagRepository;
+	final private PostHashtagRepository postHashtagRepository;
 	
 	// 글 작성
 	@Override
-	public void post(Post post) {
-		feedRepository.save(post);
+	public void post(PostIp postIp) {
+		int postId = feedRepository.save(postIp.getPost()).getId();
+
+		// hashtag가 있는 경우 hashtag 테이블에 insert
+		if (postIp.getHashtag() != null) {
+			String words = postIp.getHashtag().getWord();
+			StringTokenizer st = new StringTokenizer(words, " ");
+
+			int hashtagId;
+			while (st.hasMoreTokens()) {
+				String word = st.nextToken().replace("#", "");
+				Optional<Hashtag> checkHashtag = hashtagRepository.getHashtagByWord(word);
+				if (!checkHashtag.isPresent()) {
+					Hashtag hashtag = new Hashtag(word);
+					hashtagId = hashtagRepository.save(hashtag).getId();
+				} else {
+					hashtagId = checkHashtag.get().getId();
+				}
+
+				// post_hashtag 테이블에 각 id 값 insert
+				PostHashtag postHashtag = PostHashtag.builder().postId(postId).hashtagId(hashtagId).build();
+				postHashtagRepository.save(postHashtag);
+			}
+		}
 	}
 
 	// 글 삭제

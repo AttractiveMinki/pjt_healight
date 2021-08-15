@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ssafy.kiwi.model.domain.entity.Post;
+import com.ssafy.kiwi.model.dto.PostIp;
 import com.ssafy.kiwi.model.service.FeedService;
 import com.ssafy.kiwi.model.service.UserService;
 
@@ -24,8 +24,8 @@ public class FeedController {
 
 	@ApiOperation(value = "글 작성하기")
 	@PostMapping("/post")
-	public Object post(@RequestBody Post post) {
-		feedService.post(post);
+	public Object post(@RequestBody PostIp postIp) {
+		feedService.post(postIp);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.ssafy.kiwi.model.domain.entity.Post;
+import com.ssafy.kiwi.model.dto.PostIp;
 import com.ssafy.kiwi.model.dto.UserFollowOp;
 
 public interface FeedService {
 
 	// 글 작성
-	public void post(Post post);
+	public void post(PostIp postIp);
 	// 글 삭제
 	public boolean delete(int postId, int userId);
 	
