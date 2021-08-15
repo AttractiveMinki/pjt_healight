@@ -3,6 +3,7 @@ package com.ssafy.kiwi.controller;
 import java.util.*;
 
 import com.ssafy.kiwi.model.dto.ProfileIp;
+import com.ssafy.kiwi.model.dto.UserFollowOp;
 import com.ssafy.kiwi.model.dto.UserSimpleOp;
 import com.ssafy.kiwi.model.dto.CommentIdSetIp;
 import com.ssafy.kiwi.model.dto.UserIdSetIp;
@@ -173,6 +174,14 @@ public class UserController {
 	public Object getAllCommentLikeUserByUserId(@RequestBody CommentIdSetIp commentIdSetIp){
 		List<Integer> likeCommentList = userService.getAllLikeCommentByUserId(commentIdSetIp.getCommentIdSet(), commentIdSetIp.getUserId());
 		return new ResponseEntity<>(likeCommentList, HttpStatus.OK);
+	}
+	
+	
+	@ApiOperation(value = "유저 검색")
+	@GetMapping("/search/{userId}/{word}")
+	public Object getUserListByWord(@PathVariable int userId, @PathVariable String word, int page){
+		List<UserFollowOp> searchUserList = userService.getUserListByWord(userId, word, page);
+		return new ResponseEntity<>(searchUserList, HttpStatus.OK);
 	}
 	
 }

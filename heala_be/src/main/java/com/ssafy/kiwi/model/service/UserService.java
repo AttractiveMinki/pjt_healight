@@ -6,6 +6,7 @@ import java.util.*;
 import com.ssafy.kiwi.model.domain.entity.Follow;
 import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.dto.ProfileIp;
+import com.ssafy.kiwi.model.dto.UserFollowOp;
 import com.ssafy.kiwi.model.dto.UserSimpleOp;
 
 public interface UserService {
@@ -51,5 +52,8 @@ public interface UserService {
 	
 	// id로 유저 정보 조회 (true:존재, false:없는 id)
 	boolean existId(int id);
+	
+	// 단어를 identity나 name에 포함하는 유저 검색
+	List<UserFollowOp> getUserListByWord(int userId, String word, int page);
 	
 }

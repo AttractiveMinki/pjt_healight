@@ -7,6 +7,9 @@ import java.util.*;
 
 import com.ssafy.kiwi.model.domain.entity.*;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +20,7 @@ import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
 
 import com.ssafy.kiwi.model.dto.ProfileIp;
+import com.ssafy.kiwi.model.dto.UserFollowOp;
 import com.ssafy.kiwi.model.dto.UserSimpleOp;
 
 import lombok.RequiredArgsConstructor;
@@ -188,11 +192,24 @@ public class UserServiceImpl implements UserService {
 		return userRepository.getUserExpByUserId(userId);
 	}
 
-	//id로 유저 존재여부 확인
+	// id로 유저 존재여부 확인
 	@Override
 	public boolean existId(int id) {
 		if(userRepository.countById(id)==1) return true;
 		else return false;
 	}
+
+	// 단어를 identity나 name에 포함하는 유저 검색
+	@Override
+	public List<UserFollowOp> getUserListByWord(int userId, String word, int page) {
+		Page<UserFollowOp> userListPage = userRepository.getUserListByWord(userId, word, PageRequest.of(page, 20, Sort.by("id").descending())); // word 포함하는 유저 리스트
+		List<UserFollowOp> userList = userListPage.getContent();
+		for (UserFollowOp user : userList) { // 팔로잉 여부 확인
+			int otherUserId = user.getId();
+			if (followRepository.countByFollowIdAndUserId(otherUserId, userId)==1) user.setFollow(true);
+		}
+		return userList;
+	}
+	
 
 }
