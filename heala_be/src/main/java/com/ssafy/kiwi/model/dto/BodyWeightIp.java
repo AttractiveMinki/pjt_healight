@@ -1,7 +1,5 @@
 package com.ssafy.kiwi.model.dto;
 
-import java.sql.Date;
-
 import lombok.*;
 
 @AllArgsConstructor
@@ -9,11 +7,8 @@ import lombok.*;
 @Getter
 @Setter
 @Data
-public class BodyInfoIp {
-	//신체 정보 등록
+public class BodyWeightIp {
+	//오늘의 체중 기록
 	private int userId;
-	private boolean gender;
-	private Date birth;
-	private double height;
 	private double weight;
 }

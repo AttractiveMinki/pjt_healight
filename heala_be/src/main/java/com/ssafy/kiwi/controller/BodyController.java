@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.kiwi.model.dto.BodyInfoIp;
+import com.ssafy.kiwi.model.dto.BodyWeightIp;
 import com.ssafy.kiwi.model.service.BodyService;
 
 import io.swagger.annotations.ApiOperation;
@@ -40,4 +41,12 @@ public class BodyController {
 		return new ResponseEntity<>(bodyService.calenderBody(userId, month), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "오늘의 체중 기록하기")
+	@PostMapping("/calender")
+	public Object uploadBody (@RequestBody BodyWeightIp bodyWeightIp) {
+		if(bodyService.uploadBody(bodyWeightIp)) {
+			return new ResponseEntity<>(HttpStatus.OK);			
+		}
+		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
 }

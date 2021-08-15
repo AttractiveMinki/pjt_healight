@@ -12,6 +12,7 @@ import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.repository.BodyInfoRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
 import com.ssafy.kiwi.model.dto.BodyInfoIp;
+import com.ssafy.kiwi.model.dto.BodyWeightIp;
 
 import lombok.RequiredArgsConstructor;
 
@@ -76,6 +77,23 @@ public class BodyServiceImpl implements BodyService {
 			dateSet.add(day);
 		}
 		return dateSet;
+	}
+
+	
+	//오늘의 체중 기록
+	@Override
+	public boolean uploadBody(BodyWeightIp bodyWeightIp) {
+		int userId = bodyWeightIp.getUserId();
+		BodyInfo bodyInfo = new BodyInfo();
+		//최신 height 값 가져오기 : 입력하지 않은 경우 기본값 170
+		BodyInfo recentInfo = bodyInfoRepository.getRecentByUserId(userId);
+		if(recentInfo == null) bodyInfo.setHeight(170);
+		else bodyInfo.setHeight(recentInfo.getHeight());
+		//weight, userId 저장
+		bodyInfo.setWeight(bodyWeightIp.getWeight());
+		bodyInfo.setUserId(userId);
+		bodyInfoRepository.save(bodyInfo);
+		return true;
 	}
 
 }
