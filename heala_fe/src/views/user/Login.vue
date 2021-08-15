@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      heala-logo
+      <img class="logo-image" src="@/assets/image/kiwi_logo.png" />
     </div>
     <h1>로그인</h1>
     <el-row>
