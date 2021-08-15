@@ -13,5 +13,4 @@ import lombok.*;
 public class ProfileIp {
 	private User user;
 	private List<UserBadge> badges;
-	private MultipartFile image;
 }
