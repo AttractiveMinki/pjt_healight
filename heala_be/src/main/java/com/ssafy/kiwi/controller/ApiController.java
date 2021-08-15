@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +23,15 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class ApiController {
 	
+	@Value("${diet.api.key}")
+	private String apiKey;
+
 	@ApiOperation(value = "식품 영양 성분 정보 보기")
 	@GetMapping("/data")
 	public String callApi(@RequestParam(value="desc_kor", required = true) String desc_kor) throws IOException {
 		
 		String urlStr = "http://apis.data.go.kr/1470000/FoodNtrIrdntInfoService/getFoodNtrItdntList?"
-				+ "serviceKey=" + ""
+				+ "serviceKey=" + apiKey
 				+ "&desc_kor=" + URLEncoder.encode(desc_kor, "UTF-8")
 				+ "&type=json";
 		
