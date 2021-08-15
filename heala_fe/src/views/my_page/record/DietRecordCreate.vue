@@ -16,8 +16,11 @@
       <img v-if="image == ''" src="@/assets/img/profile/user.png" alt="profile_image" width="92" height="92" style="border-radius: 50%;">
       <img v-else :src="image" alt="profile_image" width="92" height="92"><br>
       <label for="image" class="btn-file">
-        <span style="font-size: 13px; font-weight: bold; color: #ADEC6E;">영양성분사진 등록</span>
         <input name="image" type="file" @change="selectFile" id="change_image"/>
+        <span style="font-size: 13px; font-weight: bold; color: #ADEC6E;">영양성분사진 등록
+          
+        </span>
+        
       </label>
     </div>
     <div>
@@ -44,7 +47,7 @@
       <el-col :span="24"><div class="introduce-text-align-start">나트륨(mg)</div>
         <input type="number" class='get-input bg-gray' id="foods-sodium" v-model="foods.sodium" maxlength="10" placeholder="단위: mg">
       </el-col>
-    <button class="bg-green get-input join-button-setting" @click="addFoods(foods)">추가하기</button>
+    <button id="addFoods" class="bg-green get-input join-button-setting" @click="addFoods(foods)">추가하기</button>
     </el-row>
   </div>
 </template>
@@ -137,6 +140,7 @@ export default {
         // console.log(res)
         this.data = res.data
         this.findNutrient(this.data)
+        scrollBy(0, document.body.scrollHeight) // 맨 밑으로 내려줌
       })
       .catch((err) => {
         console.log(err)

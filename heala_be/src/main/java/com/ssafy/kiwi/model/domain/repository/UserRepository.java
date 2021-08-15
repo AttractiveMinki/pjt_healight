@@ -38,4 +38,8 @@ public interface UserRepository extends JpaRepository<User,Integer>{
 
     //id로 유저 존재여부 확인 (1:존재, 0:미존재)
 	int countById(int id);
+
+	//성별 가져오기
+	@Query(value = "SELECT u.gender FROM User u WHERE u.id = :userId")
+	Boolean getGenderByUserId(int userId);
 }

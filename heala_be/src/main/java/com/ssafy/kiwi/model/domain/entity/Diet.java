@@ -15,11 +15,15 @@ import lombok.*;
 @Entity
 @Builder
 @Getter
+@Setter
 public class Diet {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	@Column(name = "food_name")
+	private String foodName;
 	
 	private double calory;
 	private double carbohydrate;
