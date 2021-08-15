@@ -5,7 +5,7 @@
     <h2>검색해서 입력하기</h2>
 
     <!-- <input type="text" class='get-input bg-gray' id="foodName" v-model="data.foodName" > -->
-    <input type="text" id="foodName" v-model="foodName" style="margin-right: 2vw">
+    <input type="text" id="foodNameSearch" v-model="foodNameSearch" style="margin-right: 2vw">
     <el-button @click="getFoodInfo()">음식 등록</el-button>
     <hr>
     <h2>영양정보 사진으로 입력하기</h2>
@@ -30,7 +30,7 @@
     <h2>직접 입력하기</h2>
     <el-row>
       <el-col :span="24"><div class="introduce-text-align-start">음식 이름</div>
-        <input type="text" class='get-input bg-gray' id="foods-name" v-model="foods.name" maxlength="20" placeholder="음식 이름을 입력하세요.">
+        <input type="text" class='get-input bg-gray' id="foods-name" v-model="foods.foodName" maxlength="20" placeholder="음식 이름을 입력하세요.">
       </el-col>
       <el-col :span="24"><div class="introduce-text-align-start">칼로리(kcal)</div>
         <input type="number" class='get-input bg-gray' id="foods-calory" v-model="foods.calory" maxlength="10" placeholder="단위: kcal">
@@ -65,14 +65,15 @@ export default {
   data: function () {
     return {
       foods: {
-        name: "",
+        foodName: "",
         calory: "",
         carbohydrate: "", // 탄수화물
         protein: "",
         fat: "",
         sodium: "", // 나트륨
+        userId: "",
       },
-      foodName: "",
+      foodNameSearch: "",
 
       image: "",
       data: [],
@@ -90,10 +91,10 @@ export default {
       // let proxy_url = 'https://cors-anywhere.herokuapp.com'
       let url = 'http://apis.data.go.kr/1470000/FoodNtrIrdntInfoService/getFoodNtrItdntList';
       let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.VUE_APP_APISDATA_API_KEY; /* Service Key*/
-      queryParams += '&' + encodeURIComponent('desc_kor') + '=' + this.foodName; /* */
+      queryParams += '&' + encodeURIComponent('desc_kor') + '=' + this.foodNameSearch; /* */
       console.log('queryParams', url + queryParams)
       // axios.get(`${proxy_url}/${url}?ServiceKey=${process.env.VUE_APP_APISDATA_API_KEY}&desc_kor=${this.foodName}`)
-      axios.get(`${url}?ServiceKey=${process.env.VUE_APP_APISDATA_API_KEY}&desc_kor=${this.foodName}`)
+      axios.get(`${url}?ServiceKey=${process.env.VUE_APP_APISDATA_API_KEY}&desc_kor=${this.foodNameSearch}`)
         .then(res => {
           console.log(res)
         })
@@ -102,24 +103,10 @@ export default {
           console.error(err.response.data)
         })
     },
-    getFoodInfo2() {
-      let request = require('request');
-
-      let url = 'http://apis.data.go.kr/1470000/FoodNtrIrdntInfoService/getFoodNtrItdntList';
-      let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.VUE_APP_APISDATA_API_KEY; /* Service Key*/
-      queryParams += '&' + encodeURIComponent('desc_kor') + '=' + this.foodName; /* */
-      console.log('queryParams', url + queryParams)
-      request({
-          url: url + queryParams,
-          method: 'GET'
-      }, function (error, response, body) {
-          console.log('Status', response.statusCode);
-          console.log('Headers', JSON.stringify(response.headers));
-          console.log('Reponse received', body);
-      });
-    },
     addFoods(foods) {
-      axios.post(`${SERVER.URL}${SERVER.ROUTES.registerfoods}`, foods)
+      console.log(foods)
+      console.log(`${SERVER.URL}${SERVER.ROUTES.dietupload}`)
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.dietupload}`, foods)
         .then (() => {
           console.log('추가 완료')
         })
@@ -170,6 +157,21 @@ export default {
       this.foods['fat'] = this.set_number[3]
       this.foods['sodium'] = this.set_number[4]
     },
+  },
+  created () {
+    this.foods.userId = localStorage.getItem('userId')
+
+    // 현재 보고 있는 프로필 주인의 id 주소창에서 가져오기
+    this.userId = this.$route.path.split('/')[3]
+
+    // 내 아이디 localStorage에서 가져오기
+    this.myId = localStorage.getItem('userId')
+
+    // 다른 사람꺼 보려 하면 추방
+    if (this.userId != this.myId) {
+      alert('다른 사람의 계정입니다. 열람하실 수 없습니다.')
+      this.$router.go(-1)
+    }
   },
 }
 </script>
