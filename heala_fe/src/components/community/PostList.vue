@@ -1,6 +1,5 @@
 <template>
   <div class="article-bottom-padding">
-    {{ infiniteId }}
 		<!-- <el-col :span="12" class="text-align-start padding-1">
 			<span>BEST 게시글</span>
 		</el-col> -->
