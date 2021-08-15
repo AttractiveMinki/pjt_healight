@@ -94,7 +94,7 @@
       <el-col :span="1"></el-col>
     </el-row><hr>
     <!-- 내용 -->
-    <el-input type="textarea" rows="15" placeholder="글내용을 작성해주세요" v-model="contents"></el-input><hr>
+    <textarea class="textarea" rows="15" placeholder="글 내용을 작성해주세요" v-model="contents"></textarea><hr>
     <!-- 해시태그 -->
     <el-row type="flex" align="middle">
       <el-col :span="6" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">해시태그</el-col>
@@ -223,10 +223,10 @@ export default {
     position: fixed;
     bottom: 0rem;
   }
+
   hr {
     border: 1px solid rgba(240,240,240,1);
   }
-
   .input-file-button{
     width: 40px;
     height: 40px;
@@ -243,5 +243,11 @@ export default {
     width: 50px;
     height: 50px;
     margin-right: 10px; border-radius: 5px; cursor: pointer;
+  }
+  .textarea {
+    border: none;
+    resize: none;
+    width: 100%;
+    height: 15vh;
   }
 </style>

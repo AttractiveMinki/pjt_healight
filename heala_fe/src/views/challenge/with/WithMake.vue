@@ -57,7 +57,7 @@
         <span style="font-weight: bold">인증 방법</span>
       </el-col>
      <el-col :span="18">
-        <textarea style="width:90%; height:50px" v-model="data.certify_info" placeholder="예) 오늘 날짜와 운동 기구 혹은 운동 결과가 보이는 인증샷 찍기"></textarea>
+        <textarea style="width:90%; height:50px; resize: none" v-model="data.certify_info" placeholder="예) 오늘 날짜와 운동 기구 혹은 운동 결과가 보이는 인증샷 찍기"></textarea>
       </el-col>
     </el-row>
     <div id="square" class="margin-line"></div>
@@ -66,7 +66,7 @@
         <span style="font-weight: bold; font-size: 15px">챌린지 소개</span>
       </el-col>
      <el-col :span="18" type="flex">
-        <textarea style="width:90%; height:150px" v-model="data.introduction" placeholder="예) 매일 꾸준한 운동으로 기초 체력을 기릅시다!"></textarea>
+        <textarea style="width:90%; height:150px; resize: none" v-model="data.introduction" placeholder="예) 매일 꾸준한 운동으로 기초 체력을 기릅시다!"></textarea>
       </el-col>
     </el-row>  
     <div id="square" class="margin-line"></div>

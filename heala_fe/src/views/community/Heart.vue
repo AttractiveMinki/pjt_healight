@@ -76,6 +76,7 @@
           </el-col>
         <infinite-loading @infinite="infiniteHandler" spineer="waveDots">
           <div slot="no-more"></div>
+          <div slot="no-results"></div>
         </infinite-loading>
         </el-col>
       </el-col>
