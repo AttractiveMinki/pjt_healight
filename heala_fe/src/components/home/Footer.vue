@@ -1,22 +1,22 @@
 <template>
   <div id="footer" style="display: grid; align-items: center">
     <el-row>
-      <router-link :to="{ name: 'HomeFeed' }" class="text-decoration-none" @click.native="changeRouter(0)" :class="{selected: this.$store.state.selectedRouter == 0}">
+      <router-link :to="{ name: 'HomeFeed' }" class="text-decoration-none color-black" @click.native="changeRouter(0)" :class="{selected: selectedRouter == 0}">
         <el-col :span="5">
           <font-awesome-icon icon="home"/>
         </el-col>
       </router-link>
-      <router-link :to="{ name: 'CommunityMain' }" class="text-decoration-none" @click.native="changeRouter(1)" :class="{selected: this.$store.state.selectedRouter == 1}">
+      <router-link :to="{ name: 'CommunityMain' }" class="text-decoration-none color-black" @click.native="changeRouter(1)" :class="{selected:selectedRouter == 1}">
         <el-col :span="5">
           <font-awesome-icon icon="user-friends"/>
         </el-col>
       </router-link>
-      <router-link :to="{ name: 'writing' }" class="text-decoration-none" @click.native="changeRouter(2)" :class="{selected: this.$store.state.selectedRouter == 2}">
+      <router-link :to="{ name: 'writing' }" class="text-decoration-none color-black" @click.native="changeRouter(2)" :class="{selected: selectedRouter == 2}">
         <el-col :span="4">
           <font-awesome-icon :icon="['far', 'plus-square']" />
         </el-col>
       </router-link>
-      <router-link :to="{ name: 'WithMain' }" class="text-decoration-none" :class="{selected: this.$store.state.selectedRouter == 3}" @click.native="changeRouter(3)" >
+      <router-link :to="{ name: 'WithMain' }" class="text-decoration-none color-black" @click.native="changeRouter(3)" :class="{selected: selectedRouter == 3}" >
         <el-col :span="5">
           <font-awesome-icon :icon="['fas', 'running']" />
         </el-col>
@@ -81,9 +81,9 @@ export default {
     height: 3rem;
   }
   .selected {
-    color: #ADEC6E;
+    color: #ADEC6E !important;
   }
-  .normal {
+  .color-black {
     color: black;
   }
 </style>
