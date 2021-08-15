@@ -86,7 +86,8 @@ public class UserController {
 			Map<String, Object> response = new HashMap<String, Object>();
 			response.put("id", userOpt.get().getId());
 			response.put("name", userOpt.get().getName());
-			return new ResponseEntity<>(userOpt.get().getId(), HttpStatus.OK);
+			response.put("image", userOpt.get().getImage());
+			return new ResponseEntity<>(response, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
