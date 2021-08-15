@@ -10,6 +10,6 @@ import lombok.*;
 @Setter
 @Data
 public class BodyRecordOp {
-	private int thisWeek;
+	private int num;
 	private List<Object> bodyRecord;
 }

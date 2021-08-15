@@ -101,12 +101,22 @@ public class BodyServiceImpl implements BodyService {
 	@Override
 	public Object recordBody(int userId, String type) {
 		BodyRecordOp bodyRecordOp = new BodyRecordOp();
+		//주별 기록
 		if(type.equals("week")) {
 			//이번주 몇 주차인지
 			int today = bodyInfoRepository.getWeekNum();
-			bodyRecordOp.setThisWeek(today);
+			bodyRecordOp.setNum(today);
 			//지난 23주 주 번호와 평균 리스트
 			List<Object> bodyRecord = bodyInfoRepository.getWeeklyRecordByUserId(userId);
+			bodyRecordOp.setBodyRecord(bodyRecord);
+			return bodyRecordOp;
+		}
+		//월별 기록
+		else if(type.equals("month")) {
+			int today = bodyInfoRepository.getMonthNum();
+			bodyRecordOp.setNum(today);
+			//지난 12개월 달 번호와 평균 리스트
+			List<Object> bodyRecord = bodyInfoRepository.getMonthlyRecordByUserId(userId);
 			bodyRecordOp.setBodyRecord(bodyRecord);
 			return bodyRecordOp;
 		}
