@@ -127,12 +127,13 @@ export default {
       // let file = "image[" + 0 + "]"
       formData.append("file", imgFile)
       // console.log(imgFile)
-      // for (var key of formData.keys()) {
-      //   console.log(key)
-      // }
-      // for (var value of formData.values()) {
-      //   console.log(value)
-      // }
+      for (var key of formData.keys()) {
+        console.log(key)
+      }
+      for (var value of formData.values()) {
+        console.log(value)
+      }
+      console.log(imgFile)
       console.log(formData)
       console.log(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`)
       axios.post(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`, formData, { headers: {'Content-Type' : 'multipart/form-data'}})
