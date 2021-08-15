@@ -74,6 +74,9 @@
               </div>
             </div>
           </el-col>
+        <infinite-loading @infinite="infiniteHandler" spineer="waveDots">
+          <div slot="no-more"></div>
+        </infinite-loading>
         </el-col>
       </el-col>
     </el-row> 
@@ -82,6 +85,7 @@
 </template>
 
 <script>
+import InfiniteLoading from "vue-infinite-loading";
 import Footer from "@/components/home/Footer"
 import CommunityCategoryBar from "@/components/community/CommunityCategoryBar"
 import SERVER from "@/api/drf.js"
@@ -93,31 +97,57 @@ export default {
   data: function () {
     return {
       communityArticles: [],
+      limit: 0,
     }
   },
   components: {
     Footer,
     CommunityCategoryBar,
+    InfiniteLoading,
   },
   methods: {
-    getCommunityInfo: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.community}`)
-        .then ((res) => {
-          this.communityArticles = res.data
-        })
-        .catch ((err) => {
-          console.log(err)
-        })
+    async getCommunityDietInfo() {
+      try {
+        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}category?category=${1}&page=${this.limit}&subCategory=${this.$store.state.selectedSubCategory}`)
+        this.communityArticles = response.data
+      } catch(err) {
+        console.log(err)
+      }
+    },
+    async infiniteHandler($state) {
+      const EACH_LEN = 10;
+      this.limit += 1
+      const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}category?category=${1}&page=${this.limit}&subCategory=${this.$store.state.selectedSubCategory}`)
+      setTimeout(() => {
+        if (response.data.length) {
+          this.communityArticles = this.communityArticles.concat(response.data)
+          $state.loaded() // 데이터 로딩
+
+          if (response.data.length < EACH_LEN) {
+            $state.complete()
+          }
+        }
+        else {
+          $state.complete()
+        }
+      }, 300)
     },
   },
   mounted: function () {
-    this.getCommunityInfo()
+    this.getCommunityDietInfo()
     this.$store.state.selectedSubCategory = 0
   },
   computed: {
     ...mapState([
       "selectedSubCategory",
     ])
+  },
+  watch: {
+    selectedSubCategory: function() {
+      this.limit = 0
+      this.getCommunityDietInfo()
+      this.infiniteHandler()
+    },
   },
 
 }

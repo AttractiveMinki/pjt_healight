@@ -72,15 +72,20 @@
               </el-col>
             </router-link>
           </el-col>
+        <infinite-loading @infinite="infiniteHandler" spineer="waveDots">
+          <div slot="no-more"></div>
+        </infinite-loading>
         </el-col>
       </el-col>
+
     </el-row> 
-    
+
     <Footer />   
   </div>
 </template>
 
 <script>
+import InfiniteLoading from "vue-infinite-loading";
 import Footer from "@/components/home/Footer"
 import SERVER from "@/api/drf.js"
 import axios from 'axios'
@@ -91,46 +96,46 @@ export default {
     return {
       communityArticles: [],
       selectedSubCategory: 0,
+      limit: 0,
     }
   },
   components: {
     Footer,
+    InfiniteLoading,
   },
   methods: {
-    // getUserInfo: function () {
-    //  this.userId = localStorage.getItem('userId')
-    //  this.userIdentity = localStorage.getItem('userIdentity')
-    // },
-    getCommunityInfo: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.community}`)
-        .then ((res) => {
-          this.communityArticles = res.data
-        })
-        .catch ((err) => {
-          console.log(err)
-        })
+    async getCommunityInfo() {
+      try {
+        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}?page=${this.limit}`)
+        this.communityArticles = response.data
+      } catch(err) {
+        console.log(err)
+      }
     },
+    async infiniteHandler($state) {
+      const EACH_LEN = 10;
+      // 말 너무 안들어서 초기에 20개 들어온 뒤, 10개씩 들어오도록 변경
+      this.limit += 1
+      const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}?page=${this.limit}`)
+      setTimeout(() => {
+        if (response.data.length) {
+          this.communityArticles = this.communityArticles.concat(response.data)
+          $state.loaded() // 데이터 로딩
 
-    // async await 연습..
-
-    // axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}` + localStorage.getItem('userId'))
-    // getCommunityInfo: function () {
-    //   let url = `${SERVER.URL}${SERVER.ROUTES.community}`
-    //   return fetch(url).then(function(response) {
-    //     return response
-    //   });
-    // },
-    // getInfo: async function () {
-    //   let result = await this.getCommunityInfo()
-    //   console.log(result)
-    // },
-
+          if (response.data.length < EACH_LEN) {
+            $state.complete()
+          }
+        }
+        else {
+          $state.complete()
+        }
+      }, 300)
+    },
   },
-  mounted: function () {
+  created () {
     this.getCommunityInfo()
-    // this.getUserInfo()
-    // this.getInfo()
     this.$store.state.selectedSubCategory = 0
+    this.$store.state.selectedRouter = 1
   },
   // computed: {
   //   ...mapState([
