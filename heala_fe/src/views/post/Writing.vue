@@ -101,7 +101,7 @@
       <el-col :span="17" style="padding-left: 10px;"><el-input placeholder="해시태그를 작성해주세요" v-model="hashtag" clearable></el-input></el-col>
       <el-col :span="1"></el-col>
     </el-row>
-    <div id="submit" @click="submit" style="margin-top: 20px; background-color: #ADEC6E; color: white; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center; cursor: pointer;">저장</div>
+    <div id="submit" @click="submit()" style="margin-top: 20px; background-color: #ADEC6E; color: white; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center; cursor: pointer;">저장</div>
   </div>
 </template>
 
@@ -128,7 +128,7 @@ export default {
         console.log(document.getElementsByClassName("image")[i]);
         var imgFile = document.getElementsByClassName("image")[i];
         var key = "image[" + i + "]";
-        formData.append(key, imgFile.files[0]);
+        formData.append(key, imgFile);
       }
       formData.append("title", this.title);
       formData.append("contents", this.contents);
@@ -138,6 +138,7 @@ export default {
       } else {
         formData.append("anonymous", true);
       }
+      console.log(formData, 'formData')
       // 서버로 FormData 전송
       axios.post(`${SERVER.URL}${SERVER.ROUTES.feedPost}`, formData, { headers: {'Content-Type' : 'multipart/form-data'}})
         .then(response => {
