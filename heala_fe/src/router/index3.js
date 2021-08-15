@@ -146,22 +146,22 @@ export default [
     component: ChangePassword,
   },
   {
-    path: "/profile/dietrecord",
+    path: "/profile/dietrecord/:id",
     name: "DietRecord",
     component: DietRecord,
   },
   {
-    path: "/profile/dietrecorddetail",
+    path: "/profile/dietrecorddetail/:id",
     name: "DietRecordDetail",
     component: DietRecordDetail,
   },
   {
-    path: "/profile/dietrecordcreate",
+    path: "/profile/dietrecordcreate/:id",
     name: "DietRecordCreate",
     component: DietRecordCreate,
   },
   {
-    path: "/profile/dietrecordcalender",
+    path: "/profile/dietrecordcalender/:id",
     name: "DietRecordCalender",
     component: DietRecordCalender,
   },

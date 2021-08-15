@@ -27,8 +27,8 @@
             <span v-if="isToday(currentYear, currentMonth, day)" class="rounded">
               {{ day }}
               <!-- 운동한 날이라면 표시  -->
-              <span v-if="index2 % 7 == 3" style="margin: 0px; width: 2px; height: 2px">
-                ., 
+              <span v-if="day in recordDates" style="margin: 0px; width: 2px; height: 2px">
+                ., d
               </span>
               <span v-else style="margin: 2px">
               </span>
@@ -61,6 +61,9 @@
 </template>
 
 <script>
+import axios from 'axios';
+import SERVER from "@/api/drf.js"
+
 export default {
   name: 'DietCalendar',
   data () {
@@ -74,11 +77,12 @@ export default {
       currentMonthStartWeekIndex: null,
       currentCalendarMatrix: [],
       endOfDay: null,
-      memoDatas: [],
+      recordDates: [],
     }
   },
   mounted(){
-    this.init();
+    this.init()
+    this.getMonthDietRecord()
   },
   methods: {
     init:function(){
@@ -193,10 +197,19 @@ export default {
       let date = new Date();
       return year == date.getFullYear() && month == date.getMonth()+1 && day == date.getDate(); 
     },
-    
-  },
-  created() {
 
+    getMonthDietRecord: function () {
+      let Month = ('0000' + this.currentYear).slice(-4) + '-' +  ('00' + this.currentMonth).slice(-2)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getMonthDietRecord}?userId=${localStorage.getItem('userId')}&month=${Month}`)
+        .then((res) => {
+          this.recordDates = res.data
+          console.log(this.recordDates)
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    },
+    
   },
 }
 </script>
