@@ -55,4 +55,6 @@ public interface CommunityService {
 	// 게시글 좋아요 여부 조회
 	boolean getLike(int postId, int userId);
 
+	// 전체 글 중 단어를 제목 또는 내용에 포함하는 글 목록 반환하기
+	List<Post> getAllPostListByWord(String word);
 }
