@@ -21,13 +21,11 @@
           <font-awesome-icon :icon="['fas', 'running']" />
         </el-col>
       </router-link>
-      <span @click="changeRouter(4)">
-        <router-link :to="{ name: 'Profile', params: { id: userId } }" :v-model="selectedRouter" :class="{selected: this.$store.state.selectedRouter == 4}" class="text-decoration-none color-black" >
-          <el-col :span="5">
-            <font-awesome-icon icon="user" />
-          </el-col>
-        </router-link>
-      </span>
+      <router-link :to="{ name: 'Profile', params: { id: userId } }" @click="changeRouter(4)" :class="{selected: selectedRouter == 4}" class="text-decoration-none color-black" >
+        <el-col :span="5">
+          <font-awesome-icon icon="user" />
+        </el-col>
+      </router-link>
     </el-row>
   </div>
 </template>
