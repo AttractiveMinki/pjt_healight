@@ -49,5 +49,6 @@ export default {
     joinWithChallenge: "/challenge/with/join",
     withdrawal: "/user",
     OCR: "https://dapi.kakao.com/v2/vision/text/ocr",
+    uploadImage: "/image",
   }
 }

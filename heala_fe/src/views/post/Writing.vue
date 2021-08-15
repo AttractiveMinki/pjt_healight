@@ -101,7 +101,7 @@
       <el-col :span="17" style="padding-left: 10px;"><el-input placeholder="해시태그를 작성해주세요" v-model="hashtag" clearable></el-input></el-col>
       <el-col :span="1"></el-col>
     </el-row>
-    <div id="submit" @click="submit()" style="margin-top: 20px; background-color: #ADEC6E; color: white; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center; cursor: pointer;">저장</div>
+    <div id="submit" @click="uploadImage()" style="margin-top: 20px; background-color: #ADEC6E; color: white; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center; cursor: pointer;">저장</div>
   </div>
 </template>
 
@@ -121,6 +121,32 @@ export default {
       else if(this.imgCnt === 4) this.imgUrl.fifth = URL.createObjectURL(file);
       this.imgCnt++;
     },
+    uploadImage() {
+      let formData = new FormData()
+      let imgFile = document.getElementsByClassName("image")[0]
+      // let file = "image[" + 0 + "]"
+      formData.append("file", imgFile)
+      // console.log(imgFile)
+      // for (var key of formData.keys()) {
+      //   console.log(key)
+      // }
+      // for (var value of formData.values()) {
+      //   console.log(value)
+      // }
+      console.log(formData)
+      console.log(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`)
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`, formData, { headers: {'Content-Type' : 'multipart/form-data'}})
+        .then(res => {
+          console.log('통신 성공')
+          console.log(res)
+        })
+        .catch(err => {
+          console.log('통신 실패')
+          console.error(err.response.data)
+        })
+    // submit(res)
+    },
+
     submit() {
       // FormData에 전송할 데이터 저장
       var formData  = new FormData();
