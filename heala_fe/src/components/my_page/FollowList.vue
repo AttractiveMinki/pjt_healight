@@ -45,21 +45,19 @@ export default {
           const response = await axios.get(SERVER.URL + SERVER.ROUTES.feed + this.$route.params.id + SERVER.ROUTES.followList
           + `?myId=${this.userId}&type=${this.followListType}&page=${this.page}`);
           this.followList = response.data;
-          this.page = 1;
         } catch(exp) {
           console.log(exp);
         }
       },
       async infiniteHandler($state) {
         const EACH_LEN = 15;
-        if(this.page == 0) this.page = 1;
+        this.page += 1;
         try{
           const response = await axios.get(SERVER.URL + SERVER.ROUTES.feed + this.$route.params.id + SERVER.ROUTES.followList
             + `?myId=${this.userId}&type=${this.followListType}&page=${this.page}`);
           // setTimeout(() => {
           if(response.data.length) {
             this.followList = this.followList.concat(response.data);
-            this.page += 1;
             $state.loaded();
 
             if(response.data.length < EACH_LEN) {
