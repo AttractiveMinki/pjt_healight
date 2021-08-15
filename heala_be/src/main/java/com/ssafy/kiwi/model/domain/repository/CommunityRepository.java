@@ -1,5 +1,7 @@
 package com.ssafy.kiwi.model.domain.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,5 +23,6 @@ public interface CommunityRepository extends JpaRepository<Post,Integer>{
 	@Query(value = "select sum(p.likes) from Post p where p.category = :category and p.userId = :userId")
 	int getSumLikeByCategoryAndUserId(int category, int userId);
 	
-	
+	@Query(value = "select * from post p WHERE p.title LIKE %:word% OR p.content LIKE %:word% and access = :access", nativeQuery = true)
+	List<Post> getAllPostByWordAndAccess(String word, int access);
 }

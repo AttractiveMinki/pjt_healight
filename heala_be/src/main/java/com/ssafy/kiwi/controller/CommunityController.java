@@ -147,4 +147,11 @@ public class CommunityController {
 	public Object countComment(@PathVariable int postId){
 		return new ResponseEntity<>(communityService.countComment(postId), HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "커뮤니티 전체에서 글 검색")
+	@GetMapping("/search/{word}")
+	public Object getUserListByWord(@PathVariable String word){
+		List<Post> searchPostList = communityService.getAllPostListByWord(word);
+		return new ResponseEntity<>(searchPostList, HttpStatus.OK);
+	}
 }

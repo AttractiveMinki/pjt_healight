@@ -204,4 +204,11 @@ public class CommunityServiceImpl implements CommunityService {
 		return false;
 	}
 
+	// 전체 글 중 단어를 제목 또는 내용에 포함하는 글 목록 반환
+	@Override
+	public List<Post> getAllPostListByWord(String word) {
+		final int access = 0; // 전체 공개: 0
+		List<Post> searchPostList = communityRepository.getAllPostByWordAndAccess(word, access);
+		return searchPostList;
+	}
 }
