@@ -179,8 +179,8 @@ public class UserController {
 	
 	@ApiOperation(value = "유저 검색")
 	@GetMapping("/search/{userId}/{word}")
-	public Object getUserListByWord(@PathVariable int userId, @PathVariable String word){
-		List<UserFollowOp> searchUserList = userService.getUserListByWord(userId, word);
+	public Object getUserListByWord(@PathVariable int userId, @PathVariable String word, int page){
+		List<UserFollowOp> searchUserList = userService.getUserListByWord(userId, word, page);
 		return new ResponseEntity<>(searchUserList, HttpStatus.OK);
 	}
 	

@@ -7,6 +7,9 @@ import java.util.*;
 
 import com.ssafy.kiwi.model.domain.entity.*;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -198,8 +201,9 @@ public class UserServiceImpl implements UserService {
 
 	// 단어를 identity나 name에 포함하는 유저 검색
 	@Override
-	public List<UserFollowOp> getUserListByWord(int userId, String word) {
-		List<UserFollowOp> userList = userRepository.getUserListByWord(userId, word); // word 포함하는 유저 리스트
+	public List<UserFollowOp> getUserListByWord(int userId, String word, int page) {
+		Page<UserFollowOp> userListPage = userRepository.getUserListByWord(userId, word, PageRequest.of(page, 20, Sort.by("id").descending())); // word 포함하는 유저 리스트
+		List<UserFollowOp> userList = userListPage.getContent();
 		for (UserFollowOp user : userList) { // 팔로잉 여부 확인
 			int otherUserId = user.getId();
 			if (followRepository.countByFollowIdAndUserId(otherUserId, userId)==1) user.setFollow(true);

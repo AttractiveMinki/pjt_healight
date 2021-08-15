@@ -54,6 +54,6 @@ public interface UserService {
 	boolean existId(int id);
 	
 	// 단어를 identity나 name에 포함하는 유저 검색
-	List<UserFollowOp> getUserListByWord(int userId, String word);
+	List<UserFollowOp> getUserListByWord(int userId, String word, int page);
 	
 }

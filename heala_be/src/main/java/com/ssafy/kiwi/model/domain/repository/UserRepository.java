@@ -3,6 +3,8 @@ package com.ssafy.kiwi.model.domain.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -42,6 +44,6 @@ public interface UserRepository extends JpaRepository<User,Integer>{
 	
 	// 해당 단어가 identity 또는 name에 포함된 회원 조회 -> 여기에서도 필요한 op라서 UserFollowOp 객체 이름 바꾸는 것 좋을듯!
 	@Query(value = "SELECT new com.ssafy.kiwi.model.dto.UserFollowOp(u.id, u.identity, u.name, u.image) FROM User u WHERE u.identity LIKE %:word% OR u.name LIKE %:word% AND u.id != :userId")
-	List<UserFollowOp> getUserListByWord(@Param("userId") int userId, @Param("word") String word);
+	Page<UserFollowOp> getUserListByWord(@Param("userId") int userId, @Param("word") String word, Pageable page);
 	
 }
