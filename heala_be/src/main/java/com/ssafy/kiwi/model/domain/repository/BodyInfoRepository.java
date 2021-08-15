@@ -33,7 +33,7 @@ public interface BodyInfoRepository extends JpaRepository<BodyInfo, Integer> {
 	@Query(value = "select extract(month from now())", nativeQuery = true)
 	int getMonthNum();
 
-	//주별 평균 기록 리스트, 현재부터 23주 전까지
+	//월별 평균 기록 리스트, 현재부터 12달 전까지
 	@Query(value = "select extract(month from created_at), avg(weight) from body_info "
 			+ "where (user_id = :userId)  and (created_at between date_sub(curdate(), interval 12 month) and curdate()+1)"
 			+ "group by month(created_at) order by created_at", nativeQuery = true)
