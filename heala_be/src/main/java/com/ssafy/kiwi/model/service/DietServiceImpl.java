@@ -83,6 +83,14 @@ public class DietServiceImpl implements DietService {
 		}
 		return dietInfoOp;
 	}
+
+	
+	//오늘의 식단 목록
+	@Override
+	public Object getTodayList(int userId) {
+		List<String> list = dietRepository.getListByUserId(userId, today);
+		return list;
+	}
 	
 	
 }

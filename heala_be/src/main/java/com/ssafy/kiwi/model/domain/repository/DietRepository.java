@@ -14,4 +14,7 @@ public interface DietRepository extends JpaRepository<Diet, Integer> {
 			+ "FROM Diet d WHERE d.userId = :userId AND DATE(d.createdAt) = :date")
 	List<Object[]> getSumByUserId(int userId, Date date);
 
+	@Query(value = "SELECT d.foodName FROM Diet d WHERE d.userId = :userId AND DATE(d.createdAt) = :date ORDER BY ID DESC")
+	List<String> getListByUserId(int userId, Date date);
+
 }
