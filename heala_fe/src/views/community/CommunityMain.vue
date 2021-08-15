@@ -21,16 +21,19 @@
       {{ userId }} -->
       <!-- {{ communityArticles }} -->
     </div>
-    <el-row>
+    <!-- <el-row>
       <el-col :span="24">hashtag</el-col>
-    </el-row>
-    <el-row>
+    </el-row> -->
+    <!-- <el-row>
       <el-col :span="24"><div class="introduce-text-align-start">
         <i class="el-icon-search"></i>
         <input type="text" class="get-input bg-gray" id="identity" maxlength="20" placeholder="    검색" required>
       </div>
       </el-col>
-    </el-row>
+    </el-row> -->
+    <div>
+      <search-box></search-box>
+    </div>
     <el-row>
       <el-col :span="24" class="community article-bottom-padding">
         <el-col :span="12" class="text-align-start padding-1">
@@ -87,6 +90,7 @@
 <script>
 import InfiniteLoading from "vue-infinite-loading";
 import Footer from "@/components/home/Footer"
+import SearchBox from "@/components/community/SearchBox";
 import SERVER from "@/api/drf.js"
 import axios from 'axios'
 
@@ -102,6 +106,7 @@ export default {
   components: {
     Footer,
     InfiniteLoading,
+    SearchBox,
   },
   methods: {
     async getCommunityInfo() {
