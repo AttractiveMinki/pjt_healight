@@ -100,7 +100,7 @@ public class ChallengeController {
 	@ApiOperation(value = "마이 챌린지 결과 조회하기.")
 	@GetMapping("/my/result")
 	public Object resultMyChallenge(@RequestParam(value="userId", required=true) int userId,
-			@PathVariable int withChallengeId) {
+			@RequestParam(value="withChallengeId", required=true) int withChallengeId) {
 		return new ResponseEntity<>(withChallengeService.resultMyChallenge(userId, withChallengeId), HttpStatus.OK);
 	}
 	
