@@ -114,12 +114,12 @@ export default [
     component: WithDetailReview,
   },
   {
-    path: "/profile",
+    path: "/profile/:id",
     name: "Profile",
     component: Profile,
   },
   {
-    path: "/profiletodolist",
+    path: "/profiletodolist/:id",
     name: "ProfileTodoList",
     component: ProfileTodoList,
   },
