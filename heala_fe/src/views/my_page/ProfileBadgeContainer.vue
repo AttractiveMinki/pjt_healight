@@ -58,45 +58,33 @@
         <router-link :to="{ name: 'Profile', params: { id: userId } }" class="text-decoration-none"><font-awesome-icon :icon="['far', 'images']" style="margin-top: 1.5vh" /></router-link> 
       </el-col>
       <el-col :span="11" style="background: #ADEC6E; height: 5vh" class="display-inline-grid aligh-items-center">
-        <router-link :to="{ name: 'ProfileTodoList', params: { id: userId } }" class="text-decoration-none selected-category">오늘의 할 일</router-link> 
+        <router-link :to="{ name: 'ProfileBadgeContainer', params: { id: userId } }" class="text-decoration-none selected-category">배지 보관함</router-link> 
       </el-col>
     </el-row>
     <div class="community">
       <el-row style="padding-top: 2vh">
         <el-col :span="24">
-          <el-col :span="12" style="text-align: start; padding: 2vw">
-            <span>오늘의 할 일</span>
+          <el-col :span="24" style="text-align: start; padding: 2vw">
+            <span>배지 보관함</span>
           </el-col>
-          <router-link :to="{ name: 'ProfilePhysInfo' }" class="text-decoration-none">
+          <div v-for="badge, idx in badges" :key="idx">
+            <span>
+              {{ badge }}
+            </span>
+          </div>
+          <!-- <router-link :to="{ name: 'ProfilePhysInfo' }" class="text-decoration-none">
             <el-col :span="12" style="text-align: end; padding: 2vw" class="community-title">
               <i class="margin-left-10 el-icon-arrow-right"></i>
               <span>신체정보 등록</span>
             </el-col>
-          </router-link>
+          </router-link> -->
         </el-col>
       </el-row>
+    
+      <el-row>
+        <!-- 배지 목록 -->
+      </el-row>
 
-      <router-link :to="{ name: 'DietRecord' }" class="text-decoration-none">
-        <el-row class="community-inside">
-          <el-col :span="18">
-            <div>식단 기록하기</div>
-          </el-col>
-          <el-col :span="6">
-            <!-- 그림 자리 -->
-          </el-col>
-        </el-row>
-      </router-link>
-
-      <router-link :to="{ name: 'WeightCalender' }" class="text-decoration-none">
-        <el-row class="community-inside">
-          <el-col :span="18">
-              <div>체중 기록하기</div>
-          </el-col>
-          <el-col :span="6">
-            <!-- 그림 자리 -->
-          </el-col>
-        </el-row>
-      </router-link>
     </div>  
     <Footer />
   </div>
@@ -109,7 +97,7 @@ import Navbar from "@/components/my_page/Navbar"
 import Footer from "@/components/home/Footer"
 
 export default {
-  name: "ProfileTodoList",
+  name: "ProfileBadgeContainer",
   data: () => {
     return {
       user: {
@@ -131,11 +119,24 @@ export default {
       
       // 로그인 한 내 아이디
       myId: "",
+
+      badges: [],
     };
   },
   components: {
     Navbar,
     Footer,
+  },
+  methods: {
+    getBadgeInfo: function () {
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.community}`)
+        .then ((res) => {
+          this.communityArticles = res.data
+        })
+        .catch ((err) => {
+          console.log(err)
+        })
+    },
   },
   mounted() {
     // footer 4로 설정
@@ -147,23 +148,16 @@ export default {
     // 내 아이디 localStorage에서 가져오기
     this.myId = localStorage.getItem('userId')
 
-    // 내 꺼 보기
-    if (this.userId == this.myId) {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.userProfile}${this.myId}/my`)
-        .then(response => {     
-          // this.image = require("@/assets/img/profile/" + response.data.image);
-          this.user = response.data
-        })
-        .catch(error => {
-          console.log(error);
-          console.error(error.response.data);
-        });
-    }
-    // 다른 사람꺼 보기
-    else {
-      alert('다른 사람의 계정입니다. 열람하실 수 없습니다.')
-      this.$router.go(-1)
-    }
+    axios.get(`${SERVER.URL}${SERVER.ROUTES.userProfile}${this.userId}/badge`)
+      .then(response => {     
+        // this.image = require("@/assets/img/profile/" + response.data.image);
+        this.badges = response.data
+      })
+      .catch(error => {
+        console.log(error);
+        console.error(error.response.data);
+      });
+    
   },
 }
 </script>

@@ -65,7 +65,7 @@
       </el-col>
       <!-- 내 계정이 아니라면 -->
       <el-col :span="11" v-else>
-        <span>배지 모음</span>
+        <router-link :to="{ name: 'ProfileBadgeContainer', params: { id: userId } }" class="text-decoration-none">배지 보관함</router-link> 
       </el-col>
     </el-row>
     <Category />

@@ -16,13 +16,13 @@
           <font-awesome-icon :icon="['far', 'plus-square']" />
         </el-col>
       </router-link>
-      <router-link :to="{ name: 'WithMain' }" class="text-decoration-none" :class="{selected: this.$store.state.selectedRouter == 3}" @click.native="changeRouter(3)" >
+      <router-link :to="{ name: 'WithMain' }" class="text-decoration-none" @click.native="changeRouter(3)" :class="{selected: this.$store.state.selectedRouter == 3}">
         <el-col :span="5">
           <font-awesome-icon :icon="['fas', 'running']" />
         </el-col>
       </router-link>
       <span @click="changeRouter(4)">
-        <router-link :to="{ name: 'Profile' }" :v-model="selectedRouter" :class="{selected: this.$store.state.selectedRouter == 4}" class="text-decoration-none" >
+        <router-link :to="{ name: 'Profile', params: { id: userId } }" :v-model="selectedRouter" :class="{selected: this.$store.state.selectedRouter == 4}" class="text-decoration-none" >
           <el-col :span="5">
             <font-awesome-icon icon="user" />
           </el-col>
@@ -39,12 +39,14 @@ export default {
   name: "Footer",
   data: () => {
     return {
+      userId: "",
     };
   },
   methods: {
     changeRouter (num) {
       // this.selectedRouter = num
       this.$store.state.selectedRouter = num
+      this.$router.go();
     },
   },
   computed: {
@@ -52,6 +54,10 @@ export default {
       "selectedRouter",
     ])
   },
+  created () {
+    this.userId = localStorage.getItem('userId')
+  },
+
   // watch: {
   //   selectedRouter: {
   //     handler: 'changeRouter',
