@@ -17,4 +17,8 @@ public interface DietRepository extends JpaRepository<Diet, Integer> {
 	@Query(value = "SELECT d.foodName FROM Diet d WHERE d.userId = :userId AND DATE(d.createdAt) = :date ORDER BY ID DESC")
 	List<String> getListByUserId(int userId, Date date);
 
+	@Query(value = "SELECT d.createdAt FROM Diet d WHERE d.userId = :userId "
+			+ "AND DATE(d.createdAt) >= :startDate AND DATE(d.createdAt) < :endDate")
+	List<Date> getAllDayByMonth(int userId, Date startDate, Date endDate);
+
 }

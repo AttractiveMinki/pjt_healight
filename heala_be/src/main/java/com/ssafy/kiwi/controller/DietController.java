@@ -49,4 +49,12 @@ public class DietController {
 		}
 		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
+	
+	@ApiOperation(value = "식단 캘린더 보기")
+	@GetMapping("/calender")
+	public Object calenderDiet(@RequestParam(value="userId", required=true) int userId,
+								@RequestParam(value="month", required=true) String month) {
+		return new ResponseEntity<>(dietService.calenderDiet(userId, month), HttpStatus.OK);
+	}
+	
 }

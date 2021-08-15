@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.TreeSet;
 
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,7 @@ public class DietServiceImpl implements DietService {
 	static SimpleDateFormat ageFormat = new SimpleDateFormat ("yyyy");
 	static SimpleDateFormat inputFormat = new SimpleDateFormat("yyyymmdd");
 	static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+	static SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
 	
 	//하루 영양 정보
 	@Override
@@ -98,6 +100,39 @@ public class DietServiceImpl implements DietService {
 	public boolean uploadDiet(Diet diet) {
 		dietRepository.save(diet);
 		return true;
+	}
+
+	//식단 캘린더
+	@Override
+	public Object calenderDiet(int userId, String month) {
+		//검색 기간 - 시작일 : 이번 달 1일
+		StringBuilder sb = new StringBuilder();
+		sb.append(month).append("-01");
+		java.sql.Date startDate = java.sql.Date.valueOf(sb.toString());
+		
+		//검색 기간 - 마감일 : 다음 달 1일
+		String nowMonth = month.substring(6);
+		int year = Integer.parseInt(month.substring(0, 4));
+		sb = new StringBuilder();
+		switch (nowMonth) {
+		case "09": sb.append(year).append("-10-01"); break;
+		case "10": sb.append(year).append("-11-01"); break;
+		case "11": sb.append(year).append("-12-01"); break;
+		case "12": sb.append(year+1).append("-01-01"); break;
+		default: sb.append(year).append("-0").append(Integer.parseInt(month.substring(6, 7))+1).append("-01");
+			break;
+		}
+		java.sql.Date endDate = java.sql.Date.valueOf(sb.toString());
+		
+		//기록된 날짜 목록
+		List<Date> dates = dietRepository.getAllDayByMonth(userId, startDate, endDate);
+		//중복 제거, int로 정제
+		TreeSet<Integer> dateSet = new TreeSet<>();
+		for (Date d : dates) {
+			int day = Integer.parseInt(dayFormat.format(d));
+			dateSet.add(day);
+		}
+		return dateSet;
 	}
 	
 	

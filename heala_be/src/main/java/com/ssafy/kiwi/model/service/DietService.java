@@ -16,4 +16,7 @@ public interface DietService {
 	//식단 기록
 	boolean uploadDiet(Diet diet);
 
+	//식단 캘린더
+	Object calenderDiet(int userId, String month);
+
 }
