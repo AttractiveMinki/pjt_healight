@@ -1,7 +1,8 @@
 <template>
   <div>
+    <Navbar />
     <div>
-      heala-logos
+      <img class="logo-image" src="@/assets/image/kiwi_logo.png" />
     </div>
     <h1>회원 탈퇴</h1>
     <el-row>
@@ -15,7 +16,7 @@
           <span class="el-icon-chat-line-round text-align:right" @click="toggleIcon"></span>
         </div>
       </el-col>
-      <button class="bg-green get-input join-button-setting" @click="showDeleteModal = true">회원 탈퇴하기</button>
+      <button class="bg-red get-input join-button-setting" @click="showDeleteModal = true">회원 탈퇴하기</button>
       <modal v-if="showDeleteModal" @yes="Withdrawal(data)" @no="showDeleteModal = false">
           <template v-slot:header>회원 탈퇴</template>
           <template v-slot:body>정말 회원탈퇴하시겠습니까?</template>
@@ -29,6 +30,7 @@
 <script>
 import SERVER from "@/api/drf.js"
 import axios from "axios"
+import Navbar from "@/components/my_page/Navbar"
 import router from "@/router/index.js"
 import Modal from "@/components/Modal.vue";
 
@@ -94,7 +96,10 @@ export default {
       showDeleteModal: false,
     }
   },
-  components: { Modal, }
+  components: { 
+    Modal, 
+    Navbar,
+  }
 }
 </script>
 
@@ -105,8 +110,8 @@ export default {
     margin-left: 10%;
     text-align: start;
   }
-  .bg-green {
-    background: #ADEC6E;
+  .bg-red {
+    background: red;
     color: white;
     /* color: #99a9bf; */
   }
