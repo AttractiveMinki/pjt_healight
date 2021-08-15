@@ -12,6 +12,7 @@ import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.repository.BodyInfoRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
 import com.ssafy.kiwi.model.dto.BodyInfoIp;
+import com.ssafy.kiwi.model.dto.BodyRecordOp;
 import com.ssafy.kiwi.model.dto.BodyWeightIp;
 
 import lombok.RequiredArgsConstructor;
@@ -94,6 +95,22 @@ public class BodyServiceImpl implements BodyService {
 		bodyInfo.setUserId(userId);
 		bodyInfoRepository.save(bodyInfo);
 		return true;
+	}
+
+	//주별, 월별 체중 기록
+	@Override
+	public Object recordBody(int userId, String type) {
+		BodyRecordOp bodyRecordOp = new BodyRecordOp();
+		if(type.equals("week")) {
+			//이번주 몇 주차인지
+			int today = bodyInfoRepository.getWeekNum();
+			bodyRecordOp.setThisWeek(today);
+			//지난 23주 주 번호와 평균 리스트
+			List<Object> bodyRecord = bodyInfoRepository.getWeeklyRecordByUserId(userId);
+			bodyRecordOp.setBodyRecord(bodyRecord);
+			return bodyRecordOp;
+		}
+		return null;
 	}
 
 }

@@ -18,7 +18,15 @@ public interface BodyInfoRepository extends JpaRepository<BodyInfo, Integer> {
 	@Query(value = "SELECT bi.createdAt FROM BodyInfo bi WHERE bi.userId = :userId "
 			+ "AND DATE(bi.createdAt) >= :startDate AND DATE(bi.createdAt) < :endDate")
 	List<Date> getAllDayByMonth(int userId, java.sql.Date startDate, java.sql.Date endDate);
+	
+	//이번주 몇주차인지 번호 리턴
+	@Query(value = "select extract(week from now())", nativeQuery = true)
+	int getWeekNum();
 
-
+	//주별 평균 기록 리스트, 현재부터 23주 전까지
+	@Query(value = "select extract(week from created_at), avg(weight) from body_info "
+			+ "where (user_id = :userId)  and (created_at between date_sub(curdate(), interval 23 week) and curdate()+1)"
+			+ "group by week(created_at) order by created_at", nativeQuery = true)
+	List<Object> getWeeklyRecordByUserId(int userId);
 
 }

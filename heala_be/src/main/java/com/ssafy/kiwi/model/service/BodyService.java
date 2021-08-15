@@ -13,5 +13,7 @@ public interface BodyService {
 	TreeSet<Integer> calenderBody(int userId, String month);
 	//오늘의 체중 기록
 	boolean uploadBody(BodyWeightIp bodyWeightIp);
+	//주별, 월별 체중 기록 확인
+	Object recordBody(int userId, String type);
 
 }

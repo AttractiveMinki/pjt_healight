@@ -49,4 +49,11 @@ public class BodyController {
 		}
 		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
+	
+	@ApiOperation(value = "체중 기록 확인하기(주별,월별)")
+	@GetMapping("/record")
+	public Object weeklyBody (@RequestParam(value="userId") int userId, @RequestParam(value="type") String type) {
+		return new ResponseEntity<>(bodyService.recordBody(userId, type), HttpStatus.OK);
+	}
+	
 }
