@@ -24,7 +24,7 @@
       class="border-bottom">
     </community-category-bar>
     <div v-else class="total-rest"></div>
-    <div>
+    <div class="search-box">
       <search-box></search-box>
     </div>
     <post-list :category="category"></post-list>
@@ -79,5 +79,9 @@ export default {
 }
 .total-rest {
   height: 36px;
+}
+.search-box {
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 </style>

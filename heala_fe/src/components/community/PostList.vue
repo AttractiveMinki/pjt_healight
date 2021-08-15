@@ -1,5 +1,6 @@
 <template>
   <div class="article-bottom-padding">
+    {{ infiniteId }}
 		<!-- <el-col :span="12" class="text-align-start padding-1">
 			<span>BEST 게시글</span>
 		</el-col> -->
@@ -12,7 +13,7 @@
 		<div v-for="(article, idx) in communityArticles" :key="idx" class="post-list-item">
 			<post-list-item :article="article"></post-list-item>
 		</div>
-		<infinite-loading @infinite="infiniteHandler" spineer="waveDots">
+		<infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spineer="waveDots">
 			<div slot="no-more"></div>
 			<div slot="no-results"></div>
 		</infinite-loading>
@@ -34,7 +35,8 @@ export default {
 			communityArticles: [],
       limit: 0,
       subCategory: [ "BEST", "일반", "정보", "질문", "익명" ],
-		}
+      infiniteId: 0,
+    }
 	},
 	created() {
 		this.getInitialCommunityInfo();
@@ -42,11 +44,12 @@ export default {
   computed: {
     ...mapState([
       "selectedSubCategory",
-    ])
+    ]),
   },
   watch: {
     category() {
       this.limit = 0;
+      this.infiniteId++;
       if(this.category == 3) {
         this.$store.state.selectedSubCategory = 0;
         this.getInitialCommunityInfo();
@@ -57,6 +60,7 @@ export default {
     },
     selectedSubCategory() {
       this.limit = 0;
+      this.infiniteId++;
       this.getInitialPostListByCategory();
     }
   },
