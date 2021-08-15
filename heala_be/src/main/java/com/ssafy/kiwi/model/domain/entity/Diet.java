@@ -15,6 +15,7 @@ import lombok.*;
 @Entity
 @Builder
 @Getter
+@Setter
 public class Diet {
 	
 	@Id

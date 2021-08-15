@@ -2,6 +2,7 @@ package com.ssafy.kiwi.model.service;
 
 import java.text.ParseException;
 
+import com.ssafy.kiwi.model.domain.entity.Diet;
 import com.ssafy.kiwi.model.dto.DietInfoOp;
 
 public interface DietService {
@@ -11,5 +12,8 @@ public interface DietService {
 
 	//오늘의 식단 목록
 	Object getTodayList(int userId);
+
+	//식단 기록
+	boolean uploadDiet(Diet diet);
 
 }

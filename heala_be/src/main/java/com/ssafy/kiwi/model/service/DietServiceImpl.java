@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.kiwi.model.domain.entity.BodyInfo;
+import com.ssafy.kiwi.model.domain.entity.Diet;
 import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.repository.BodyInfoRepository;
 import com.ssafy.kiwi.model.domain.repository.DietRepository;
@@ -90,6 +91,13 @@ public class DietServiceImpl implements DietService {
 	public Object getTodayList(int userId) {
 		List<String> list = dietRepository.getListByUserId(userId, today);
 		return list;
+	}
+
+	//식단 기록
+	@Override
+	public boolean uploadDiet(Diet diet) {
+		dietRepository.save(diet);
+		return true;
 	}
 	
 	

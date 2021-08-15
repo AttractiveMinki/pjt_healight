@@ -7,11 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.ssafy.kiwi.model.domain.entity.Diet;
 import com.ssafy.kiwi.model.service.DietService;
 
 import io.swagger.annotations.ApiOperation;
@@ -37,5 +39,14 @@ public class DietController {
 	@GetMapping("/list/{userId}")
 	public Object getTodayList(@PathVariable int userId)  {
 		return new ResponseEntity<>(dietService.getTodayList(userId), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "식단 기록하기")
+	@PostMapping("/upload")
+	public Object uploadDiet(@RequestBody Diet dietIp) {
+		if(dietService.uploadDiet(dietIp)) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 }
