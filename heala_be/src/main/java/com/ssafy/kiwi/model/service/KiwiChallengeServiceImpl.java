@@ -248,7 +248,7 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	@Transactional
 	private boolean missionChallengeCompleted(int category, int userId, int missionId, int num) {
 		List<Map<String,Object>> myChallengeList = withChallengeService.getMyChallenge(userId);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-ddd");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
 		Date today = new Date();
 		int cnt = 0;
 		for (Map<String,Object> map : myChallengeList) {
