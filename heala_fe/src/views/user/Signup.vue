@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      heala-logos
+      <img class="logo-image" src="@/assets/image/kiwi_logo.png" />
     </div>
     <h1>회원 가입</h1>
     <div>
