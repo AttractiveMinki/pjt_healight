@@ -198,7 +198,7 @@ public class CommunityServiceImpl implements CommunityService {
 		return likeUser.isPresent();
 	}
 
-	// 전체 글 중 단어를 제목 또는 내용에 포함하는 글 목록 반환
+	// 전체 글 중 단어를 제목, 내용, 해시태그에 포함하는 글 목록 반환
 	@Override
 	public List<Post> getAllPostListByWord(String word) {
 		final int access = 0; // 전체 공개: 0

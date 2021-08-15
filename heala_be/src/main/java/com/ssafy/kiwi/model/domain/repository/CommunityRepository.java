@@ -23,6 +23,8 @@ public interface CommunityRepository extends JpaRepository<Post,Integer>{
 	@Query(value = "select sum(p.likes) from Post p where p.category = :category and p.userId = :userId")
 	int getSumLikeByCategoryAndUserId(int category, int userId);
 	
-	@Query(value = "select * from post p WHERE p.title LIKE %:word% OR p.content LIKE %:word% and access = :access", nativeQuery = true)
+	@Query(value = "SELECT * from post p WHERE (p.title LIKE %:word%) OR (p.content LIKE %:word%) "
+			+ "OR (p.id in (SELECT post_id FROM post_hashtag ph JOIN hashtag h ON ph.hashtag_id = h.id WHERE h.word LIKE %:word%))"
+			+ "AND access = :access", nativeQuery = true)
 	List<Post> getAllPostByWordAndAccess(String word, int access);
 }
