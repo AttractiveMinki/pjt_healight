@@ -1,33 +1,38 @@
 <template>
   <div>
-    <Navbar />
+    <!-- 별명 로그인한 사용자 ->계정 주인으로 바꾸기, props 사용해야 할 듯 -->
+    <Navbar 
+    
+    />
     <el-row style="align-items:center">
       <el-col :span="6" style="padding: 3vw">
-        <img v-if="image == '' " src="@/assets/img/profile/user.png" alt="profile_image" width="62" height="62" style="border-radius: 50%;">
-        <img v-else :src="image" alt="profile_image" width="62" height="62" style="border-radius: 50%;"><br>
+        <img v-if="user.image == '' " src="@/assets/img/profile/user.png" alt="profile_image" width="62" height="62" style="border-radius: 50%;">
+        <img v-else :src="user.image" alt="profile_image" width="62" height="62" style="border-radius: 50%;"><br>
       </el-col>
       <el-col :span="18" style="text-align: -webkit-right; padding: 3vw">
         <!-- 사용자와 프로필 주인이 같다면 -->
-        <span id="square" style="margin-top: 10px"><router-link :to="{ name: 'ProfileEdit' }" class="text-decoration-none challenge-make">프로필 편집</router-link></span>
+        <span v-if="userId == myId" id="square" style="margin-top: 10px"><router-link :to="{ name: 'ProfileEdit' }" class="text-decoration-none challenge-make">프로필 편집</router-link></span>
 
         <!-- 사용자와 프로필 주인이 다르다면 -->
+        <span v-else id="square" style="margin-top: 10px"><router-link :to="{ name: 'ProfileEdit' }" class="text-decoration-none challenge-make">팔로잉 팔로우 구현하기</router-link></span>
         <!-- 메시지 -->
         <!-- 팔로잉 -->
       </el-col>
     </el-row>
     <el-row style="text-align: start; padding: 2vw">
       <el-col :span="12">
-        <span style="font-size: 14px; font-weight: bold; padding: 1px"> <!-- {{ user.userName }} --> 스파르타꾹스 </span>
-        <span style="font-size: 11px"> Lv. <!-- {{ user.userId }} -->77</span>
+        <span style="font-size: 14px; font-weight: bold; padding: 1px"> {{ user.name }} <!-- 스파르타꾹스 --> </span>
+        <span style="font-size: 11px"> Lv. {{ user.id }} <!-- exp--></span>
       </el-col>
     </el-row>
     <el-row style="text-align: start; padding: 2vw">
       <el-col>
-        <span style="font-size: 13px"><!-- {{ user.content }} -->나는야 스파르타꾹스. 유튜브 많이 보러 와주세요</span>
+        <span style="font-size: 13px"> {{ user.introduction }}<!-- 나는야 스파르타꾹스. 유튜브 많이 보러 와주세요--></span>
       </el-col>
     </el-row>
     <el-row style="text-align: space-between; font-size: 12px">
       <el-col :span="12">
+        <!-- 팔로잉 팔로워 수를 구하는 통신이 필요할 듯! -->
         <span style="padding: 2vw"> <span style="font-weight: bold; font-size: 13px; padding: 1vw">231<!-- {{ user.following }} --></span>팔로잉</span>  
         <span style="padding: 2vw"> <span style="font-weight: bold; font-size: 13px; padding: 1vw">583<!-- {{ user.follower }} --></span>팔로워</span>
       </el-col>
@@ -52,13 +57,15 @@
 
     <el-row class="justify-content-space-between align-items-center">
       <el-col :span="12" style="background: #ADEC6E; height: 5vh">
-        <router-link :to="{ name: 'Profile' }" class="text-decoration-none selected-category"><font-awesome-icon :icon="['far', 'images']" style="margin-top: 1.5vh" /></router-link> 
+        <router-link :to="{ name: 'Profile', params: { id: userId } }" class="text-decoration-none selected-category"><font-awesome-icon :icon="['far', 'images']" style="margin-top: 1.5vh" /></router-link> 
       </el-col>
-      <el-col :span="11">
+      <el-col :span="11" v-if="userId == myId">
         <!-- 내 계정이라면 -->
-        <router-link :to="{ name: 'ProfileTodoList' }" class="text-decoration-none">오늘의 할 일</router-link> 
-        <!-- 내 계정이 아니라면 -->
-        <!-- 배지 모음 -->
+        <router-link :to="{ name: 'ProfileTodoList', params: { id: userId } }" class="text-decoration-none">오늘의 할 일</router-link> 
+      </el-col>
+      <!-- 내 계정이 아니라면 -->
+      <el-col :span="11" v-else>
+        <span>배지 모음</span>
       </el-col>
     </el-row>
     <Category />
@@ -72,46 +79,76 @@ import axios from 'axios';
 import Navbar from "@/components/my_page/Navbar"
 import Category from "@/components/my_page/profile/Category"
 import Footer from "@/components/home/Footer"
-import { mapState } from "vuex"
 
 export default {
   name: "Profile",
   data: () => {
     return {
-      image: "",
-      name: "",
-      identity: "",
-      introduction: "",
-      badges: [],
+      user: {
+        id: "",
+        identity: "",
+        image: "",
+        name: "",
+        exp: "",
+        introduction: "",
+        badge: [],
+        follower: "",
+        following: "",
+        exercise: [],
+        food: [],
+        heart: [],
+      },
+      // 보고 있는 프로필 계정 주인의 id
+      userId: "",
+      
+      // 로그인 한 내 아이디
+      myId: "",
     };
   },
+  // props: {
+  //   id: {
+  //     type: String,
+  //   }
+  // },
   components: {
     Navbar,
     Category,
     Footer,
   },
-  computed: {
-    ...mapState([
-      "profileSelectedCategory",
-    ])
-  },
   mounted() {
-    // 프로필 기존 정보 불러오기
-    axios.get(`${SERVER.URL}${SERVER.ROUTES.userProfile}${localStorage.getItem('userId')}`)
-      .then(response => {     
-        // this.image = require("@/assets/img/profile/" + response.data.image);
-        this.identity = response.data.identity;
-        this.name = response.data.name;
-        this.introduction = response.data.introduction;
-        this.badges = response.data.badges;
+    // footer 4로 설정
+    this.$store.state.selectedRouter = 4
+  
+    // 현재 보고 있는 프로필 주인의 id 주소창에서 가져오기
+    this.userId = this.$route.path.split('/')[2]
 
-        this.originalIdentity = response.data.identity;
-        // console.log(this.badges)
-      })
-      .catch(error => {
-        console.log(error);
-        console.error(error.response.data);
-      });
+    // 내 아이디 localStorage에서 가져오기
+    this.myId = localStorage.getItem('userId')
+
+    // 내 꺼 보기
+    if (this.userId == this.myId) {
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.userProfile}${this.myId}/my`)
+        .then(response => {     
+          // this.image = require("@/assets/img/profile/" + response.data.image);
+          this.user = response.data
+        })
+        .catch(error => {
+          console.log(error);
+          console.error(error.response.data);
+        });
+    }
+    // 다른 사람꺼 보기
+    else {
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.userProfile}${this.userId}/${this.myId}`)
+        .then(response => {     
+          // this.image = require("@/assets/img/profile/" + response.data.image);
+          this.user = response.data
+        })
+        .catch(error => {
+          console.log(error);
+          console.error(error.response.data);
+        });
+    }
   },
 }
 </script>
