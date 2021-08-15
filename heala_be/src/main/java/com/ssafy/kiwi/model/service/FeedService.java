@@ -3,9 +3,6 @@ package com.ssafy.kiwi.model.service;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import com.ssafy.kiwi.model.domain.entity.Post;
 import com.ssafy.kiwi.model.dto.UserFollowOp;
 
@@ -20,12 +17,12 @@ public interface FeedService {
 	public List<Post> getPostList(int userId, int page);
 
 	// 개인 피드 (본인)
-	public Map<String, Object> getMyFeed(int userId);
+	public Map<String, Object> getMyFeed(int userId, int page);
 	// 개인 피드 (타인)
-	public Map<String, Object> getUserFeed(int userId, int myId);
+	public Map<String, Object> getUserFeed(int userId, int myId, int page);
 
 	// 팔로워 목록 가져오기
-	public List<UserFollowOp> getFollower(int userId, int myId);
+	public List<UserFollowOp> getFollower(int userId, int myId, int page);
 	// 팔로잉 목록 가져오기
-	public List<UserFollowOp> getFollowing(int userId, int myId);
+	public List<UserFollowOp> getFollowing(int userId, int myId, int page);
 }

@@ -66,19 +66,21 @@ public class FeedServiceImpl implements FeedService {
 	
 	//개인 피드 (본인)
 	@Override
-	public Map<String, Object> getMyFeed(int userId) {
-		List<Post> postList = feedRepository.getByUserId(userId);
+	public Map<String, Object> getMyFeed(int userId, int page) {
+		Page<Post> postPage = feedRepository.getByUserId(userId, PageRequest.of(page, 30, Sort.by("createdAt").descending()));
+		List<Post> postList = postPage.getContent();
 		Map<String, Object> map = getFeedPost(postList, getFeedInfo(userId));
 		return map;
 	}
 
 	//개인 피드 (타인)
 	@Override
-	public Map<String, Object> getUserFeed(int userId, int myId) {
+	public Map<String, Object> getUserFeed(int userId, int myId, int page) {
 		int num = followRepository.countFollowState(userId, myId);
 		if(num==2) num = 1; //맞팔인 경우
 		else num = 0; //그 외 경우
-		List<Post> postList = feedRepository.getLimitByUserId(userId, num);
+		Page<Post> postPage = feedRepository.getLimitByUserId(userId, num, PageRequest.of(page, 30, Sort.by("createdAt").descending()));
+		List<Post> postList = postPage.getContent();
 		Map<String, Object> map = getFeedPost(postList, getFeedInfo(userId));
 		return map;
 	}
@@ -125,8 +127,9 @@ public class FeedServiceImpl implements FeedService {
 	
 	//팔로워 목록
 	@Override
-	public List<UserFollowOp> getFollower(int userId, int myId) {
-		List<Integer> follower = followRepository.getFollowerIdsByUserId(userId); //id
+	public List<UserFollowOp> getFollower(int userId, int myId, int page) {
+		Page<Integer> followerPage = followRepository.getFollowerIdsByUserId(userId, PageRequest.of(page, 15)); //id
+		List<Integer> follower = followerPage.getContent();
 		List<UserFollowOp> followers = userRepository.getUserFollowOpByIds(follower); //유저 정보
 		for(UserFollowOp ufo : followers) { //팔로잉 여부 확인
 			int id = ufo.getId();
@@ -137,8 +140,9 @@ public class FeedServiceImpl implements FeedService {
 
 	//팔로잉 목록
 	@Override
-	public List<UserFollowOp> getFollowing(int userId, int myId) {
-		List<Integer> following = followRepository.getFollowingIdsByUserId(userId); //id
+	public List<UserFollowOp> getFollowing(int userId, int myId, int page) {
+		Page<Integer> followingPage = followRepository.getFollowingIdsByUserId(userId, PageRequest.of(page, 15)); //id
+		List<Integer> following = followingPage.getContent();
 		List<UserFollowOp> followings = userRepository.getUserFollowOpByIds(following); //유저 정보
 		for(UserFollowOp ufo : followings) { //팔로잉 여부 확인
 			int id = ufo.getId();

@@ -106,7 +106,7 @@ export default {
     //   })
     // },
   },
-  mounted: {
+  mounted() {
     // getDietRecord() {},
     // 사용자 성별, 신장, 체중
     // 가지고와서 하루 권장섭취량 계산

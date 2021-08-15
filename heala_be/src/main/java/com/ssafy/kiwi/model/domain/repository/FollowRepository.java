@@ -2,6 +2,8 @@ package com.ssafy.kiwi.model.domain.repository;
 
 import com.ssafy.kiwi.model.domain.entity.Follow;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -32,11 +34,11 @@ public interface FollowRepository extends JpaRepository<Follow, Integer> {
 	
     // 팔로워 : 나를 follow 하고 있는 Follow 객체의 id 리스트 반환
     @Query(value = "select user_id from follow WHERE follow_id = :userId", nativeQuery = true)
-    List<Integer> getFollowerIdsByUserId(int userId);
+    Page<Integer> getFollowerIdsByUserId(int userId, Pageable pageable);
     
     // 팔로잉 : 내가 follow 하고 있는 Follow 객체의 id 리스트 반환
     @Query(value = "select follow_id from follow WHERE user_id = :userId", nativeQuery = true)
-    List<Integer> getFollowingIdsByUserId(int userId);
+    Page<Integer> getFollowingIdsByUserId(int userId, Pageable pageable);
 
     // 내가 상대를 팔로우 하는지 확인 (1:팔로잉, 0:팔로우하지 않음)
 	int countByFollowIdAndUserId(int id, int myId);
