@@ -44,8 +44,6 @@ export default {
     changeRouter (num) {
       // this.selectedRouter = num
       this.$store.state.selectedRouter = num
-      // 다른사람 프로필 -> 내 프로필로 올 때 footer 버튼을 누를 경우 무반응 방지
-      this.$router.go();
     },
   },
   computed: {
