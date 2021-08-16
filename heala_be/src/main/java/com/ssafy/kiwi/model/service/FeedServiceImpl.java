@@ -1,6 +1,7 @@
 package com.ssafy.kiwi.model.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.ssafy.kiwi.model.domain.entity.Badge;
 import com.ssafy.kiwi.model.domain.entity.Hashtag;
@@ -23,6 +26,7 @@ import com.ssafy.kiwi.model.domain.repository.FeedRepository;
 import com.ssafy.kiwi.model.domain.repository.FollowRepository;
 import com.ssafy.kiwi.model.domain.repository.HashtagRepository;
 import com.ssafy.kiwi.model.domain.repository.PostHashtagRepository;
+import com.ssafy.kiwi.model.domain.repository.PostRepository;
 import com.ssafy.kiwi.model.domain.repository.ScrapRepository;
 import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
@@ -41,6 +45,7 @@ public class FeedServiceImpl implements FeedService {
 	final private UserRepository userRepository;
 	final private UserBadgeRepository userBadgeRepository;
 	final private HashtagRepository hashtagRepository;
+	final private PostRepository postRepository;
 	final private PostHashtagRepository postHashtagRepository;
 	final private ScrapRepository scrapRepository;
 	final private CommunityRepository communityRepository;
@@ -83,6 +88,81 @@ public class FeedServiceImpl implements FeedService {
 			isPossible = true;
 		}
 		return isPossible;
+	}
+	
+	// 글 수정
+	@Transactional
+	@Override
+	public boolean update(int postId, PostIp postIp) {
+		Post post = postRepository.getById(postId);
+		boolean state = true;
+		boolean post_update = false;
+		
+		//글 부분 수정한 경우
+		if(postIp.getPost() != null) {
+			Post newPost = postIp.getPost();			
+			if(StringUtils.hasLength(newPost.getImage())) {
+				post.setImage(newPost.getImage());
+				post_update = true;
+			}
+			if(StringUtils.hasLength(newPost.getTitle())) {
+				post.setTitle(newPost.getTitle());
+				post_update = true;
+			}
+			if(post.getCategory() != newPost.getCategory()) {
+				post.setCategory(newPost.getCategory());
+				post_update = true;
+			}
+			if(post.getSubCategory() != newPost.getSubCategory()) {
+				post.setSubCategory(newPost.getSubCategory());
+				post_update = true;
+			}
+			if(post.getAccess() != newPost.getAccess()) {
+				post.setAccess(newPost.getAccess());
+				post_update = true;
+			}
+			if(StringUtils.hasLength(newPost.getContent())) {
+				post.setContent(newPost.getContent());
+				post_update = true;
+			}
+			if(post.isAnonymous() != newPost.isAnonymous()) {
+				post.setAnonymous(newPost.isAnonymous());
+				post_update = true;
+			}
+			if(post_update) {
+				Date updateDate = new Date();
+				post.setUpdatedAt(updateDate);
+				postRepository.save(post);
+				state = true;
+			}
+		}
+		
+		//해시태그 수정한 경우
+		if (postIp.getHashtag() != null) {
+			//기존 해시태그 저장 삭제
+			postHashtagRepository.deleteAllByPostId(postId);
+			//새 해시태그 저장
+			String words = postIp.getHashtag().getWord();
+			StringTokenizer st = new StringTokenizer(words, " ");
+			int hashtagId;
+			while (st.hasMoreTokens()) {
+				String word = st.nextToken().replace("#", "");
+				Optional<Hashtag> checkHashtag = hashtagRepository.getHashtagByWord(word);
+				if (!checkHashtag.isPresent()) {
+					Hashtag hashtag = new Hashtag(word);
+					hashtagId = hashtagRepository.save(hashtag).getId();
+				} 
+				else {
+					hashtagId = checkHashtag.get().getId();
+				}
+
+				// post_hashtag 테이블에 각 id 값 insert
+				PostHashtag postHashtag = PostHashtag.builder().postId(postId).hashtagId(hashtagId).build();
+				postHashtagRepository.save(postHashtag);
+			}
+			state = true;
+		}
+		return state;
 	}
 	
 	// 자신이 팔로우 하고 있는 사람들의 Post 목록을 가져옴(공개 범위가 전체로 되어있는 것 + 양쪽 팔로우를 하고 있는 경우 친구 공개 Post까지)
