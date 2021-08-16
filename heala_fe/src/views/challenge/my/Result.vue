@@ -51,7 +51,7 @@
         <div class="certify-image-wrapper"
           v-for="(index, i) in certifyImageLimit"
           v-bind:key="i">
-          <img v-show="i < 5" :src="require(`@/assets/image/${resultData.certifyImage[index].image}`)" alt="@/assets/image/error.jpg" class="certify-image">
+          <img v-show="i < 5" :src="imageServerURL + resultData.certifyImage[index].image" alt="@/assets/image/error.jpg" class="certify-image">
           <div v-show="i == 5" class="certify-image-link-text" @click="goToCertifyImage">
             전체사진<br>보러가기
           </div>
@@ -71,56 +71,26 @@ export default {
     data() {
         return {
             userId: 1,
+            imageServerURL: SERVER.IMAGE_URL,
             certifyImageLimit: [0, 0, 0, 0, 0, 0],
             resultData: {
-                achievement: 1,
-                point: 1700,
+                achievement: Number,
+                point: Number,
                 certifyImage: [
                   {
-                    id: 1,
-                    image: "cat.jpg",
-                  },
-                  {
-                    id: 2,
-                    image: "cat.jpg",
-                  },
-                  {
-                    id: 3,
-                    image: "cat.jpg",
-                  },
-                  {
-                    id: 4,
-                    image: "cat.jpg",
-                  },
-                  {
-                    id: 5,
-                    image: "cat.jpg",
-                  },
-                  {
-                    id: 6,
-                    image: "cat.jpg",
-                  },
-                  {
-                    id: 7,
-                    image: "cat.jpg",
-                  },
-                  {
-                    id: 8,
-                    image: "cat.jpg",
-                  },
-                  {
-                    id: 9,
-                    image: "cat.jpg",
-                  },
+                    image: "",
+                    id: Number,
+                    time: "",
+                  }
                 ],
             },
             userData: {
-              exp: 33000,
+              exp: 0,
             },
-            level: 32,
+            level: 0,
             levelNeedExp: 2000,
-            levelExp: 1000,
-            levelPercent: 99,
+            levelExp: 0,
+            levelPercent: 0,
         }
     },
     created() {
@@ -262,7 +232,7 @@ export default {
   vertical-align: top;
 }
 .level-percent {
-  min-width: 17px;
+  min-width: 30px;
   max-width: calc(100% - 30px);
   height: 14px;
   color: #FFA7A7;

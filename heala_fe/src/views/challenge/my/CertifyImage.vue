@@ -6,23 +6,23 @@
     <div class="certify-image-container">
       <div class="challenge-info">  
         <div class="challenge-title">
-        {{ withChallenge.title }}
+          {{ withChallenge.title }}
         </div>
         <div class="challenge-term">
-        {{ withChallenge.startDate }} - {{ withChallenge.endDate }}
+          {{ withChallenge.startDate }} - {{ withChallenge.endDate }}
         </div>
       </div>
         <div class="certify-wrapper"
-        v-for="(data, i) in certifyData"
-        v-bind:key="i">
-        <div class="certify-date">
-            {{ data.date }}
+          v-for="(data, i) in certifyData"
+          v-bind:key="i">
+          <div class="certify-date">
+          {{ data.date }}
         </div>
       <div class="certify-images-wrapper">
         <div class="certify-image-wrapper"
-            v-for="(images) in data.list"
-            v-bind:key="images.id">
-            <img :src="require(`@/assets/image/${images.image}`)" alt="@/assets/image/error.jpg" class="certify-image">
+          v-for="(images) in data.list"
+          v-bind:key="images.id">
+          <img :src="imageServerURL + images.image" alt="@/assets/image/error.jpg" class="certify-image">
         </div>
         </div>
       </div>
@@ -37,81 +37,47 @@ import axios from "axios"
 import SERVER from "@/api/drf.js"
 
 export default {
-    name: "CertifyImage",
-    data() {
-        return {
-            userId: 1, // local Storage 에서 얻어오도록 변경
-            withChallengeId: Number,
-            withChallenge: {
-                title: "임시 데이터: 챌린지 이름",
-                startDate: "21/07/20",
-                endDate: "21/08/02",
-            },
-            certifyData: [
-                {
-                    date: "21/07/20",
-                    list: [
-                        {
-                            id: 1,
-                            image: "cat.jpg",
-                        },
-                        {
-                            id: 2,
-                            image: "cat.jpg",
-                        },
-                        {
-                            id: 3,
-                            image: "cat.jpg",
-                        },
-                        {
-                            id: 4,
-                            image: "cat.jpg",
-                        },
-                    ],
-                },
-                {
-                    date: "21/07/21",
-                    list: [
-                        {
-                            id: 5,
-                            image: "error.png",
-                        },
-                    ],
-                }
-            ]
-        }
+  name: "CertifyImage",
+  data() {
+    return {
+      userId: 1,
+      imageServerURL: SERVER.IMAGE_URL,
+      withChallengeId: Number,
+      withChallenge: {},
+      certifyData: [],
+    }
+  },
+  created() {
+    this.userId = localStorage.getItem("userId");
+    this.withChallengeId = this.$route.params.withChallengeId;
+    this.getWithChallengInfo();
+    this.getImages();
+  },
+  methods: {
+    getWithChallengInfo() {
+      axios
+        .get(SERVER.URL + SERVER.ROUTES.getWithDetail
+            + `?userId=${this.userId}&withChallengeId=${this.withChallengeId}`)
+        .then((response) =>
+            this.withChallenge = response.data.withChallenge
+        )
+        .catch((exp) => 
+            console.log(`인증사진 불러오기에 실패했습니다: ${exp}`)
+        );
     },
-    created() {
-        // this.userId = localStorage.getItem("userId");
-        this.withChallengeId = this.$route.params.withChallengeId;
-        this.getWithChallengInfo();
-        this.getImages();
-    },
-    methods: {
-        getWithChallengInfo() {
-            axios
-                .get(SERVER.URL + SERVER.ROUTES.getWithDetail
-                    + `?userId=${this.userId}&withChallengeId=${this.withChallengeId}`)
-                .then((response) =>
-                    this.withChallenge = response.data.withChallenge
-                )
-                .catch((exp) => 
-                    console.log(`인증사진 불러오기에 실패했습니다: ${exp}`)
-                );
-        },
-        getImages() {
-            axios
-                .get(SERVER.URL + SERVER.ROUTES.myChallengePhoto
-                    + `?userId=${this.userId}&withChallengeId=${this.withChallengeId}`)
-                .then((response) =>
-                    this.certifyData = response.data
-                )
-                .catch((exp) => 
-                    console.log(`인증사진 불러오기에 실패했습니다: ${exp}`)
-                );
-        }
-    },
-    components: { KiwiHeader }
+    getImages() {
+      axios
+        .get(SERVER.URL + SERVER.ROUTES.myChallengePhoto
+            + `?userId=${this.userId}&withChallengeId=${this.withChallengeId}`)
+        .then((response) =>
+            this.certifyData = response.data
+        )
+        .catch((exp) => 
+            console.log(`인증사진 불러오기에 실패했습니다: ${exp}`)
+        );
+    }
+  },
+  components: { KiwiHeader }
 }
 </script>
 
@@ -121,7 +87,6 @@ export default {
     text-align: left;
 }
 .challenge-info {
-    margin: 70px 0px 0px 0px;
     padding: 0px 0px 0px 30px;
 }
 .challenge-title {

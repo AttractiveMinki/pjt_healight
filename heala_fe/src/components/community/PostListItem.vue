@@ -3,7 +3,7 @@
     <router-link :to="{ name: 'PostDetail',  params: { id: article.id } }" class="text-decoration-none align-self">
       <el-row>
         <div class="post-image-wrapper">
-          <img :src="require(`@/assets/image/${article.image}`)" alt="" class="post-image">
+          <img :src="imageURL" alt="" class="post-image">
         </div>
         <div class="post-content">
           <div class="text-align-start text-title">{{ article.title }}</div>
@@ -14,7 +14,7 @@
               <div>
                 {{ article.createdAt.substring(0, 10) }}
               </div>
-            </span> 
+            </span>
             <span class="fix-width">
               <font-awesome-icon :icon="['far', 'star']" class="padding-right small-icon"/>{{ article.likes }}
             </span>
@@ -26,9 +26,15 @@
 </template>
 
 <script>
+import SERVER from "@/api/drf.js";
 export default {
   name: "PostListItem",
   props: [ 'article' ],
+  data() {
+    return {
+      imageURL: SERVER.IMAGE_URL + this.article.image,
+    }
+  },
 }
 </script>
 
