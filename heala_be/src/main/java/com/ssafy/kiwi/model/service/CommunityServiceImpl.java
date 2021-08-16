@@ -27,7 +27,21 @@ public class CommunityServiceImpl implements CommunityService {
 	final private LikeUserRepository likeUserRepository;
 	final private ScrapRepository scrapRepository;
 
-	// 커뮤니티 전체 글 목록 가져오기
+	// Best 글에 들어갈 좋아요 기준 설정
+	private final int CRITERION = 100;
+
+	
+	// 커뮤니티 전체 BEST 글 목록 가져오기
+	@Override
+	public List<Post> getAllBestPostList(int page) {
+		final int access = 0; // 전체 공개: 0
+		
+		Page<Post> postPage = communityRepository.getPostByAccessAndLikesGreaterThan(access, CRITERION, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
+		List<Post> postList = postPage.getContent();
+		return postList;
+	}
+	
+	// 커뮤니티 전체 최신글 목록 가져오기
 	@Override
 	public List<Post> getAllPostList(int page) {
 		final int access = 0; // 전체 공개: 0
@@ -36,9 +50,6 @@ public class CommunityServiceImpl implements CommunityService {
 		List<Post> postList = postPage.getContent();
 		return postList;
 	}
-	
-	// Best 글에 들어갈 좋아요 기준 설정
-	private final int CRITERION = 100;
 
 	// 카테고리와 서브 카테고리에 맞는 글 목록 가져오기
 	@Override

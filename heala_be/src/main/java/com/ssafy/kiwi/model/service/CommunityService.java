@@ -10,7 +10,10 @@ import com.ssafy.kiwi.model.domain.entity.Scrap;
 
 public interface CommunityService {
 	
-	// 전체 글 목록 반환하기
+	// 전체 BEST 글 목록 반환하기
+	List<Post> getAllBestPostList(int page);
+	
+	// 전체 최신글 목록 반환하기
 	List<Post> getAllPostList(int page);
 
 	// 카테고리(운동,식단,마음)와 서브 카테고리(일반, Best, 정보, 질문)에 따라 글 목록 반환하기
