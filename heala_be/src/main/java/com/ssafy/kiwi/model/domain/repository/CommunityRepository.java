@@ -25,4 +25,7 @@ public interface CommunityRepository extends JpaRepository<Post,Integer>{
 	
 	@Query(value = "select * from post p WHERE p.title LIKE %:word% OR p.content LIKE %:word% and access = :access", nativeQuery = true)
 	List<Post> getAllPostByWordAndAccess(String word, int access);
+	
+	//스트랩한 게시글 목록 가져오기
+	Page<Post> getPostByIdIn(List<Integer> id, Pageable pageable);
 }
