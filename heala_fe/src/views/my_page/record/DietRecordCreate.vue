@@ -55,9 +55,9 @@
         <input type="number" class='get-input bg-gray' id="foods-sodium" v-model="foods.sodium" maxlength="10" placeholder="단위: mg">
       </el-col>
     <button @click="oneHalf" class="select-food-number">1/2배</button>
-    <!-- <button @click="minus" class="select-food-number">-1개</button> -->
+    <button @click="minus" class="select-food-number">-1개</button>
     {{ number }}개
-    <!-- <button @click="plus" class="select-food-number">+1개</button> -->
+    <button @click="plus" class="select-food-number">+1개</button>
     <button @click="twice" class="select-food-number">2배</button>
     <br>
     <button id="addFoods" class="bg-green get-input join-button-setting" @click="addFoods(foods)">추가하기</button>
@@ -86,13 +86,13 @@ export default {
         sodium: "", // 나트륨
         userId: "",
       },
-      // oneFood: {
-      //   calory: "",
-      //   carbohydrate: "", // 탄수화물
-      //   protein: "",
-      //   fat: "",
-      //   sodium: "", // 나트륨
-      // },
+      oneFood: {
+        calory: "",
+        carbohydrate: "", // 탄수화물
+        protein: "",
+        fat: "",
+        sodium: "", // 나트륨
+      },
       foodNameSearch: "",
       foodList: [],
       image: "",
@@ -124,7 +124,14 @@ export default {
       console.log(`${SERVER.URL}${SERVER.ROUTES.dietupload}`)
       axios.post(`${SERVER.URL}${SERVER.ROUTES.dietupload}`, foods)
         .then (() => {
-          console.log('추가 완료')
+          alert('추가 완료!')
+          this.foods['foodName'] = ""
+          this.foods['calory'] = ""
+          this.foods['carbohydrate'] = ""
+          this.foods['protein'] = ""
+          this.foods['fat'] = ""
+          this.foods['sodium'] = ""
+          scrollBy(0, -document.body.scrollHeight) // 맨 위로 올랴줌
         })
         .catch(() => {
           console.log('추가 실패')
@@ -172,7 +179,13 @@ export default {
       this.foods['fat'] = this.set_number[3]
       this.foods['sodium'] = this.set_number[4]
       scrollBy(0, document.body.scrollHeight) // 맨 밑으로 내려줌
+
       this.number = 1
+      this.oneFood['calory'] = this.foods['calory']
+      this.oneFood['carbohydrate'] = this.foods['carbohydrate']
+      this.oneFood['protein'] = this.foods['protein']
+      this.oneFood['fat'] = this.foods['fat']
+      this.oneFood['sodium'] = this.foods['sodium']
     },
     selectNutrient: function (food) {
       this.foodList = []
@@ -183,47 +196,59 @@ export default {
       this.foods['fat'] = food.NUTR_CONT4
       this.foods['sodium'] = food.NUTR_CONT6
       scrollBy(0, document.body.scrollHeight) // 맨 밑으로 내려줌
+
       this.number = 1
-      // this.oneFood = this.foods
-      // console.log(this.oneFood)
+      this.oneFood['calory'] = this.foods['calory']
+      this.oneFood['carbohydrate'] = this.foods['carbohydrate']
+      this.oneFood['protein'] = this.foods['protein']
+      this.oneFood['fat'] = this.foods['fat']
+      this.oneFood['sodium'] = this.foods['sodium']
     },
     twice: function () {
       this.number *= 2
       this.foods['calory'] *= 2
       this.foods['calory'].toFixed(0)
       this.foods['carbohydrate'] *= 2
+      this.foods['carbohydrate'].toFixed(2)
       this.foods['protein'] *= 2
+      this.foods['protein'].toFixed(2)
       this.foods['fat'] *= 2
+      this.foods['fat'].toFixed(2)
       this.foods['sodium'] *= 2
+      this.foods['sodium'].toFixed(0)
     },
     oneHalf: function () {
       this.number /= 2
       this.foods['calory'] /= 2
+      this.foods['calory'].toFixed(0)
       this.foods['carbohydrate'] /= 2
+      this.foods['carbohydrate'].toFixed(2)
       this.foods['protein'] /= 2
+      this.foods['protein'].toFixed(2)
       this.foods['fat'] /= 2
+      this.foods['fat'].toFixed(2)
       this.foods['sodium'] /= 2
+      this.foods['sodium'].toFixed(0)
     },
-    // plus: function () {
-    //   this.number += 1
-    //   this.foods['calory'] += parseInt(this.oneFood['calory'])
-    //   // this.foods['calory'].toFixed(2)
-    //   this.foods['carbohydrate'] += this.oneFood['carbohydrate']
-    //   this.foods['protein'] += this.oneFood['protein']
-    //   this.foods['fat'] += this.oneFood['fat']
-    //   this.foods['sodium'] += this.oneFood['sodium']
-    // },
-    // minus: function () {
-    //   if (this.number > 0) {
-    //     this.number -= 1
-    //     this.foods['calory'] -= this.oneFood['calory']
-    //     this.foods['carbohydrate'] -= this.oneFood['carbohydrate']
-    //     this.foods['protein'] -= this.oneFood['protein']
-    //     this.foods['fat'] -= this.oneFood['fat']
-    //     this.foods['sodium'] -= this.oneFood['sodium']
-    //   }
-
-    // },
+    plus: function () {
+      this.number += 1
+      this.foods['calory'] = (parseFloat(this.foods['calory']) + parseFloat(this.oneFood['calory'])).toFixed(0)
+      this.foods['carbohydrate'] = (parseFloat(this.foods['carbohydrate']) + parseFloat(this.oneFood['carbohydrate'])).toFixed(2)
+      this.foods['protein'] = (parseFloat(this.foods['protein']) + parseFloat(this.oneFood['protein'])).toFixed(2)
+      this.foods['fat'] = (parseFloat(this.foods['fat']) + parseFloat(this.oneFood['fat'])).toFixed(2)
+      this.foods['sodium'] = (parseFloat(this.foods['sodium']) + parseFloat(this.oneFood['sodium'])).toFixed(0)
+    },
+    minus: function () {
+      if (this.number - 1 < 0) {
+        return
+      }
+      this.number -= 1
+      this.foods['calory'] = (parseFloat(this.foods['calory']) - parseFloat(this.oneFood['calory'])).toFixed(0)
+      this.foods['carbohydrate'] = (parseFloat(this.foods['carbohydrate']) - parseFloat(this.oneFood['carbohydrate'])).toFixed(2)
+      this.foods['protein'] = (parseFloat(this.foods['protein']) - parseFloat(this.oneFood['protein'])).toFixed(2)
+      this.foods['fat'] = (parseFloat(this.foods['fat']) - parseFloat(this.oneFood['fat'])).toFixed(2)
+      this.foods['sodium'] = (parseFloat(this.foods['sodium']) - parseFloat(this.oneFood['sodium'])).toFixed(0)
+    },
   },
   created () {
     this.foods.userId = localStorage.getItem('userId')
