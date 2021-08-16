@@ -10,7 +10,8 @@
     <div v-if="foodList">
       <div v-for="food, idx in foodList" :key="idx">
         <button class="select-food-button" @click="selectNutrient(food)">
-          {{ food.ANIMAL_PLANT }}, {{ food.DESC_KOR }}  
+          <span v-if="food.ANIMAL_PLANT"> [{{ food.ANIMAL_PLANT }}] </span>
+           {{ food.DESC_KOR }}  
         </button>
       </div>
     </div>
