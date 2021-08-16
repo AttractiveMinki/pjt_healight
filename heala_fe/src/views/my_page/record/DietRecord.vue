@@ -3,6 +3,10 @@
     <Navbar />
     <el-row>
       <el-col :span="12">
+        <router-link :to="{ name: 'ProfilePhysInfo' }" class="text-decoration-none">
+          <span v-if="register == false" style="color: red; font-size: 13px">프로필 등록 후 사용하세요</span>
+        </router-link>
+        
         <h2>하루 영양 정보</h2>
         <div style="font-size:18px"> <span style="font-weight: bold">{{ diet.calory }}kcal </span> / {{ recommend.calory }}</div>
         <div v-if="diet.calory - recommend.calory < 0" style="font-size:18px; color: #289B2D">{{ (100 - (diet.calory / recommend.calory) * 100).toFixed(2)}}% 남음</div>

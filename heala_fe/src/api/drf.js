@@ -54,5 +54,6 @@ export default {
     getDietRecordToday: "/diet/record",
     getMonthDietRecord: "/diet/calender",
     getFoodnutrient: "/data",
+    profilePhysInfo: "/body/register",
   }
 }

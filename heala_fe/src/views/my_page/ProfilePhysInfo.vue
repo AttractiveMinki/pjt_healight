@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+import SERVER from "@/api/drf.js"
 import Navbar from "@/components/my_page/Navbar"
 
 export default {
@@ -59,6 +61,7 @@ export default {
   data: function () {
     return {
       data: {
+        userId: "",
         gender: true,
         birth: "",
         height: "",
@@ -80,10 +83,17 @@ export default {
     },
     submit(data) {
       console.log(data)
-      // axios.post(URL, data)
-      // .then((res) => {})
-      // .catch((err) => {})
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.profilePhysInfo}`, data)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     },
+  },
+  created() {
+    this.data.userId = localStorage.getItem('userId')
   },
   // mounted() {
   //   // 프로필 기존 정보 불러오기 -> 함수를 선언하고 따로 뺀 뒤, mounted에는 함수 이름만 호출하면 될 듯.
