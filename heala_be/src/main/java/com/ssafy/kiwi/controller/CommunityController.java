@@ -150,8 +150,15 @@ public class CommunityController {
 	
 	@ApiOperation(value = "커뮤니티 전체에서 글 검색")
 	@GetMapping("/search/{word}")
-	public Object getUserListByWord(@PathVariable String word){
-		List<Post> searchPostList = communityService.getAllPostListByWord(word);
+	public Object getAllPostListByWord(@PathVariable String word, int page){
+		List<Post> searchPostList = communityService.getAllPostListByWord(word, page);
 		return new ResponseEntity<>(searchPostList, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "카테고리와 서브 카테고리에 맞는 글 목록 가져오기")
+	@GetMapping("/category/search/{word}")
+	public Object getPostListByWord(@RequestParam int category, @RequestParam int subCategory, @PathVariable String word, int page) {
+		List<Post> postList = communityService.getPostListByWord(category, subCategory, word, page);
+		return new ResponseEntity<>(postList, HttpStatus.OK);
 	}
 }

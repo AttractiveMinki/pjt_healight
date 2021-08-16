@@ -15,9 +15,9 @@ public interface FeedRepository extends JpaRepository<Post,Integer>{
 	@Query(value = "SELECT * FROM post WHERE (user_id IN (:onewayfollowIdList) AND access = 0) or (user_id IN (:followForFollowIdList) AND access in (0,1))", nativeQuery = true)
 	Page<Post> getByFollowAndAccess(List<Integer> onewayfollowIdList, List<Integer> followForFollowIdList, Pageable pageable);
 
-	Page<Post> getByUserId(int userId, Pageable pageable);
+	Page<Post> getByUserIdAndCategory(int userId, int category, Pageable pageable);
 
 	//공개범위에 따른 Post 목록 반환
-	@Query(value = "SELECT p FROM Post p WHERE (p.access BETWEEN 0 AND :num) AND p.userId = :userId")
-	Page<Post> getLimitByUserId(int userId, int num, Pageable pageable);
+	@Query(value = "SELECT p FROM Post p WHERE (p.access BETWEEN 0 AND :num) AND p.userId = :userId AND p.category= :category")
+	Page<Post> getLimitByUserIdAndCategory(int userId, int num, int category, Pageable pageable);
 }
