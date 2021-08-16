@@ -28,6 +28,8 @@ export default {
     feed: "/feed/",
     followList: "/followList",
     userSearch: "/user/search",
+    postSearch: "/community/search",
+    postSearchCategory: "/community/category/search",
 
     // 원석 #@
 

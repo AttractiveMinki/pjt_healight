@@ -25,9 +25,9 @@
     </community-category-bar>
     <div v-else class="total-rest"></div>
     <div class="search-box">
-      <search-box></search-box>
+      <search-box @search="search"></search-box>
     </div>
-    <post-list :category="category"></post-list>
+    <post-list :category="category" :keyword="keyword" @changeCategory="keyword=''" @changeSubCategory="keyword=''"></post-list>
 
     <Footer />
   </div>
@@ -44,7 +44,13 @@ export default {
   data() {
     return {
       category: 3,
-      subCategory: 0,
+      subCategory: 3,
+      keyword: "",
+    }
+  },
+  methods: {
+    search(keyword) {
+      this.keyword = keyword;
     }
   },
   components: { CommunityCategoryBar, SearchBox, PostList, Footer, },
