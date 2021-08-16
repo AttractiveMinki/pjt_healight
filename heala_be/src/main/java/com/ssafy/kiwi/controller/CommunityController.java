@@ -30,7 +30,13 @@ public class CommunityController {
 	
 	final private CommunityService communityService;
 	
-	@ApiOperation(value = "커뮤니티 전체 글 목록 가져오기")
+	@ApiOperation(value = "커뮤니티 전체 BEST 글 목록 가져오기")
+	@GetMapping("/best")
+	public ResponseEntity<List<Post>> getAllBestPostList(int page) {
+		return new ResponseEntity<>(communityService.getAllBestPostList(page), HttpStatus.OK);
+	} 
+	
+	@ApiOperation(value = "커뮤니티 전체 최신글 목록 가져오기")
 	@GetMapping
 	public ResponseEntity<List<Post>> getAllPostList(int page) {
 		return new ResponseEntity<>(communityService.getAllPostList(page), HttpStatus.OK);

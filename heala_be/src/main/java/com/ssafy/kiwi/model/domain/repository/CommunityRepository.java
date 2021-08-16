@@ -11,6 +11,9 @@ import com.ssafy.kiwi.model.domain.entity.Post;
 
 public interface CommunityRepository extends JpaRepository<Post,Integer>{
 
+	// 전체 BEST 글 목록 가져오기
+	Page<Post> getPostByAccessAndLikesGreaterThan(int access, int criterion, Pageable pageable);
+	
 	Page<Post> getPostByAccess(int access, Pageable pageable);
 	Page<Post> getPostByCategoryAndSubCategoryAndAccess(int category, int subCategory, int access, Pageable pageable);
 	Page<Post> getPostByCategoryAndAccessAndLikesGreaterThan(int category, int access, int criterion, Pageable pageable);

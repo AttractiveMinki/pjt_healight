@@ -27,30 +27,37 @@ public class CommunityServiceImpl implements CommunityService {
 	final private LikeUserRepository likeUserRepository;
 	final private ScrapRepository scrapRepository;
 
-	// 커뮤니티 전체 글 목록 가져오기
+	// Best 글에 들어갈 좋아요 기준 설정
+	private final int CRITERION = 100;
+	private final int publicAccess = 0;
+
+	
+	// 커뮤니티 전체 BEST 글 목록 가져오기
 	@Override
-	public List<Post> getAllPostList(int page) {
-		final int access = 0; // 전체 공개: 0
-		
-		Page<Post> postPage = communityRepository.getPostByAccess(access, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
+	public List<Post> getAllBestPostList(int page) {
+		Page<Post> postPage = communityRepository.getPostByAccessAndLikesGreaterThan(publicAccess, CRITERION, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
 		List<Post> postList = postPage.getContent();
 		return postList;
 	}
 	
-	// Best 글에 들어갈 좋아요 기준 설정
-	private final int CRITERION = 100;
+	// 커뮤니티 전체 최신글 목록 가져오기
+	@Override
+	public List<Post> getAllPostList(int page) {
+		Page<Post> postPage = communityRepository.getPostByAccess(publicAccess, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
+		List<Post> postList = postPage.getContent();
+		return postList;
+	}
 
 	// 카테고리와 서브 카테고리에 맞는 글 목록 가져오기
 	@Override
 	public List<Post> getPostList(int category, int subCategory, int page) {
 		Page<Post> postPage;
-		final int access = 0; // 전체 공개: 0
 		
 		// Best 게시글: 3
 		if (subCategory == 3) { 
-			postPage = communityRepository.getPostByCategoryAndAccessAndLikesGreaterThan(category, access, CRITERION, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
+			postPage = communityRepository.getPostByCategoryAndAccessAndLikesGreaterThan(category, publicAccess, CRITERION, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
 		} else {
-			postPage = communityRepository.getPostByCategoryAndSubCategoryAndAccess(category, subCategory, access, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
+			postPage = communityRepository.getPostByCategoryAndSubCategoryAndAccess(category, subCategory, publicAccess, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
 		}
 		List<Post> postList = postPage.getContent();
 		return postList;
@@ -201,8 +208,7 @@ public class CommunityServiceImpl implements CommunityService {
 	// 전체 글 중 단어를 제목or내용or해시태그에 포함하는 글 목록 반환하기
 	@Override
 	public List<Post> getAllPostListByWord(String word, int page) {
-		final int access = 0; // 전체 공개: 0
-		Page<Post> postPage = communityRepository.getAllPostByWordAndAccess(word, access, PageRequest.of(page, 10, Sort.by("created_at").descending()));
+		Page<Post> postPage = communityRepository.getAllPostByWordAndAccess(word, publicAccess, PageRequest.of(page, 10, Sort.by("created_at").descending()));
 		 List<Post> searchPostList = postPage.getContent();
 		 return searchPostList;
 	}
@@ -210,15 +216,14 @@ public class CommunityServiceImpl implements CommunityService {
 	// 카테고리 분류별 글 중 단어를 제목or내용or해시태그에 포함하는 글 목록 반환하기
 	@Override
 	public List<Post> getPostListByWord(int category, int subCategory, String word, int page) {
-		final int access = 0; // 전체 공개: 0
 		Page<Post> postPage;
 
 		// Best 게시글: 3
 		if (subCategory == 3) {
-			postPage = communityRepository.getBestCategoryPostByWord(category, access, CRITERION, word,
+			postPage = communityRepository.getBestCategoryPostByWord(category, publicAccess, CRITERION, word,
 					PageRequest.of(page, 10, Sort.by("created_at").descending()));
 		} else {
-			postPage = communityRepository.getCategoryPostByWord(category, subCategory, access, word,
+			postPage = communityRepository.getCategoryPostByWord(category, subCategory, publicAccess, word,
 					PageRequest.of(page, 10, Sort.by("created_at").descending()));
 		}
 
