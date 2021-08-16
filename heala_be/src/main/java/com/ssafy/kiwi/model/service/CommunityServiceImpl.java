@@ -198,11 +198,26 @@ public class CommunityServiceImpl implements CommunityService {
 		return likeUser.isPresent();
 	}
 
-	// 전체 글 중 단어를 제목, 내용, 해시태그에 포함하는 글 목록 반환
+	// 전체 글 중 단어를 제목or내용or해시태그에 포함하는 글 목록 반환하기
 	@Override
 	public List<Post> getAllPostListByWord(String word) {
 		final int access = 0; // 전체 공개: 0
 		List<Post> searchPostList = communityRepository.getAllPostByWordAndAccess(word, access);
 		return searchPostList;
 	}
+	
+	// 카테고리 분류별 글 중 단어를 제목or내용or해시태그에 포함하는 글 목록 반환하기
+		@Override
+		public List<Post> getPostListByWord(int category, int subCategory, String word) {
+			final int access = 0; // 전체 공개: 0
+			List<Post> postList;
+			
+			// Best 게시글: 3
+			if (subCategory == 3) { 
+				postList = communityRepository.getBestCategoryPostByWord(category, access, CRITERION, word);
+			} else {
+				postList = communityRepository.getCategoryPostByWord(category, subCategory, access, word);
+			}
+			return postList;
+		}
 }
