@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <h1>식단 기록하기</h1>
+    <h1>식단 캘린더</h1>
     <DietCallender />
     <br>
     <div> 내 식단 정보를 달력에서 확인해보세요! </div>

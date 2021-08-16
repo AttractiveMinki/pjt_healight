@@ -106,4 +106,7 @@ export default {
   .artificial-padding-right {
     padding-right: 10%;
   }
+  .get-input:focus {
+    outline: none;
+  }
 </style>

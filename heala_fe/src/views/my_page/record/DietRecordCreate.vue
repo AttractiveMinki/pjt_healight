@@ -6,7 +6,7 @@
 
     <!-- <input type="text" class='get-input bg-gray' id="foodName" v-model="data.foodName" > -->
     <input type="text" id="foodNameSearch" v-model="foodNameSearch" style="margin-right: 2vw" @keyup.enter="getFoodInfo()">
-    <el-button @click="getFoodInfo()">음식 등록</el-button>
+    <el-button @click="getFoodInfo()">음식 검색</el-button>
     <div v-if="foodList">
       <div v-for="food, idx in foodList" :key="idx">
         <button class="select-food-button" @click="selectNutrient(food)">
