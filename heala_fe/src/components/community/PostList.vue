@@ -1,14 +1,6 @@
 <template>
   <div class="article-bottom-padding">
-		<!-- <el-col :span="12" class="text-align-start padding-1">
-			<span>BEST 게시글</span>
-		</el-col> -->
 		<div class="post-list-title">{{ subCategory[selectedSubCategory] }} 게시글</div>
-		<!-- <el-col :span="12" class="text-align-end padding-1 community-title">
-			<i class="margin-left-10 el-icon-arrow-right"></i>
-			<span>최신 글 보기</span>
-		</el-col> -->
-			<!-- <hr> -->
 		<div v-for="(article, idx) in communityArticles" :key="idx" class="post-list-item">
 			<post-list-item :article="article"></post-list-item>
 		</div>
