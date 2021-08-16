@@ -24,9 +24,9 @@ public interface FeedService {
 	public Map<String, Object> getUserFeed(int userId, int myId);
 	
 	// 개인 피드 게시글 가져오기(본인 피드)
-	public List<PostSimpleOp> getMyPost(int userId, int category);
+	public List<PostSimpleOp> getMyPost(int userId, int category, int page);
 	// 개인 피드 게시글 가져오기(타인 피드)
-	public List<PostSimpleOp> getUserPost(int userId, int myId, int category);
+	public List<PostSimpleOp> getUserPost(int userId, int myId, int category, int page);
 
 	// 팔로워 목록 가져오기
 	public List<UserFollowOp> getFollower(int userId, int myId, int page);

@@ -136,9 +136,12 @@ public class FeedServiceImpl implements FeedService {
 	
 	// 개인 피드 게시글 가져오기(본인 피드)
 	@Override
-	public List<PostSimpleOp> getMyPost(int userId, int category) {
-		List<Post> postList = feedRepository.getByUserIdAndCategory(userId, category);
+	public List<PostSimpleOp> getMyPost(int userId, int category, int page) {
+		
 		List<PostSimpleOp> list = new ArrayList<>();
+
+		Page<Post> postPage = feedRepository.getByUserIdAndCategory(userId, category, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
+		List<Post> postList = postPage.getContent();
 		
 		for (Post p : postList) {
 			list.add(new PostSimpleOp(p.getId(), p.getImage()));
@@ -148,14 +151,15 @@ public class FeedServiceImpl implements FeedService {
 	
 	// 개인 피드 게시글 가져오기(타인 피드)
 	@Override
-	public List<PostSimpleOp> getUserPost(int userId, int myId, int category) {
+	public List<PostSimpleOp> getUserPost(int userId, int myId, int category, int page) {
 		
+		List<PostSimpleOp> list = new ArrayList<>();
+
 		int num = followRepository.countFollowState(userId, myId);
 		if(num==2) num = 1; //맞팔인 경우
 		else num = 0; //그 외 경우
-		List<Post> postList = feedRepository.getLimitByUserIdAndCategory(userId, num, category);
-		
-		List<PostSimpleOp> list = new ArrayList<>();
+		Page<Post> postPage = feedRepository.getLimitByUserIdAndCategory(userId, num, category, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
+		List<Post> postList = postPage.getContent();
 		
 		for (Post p : postList) {
 			list.add(new PostSimpleOp(p.getId(), p.getImage()));

@@ -67,14 +67,14 @@ public class FeedController {
 	
 	@ApiOperation(value = "게시글 가져오기(본인피드)")
 	@GetMapping("/post/{userId}/my/{category}")
-	public Object getMyPost(@PathVariable int userId, @PathVariable int category) {
-		return new ResponseEntity<>(feedService.getMyPost(userId, category), HttpStatus.OK);
+	public Object getMyPost(@PathVariable int userId, @PathVariable int category, int page) {
+		return new ResponseEntity<>(feedService.getMyPost(userId, category, page), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "게시글 가져오기(타인피드)")
 	@GetMapping("/post/{userId}/{myId}/{category}")
-	public Object getUserPost(@PathVariable int userId, @PathVariable int myId, @PathVariable int category) {
-		return new ResponseEntity<>(feedService.getUserPost(userId, myId, category), HttpStatus.OK);
+	public Object getUserPost(@PathVariable int userId, @PathVariable int myId, @PathVariable int category, int page) {
+		return new ResponseEntity<>(feedService.getUserPost(userId, myId, category, page), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "팔로워 / 팔로잉 목록 보기")
