@@ -53,16 +53,28 @@ public class FeedController {
 	}
 	
 	
-	@ApiOperation(value = "개인 피드 보기 (본인피드)")
+	@ApiOperation(value = "게시글 제외 개인 피드 정보 가져오기(본인피드)")
 	@GetMapping("/{userId}/my")
-	public Object getMyFeed(@PathVariable int userId, int page) {
-		return new ResponseEntity<>(feedService.getMyFeed(userId, page), HttpStatus.OK);
+	public Object getMyFeed(@PathVariable int userId) {
+		return new ResponseEntity<>(feedService.getMyFeed(userId), HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "개인 피드 보기 (타인피드)")
+	@ApiOperation(value = "게시글 제외 개인 피드 정보 가져오기(타인피드)")
 	@GetMapping("/{userId}/{myId}")
-	public Object getUserFeed(@PathVariable int userId, @PathVariable int myId, int page) {
-		return new ResponseEntity<>(feedService.getUserFeed(userId, myId, page), HttpStatus.OK);
+	public Object getUserFeed(@PathVariable int userId, @PathVariable int myId) {
+		return new ResponseEntity<>(feedService.getUserFeed(userId, myId), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "게시글 가져오기(본인피드)")
+	@GetMapping("/post/{userId}/my/{category}")
+	public Object getMyPost(@PathVariable int userId, @PathVariable int category, int page) {
+		return new ResponseEntity<>(feedService.getMyPost(userId, category, page), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "게시글 가져오기(타인피드)")
+	@GetMapping("/post/{userId}/{myId}/{category}")
+	public Object getUserPost(@PathVariable int userId, @PathVariable int myId, @PathVariable int category, int page) {
+		return new ResponseEntity<>(feedService.getUserPost(userId, myId, category, page), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "팔로워 / 팔로잉 목록 보기")
