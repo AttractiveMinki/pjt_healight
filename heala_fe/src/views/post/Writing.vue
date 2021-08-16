@@ -136,7 +136,7 @@ export default {
       console.log(imgFile)
       console.log(formData)
       console.log(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`)
-      axios.post(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`, formData, { headers: {'Content-Type' : 'multipart/form-data'}})
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`, formData, { headers: {"Content-Type" : "multipart/form-data"}})
         .then(res => {
           console.log('통신 성공')
           console.log(res)
