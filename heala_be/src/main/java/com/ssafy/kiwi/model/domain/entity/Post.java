@@ -12,6 +12,7 @@ import java.util.Date;
 @Entity(name = "Post")
 @Builder
 @Getter
+@Setter
 @ToString
 @Table(name = "post")
 public class Post {

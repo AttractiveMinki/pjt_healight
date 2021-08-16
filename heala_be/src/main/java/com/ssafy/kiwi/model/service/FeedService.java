@@ -14,6 +14,8 @@ public interface FeedService {
 	public void post(PostIp postIp);
 	// 글 삭제
 	public boolean delete(int postId, int userId);
+	// 글 수정
+	public boolean update(int postId, PostIp postIp);
 	
 	// 자신이 팔로우 하고 있는 사람들의 Post 목록을 가져옴(공개 범위가 전체로 되어있는 것 + 양쪽 팔로우를 하고 있는 경우 친구 공개 Post까지)
 	public List<Post> getPostList(int userId, int page);
@@ -35,4 +37,5 @@ public interface FeedService {
 	
 	// 스크랩 게시글 목록 가져오기
 	public Object getScrapList(int userId, int page);
+	
 }
