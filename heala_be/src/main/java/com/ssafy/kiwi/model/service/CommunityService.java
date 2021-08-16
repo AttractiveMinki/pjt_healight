@@ -56,8 +56,8 @@ public interface CommunityService {
 	boolean getLike(int postId, int userId);
 
 	// 전체 글 중 단어를 제목or내용or카테고리에 포함하는 글 목록 반환하기
-	List<Post> getAllPostListByWord(String word);
+	List<Post> getAllPostListByWord(String word, int page);
 
 	// 카테고리 분류별 글 중 단어를 제목or내용or카테고리에 포함하는 글 목록 반환하기
-	List<Post> getPostListByWord(int category, int subCategory, String word);
+	List<Post> getPostListByWord(int category, int subCategory, String word, int page);
 }
