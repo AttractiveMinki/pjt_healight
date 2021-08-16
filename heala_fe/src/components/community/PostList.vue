@@ -1,14 +1,11 @@
 <template>
   <div class="article-bottom-padding">
-		<!-- <el-col :span="12" class="text-align-start padding-1">
-			<span>BEST 게시글</span>
-		</el-col> -->
-		<div class="post-list-title">{{ subCategory[selectedSubCategory] }} 게시글</div>
-		<!-- <el-col :span="12" class="text-align-end padding-1 community-title">
-			<i class="margin-left-10 el-icon-arrow-right"></i>
-			<span>최신 글 보기</span>
-		</el-col> -->
-			<!-- <hr> -->
+		<div v-show="!searchAllPost && !searchPostByCategory" class="post-list-title">
+      {{ subCategory[selectedSubCategory] }} 게시글
+    </div>
+    <div v-show="searchAllPost || searchPostByCategory" class="post-list-title">
+      검색결과
+    </div>
 		<div v-for="(article, idx) in communityArticles" :key="idx" class="post-list-item">
 			<post-list-item :article="article"></post-list-item>
 		</div>
@@ -28,13 +25,15 @@ import { mapState } from "vuex";
 
 export default {
   name: "PostList",
-  props: [ 'category' ],
+  props: [ 'category', 'keyword' ],
 	data() {
 		return {
 			communityArticles: [],
       limit: 0,
-      subCategory: [ "BEST", "일반", "정보", "질문", "익명" ],
+      subCategory: [ "일반", "정보", "질문", "BEST", ],
       infiniteId: 0,
+      searchAllPost: false,
+      searchPostByCategory: false,
     }
 	},
 	created() {
@@ -47,23 +46,54 @@ export default {
   },
   watch: {
     category() {
-      this.limit = 0;
-      this.infiniteId++;
+      this.initPage();
       if(this.category == 3) {
-        this.$store.state.selectedSubCategory = 0;
+        this.$store.state.selectedSubCategory = 3;
         this.getInitialCommunityInfo();
       }
       else {
         this.getInitialPostListByCategory();
       }
+      this.$emit("changeCategory");
     },
     selectedSubCategory() {
-      this.limit = 0;
-      this.infiniteId++;
+      this.initPage();
       this.getInitialPostListByCategory();
-    }
+      this.$emit("changeSubCategory");
+    },
+    keyword() {
+      this.initPage();
+      if(!this.keyword.length) {
+        this.searchPostByCategory = false;
+        this.searchAllPost = false;
+        if(this.category == 3) {
+          this.$store.state.selectedSubCategory = 3;
+          this.getInitialCommunityInfo();
+        }
+        else {
+          this.getInitialPostListByCategory();
+        }
+      }
+      else if(this.category == 3) {
+        this.searchPostByCategory = false;
+        this.searchAllPost = true;
+        this.getInitialSearchPostList();
+      }
+      else {
+        this.searchAllPost = false;
+        this.searchPostByCategory = true;
+        this.getInitialSearchPostListByCategory();
+      }
+    },
+    // communityArticles() {
+    //   console.log("post list change...", this.communityArticles.length);
+    // }
   },
 	methods: {
+    initPage() {
+      this.limit = 0;
+      this.infiniteId++;
+    },
     async getInitialCommunityInfo() {
       try {
         const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}?page=${this.limit}`)
@@ -96,12 +126,50 @@ export default {
         console.log(err)
       }
     },
+    async getInitialSearchPostList() {
+      try {
+        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.postSearch}?page=${this.limit}&word=${this.keyword}`)
+        this.communityArticles = response.data;
+      } catch(err) {
+        console.log(err)
+      }
+    },
+    async getSearchPostList() {
+      try {
+        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.postSearch}?page=${this.limit}&word=${this.keyword}`)
+        return response.data
+      } catch(err) {
+        console.log(err)
+      }
+    },
+    async getInitialSearchPostListByCategory() {
+      try {
+        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.postSearchCategory}?page=${this.limit}&word=${this.keyword}&category=${this.category}&subCategory=${this.$store.state.selectedSubCategory}`)
+        this.communityArticles = response.data;
+      } catch(err) {
+        console.log(err)
+      }
+    },
+    async getSearchPostListByCategory() {
+      try {
+        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.postSearchCategory}?page=${this.limit}&word=${this.keyword}&category=${this.category}&subCategory=${this.$store.state.selectedSubCategory}`)
+        return response.data;
+      } catch(err) {
+        console.log(err)
+      }
+    },
     async infiniteHandler($state) {
       const EACH_LEN = 10;
       
       this.limit += 1;
       let data;
-      if(this.category == 3){
+      if(this.searchAllPost) {
+        data = await this.getSearchPostList();
+      }
+      else if(this.searchPostByCategory) {
+        data = await this.getSearchPostListByCategory();
+      }
+      else if(this.category == 3){
         data = await this.getCommunityInfo();
       }
       else {
