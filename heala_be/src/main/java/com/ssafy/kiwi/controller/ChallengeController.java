@@ -61,7 +61,6 @@ public class ChallengeController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	
 	@ApiOperation(value = "키위 챌린지 목록 조회하기.")
 	@GetMapping("/kiwi")
 	public Object getKiwiChallenge() {

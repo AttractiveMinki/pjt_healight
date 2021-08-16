@@ -26,4 +26,7 @@ public interface FeedService {
 	public List<UserFollowOp> getFollower(int userId, int myId, int page);
 	// 팔로잉 목록 가져오기
 	public List<UserFollowOp> getFollowing(int userId, int myId, int page);
+	
+	// 스크랩 게시글 목록 가져오기
+	public Object getScrapList(int userId, int page);
 }

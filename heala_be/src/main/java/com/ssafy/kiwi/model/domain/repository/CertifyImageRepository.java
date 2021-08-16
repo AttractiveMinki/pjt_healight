@@ -13,5 +13,7 @@ public interface CertifyImageRepository extends JpaRepository<CertifyImage, Inte
 	List<CertifyImage> getAllByUserIdAndWithChallengeId(int userId, int withChallengeId);
 
 	List<CertifyImage> getAllByUserIdAndWithChallengeIdOrderByTimeDesc(int userId, int withChallengeId);
+
+	List<CertifyImage> getAllByWithChallengeIdOrderByTimeDesc(int withChallengeId);
 	
 }
