@@ -38,4 +38,7 @@ public interface WithChallengeService {
 
 	// 마이 챌린지 - 인증사진 모아보기
 	public List<CertifyImageOp> photoMyChallenge(int userId, int withChallengeId);
+
+	// 함께 챌린지 - 인증사진 모아보기
+	public List<CertifyImageOp> photoWithChallenge(int withChallengeId);
 }
