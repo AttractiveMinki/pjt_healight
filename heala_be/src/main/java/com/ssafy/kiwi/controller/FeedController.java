@@ -39,6 +39,13 @@ public class FeedController {
 			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 		}
 	}
+	
+	@ApiOperation(value = "글 수정하기")
+	@PatchMapping("/post")
+	public Object update(@RequestParam int postId, @RequestBody PostIp postIp) {
+		if(feedService.update(postId, postIp)) return new ResponseEntity<>(HttpStatus.OK);
+		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
 
 	@ApiOperation(value = "홈 피드 보기")
 	@GetMapping("/home/{userId}")
