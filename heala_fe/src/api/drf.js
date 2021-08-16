@@ -61,5 +61,7 @@ export default {
     getMonthDietRecord: "/diet/calender",
     getFoodnutrient: "/data",
     profilePhysInfo: "/body/register",
+    getMonthWeiRecord: "/body/calender",
+    getWeightInformation: "/body/record",
   }
 }

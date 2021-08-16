@@ -137,7 +137,7 @@ export default {
     Navbar,
     Footer,
   },
-  mounted() {
+  created() {
     // footer 4로 설정
     this.$store.state.selectedRouter = 4
   

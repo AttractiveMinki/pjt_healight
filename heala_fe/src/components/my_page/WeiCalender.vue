@@ -22,17 +22,32 @@
             </span>
           </td>
         </tr>
-      </el-row>
-      <el-row>
         <tr v-for="(row, index) in currentCalendarMatrix" :key="index">
           <td v-for="(day, index2) in row" :key="index2" style="padding:3vw;">
-            <span v-if="isToday(currentYear, currentMonth, day)" class="rounded">
-              {{ day }}
+            <!-- 오늘 -->
+            <span v-if="isToday(currentYear, currentMonth, day)">
+              <span class="rounded">
+                {{ day }}
+              </span>
+              
+              <!-- 운동한 날이라면 표시  -->
+              <span v-for="(record, idx) in recordDates" :key=idx>
+                <span v-if="day == record" style="margin: 0px; width: 2px; height: 2px">
+                  <router-link :to="{ name: 'WeightRecordPast', params: { id: userId } }" class="text-decoration-none">
+                    <div class="selected-date"></div>
+                    <!-- {{ record }} -->
+                  </router-link>
+                </span>
+                <span v-else style="margin: 2px">
+                </span>
+              </span>
+
             </span>
+
+            <!-- 오늘 외 -->
             <span v-else>
               <span v-if="index2 % 7 == 0" style="color: red">
                 {{ day }}
-                <!-- 데이터가 있다면 점 추가 -->
               </span>
               <span v-else-if="index2 % 7 == 6" style="color: blue">
                 {{ day }}
@@ -40,15 +55,35 @@
               <span v-else>
                 {{ day }}
               </span>
+
+              <!-- 운동한 날이라면 표시  -->
+              <span v-for="(record, idx) in recordDates" :key=idx>
+                <span v-if="day == record" style="margin: 0px; width: 2px; height: 2px">
+                  <router-link :to="{ name: 'WeightRecordPast', params: { id: userId } }" class="text-decoration-none">
+                    <div class="selected-date"></div>
+                    <!-- {{ record }} -->
+                  </router-link>
+                  <!-- 점이 있는 날을 클릭하면, 해당 일의 칼로리 섭취량을 보여준다. -->
+                </span>
+                <span v-else style="margin: 2px">
+                </span>
+              </span>
+
             </span>
           </td>
         </tr>
       </el-row>
-    </table>    
+    <div v-if="currentYear == new Date().getFullYear() && currentMonth == new Date().getMonth() + 1">
+      <input type="number" class="get-weight" v-model="weight"> kg <el-button @click="setTodayWeight()">저장</el-button>
+    </div>
+    </table>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import SERVER from "@/api/drf.js"
+
 export default {
   name: 'WeiCalendar',
   data () {
@@ -62,11 +97,9 @@ export default {
       currentMonthStartWeekIndex: null,
       currentCalendarMatrix: [],
       endOfDay: null,
-      memoDatas: [],
+      recordDates: [],
+      weight: "",
     }
-  },
-  mounted(){
-    this.init();
   },
   methods: {
     init:function(){
@@ -180,8 +213,45 @@ export default {
     isToday: function(year, month, day){
       let date = new Date();
       return year == date.getFullYear() && month == date.getMonth()+1 && day == date.getDate(); 
-    }
-  }
+    },
+
+    getMonthWeiRecord: function () {
+      let Month = ('0000' + this.currentYear).slice(-4) + '-' +  ('00' + this.currentMonth).slice(-2)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getMonthWeiRecord}?month=${Month}&userId=${localStorage.getItem('userId')}`)
+        .then((res) => {
+          this.recordDates = res.data
+        })
+        .catch((err) => {
+          console.error(err)
+          this.recordDates = []
+        })
+    },
+    async setTodayWeight() {
+      try {
+        let data= {
+          "userId": localStorage.getItem('userId'),
+          "weight": this.weight,
+        }
+        await axios.post(`${SERVER.URL}${SERVER.ROUTES.getMonthWeiRecord}`, data)
+        alert('체중 입력이 완료되었습니다.')
+      } catch(err) {
+        console.log(err)
+      }
+    },
+  },
+  mounted(){
+    this.init();
+    this.getMonthWeiRecord()
+    this.userId = localStorage.getItem('userId')
+  },
+  watch: {
+    currentYear: function() {
+      this.getMonthWeiRecord()
+    },
+    currentMonth: function () {
+      this.getMonthWeiRecord()
+    },
+  },
 }
 </script>
 
@@ -202,5 +272,14 @@ export default {
   .text-decoration-none {
     text-decoration: none;
     color: black;
+  }
+  .selected-date {
+    position: absolute;
+    width: 7vw;
+    height: 1vw;
+    background: orange;
+  }
+  .get-weight:focus {
+    outline: none;
   }
 </style>
