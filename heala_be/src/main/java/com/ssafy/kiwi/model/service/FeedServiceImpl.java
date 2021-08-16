@@ -93,28 +93,24 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	
-	//개인 피드 (본인)
+	// 게시글 제외 개인 피드 정보 가져오기(본인)
 	@Override
-	public Map<String, Object> getMyFeed(int userId, int page) {
-		Page<Post> postPage = feedRepository.getByUserId(userId, PageRequest.of(page, 30, Sort.by("createdAt").descending()));
-		List<Post> postList = postPage.getContent();
-		Map<String, Object> map = getFeedPost(postList, getFeedInfo(userId));
+	public Map<String, Object> getMyFeed(int userId) {
+		Map<String, Object> map = getFeedInfo(userId);
 		return map;
 	}
 
-	//개인 피드 (타인)
+	// 게시글 제외 개인 피드 정보 가져오기(타인)
 	@Override
-	public Map<String, Object> getUserFeed(int userId, int myId, int page) {
+	public Map<String, Object> getUserFeed(int userId, int myId) {
 		int num = followRepository.countFollowState(userId, myId);
 		if(num==2) num = 1; //맞팔인 경우
 		else num = 0; //그 외 경우
-		Page<Post> postPage = feedRepository.getLimitByUserId(userId, num, PageRequest.of(page, 30, Sort.by("createdAt").descending()));
-		List<Post> postList = postPage.getContent();
-		Map<String, Object> map = getFeedPost(postList, getFeedInfo(userId));
+		Map<String, Object> map = getFeedInfo(userId);
 		return map;
 	}
 	
-	//개인 피드 정보 - 게시글 제외
+	// 게시글 제외 개인 피드 정보 가져오기
 	public Map<String, Object> getFeedInfo(int userId){
 		User user = userRepository.getById(userId);
 		Map<String, Object> map = new HashMap<>();
@@ -138,21 +134,35 @@ public class FeedServiceImpl implements FeedService {
 		return map;
 	}
 	
-	//개인 피드 정보 - 게시글 추가
-	public Map<String, Object> getFeedPost(List<Post> postList, Map<String, Object> map){
-		List<PostSimpleOp> exerciseList = new ArrayList<>();
-		List<PostSimpleOp> foodList = new ArrayList<>();
-		List<PostSimpleOp> heartList = new ArrayList<>();
-		for(Post p : postList) {
-			if(p.getCategory() == 0) exerciseList.add(new PostSimpleOp(p.getId(), p.getImage()));
-			else if(p.getCategory() == 1) foodList.add(new PostSimpleOp(p.getId(), p.getImage()));
-			else heartList.add(new PostSimpleOp(p.getId(), p.getImage()));
+	// 개인 피드 게시글 가져오기(본인 피드)
+	@Override
+	public List<PostSimpleOp> getMyPost(int userId, int category) {
+		List<Post> postList = feedRepository.getByUserIdAndCategory(userId, category);
+		List<PostSimpleOp> list = new ArrayList<>();
+		
+		for (Post p : postList) {
+			list.add(new PostSimpleOp(p.getId(), p.getImage()));
 		}
-		map.put("exercise", exerciseList);
-		map.put("food", foodList);
-		map.put("heart", heartList);
-		return map;
+		return list;
 	}
+	
+	// 개인 피드 게시글 가져오기(타인 피드)
+	@Override
+	public List<PostSimpleOp> getUserPost(int userId, int myId, int category) {
+		
+		int num = followRepository.countFollowState(userId, myId);
+		if(num==2) num = 1; //맞팔인 경우
+		else num = 0; //그 외 경우
+		List<Post> postList = feedRepository.getLimitByUserIdAndCategory(userId, num, category);
+		
+		List<PostSimpleOp> list = new ArrayList<>();
+		
+		for (Post p : postList) {
+			list.add(new PostSimpleOp(p.getId(), p.getImage()));
+		}
+		return list;
+	}
+	
 	
 	//팔로워 목록
 	@Override
