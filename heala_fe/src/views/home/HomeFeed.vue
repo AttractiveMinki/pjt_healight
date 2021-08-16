@@ -4,7 +4,7 @@
       <img class="logo-image" src="@/assets/image/kiwi_logo.png" />
       <div class="icon-wrapper">
         <font-awesome-icon :icon="['fas', 'search']" class="icon" />
-        <font-awesome-icon :icon="['far', 'envelope']" class="icon" />
+        <font-awesome-icon :icon="['far', 'envelope']" class="icon" @click="userSearch"/>
         <font-awesome-icon :icon="['far', 'bell']" class="icon" />
       </div>
     </div>
@@ -68,6 +68,9 @@ export default {
             $state.complete();
           }
         }, 300);
+      },
+      userSearch() {
+        this.$router.push({ name: 'SearchUser' });
       }
     },
     components: {
@@ -80,13 +83,12 @@ export default {
 
 <style scoped>
 .feed-header {
-  position: absolute;
-  top: 0px;
-  left: 0px;
+  position: relative;
   width: 100%;
-  padding: 15px;
+  padding: 5px 15px 15px 15px;
   margin: 0px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 .logo-image {
   width: 25%;

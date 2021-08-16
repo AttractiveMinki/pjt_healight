@@ -1,13 +1,20 @@
 <template>
   <div class="user-image-wrapper" v-bind:style="{ width: width + 'px', height: height + 'px'}">
-    <img :src="require(`@/assets/image/${image}`)" alt="@/assets/image/user.png" class="user-image">
+    <img :src="imageURL" alt="@/assets/image/user.png" class="user-image">
   </div>
 </template>
 
 <script>
+import SERVER from "@/api/drf.js";
+
 export default {
     name: "UserImage",
     props: [ "image", "width", "height" ],
+    data() {
+      return {
+        imageURL: SERVER.IMAGE_URL + this.image,
+      }
+    },
 }
 </script>
 

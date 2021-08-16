@@ -1,39 +1,31 @@
 <template>
   <div class="header-container">
-      <font-awesome-icon icon="arrow-left" @click="goBack()"/>
-      <div class="title">
-        <slot name="title">마음</slot>
-      </div>
-      <div class="ellipsis">
-        <slot name="ellipsis"></slot>
-      </div>
-      <hr>
+    <font-awesome-icon icon="arrow-left" @click="goBack()"/>
+    <div class="title">
+      <slot name="title">마음</slot>
+    </div>
+    <div class="ellipsis">
+      <slot name="ellipsis"></slot>
+    </div>
+    <hr>
   </div>
 </template>
 
 <script>
 export default {
-    name: "KiwiHeader",
-    data() {
-        return {
-            
-        }
-    },
-    methods: {
-      goBack(){
-        this.$router.go(-1);
-      }
-    },
+  name: "KiwiHeader",
+  methods: {
+    goBack(){
+      this.$router.go(-1);
+    }
+  },
 }
 </script>
 
 <style scoped>
 .header-container {
-  position: absolute;
-  top: 0px;
-  left: 0px;
   width: 100%;
-  padding: 15px 0px;
+  padding: 5px 0px 15px 0px;
   margin: 0px;
   box-sizing: border-box;
 }
