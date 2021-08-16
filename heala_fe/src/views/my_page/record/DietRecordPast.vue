@@ -14,7 +14,7 @@
         <br>
         <div>
           <router-link :to="{ name: 'DietRecordCalender' }" class="text-decoration-none cursor-pointer">
-            <i class="el-icon-date"></i> {{ year }} / {{ month }} / {{ date }}
+            <i class="el-icon-date"></i> {{ recordYear }} / {{ recordMonth }} / {{ recordDate }}
           </router-link>
         </div>
       </el-col>
@@ -63,9 +63,9 @@
         <el-progress :stroke-width="24" :percentage="parseInt(((diet.sodium / recommend.sodium) * 100).toFixed(2))" :color="colors"></el-progress>
       </el-col>
     </el-row>
-    <router-link :to="{ name: 'DietRecordDetail' }" class="text-decoration-none cursor-pointer">
+    <!-- <router-link :to="{ name: 'DietRecordDetail' }" class="text-decoration-none cursor-pointer">
       <div id="submit" style="background-color: #ADEC6E; color: black; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">식단 기록보기</div>
-    </router-link>
+    </router-link> -->
   </div>
 </template>
 
@@ -81,13 +81,6 @@ export default {
   },
   data: function () {
     return {
-      // diet: {
-      //   calory: "",
-      //   carbohydrate: "", // 탄수화물
-      //   protein: "",
-      //   fat: "",
-      //   sodium: "", // 나트륨
-      // }
       diet: {
         calory: 1800,
         carbohydrate: 141, // 탄수화물
@@ -111,44 +104,17 @@ export default {
         {color: '#ADEC6E', percentage: 100},
         {color: '#F57053', percentage: 101},
       ],
-      today: "",
-      year: "", // 년도
-      month: "",  // 월
-      date: "", // 날짜
-      day: "",
+      recordYear: "", // 년도
+      recordMonth: "",  // 월
+      recordDate: "", // 날짜
       register: "",
       minCalory: "",
     }
   },
   methods: {
-    // getScrapFeeds: function () {
-    //   axios.get(`${SERVER.URL}${SERVER.ROUTES.getScrapFeeds}`)
-    //     .then((res) => {
-    //       feeds = res
-    //   })
-    //     .catch((err) => {
-    //       alert("에러가 발생했습니다.")
-    //       // console.log(`${SERVER.URL}${SERVER.ROUTES.checkEmail}${email}`)
-    //       console.error(err.response.data)
-    //   })
-    // },
-    getDate() {
-      let today = new Date();   
-
-      let year = today.getFullYear(); // 년도
-      let month = today.getMonth() + 1;  // 월
-      let date = today.getDate();  // 날짜
-      let day = today.getDay();  // 요일,
-
-      this.today = today
-      this.year = ('0000' + year).slice(-4)
-      this.month = ('00' + month).slice(-2)
-      this.date = ('00' + date).slice(-2)
-      this.day = day
-    },
-    getDietRecordToday: function () {
-      console.log(`${SERVER.URL}${SERVER.ROUTES.getDietRecordToday}?day=${this.year}${this.month}${this.date}&userId=${localStorage.getItem('userId')}`)
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getDietRecordToday}?day=${this.year}${this.month}${this.date}&userId=${localStorage.getItem('userId')}`)
+    getDietRecordPast: function () {
+      console.log(`${SERVER.URL}${SERVER.ROUTES.getDietRecordToday}?day=${this.recordYear}${this.recordMonth}${this.recordDate}&userId=${localStorage.getItem('userId')}`)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getDietRecordToday}?day=${this.recordYear}${this.recordMonth}${this.recordDate}&userId=${localStorage.getItem('userId')}`)
         .then((res) => {
           this.diet.calory = res.data.calory
           this.diet.carbohydrate = res.data.carbohydrate
@@ -170,7 +136,7 @@ export default {
     },
   },
   mounted() {
-    this.getDate()
+    // this.getDate()
     // getScrapFeeds() {},
     // 사용자 성별, 신장, 체중
     // 가지고와서 하루 권장섭취량 계산
@@ -181,10 +147,14 @@ export default {
 
     // 내 아이디 localStorage에서 가져오기
     this.myId = localStorage.getItem('userId')
+    
+    this.recordYear = ('0000' + this.$route.path.split('/')[4]).slice(-4)
+    this.recordMonth = ('00' + this.$route.path.split('/')[5]).slice(-2)
+    this.recordDate = ('00' + this.$route.path.split('/')[6]).slice(-2)
 
     // 내 꺼 보기
     if (this.userId == this.myId) {
-      this.getDietRecordToday()
+      this.getDietRecordPast()
     }
     // 다른 사람꺼 보기
     else {

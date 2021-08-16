@@ -47,11 +47,13 @@
         <input type="number" style="margin: 5vw" v-model="data.weight">kg
       </el-col>
     </el-row>
-    <div id="submit" @click="submit(data)" style="background-color: #ADEC6E; color: white; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">등록하기</div>
+    <div id="submit" @click="submit(data)" style="background-color: #ADEC6E; color: black; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">등록하기</div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import SERVER from "@/api/drf.js"
 import Navbar from "@/components/my_page/Navbar"
 
 export default {
@@ -59,6 +61,7 @@ export default {
   data: function () {
     return {
       data: {
+        userId: "",
         gender: true,
         birth: "",
         height: "",
@@ -80,10 +83,17 @@ export default {
     },
     submit(data) {
       console.log(data)
-      // axios.post(URL, data)
-      // .then((res) => {})
-      // .catch((err) => {})
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.profilePhysInfo}`, data)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     },
+  },
+  created() {
+    this.data.userId = localStorage.getItem('userId')
   },
   // mounted() {
   //   // 프로필 기존 정보 불러오기 -> 함수를 선언하고 따로 뺀 뒤, mounted에는 함수 이름만 호출하면 될 듯.

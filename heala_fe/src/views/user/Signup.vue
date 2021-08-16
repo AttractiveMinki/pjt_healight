@@ -287,4 +287,7 @@ export default {
     color: gainsboro;
     cursor: default;
   }
+  .get-input:focus {
+    outline: none;
+  }
 </style>
