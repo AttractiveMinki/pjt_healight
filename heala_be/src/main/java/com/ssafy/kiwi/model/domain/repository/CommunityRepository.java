@@ -28,4 +28,23 @@ public interface CommunityRepository extends JpaRepository<Post,Integer>{
 	
 	//스트랩한 게시글 목록 가져오기
 	Page<Post> getPostByIdIn(List<Integer> id, Pageable pageable);
+
+	// 전체 글 중 단어를 제목or내용or해시태그에 포함하는 글 목록 반환하기
+	@Query(value = "SELECT * from post p WHERE (p.title LIKE %:word%) OR (p.content LIKE %:word%) "
+			+ "OR (p.id in (SELECT post_id FROM post_hashtag ph JOIN hashtag h ON ph.hashtag_id = h.id WHERE h.word LIKE %:word%))"
+			+ "AND access = :access", nativeQuery = true)
+	Page<Post> getAllPostByWordAndAccess(String word, int access, Pageable pageable);
+	
+	// 베스트 글 중 단어를 제목or내용or해시태그에 포함하는 글 목록 반환하기
+	@Query(value = "SELECT * from post p WHERE ((p.title LIKE %:word%) OR (p.content LIKE %:word%) "
+			+ "OR (p.id in (SELECT post_id FROM post_hashtag ph JOIN hashtag h ON ph.hashtag_id = h.id WHERE h.word LIKE %:word%)))"
+			+ "AND access = :access AND category = :category AND likes > :CRITERION", nativeQuery = true)
+	Page<Post> getBestCategoryPostByWord(int category, int access, int CRITERION, String word, Pageable pageable);
+	
+	// 카테고리 글 중 단어를 제목or내용or해시태그에 포함하는 글 목록 반환하기
+	@Query(value = "SELECT * from post p WHERE ((p.title LIKE %:word%) OR (p.content LIKE %:word%) "
+			+ "OR (p.id in (SELECT post_id FROM post_hashtag ph JOIN hashtag h ON ph.hashtag_id = h.id WHERE h.word LIKE %:word%)))"
+			+ "AND access = :access AND category = :category AND sub_category = :subCategory", nativeQuery = true)
+	Page<Post> getCategoryPostByWord(int category, int subCategory, int access, String word, Pageable pageable);
+
 }
