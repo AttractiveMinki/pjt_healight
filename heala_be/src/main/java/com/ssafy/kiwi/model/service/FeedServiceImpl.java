@@ -1,6 +1,11 @@
 package com.ssafy.kiwi.model.service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.StringTokenizer;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,10 +18,12 @@ import com.ssafy.kiwi.model.domain.entity.Post;
 import com.ssafy.kiwi.model.domain.entity.PostHashtag;
 import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.entity.UserBadge;
+import com.ssafy.kiwi.model.domain.repository.CommunityRepository;
 import com.ssafy.kiwi.model.domain.repository.FeedRepository;
 import com.ssafy.kiwi.model.domain.repository.FollowRepository;
 import com.ssafy.kiwi.model.domain.repository.HashtagRepository;
 import com.ssafy.kiwi.model.domain.repository.PostHashtagRepository;
+import com.ssafy.kiwi.model.domain.repository.ScrapRepository;
 import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
 import com.ssafy.kiwi.model.dto.PostIp;
@@ -35,6 +42,8 @@ public class FeedServiceImpl implements FeedService {
 	final private UserBadgeRepository userBadgeRepository;
 	final private HashtagRepository hashtagRepository;
 	final private PostHashtagRepository postHashtagRepository;
+	final private ScrapRepository scrapRepository;
+	final private CommunityRepository communityRepository;
 	
 	// 글 작성
 	@Override
@@ -178,6 +187,15 @@ public class FeedServiceImpl implements FeedService {
 			if(followRepository.countByFollowIdAndUserId(id, myId)==1) ufo.setFollow(true);
 		}
 		return followings;
+	}
+
+	//스크랩한 게시글 목록
+	@Override
+	public Object getScrapList(int userId, int page) {
+		List<Integer> scrapNumberList = scrapRepository.getPostIdByUserId(userId);
+		Page<Post> scrapPage = communityRepository.getPostByIdIn(scrapNumberList, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
+		List<Post> scrapList = scrapPage.getContent();
+		return scrapList;
 	}
 
 }
