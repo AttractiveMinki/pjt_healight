@@ -22,7 +22,7 @@ import com.ssafy.kiwi.model.domain.entity.PostHashtag;
 import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.entity.UserBadge;
 import com.ssafy.kiwi.model.domain.repository.CommunityRepository;
-import com.ssafy.kiwi.model.domain.repository.FeedRepository;
+import com.ssafy.kiwi.model.domain.repository.PostRepository;
 import com.ssafy.kiwi.model.domain.repository.FollowRepository;
 import com.ssafy.kiwi.model.domain.repository.HashtagRepository;
 import com.ssafy.kiwi.model.domain.repository.PostHashtagRepository;
@@ -40,12 +40,11 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class FeedServiceImpl implements FeedService {
 
-	final private FeedRepository feedRepository;
+	final private PostRepository postRepository;
 	final private FollowRepository followRepository;
 	final private UserRepository userRepository;
 	final private UserBadgeRepository userBadgeRepository;
 	final private HashtagRepository hashtagRepository;
-	final private PostRepository postRepository;
 	final private PostHashtagRepository postHashtagRepository;
 	final private ScrapRepository scrapRepository;
 	final private CommunityRepository communityRepository;
@@ -53,7 +52,7 @@ public class FeedServiceImpl implements FeedService {
 	// 글 작성
 	@Override
 	public void post(PostIp postIp) {
-		int postId = feedRepository.save(postIp.getPost()).getId();
+		int postId = postRepository.save(postIp.getPost()).getId();
 
 		// hashtag가 있는 경우 hashtag 테이블에 insert
 		if (postIp.getHashtag() != null) {
@@ -82,9 +81,9 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public boolean delete(int postId, int userId) {
 		boolean isPossible = false;
-		int checkId = feedRepository.getById(postId).getUserId();
+		int checkId = postRepository.getById(postId).getUserId();
 		if (checkId == userId) {
-			feedRepository.deleteById(postId);
+			postRepository.deleteById(postId);
 			isPossible = true;
 		}
 		return isPossible;
@@ -129,14 +128,10 @@ public class FeedServiceImpl implements FeedService {
 				post.setAnonymous(newPost.isAnonymous());
 				post_update = true;
 			}
-			if(post_update) {
-				Date updateDate = new Date();
-				post.setUpdatedAt(updateDate);
-				postRepository.save(post);
-				state = true;
-			}
+			state = true;
 		}
 		
+		boolean hash_update = false;
 		//해시태그 수정한 경우
 		if (postIp.getHashtag() != null) {
 			//기존 해시태그 저장 삭제
@@ -160,7 +155,14 @@ public class FeedServiceImpl implements FeedService {
 				PostHashtag postHashtag = PostHashtag.builder().postId(postId).hashtagId(hashtagId).build();
 				postHashtagRepository.save(postHashtag);
 			}
+			hash_update = true;
 			state = true;
+		}
+		
+		if(post_update || hash_update) {
+			Date updateDate = new Date();
+			post.setUpdatedAt(updateDate);
+			postRepository.save(post);
 		}
 		return state;
 	}
@@ -176,7 +178,7 @@ public class FeedServiceImpl implements FeedService {
 		List<Integer> followForFollowIdList = followRepository.getFollowForFollowByUserId(userId);
 		
 		// userId 홈 화면에 나타날 피드 목록 가져오기
-		Page<Post> postPage = feedRepository.getByFollowAndAccess(onewayfollowIdList, followForFollowIdList, PageRequest.of(page, 10, Sort.by("created_at").descending()));
+		Page<Post> postPage = postRepository.getByFollowAndAccess(onewayfollowIdList, followForFollowIdList, PageRequest.of(page, 10, Sort.by("created_at").descending()));
 		List<Post> postList = postPage.getContent();
 		return postList;
 	}
@@ -229,7 +231,7 @@ public class FeedServiceImpl implements FeedService {
 		
 		List<PostSimpleOp> list = new ArrayList<>();
 
-		Page<Post> postPage = feedRepository.getByUserIdAndCategory(userId, category, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
+		Page<Post> postPage = postRepository.getByUserIdAndCategory(userId, category, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
 		List<Post> postList = postPage.getContent();
 		
 		for (Post p : postList) {
@@ -247,7 +249,7 @@ public class FeedServiceImpl implements FeedService {
 		int num = followRepository.countFollowState(userId, myId);
 		if(num==2) num = 1; //맞팔인 경우
 		else num = 0; //그 외 경우
-		Page<Post> postPage = feedRepository.getLimitByUserIdAndCategory(userId, num, category, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
+		Page<Post> postPage = postRepository.getLimitByUserIdAndCategory(userId, num, category, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
 		List<Post> postList = postPage.getContent();
 		
 		for (Post p : postList) {
