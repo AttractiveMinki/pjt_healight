@@ -251,7 +251,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		//인증 사진 리스트 (가공)
 		List<CertifyImage> beforeImage = certifyImageRepository.getAllByUserIdAndWithChallengeId(userId, withChallengeId);
 		List<Map<String, Object>> afterImage = new ArrayList<>();
-		SimpleDateFormat format = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat format = new SimpleDateFormat ("yyyy/MM/dd HH:mm:ss");
 		for (int i = 0; i < beforeImage.size(); i++) {
 			CertifyImage ci = beforeImage.get(i);
 			Map<String, Object> imgMap = new HashMap<>();
@@ -271,7 +271,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		List<CertifyImage> beforeImage = certifyImageRepository.getAllByUserIdAndWithChallengeIdOrderByTimeDesc(userId, withChallengeId);
 		List<CertifyImageOp> afterImage = new ArrayList<>();
 		//날짜 변환
-		SimpleDateFormat format = new SimpleDateFormat ("yyyy-MM-dd");			
+		SimpleDateFormat format = new SimpleDateFormat ("yyyy/MM/dd");			
 		
 		if(!beforeImage.isEmpty()) {
 			//가공 후 리스트에 넣을 객체 cio
@@ -310,7 +310,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		List<CertifyImage> beforeImage = certifyImageRepository.getAllByWithChallengeIdOrderByTimeDesc(withChallengeId);
 		List<CertifyImageOp> afterImage = new ArrayList<>();
 		//날짜 변환
-		SimpleDateFormat format = new SimpleDateFormat ("yyyy-MM-dd");			
+		SimpleDateFormat format = new SimpleDateFormat ("yyyy/MM/dd");			
 				
 		if(!beforeImage.isEmpty()) {
 			//가공 후 리스트에 넣을 객체 cio
