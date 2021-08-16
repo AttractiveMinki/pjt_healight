@@ -23,6 +23,7 @@ import DietRecord from "@/views/my_page/record/DietRecord";
 import DietRecordDetail from "@/views/my_page/record/DietRecordDetail";
 import DietRecordCreate from "@/views/my_page/record/DietRecordCreate";
 import DietRecordCalender from "@/views/my_page/record/DietRecordCalender";
+import DietRecordPast from "@/views/my_page/record/DietRecordPast";
 import WeightCalender from "@/views/my_page/record/WeightCalender";
 import KiwiMain from "@/views/challenge/kiwi/KiwiMain"
 import KiwiHealth from "@/views/challenge/kiwi/KiwiHealth"
@@ -164,6 +165,11 @@ export default [
     path: "/profile/dietrecordcalender/:id",
     name: "DietRecordCalender",
     component: DietRecordCalender,
+  },
+  {
+    path: "/profile/dietrecordPast/:id/:year/:month/:day",
+    name: "DietRecordPast",
+    component: DietRecordPast,
   },
   {
     path: "/profile/weightcalender",

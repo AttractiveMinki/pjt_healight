@@ -24,15 +24,27 @@
         </tr>
         <tr v-for="(row, index) in currentCalendarMatrix" :key="index">
           <td v-for="(day, index2) in row" :key="index2" style="padding:3vw;">
-            <span v-if="isToday(currentYear, currentMonth, day)" class="rounded">
-              {{ day }}
+            <!-- 오늘 -->
+            <span v-if="isToday(currentYear, currentMonth, day)">
+              <span class="rounded">
+                {{ day }}
+              </span>
+              
               <!-- 운동한 날이라면 표시  -->
-              <span v-if="day in recordDates" style="margin: 0px; width: 2px; height: 2px">
-                ., d
+              <span v-for="(record, idx) in recordDates" :key=idx>
+                <span v-if="day == record" style="margin: 0px; width: 2px; height: 2px">
+                  <router-link :to="{ name: 'DietRecordPast', params: {id: userId , year: currentYear, month: currentMonth, day: record } }" class="text-decoration-none">
+                    <div class="selected-date"></div>
+                    <!-- {{ record }} -->
+                  </router-link>
+                </span>
+                <span v-else style="margin: 2px">
+                </span>
               </span>
-              <span v-else style="margin: 2px">
-              </span>
+
             </span>
+
+            <!-- 오늘 외 -->
             <span v-else>
               <span v-if="index2 % 7 == 0" style="color: red">
                 {{ day }}
@@ -45,18 +57,23 @@
               </span>
 
               <!-- 운동한 날이라면 표시  -->
-              <span v-if="index2 % 7 == 3" style="margin: 0px; width: 2px; height: 2px">
-                ., 
-                <!-- 점이 있는 날을 클릭하면, 해당 일의 칼로리 섭취량을 보여준다. -->
-              </span>
-              <span v-else style="margin: 2px">
+              <span v-for="(record, idx) in recordDates" :key=idx>
+                <span v-if="day == record" style="margin: 0px; width: 2px; height: 2px">
+                  <router-link :to="{ name: 'DietRecordPast', params: {id: userId , year: currentYear, month: currentMonth, day: record } }" class="text-decoration-none">
+                    <div class="selected-date"></div>
+                    <!-- {{ record }} -->
+                  </router-link>
+                  <!-- 점이 있는 날을 클릭하면, 해당 일의 칼로리 섭취량을 보여준다. -->
+                </span>
+                <span v-else style="margin: 2px">
+                </span>
               </span>
 
             </span>
           </td>
         </tr>
       </el-row>
-    </table>    
+    </table>
   </div>
 </template>
 
@@ -79,10 +96,6 @@ export default {
       endOfDay: null,
       recordDates: [],
     }
-  },
-  mounted(){
-    this.init()
-    this.getMonthDietRecord()
   },
   methods: {
     init:function(){
@@ -203,13 +216,25 @@ export default {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getMonthDietRecord}?userId=${localStorage.getItem('userId')}&month=${Month}`)
         .then((res) => {
           this.recordDates = res.data
-          console.log(this.recordDates)
         })
         .catch((err) => {
           console.error(err)
         })
     },
     
+  },
+  mounted (){
+    this.init()
+    this.getMonthDietRecord()
+    this.userId = localStorage.getItem('userId')
+  },
+  watch: {
+    currentYear: function() {
+      this.getMonthDietRecord()
+    },
+    currentMonth: function () {
+      this.getMonthDietRecord()
+    },
   },
 }
 </script>
@@ -231,5 +256,11 @@ export default {
   .text-decoration-none {
     text-decoration: none;
     color: black;
+  }
+  .selected-date {
+    position: absolute;
+    width: 7vw;
+    height: 1vw;
+    background: orange;
   }
 </style>

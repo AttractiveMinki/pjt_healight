@@ -3,7 +3,10 @@
     <Navbar />
     <h1>식단 기록하기</h1>
     <DietCallender />
-    <input type="date"><input type="number">kg <el-button>저장</el-button>
+    <br>
+    <div> 내 식단 정보를 달력에서 확인해보세요! </div>
+    <br>
+    <div class="selected-date"> 식단이 입력된 날을 클릭해보세요!</div>
   </div>
 </template>
 
@@ -24,5 +27,10 @@ export default {
 <style scoped>
   .is-selected {
     color: #1989FA;
+  }
+  .selected-date {
+    text-decoration: underline;
+    text-decoration-color: orange;
+    padding-bottom: 1vw;
   }
 </style>
