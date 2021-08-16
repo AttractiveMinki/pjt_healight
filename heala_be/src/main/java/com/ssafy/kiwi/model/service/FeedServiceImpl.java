@@ -129,14 +129,10 @@ public class FeedServiceImpl implements FeedService {
 				post.setAnonymous(newPost.isAnonymous());
 				post_update = true;
 			}
-			if(post_update) {
-				Date updateDate = new Date();
-				post.setUpdatedAt(updateDate);
-				postRepository.save(post);
-				state = true;
-			}
+			state = true;
 		}
 		
+		boolean hash_update = false;
 		//해시태그 수정한 경우
 		if (postIp.getHashtag() != null) {
 			//기존 해시태그 저장 삭제
@@ -160,7 +156,14 @@ public class FeedServiceImpl implements FeedService {
 				PostHashtag postHashtag = PostHashtag.builder().postId(postId).hashtagId(hashtagId).build();
 				postHashtagRepository.save(postHashtag);
 			}
+			hash_update = true;
 			state = true;
+		}
+		
+		if(post_update || hash_update) {
+			Date updateDate = new Date();
+			post.setUpdatedAt(updateDate);
+			postRepository.save(post);
 		}
 		return state;
 	}

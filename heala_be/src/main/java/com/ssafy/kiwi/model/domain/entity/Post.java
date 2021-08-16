@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.util.Date;
 
 
@@ -33,12 +35,13 @@ public class Post {
 	private int likes;
 	private boolean anonymous;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") 
+//	@Temporal(TemporalType.TIMESTAMP)
+//	@Column(name = "created_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") 
+	@CreationTimestamp
 	public Date createdAt;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updated_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") 
+	@Column(name = "updated_at", nullable = true, updatable = true, insertable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") 
 	public Date updatedAt;
 	
 	@Column(name = "user_id")
