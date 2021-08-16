@@ -3,6 +3,8 @@ import FollowExample from "@/views/FollowExample";
 import HomeFeed from "@/views/home/HomeFeed";
 import CertifyImage from "@/views/challenge/my/CertifyImage";
 import Result from "@/views/challenge/my/Result";
+import CommunityNewMain from "@/views/community/CommunityNewMain";
+import SearchUser from "@/views/home/SearchUser";
 
 export default [
     {
@@ -30,4 +32,14 @@ export default [
         name: "Result",
         component: Result,
     },
+    {
+        path: "/community/main",
+        name: "CommunityNewMain",
+        component: CommunityNewMain,
+    },
+    {
+        path: "/search/user",
+        name: "SearchUser",
+        component: SearchUser,
+    }
 ]
