@@ -5,8 +5,15 @@
     <h2>검색해서 입력하기</h2>
 
     <!-- <input type="text" class='get-input bg-gray' id="foodName" v-model="data.foodName" > -->
-    <input type="text" id="foodNameSearch" v-model="foodNameSearch" style="margin-right: 2vw">
+    <input type="text" id="foodNameSearch" v-model="foodNameSearch" style="margin-right: 2vw" @keyup.enter="getFoodInfo()">
     <el-button @click="getFoodInfo()">음식 등록</el-button>
+    <div v-if="foodList">
+      <div v-for="food, idx in foodList" :key="idx">
+        <button class="select-food-button" @click="selectNutrient(food)">
+          {{ food.ANIMAL_PLANT }}, {{ food.DESC_KOR }}  
+        </button>
+      </div>
+    </div>
     <hr>
     <h2>영양정보 사진으로 입력하기</h2>
     <div style="font-size: 13px">제품 뒷편에 있는</div>
@@ -47,6 +54,12 @@
       <el-col :span="24"><div class="introduce-text-align-start">나트륨(mg)</div>
         <input type="number" class='get-input bg-gray' id="foods-sodium" v-model="foods.sodium" maxlength="10" placeholder="단위: mg">
       </el-col>
+    <button @click="oneHalf" class="select-food-number">1/2배</button>
+    <!-- <button @click="minus" class="select-food-number">-1개</button> -->
+    {{ number }}개
+    <!-- <button @click="plus" class="select-food-number">+1개</button> -->
+    <button @click="twice" class="select-food-number">2배</button>
+    <br>
     <button id="addFoods" class="bg-green get-input join-button-setting" @click="addFoods(foods)">추가하기</button>
     </el-row>
   </div>
@@ -73,8 +86,15 @@ export default {
         sodium: "", // 나트륨
         userId: "",
       },
+      // oneFood: {
+      //   calory: "",
+      //   carbohydrate: "", // 탄수화물
+      //   protein: "",
+      //   fat: "",
+      //   sodium: "", // 나트륨
+      // },
       foodNameSearch: "",
-
+      foodList: [],
       image: "",
       data: [],
       temp_word: "",
@@ -83,25 +103,21 @@ export default {
         '칼로리', '탄수화물', '단백질', '지방', '나트륨'
       ],
       set_number: [0, 0, 0, 0, 0],
+      number: 0,
     }
   },
   methods: {
     getFoodInfo() {
-      // let request = require('request');
-      // let proxy_url = 'https://cors-anywhere.herokuapp.com'
-      let url = 'http://apis.data.go.kr/1470000/FoodNtrIrdntInfoService/getFoodNtrItdntList';
-      let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.VUE_APP_APISDATA_API_KEY; /* Service Key*/
-      queryParams += '&' + encodeURIComponent('desc_kor') + '=' + this.foodNameSearch; /* */
-      console.log('queryParams', url + queryParams)
-      // axios.get(`${proxy_url}/${url}?ServiceKey=${process.env.VUE_APP_APISDATA_API_KEY}&desc_kor=${this.foodName}`)
-      axios.get(`${url}?ServiceKey=${process.env.VUE_APP_APISDATA_API_KEY}&desc_kor=${this.foodNameSearch}`)
-        .then(res => {
-          console.log(res)
-        })
-        .catch(err => {
-          console.log(err)
-          console.error(err.response.data)
-        })
+      if (this.foodNameSearch != '')
+      {
+        axios.get(`${SERVER.URL}${SERVER.ROUTES.getFoodnutrient}?desc_kor=${this.foodNameSearch}`)
+          .then((res) => {
+            this.foodList = res.data.body.items
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
     },
     addFoods(foods) {
       console.log(foods)
@@ -127,7 +143,6 @@ export default {
         // console.log(res)
         this.data = res.data
         this.findNutrient(this.data)
-        scrollBy(0, document.body.scrollHeight) // 맨 밑으로 내려줌
       })
       .catch((err) => {
         console.log(err)
@@ -156,7 +171,59 @@ export default {
       this.foods['protein'] = this.set_number[2]
       this.foods['fat'] = this.set_number[3]
       this.foods['sodium'] = this.set_number[4]
+      scrollBy(0, document.body.scrollHeight) // 맨 밑으로 내려줌
+      this.number = 1
     },
+    selectNutrient: function (food) {
+      this.foodList = []
+      this.foods['foodName'] = food.DESC_KOR
+      this.foods['calory'] = food.NUTR_CONT1
+      this.foods['carbohydrate'] = food.NUTR_CONT2
+      this.foods['protein'] = food.NUTR_CONT3
+      this.foods['fat'] = food.NUTR_CONT4
+      this.foods['sodium'] = food.NUTR_CONT6
+      scrollBy(0, document.body.scrollHeight) // 맨 밑으로 내려줌
+      this.number = 1
+      // this.oneFood = this.foods
+      // console.log(this.oneFood)
+    },
+    twice: function () {
+      this.number *= 2
+      this.foods['calory'] *= 2
+      this.foods['calory'].toFixed(0)
+      this.foods['carbohydrate'] *= 2
+      this.foods['protein'] *= 2
+      this.foods['fat'] *= 2
+      this.foods['sodium'] *= 2
+    },
+    oneHalf: function () {
+      this.number /= 2
+      this.foods['calory'] /= 2
+      this.foods['carbohydrate'] /= 2
+      this.foods['protein'] /= 2
+      this.foods['fat'] /= 2
+      this.foods['sodium'] /= 2
+    },
+    // plus: function () {
+    //   this.number += 1
+    //   this.foods['calory'] += parseInt(this.oneFood['calory'])
+    //   // this.foods['calory'].toFixed(2)
+    //   this.foods['carbohydrate'] += this.oneFood['carbohydrate']
+    //   this.foods['protein'] += this.oneFood['protein']
+    //   this.foods['fat'] += this.oneFood['fat']
+    //   this.foods['sodium'] += this.oneFood['sodium']
+    // },
+    // minus: function () {
+    //   if (this.number > 0) {
+    //     this.number -= 1
+    //     this.foods['calory'] -= this.oneFood['calory']
+    //     this.foods['carbohydrate'] -= this.oneFood['carbohydrate']
+    //     this.foods['protein'] -= this.oneFood['protein']
+    //     this.foods['fat'] -= this.oneFood['fat']
+    //     this.foods['sodium'] -= this.oneFood['sodium']
+    //   }
+
+    // },
   },
   created () {
     this.foods.userId = localStorage.getItem('userId')
@@ -172,6 +239,7 @@ export default {
       alert('다른 사람의 계정입니다. 열람하실 수 없습니다.')
       this.$router.go(-1)
     }
+    this.number = 0
   },
 }
 </script>
@@ -208,7 +276,7 @@ export default {
     border-width: 0px;
     border-radius: 5px;
     width: 80%;
-    height: 40px;
+    height: 45px;
     margin-bottom: 20px;
     padding: 0px 2px;
   }
@@ -221,8 +289,25 @@ export default {
   }
   .join-button-setting {
     margin-top: 30px;
-    height: 45px;
-    width: 80%;
     cursor: pointer;
   }
+  .select-food-button {
+    background: #ADEC6E;
+    color: black;
+    width: 80%;
+    height: 4vh;
+    margin: 2vw;
+    border-width: 0px;
+    border-radius: 5px;
+  }
+  .select-food-number {
+    width: 15%;
+    height: 3vh;
+    background: #ADEC6E;
+    color: black;
+    margin: 2vw;
+    border-width: 0px;
+    border-radius: 5px;
+  }
+
 </style>
