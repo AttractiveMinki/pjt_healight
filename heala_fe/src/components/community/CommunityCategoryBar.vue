@@ -17,11 +17,6 @@
         <span @click="changeSelectedSubCategory(3)" class="text-decoration-none align-self" :class="{ 'selected': selectedSubCategory == 3 }">질문</span>
         <!-- <div v-if="selectedSubCategory == 3" id="square"></div> -->
       </el-col>
-      <el-col :span="4" class="container-box-detail" v-if="category==2">
-        <!-- 마음 카테고리만 존재 -->
-        <span @click="changeSelectedSubCategory(4)" class="text-decoration-none align-self" :class="{ 'selected': selectedSubCategory == 4 }">익명</span>
-        <!-- <div v-if="selectedSubCategory == 4" id="square"></div> -->
-      </el-col>
     </el-row>
   </div>
 </template>
@@ -46,13 +41,6 @@ export default {
       "selectedSubCategory",
     ])
   },
-  watch: {
-    category() {
-      if(this.category != 2 && this.selectedSubCategory == 4) { // 마음이면
-        this.changeSelectedSubCategory(0);
-      }
-    }
-  }
 }
 </script>
 

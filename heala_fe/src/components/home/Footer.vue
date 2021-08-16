@@ -6,7 +6,7 @@
           <font-awesome-icon icon="home"/>
         </el-col>
       </router-link>
-      <router-link :to="{ name: 'CommunityMain' }" class="text-decoration-none color-black" @click.native="changeRouter(1)" :class="{selected:selectedRouter == 1}">
+      <router-link :to="{ name: 'CommunityNewMain' }" class="text-decoration-none color-black" @click.native="changeRouter(1)" :class="{selected:selectedRouter == 1}">
         <el-col :span="5">
           <font-awesome-icon icon="user-friends"/>
         </el-col>
