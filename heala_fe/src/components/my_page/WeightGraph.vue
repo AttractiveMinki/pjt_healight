@@ -23,6 +23,14 @@ export default {
         this.recordDates = res.data
         console.log(this.recordDates)
       } catch(err) {
+        // 임시
+        this.recordDates = {
+          num: 33,
+          bodyRecord: [
+            [33, 52.75, 18]
+          ],
+        }
+
         console.log(err)
       }
     },
