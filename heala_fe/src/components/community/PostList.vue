@@ -1,6 +1,6 @@
 <template>
   <div class="article-bottom-padding">
-		<div v-show="!searchAllPost && !searchPostByCategory" class="post-list-title">
+		<div v-if="!isScrapList" v-show="!searchAllPost && !searchPostByCategory" class="post-list-title">
       {{ subCategory[selectedSubCategory] }} 게시글
     </div>
     <div v-show="searchAllPost || searchPostByCategory" class="post-list-title">
@@ -25,9 +25,10 @@ import { mapState } from "vuex";
 
 export default {
   name: "PostList",
-  props: [ 'category', 'keyword' ],
+  props: [ 'category', 'keyword', 'isScrapList' ],
 	data() {
 		return {
+      userId: 1,
 			communityArticles: [],
       limit: 0,
       subCategory: [ "일반", "정보", "질문", "BEST", ],
@@ -37,7 +38,13 @@ export default {
     }
 	},
 	created() {
-		this.getInitialCommunityInfo();
+    this.userId = localStorage.getItem("userId");
+    if(this.isScrapList) {
+      this.getInitialScrapList();
+    }
+    else {
+      this.getInitialCommunityInfo();
+    }
 	},
   computed: {
     ...mapState([
@@ -85,9 +92,6 @@ export default {
         this.getInitialSearchPostListByCategory();
       }
     },
-    // communityArticles() {
-    //   console.log("post list change...", this.communityArticles.length);
-    // }
   },
 	methods: {
     initPage() {
@@ -96,7 +100,7 @@ export default {
     },
     async getInitialCommunityInfo() {
       try {
-        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}?page=${this.limit}`)
+        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}?page=${this.limit}&subCategory=${this.$store.state.selectedSubCategory}`)
         this.communityArticles = response.data
       } catch(err) {
         console.log(err)
@@ -104,7 +108,7 @@ export default {
     },
 		async getCommunityInfo() {
       try {
-        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}?page=${this.limit}`)
+        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}?page=${this.limit}&subCategory=${this.$store.state.selectedSubCategory}`)
         return response.data
       } catch(err) {
         console.log(err)
@@ -130,6 +134,14 @@ export default {
       try {
         const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.postSearch}?page=${this.limit}&word=${this.keyword}`)
         this.communityArticles = response.data;
+        } catch(err) {
+        console.log(err)
+      }
+    },
+    async getInitialScrapList() {
+      try {
+        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.feed}${this.userId}${SERVER.ROUTES.scrap}?category=${this.category}&page=${this.limit}`)
+        this.communityArticles = response.data
       } catch(err) {
         console.log(err)
       }
@@ -137,6 +149,14 @@ export default {
     async getSearchPostList() {
       try {
         const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.postSearch}?page=${this.limit}&word=${this.keyword}`)
+        return response.data
+      } catch(err) {
+        console.log(err)
+      }
+    },
+    async getScrapList() {
+      try {
+        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.feed}${this.userId}${SERVER.ROUTES.scrap}?category=${this.category}&page=${this.limit}`)
         return response.data
       } catch(err) {
         console.log(err)
@@ -163,7 +183,10 @@ export default {
       
       this.limit += 1;
       let data;
-      if(this.searchAllPost) {
+      if(this.isScrapList) {
+        data = await this.getScrapList();
+      }
+      else if(this.searchAllPost) {
         data = await this.getSearchPostList();
       }
       else if(this.searchPostByCategory) {

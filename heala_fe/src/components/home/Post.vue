@@ -5,7 +5,7 @@
         {{ title }}
       </div>
       <div class="post-time">
-        {{ createdAt }}
+        {{ createdAt.substring(0, 10) }}
       </div>
       <div class="post-image-wrapper">
         <img :src="imageURL" alt="" class="post-image">

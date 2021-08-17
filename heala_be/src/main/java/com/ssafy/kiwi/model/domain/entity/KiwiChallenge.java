@@ -19,6 +19,7 @@ public class KiwiChallenge {
 	
 	private String name;
 	private String introduction;
+	private int category;
 	
 	@Column(name = "start_date")
 	private Date startDate;

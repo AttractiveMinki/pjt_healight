@@ -100,7 +100,7 @@ public class FeedController {
 	@ApiOperation(value = "스크랩한 게시글 목록 보기")
 	@GetMapping("/{userId}/scrap")
 	public Object getScrapList(@PathVariable int userId,
-			@RequestParam(value="type") int page) {
+			@RequestParam int page) {
 		return new ResponseEntity<>(feedService.getScrapList(userId, page), HttpStatus.OK);
 	}
 	
