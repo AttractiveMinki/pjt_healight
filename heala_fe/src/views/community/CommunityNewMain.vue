@@ -19,11 +19,9 @@
       </el-col>
     </el-row>
     <community-category-bar
-      v-if="category != 3"
       :category="category"
       class="border-bottom">
     </community-category-bar>
-    <div v-else class="total-rest"></div>
     <div class="search-box">
       <search-box @search="search"></search-box>
     </div>
@@ -82,9 +80,6 @@ export default {
 }
 .green-bar {
   background: #94EC3C;
-}
-.total-rest {
-  height: 36px;
 }
 .search-box {
   margin-top: 20px;
