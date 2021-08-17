@@ -93,7 +93,6 @@ export default {
     async infiniteHandler($state) {
       const EACH_LEN = 10;
       this.limit += 1
-      console.log(`${SERVER.URL}${SERVER.ROUTES.getWithHeartChallenge}&page=${this.limit}`)
       const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithHeartChallenge}&page=${this.limit}`)
       setTimeout(() => {
         if (response.data != undefined && response.data.length) {

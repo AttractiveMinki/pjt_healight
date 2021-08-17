@@ -4,7 +4,6 @@
     <Navbar 
     
     />
-    {{ user }}
     <el-row style="align-items:center">
       <el-col :span="6" style="padding: 3vw">
         <img v-if="user.image == '' " src="@/assets/img/profile/user.png" alt="profile_image" width="62" height="62" style="border-radius: 50%;">

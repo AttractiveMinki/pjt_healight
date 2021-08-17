@@ -121,17 +121,6 @@ export default {
     }
   },
   methods: {
-    // getScrapFeeds: function () {
-    //   axios.get(`${SERVER.URL}${SERVER.ROUTES.getScrapFeeds}`)
-    //     .then((res) => {
-    //       feeds = res
-    //   })
-    //     .catch((err) => {
-    //       alert("에러가 발생했습니다.")
-    //       // console.log(`${SERVER.URL}${SERVER.ROUTES.checkEmail}${email}`)
-    //       console.error(err.response.data)
-    //   })
-    // },
     getDate() {
       let today = new Date();   
 
@@ -147,7 +136,6 @@ export default {
       this.day = day
     },
     getDietRecordToday: function () {
-      console.log(`${SERVER.URL}${SERVER.ROUTES.getDietRecordToday}?day=${this.year}${this.month}${this.date}&userId=${localStorage.getItem('userId')}`)
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getDietRecordToday}?day=${this.year}${this.month}${this.date}&userId=${localStorage.getItem('userId')}`)
         .then((res) => {
           this.diet.calory = res.data.calory

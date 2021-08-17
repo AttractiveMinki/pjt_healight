@@ -144,7 +144,6 @@ export default {
     getKiwiSpecialChallenge: function () {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiSpecialChallenge}`+ localStorage.getItem('userId'))
         .then((res) => {
-          console.log(res)
           this.challenges = res.data
         })
         .catch((err) => {

@@ -85,10 +85,7 @@ export default {
   },
   methods: {
     SetCurrentPageId: function (getId) {
-      console.log('클릭 감지1')
-      console.log(getId)
       this.$store.state.currentPageId = getId
-      console.log('클릭 감지2')
     },
     selectFile(e) {
       const file = e.target.files[0];
@@ -104,7 +101,6 @@ export default {
       // FormData에 전송할 데이터 저장
       var formData  = new FormData();
       for(var i = 0; i < this.imgCnt; i++) {
-        console.log(document.getElementsByClassName("image")[i]);
         var imgFile = document.getElementsByClassName("image")[i];
         var key = "image[" + i + "]";
         formData.append(key, imgFile.files[0]);
@@ -116,7 +112,7 @@ export default {
       axios.post("http://localhost:8080/feed/post", formData, { headers: {'Content-Type' : 'multipart/form-data'}})
         .then(response => {
           if(response.status === 200) {
-            console.log("등록 완료");
+            alert('등록 완료')
           }
         })
         .catch(error => {
@@ -153,9 +149,7 @@ export default {
     getMyChallenge: function () {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getMyChallenge}${localStorage.getItem('userId')}`)
         .then((res) => {
-          console.log(res)
           this.values = res.data
-          // console.log(this.withChallenges)
         })
         .catch((err) => {
           console.log(err)

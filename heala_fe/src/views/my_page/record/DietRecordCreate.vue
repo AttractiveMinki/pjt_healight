@@ -121,8 +121,6 @@ export default {
       }
     },
     addFoods(foods) {
-      console.log(foods)
-      console.log(`${SERVER.URL}${SERVER.ROUTES.dietupload}`)
       axios.post(`${SERVER.URL}${SERVER.ROUTES.dietupload}`, foods)
         .then (() => {
           alert('추가 완료!')
@@ -148,7 +146,6 @@ export default {
       formData.append('image', imgFile.files[0])
       axios.post(`${SERVER.ROUTES.OCR}`, formData , { headers: {'Content-Type' : 'multipart/form-data', 'Authorization': `KakaoAK ${process.env.VUE_APP_OCR_REST_API_KEY}`}})
       .then((res) => {
-        // console.log(res)
         this.data = res.data
         this.findNutrient(this.data)
       })

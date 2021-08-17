@@ -144,7 +144,6 @@ export default {
     getKiwiDietChallenge: function () {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiDietChallenge}` + localStorage.getItem('userId'))
         .then((res) => {
-          console.log(res)
           this.challenges = res.data
         })
         .catch((err) => {

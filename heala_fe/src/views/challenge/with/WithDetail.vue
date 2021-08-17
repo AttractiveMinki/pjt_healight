@@ -123,23 +123,16 @@ export default {
     getWithDetail: function () {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?userId=${localStorage.getItem('userId')}&withChallengeId=${this.$route.params.id}`)
         .then((res) => {
-          console.log(res)
           this.value = res.data
-          console.log(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?userId=${localStorage.getItem('userId')}&withChallengeId=${this.$route.params.id}`)
         })
         .catch((err) => {
           console.log(err)
         })
     },
     joinChallenge: function () {
-      // let data = {
-      //   userId: localStorage.getItem('userId'),
-      //   withChallengeId: this.$route.params.id,
-      // }
-      // axios.post(`${SERVER.URL}${SERVER.ROUTES.joinWithChallenge}`, data)
       axios.post(`${SERVER.URL}${SERVER.ROUTES.joinWithChallenge}?userId=${localStorage.getItem('userId')}&withChallengeId=${this.$route.params.id}`)
-        .then ((res) => {
-          console.log(res)
+        .then (() => {
+          alert('챌린지에 참가하셨습니다.')
         })
         .catch((err) => {
           console.log(err)

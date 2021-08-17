@@ -58,23 +58,15 @@ export default {
     getWithDetail: function () {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?userId=${localStorage.getItem('userId')}&withChallengeId=${this.$route.params.id}`)
         .then((res) => {
-          console.log(res)
           this.value = res.data
-          console.log(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?userId=${localStorage.getItem('userId')}&withChallengeId=${this.$route.params.id}`)
         })
         .catch((err) => {
           console.log(err)
         })
     },
     joinChallenge: function () {
-      // let data = {
-      //   userId: localStorage.getItem('userId'),
-      //   withChallengeId: this.$route.params.id,
-      // }
-      // axios.post(`${SERVER.URL}${SERVER.ROUTES.joinWithChallenge}`, data)
       axios.post(`${SERVER.URL}${SERVER.ROUTES.joinWithChallenge}?userId=${localStorage.getItem('userId')}&withChallengeId=${this.$route.params.id}`)
-        .then ((res) => {
-          console.log(res)
+        .then (() => {
         })
         .catch((err) => {
           console.log(err)

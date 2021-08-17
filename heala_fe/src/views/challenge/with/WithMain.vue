@@ -96,9 +96,7 @@ export default {
       this.limit += 1
       const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithHealthChallenge}&page=${this.limit}`)
       setTimeout(() => {
-        console.log(response)
         if (response.data != undefined && response.data.length) {
-          console.log(response.data)
           this.communityArticles = this.communityArticles.concat(response.data)
           $state.loaded() // 데이터 로딩
 

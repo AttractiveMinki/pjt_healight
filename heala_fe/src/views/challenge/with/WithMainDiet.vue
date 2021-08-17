@@ -84,9 +84,7 @@ export default {
     },
     async getWithDietChallenge () {
       try {
-        console.log(`${SERVER.URL}${SERVER.ROUTES.getWithDietChallenge}&page=${this.limit}`)
         const res = await axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithDietChallenge}&page=${this.limit}`)
-        console.log(res)
         this.withChallenges = res.data
       } catch(err) {
         console.log(err)
@@ -97,13 +95,10 @@ export default {
       const EACH_LEN = 10;
       this.limit += 1
       const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithDietChallenge}&page=${this.limit}`)
-      console.log(response)
       setTimeout(() => {
-        console.log(response)
         if (response.data != undefined && response.data.length) {
           this.withChallenges = this.withChallenges.concat(response.data)
           $state.loaded() // 데이터 로딩
-          console.log(response.data.length, EACH_LEN)
           if (response.data.length < EACH_LEN) {
             $state.complete()
           }
