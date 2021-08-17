@@ -3,19 +3,15 @@
     <el-row class="justify-content-space-between padding-top-setting">
       <el-col :span="4" class="container-box-detail">
         <span @click="changeSelectedSubCategory(3)" class="text-decoration-none align-self" :class="{ 'selected': selectedSubCategory == 3 }">BEST</span> 
-        <!-- <div v-if="selectedSubCategory == 0" id="square"></div> -->
       </el-col>
       <el-col :span="4" class="container-box-detail">
         <span @click="changeSelectedSubCategory(0)" class="text-decoration-none align-self" :class="{ 'selected': selectedSubCategory == 0 }">일반</span> 
-        <!-- <div v-if="selectedSubCategory == 1" id="square"></div> -->
       </el-col>
       <el-col :span="4" class="container-box-detail">
-        <span @click="changeSelectedSubCategory(1)" class="text-decoration-none align-self" :class="{ 'selected': selectedSubCategory == 1 }">정보</span>
-        <!-- <div v-if="selectedSubCategory == 2" id="square"></div> -->
+        <span v-if="category != 3" @click="changeSelectedSubCategory(1)" class="text-decoration-none align-self" :class="{ 'selected': selectedSubCategory == 1 }">정보</span>
       </el-col>
       <el-col :span="4" class="container-box-detail">
-        <span @click="changeSelectedSubCategory(2)" class="text-decoration-none align-self" :class="{ 'selected': selectedSubCategory == 2 }">질문</span>
-        <!-- <div v-if="selectedSubCategory == 3" id="square"></div> -->
+        <span v-if="category != 3" @click="changeSelectedSubCategory(2)" class="text-decoration-none align-self" :class="{ 'selected': selectedSubCategory == 2 }">질문</span>
       </el-col>
     </el-row>
   </div>

@@ -85,9 +85,6 @@ export default {
         this.getInitialSearchPostListByCategory();
       }
     },
-    // communityArticles() {
-    //   console.log("post list change...", this.communityArticles.length);
-    // }
   },
 	methods: {
     initPage() {
@@ -96,7 +93,7 @@ export default {
     },
     async getInitialCommunityInfo() {
       try {
-        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}?page=${this.limit}`)
+        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}?page=${this.limit}&subCategory=${this.$store.state.selectedSubCategory}`)
         this.communityArticles = response.data
       } catch(err) {
         console.log(err)
@@ -104,7 +101,7 @@ export default {
     },
 		async getCommunityInfo() {
       try {
-        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}?page=${this.limit}`)
+        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}?page=${this.limit}&subCategory=${this.$store.state.selectedSubCategory}`)
         return response.data
       } catch(err) {
         console.log(err)
