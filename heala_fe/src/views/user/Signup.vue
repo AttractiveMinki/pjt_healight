@@ -62,6 +62,8 @@
       <div class="error-text" v-if="error.passwordConfirm">{{ error.passwordConfirm }}</div>
 
       <button class="get-input bg-green join-button-setting" @click="signup(data)" :disabled="!isSubmit" :class="{disabled : !isSubmit}">회원가입</button>
+      <br>
+      <button class="bg-white get-input join-button-setting" @click="goLogin()">로그인 화면으로 이동</button>
     </div>
     <br>
 
@@ -74,6 +76,7 @@ import * as EmailValidator from "email-validator";
 import { mapActions } from 'vuex'
 import axios from "axios"
 import SERVER from "@/api/drf.js"
+import router from "@/router/index.js"
 
 export default {
   name: 'Signup',
@@ -120,18 +123,6 @@ export default {
     ...mapActions([
       'signup',
     ]),
-    // SET_CHECKIDENTITY: function () {
-    //   this.error.check_identity = false
-    // },
-    // SET_CHECKEMAIL: function () {
-    //   this.error.check_email = false
-    // },
-    // INIT_CHECKIDENTITY: function () {
-    //   this.error.check_identity = "이미 존재하는 아이디입니다."
-    // },
-    // INIT_CHECKEMAIL: function () {
-    //   this.error.check_mail = "이미 존재하는 이메일입니다."
-    // },
 
     checkForm() {
       if (this.email.length >= 0 && !EmailValidator.validate(this.email))
@@ -206,6 +197,9 @@ export default {
           // console.log(`${SERVER.URL}${SERVER.ROUTES.checkEmail}${email}`)
       })
     },
+    goLogin(){
+      router.push({ name: "Login" })
+    }
   },
   data: function () {
     return {
@@ -240,6 +234,15 @@ export default {
 </script>
 
 <style scoped>
+  .logo-image {
+    width: 100%;
+  }
+  .bg-white {
+    background: rgb(197, 223, 189);
+    border-width: 0px;
+    border-radius: 5px;
+    color: black;
+  }
   .bg-green {
     background: #ADEC6E;
     border-width: 0px;

@@ -15,16 +15,14 @@
           <span class="el-icon-chat-line-round text-align:right" @click="toggleIcon"></span>
         </div>
       </el-col>
-      <el-col :span="24" class="signup-forgetpassword-button justify-content-space-between">
-        <span><router-link :to="{ name: 'Signup' }" class="text-decoration-none">가입하기</router-link></span>
-        <span><router-link :to="{ name: 'Signup' }" class="text-decoration-none">[]비밀번호를 잊으셨나요?</router-link> </span>
-      </el-col>
       <button class="bg-green get-input join-button-setting" @click="login(data)">로그인</button>
+      <button class="bg-white get-input join-button-setting" @click="goSignup()">가입하기</button>
     </el-row>
   </div>
 </template>
 
 <script>
+import router from "@/router/index.js"
 import { mapActions } from 'vuex'
 
 export default {
@@ -48,6 +46,9 @@ export default {
         document.getElementById('password').setAttribute("type", "password")
       }
     },
+    goSignup() {
+      router.push({ name: "Signup" })
+    },
   },
   data: function () {
     return {
@@ -62,9 +63,18 @@ export default {
 </script>
 
 <style scoped>
+  .logo-image {
+    width: 100%;
+  }
+  .bg-white {
+    background: rgb(197, 223, 189);
+    border-width: 0px;
+    border-radius: 5px;
+    color: black;
+  }
   .bg-green {
     background: #ADEC6E;
-    color: white;
+    color: black;
     /* color: #99a9bf; */
   }
   .bg-gray {
