@@ -45,7 +45,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		// with_challenge 테이블에 insert
 		WithChallenge withchallenge = (WithChallenge) withChallengeIp.getWithChallenge();
 		
-			// 키위 점수 계산하기(1일: 100 point)
+		// 키위 점수 계산하기(1일: 100 point)
 		int diffDays = (int)((withchallenge.getEndDate().getTime() - withchallenge.getStartDate().getTime())/(24*60*60*1000));
 		int kiwiPoint = diffDays * 100;
 		withchallenge.setKiwiPoint(kiwiPoint);
@@ -235,6 +235,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 			}
 			//필요한 정보만 맵에 담아 리스트에 저장
 			Map<String,Object> map = new HashMap<>();
+			map.put("id", nowChallenge.getId());
 			map.put("category", nowChallenge.getCategory());
 			map.put("title", nowChallenge.getTitle());
 			map.put("startDate", nowChallenge.getStartDate());
