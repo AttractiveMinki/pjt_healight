@@ -9,7 +9,7 @@
         {{ post.title }}
       </div>
       <div class="post-time">
-        {{ post.createdAt }}
+        {{ post.createdAt.substring(0, 10) }}
       </div>
       <div class="post-image-wrapper">
         <img :src="imageURL" alt="" class="post-image">
