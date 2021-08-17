@@ -11,6 +11,7 @@ import com.ssafy.kiwi.model.domain.entity.BodyInfo;
 import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.repository.BodyInfoRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
+import com.ssafy.kiwi.model.dto.BodyBMIOp;
 import com.ssafy.kiwi.model.dto.BodyInfoIp;
 import com.ssafy.kiwi.model.dto.BodyRecordOp;
 import com.ssafy.kiwi.model.dto.BodyWeightIp;
@@ -101,25 +102,37 @@ public class BodyServiceImpl implements BodyService {
 	@Override
 	public Object recordBody(int userId, String type) {
 		BodyRecordOp bodyRecordOp = new BodyRecordOp();
+		//최신 height 값 가져오기 : 입력하지 않은 경우 기본값 170
+		BodyInfo recentInfo = bodyInfoRepository.getRecentByUserId(userId);
+		double height = 0;
+		if(recentInfo == null) height = 170;
+		else height = recentInfo.getHeight();
+		
 		//주별 기록
 		if(type.equals("week")) {
 			//이번주 몇 주차인지
 			int today = bodyInfoRepository.getWeekNum();
 			bodyRecordOp.setNum(today);
 			//지난 23주 주 번호와 평균 리스트
-			List<Object> bodyRecord = bodyInfoRepository.getWeeklyRecordByUserId(userId);
-			bodyRecordOp.setBodyRecord(bodyRecord);
-			return bodyRecordOp;
+			List<BodyBMIOp> bodyRecord = bodyInfoRepository.getWeeklyRecordByUserId(userId);
+			for (int i = 0; i < bodyRecord.size(); i++) {
+//				Object br = bodyRecord.get(i);
+//				BodyBMIOp bbo = new BodyBMIOp();
+//				Object.keys(br);
+//				bbo.setWeekNumber(br.);
+			}
+//			bodyRecordOp.setBodyRecord(bodyRecord);
+			return bodyRecord;
 		}
 		//월별 기록
-		else if(type.equals("month")) {
-			int today = bodyInfoRepository.getMonthNum();
-			bodyRecordOp.setNum(today);
-			//지난 12개월 달 번호와 평균 리스트
-			List<Object> bodyRecord = bodyInfoRepository.getMonthlyRecordByUserId(userId);
-			bodyRecordOp.setBodyRecord(bodyRecord);
-			return bodyRecordOp;
-		}
+//		else if(type.equals("month")) {
+//			int today = bodyInfoRepository.getMonthNum();
+//			bodyRecordOp.setNum(today);
+//			//지난 12개월 달 번호와 평균 리스트
+//			List<BodyBMIOp> bodyRecord = bodyInfoRepository.getMonthlyRecordByUserId(userId);
+//			bodyRecordOp.setBodyRecord(bodyRecord);
+//			return bodyRecordOp;
+//		}
 		return null;
 	}
 
