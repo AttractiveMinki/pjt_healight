@@ -266,7 +266,14 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	//-------------------------admin---------------------------
 	//키위 챌린지 추가
 	@Override
-	public boolean makeKiwi(List<KiwiMission> kiwiMission) {
+	public boolean makeKiwi(List<KiwiChallenge> kiwiChallenge) {
+		kiwiChallengeRepository.saveAll(kiwiChallenge);
+		return true;
+	}
+	
+	//키위 챌린지 미션 추가
+	@Override
+	public boolean makeKiwiMission(List<KiwiMission> kiwiMission) {
 		kiwiMissionRepository.saveAll(kiwiMission);
 		return true;
 	}
