@@ -3,7 +3,6 @@
     <Navbar />
     <ChallengeContainerKiwi />
     <el-row class="community">
-      {{ data }}
       <el-col :span="24" class="community-box">
         <el-row>
           <router-link :to="{ name: 'KiwiSpecial' }" class="text-decoration-none">
