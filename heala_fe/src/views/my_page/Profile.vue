@@ -135,7 +135,7 @@ export default {
     Footer,
     FollowList,
   },
-  mounted() {
+  created() {
     // footer 4로 설정
     this.$store.state.selectedRouter = 4
   
