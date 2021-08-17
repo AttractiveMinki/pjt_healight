@@ -2,19 +2,19 @@
   <div>
     <Navbar />
     <h1>체중 기록 확인</h1>
-    <WeightGraph />
+    <VueChartJS />
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/my_page/Navbar"
-import WeightGraph from '@/components/my_page/WeightGraph'
+import VueChartJS from '@/components/my_page/chart/VueChartJS'
 
 export default {
   name: "WeightRecordPast",
   components: {
     Navbar,
-    WeightGraph,
+    VueChartJS,
   },
   created() {
     // 현재 보고 있는 프로필 주인의 id 주소창에서 가져오기
