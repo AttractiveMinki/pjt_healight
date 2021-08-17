@@ -86,6 +86,7 @@ export default {
   methods: {
     SetCurrentPageId: function (getId) {
       console.log('클릭 감지1')
+      console.log(getId)
       this.$store.state.currentPageId = getId
       console.log('클릭 감지2')
     },

@@ -3,22 +3,6 @@
     <Navbar />
     <ChallengeContainerWith />
     <el-row class="community">
-      <el-col :span="12" class="text-align-start padding-1 community-title-13">
-        <span>최근 본 챌린지</span>
-      </el-col>
-      <el-col :span="12" class="text-align-end padding-1 community-title">
-        <i class="margin-left-10 el-icon-arrow-right"></i>
-        <span>전체 보기</span>
-      </el-col>
-      <el-col style="margin-bottom: 5px">
-        <div id="recent-square" class="recent-title">
-          <span v-for="(recent_challenge, idx) in recent_challenges" :key="idx" id="recent-square-detail" style="margin: 3px">
-            {{ recent_challenge.title }}
-            <!-- 클릭 시 상세 페이지로 이동 -->
-          </span>
-        </div>
-      </el-col>
-
       <el-col :span="24">
         <el-row>
           <el-col :span="8" class="container-box-detail selected-category">
@@ -33,9 +17,7 @@
           </el-col>
         </el-row>
         <el-col class="community-box">
-          <!-- {{ withChallenges}} -->
           <el-col :span="24" v-for="(value, idx) in withChallenges" :key="idx" class="community-inside ">
-            <!-- {{ value }} -->
             <div v-if="value.withChallenge.category == 0">
               <div @click="SetCurrentPageId(value.withChallenge.id)">
                 <router-link :to="{ name: 'WithDetail' , params: { id: value.withChallenge.id } }" class="text-decoration-none">
@@ -63,6 +45,10 @@
             </div>
           </el-col>
         </el-col>
+        <infinite-loading @infinite="infiniteHandler" spineer="waveDots">
+          <div slot="no-more"></div>
+          <div slot="no-results"></div>
+        </infinite-loading>
       </el-col>
     </el-row>   
     <Footer />
@@ -70,6 +56,7 @@
 </template>
 
 <script>
+import InfiniteLoading from "vue-infinite-loading";
 import Navbar from "@/components/challenge/Navbar"
 import ChallengeContainerWith from "@/components/challenge/with/ChallengeContainerWith"
 import Footer from "@/components/home/Footer"
@@ -82,34 +69,55 @@ export default {
   data: () => {
     return {
       withChallenges: [],
+      limit: 0,
     };
   },
   components: {
     Navbar,
     ChallengeContainerWith,
     Footer,
+    InfiniteLoading,
   },
   methods: {
     SetCurrentPageId: function (getId) {
       this.$store.state.currentPageId = getId
     },
-    getWithHealthChallenge: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithHealthChallenge}`)
-        .then((res) => {
-          this.withChallenges = res.data
-          // console.log(this.withChallenges)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+    async getWithHealthChallenge() {
+      try {
+        const res = await axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithHealthChallenge}&page=${this.limit}`)
+        this.withChallenges = res.data
+      } catch(err) {
+        console.log(err)
+      }
     },
+
+    async infiniteHandler($state) {
+      const EACH_LEN = 10;
+      this.limit += 1
+      const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithHealthChallenge}&page=${this.limit}`)
+      setTimeout(() => {
+        console.log(response)
+        if (response.data != undefined && response.data.length) {
+          console.log(response.data)
+          this.communityArticles = this.communityArticles.concat(response.data)
+          $state.loaded() // 데이터 로딩
+
+          if (response.data.length < EACH_LEN) {
+            $state.complete()
+          }
+        }
+        else {
+          $state.complete()
+        }
+      }, 300)
+    }
   },
   computed: {
     ...mapState([
       "recent_challenges",
     ])
   },
-  mounted: function () {
+  created: function () {
     this.getWithHealthChallenge()
     this.$store.state.selectedRouter = 3
     this.$store.state.currentPageCategory = 0
@@ -142,7 +150,7 @@ export default {
     /* margin-left: 2.5%; */
     border-radius: 5px;
     width: 100%;
-    height: calc(80vh - 140px);
+    height: calc(98vh - 162px - 3rem);
     border: 3px solid #ADEC6E;
     overflow : scroll;
   }
