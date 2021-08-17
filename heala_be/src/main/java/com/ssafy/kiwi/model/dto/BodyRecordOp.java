@@ -11,7 +11,7 @@ import lombok.*;
 @Data
 public class BodyRecordOp {
 	//오늘 주별or월별 번호
-	private int num;
-	//주별or월별 평균 체중 기록
-	private List<Object> bodyRecord;
+	private int todayNumber;
+	//주별or월별 평균 체중, bmi 기록
+	private List<BodyBMIOp> bodyRecord;
 }

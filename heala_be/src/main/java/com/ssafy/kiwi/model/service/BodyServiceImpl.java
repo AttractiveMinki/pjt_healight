@@ -1,6 +1,7 @@
 package com.ssafy.kiwi.model.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeSet;
@@ -11,6 +12,7 @@ import com.ssafy.kiwi.model.domain.entity.BodyInfo;
 import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.repository.BodyInfoRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
+import com.ssafy.kiwi.model.dto.BodyBMIOp;
 import com.ssafy.kiwi.model.dto.BodyInfoIp;
 import com.ssafy.kiwi.model.dto.BodyRecordOp;
 import com.ssafy.kiwi.model.dto.BodyWeightIp;
@@ -100,23 +102,49 @@ public class BodyServiceImpl implements BodyService {
 	//주별, 월별 체중 기록
 	@Override
 	public Object recordBody(int userId, String type) {
+		//최신 height 값 가져오기 : 입력하지 않은 경우 기본값 170
+		BodyInfo recentInfo = bodyInfoRepository.getRecentByUserId(userId);
+		double height = 0;
+		if(recentInfo == null) height = 1.7;
+		else height = Math.round((recentInfo.getHeight()/100)*1000)/1000.0;
+		
 		BodyRecordOp bodyRecordOp = new BodyRecordOp();
+		List<BodyBMIOp> bodyRecord = new ArrayList<>();
 		//주별 기록
 		if(type.equals("week")) {
 			//이번주 몇 주차인지
 			int today = bodyInfoRepository.getWeekNum();
-			bodyRecordOp.setNum(today);
+			bodyRecordOp.setTodayNumber(today);
 			//지난 23주 주 번호와 평균 리스트
-			List<Object> bodyRecord = bodyInfoRepository.getWeeklyRecordByUserId(userId);
+			List<Object[]> bodyWeightRecord = bodyInfoRepository.getWeeklyRecordByUserId(userId);
+			//주 번호, 체중 평균, bmi 평균 담기
+			for (int i = 0; i < bodyWeightRecord.size(); i++) {
+				Object[] br = bodyWeightRecord.get(i);
+				BodyBMIOp bbo = new BodyBMIOp();
+				bbo.setNumber((int) br[0]);
+				bbo.setWeight(Math.floor((double)br[1]*10 / 10.0));
+				bbo.setBmi(Math.floor((bbo.getWeight()/(height*height))*10)/10.0);
+				bodyRecord.add(bbo);
+			}
 			bodyRecordOp.setBodyRecord(bodyRecord);
 			return bodyRecordOp;
 		}
 		//월별 기록
 		else if(type.equals("month")) {
+			//이번달 몇 달차인지
 			int today = bodyInfoRepository.getMonthNum();
-			bodyRecordOp.setNum(today);
+			bodyRecordOp.setTodayNumber(today);
 			//지난 12개월 달 번호와 평균 리스트
-			List<Object> bodyRecord = bodyInfoRepository.getMonthlyRecordByUserId(userId);
+			List<Object[]> bodyWeightRecord = bodyInfoRepository.getMonthlyRecordByUserId(userId);
+			//달 번호, 체중 평균, bmi 평균 담기
+			for (int i = 0; i < bodyWeightRecord.size(); i++) {
+				Object[] br = bodyWeightRecord.get(i);
+				BodyBMIOp bbo = new BodyBMIOp();
+				bbo.setNumber((int) br[0]);
+				bbo.setWeight(Math.floor((double)br[1]*10 / 10.0));
+				bbo.setBmi(Math.floor((bbo.getWeight()/(height*height))*10)/10.0);
+				bodyRecord.add(bbo);
+			}
 			bodyRecordOp.setBodyRecord(bodyRecord);
 			return bodyRecordOp;
 		}

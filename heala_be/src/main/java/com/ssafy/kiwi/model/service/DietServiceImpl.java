@@ -78,11 +78,11 @@ public class DietServiceImpl implements DietService {
 		List<Object[]> sumList = dietRepository.getSumByUserId(userId, date);
 		//입력한 영양 정보
 		if(!sumList.isEmpty()) {
-			if(sumList.get(0)[0] != null) dietInfoOp.setCalory((int) Math.round((double)sumList.get(0)[0]));
-			if(sumList.get(0)[1] != null) dietInfoOp.setCarbohydrate((double)sumList.get(0)[1] *10 / 10.0);
-			if(sumList.get(0)[2] != null) dietInfoOp.setProtein((double)sumList.get(0)[2] *10 / 10.0);
-			if(sumList.get(0)[3] != null) dietInfoOp.setFat((double)sumList.get(0)[3] *10 / 10.0); 
-			if(sumList.get(0)[4] != null) dietInfoOp.setSodium((int) Math.round((double)sumList.get(0)[4]));
+			if(sumList.get(0)[0] != null) dietInfoOp.setCalory((int) Math.floor((double)sumList.get(0)[0]));
+			if(sumList.get(0)[1] != null) dietInfoOp.setCarbohydrate(Math.floor((double)sumList.get(0)[1]*10) / 10.0);
+			if(sumList.get(0)[2] != null) dietInfoOp.setProtein(Math.floor((double)sumList.get(0)[2] *10) / 10.0);
+			if(sumList.get(0)[3] != null) dietInfoOp.setFat(Math.floor((double)sumList.get(0)[3] *10) / 10.0); 
+			if(sumList.get(0)[4] != null) dietInfoOp.setSodium((int) Math.floor((double)sumList.get(0)[4]));
 		}
 		return dietInfoOp;
 	}
