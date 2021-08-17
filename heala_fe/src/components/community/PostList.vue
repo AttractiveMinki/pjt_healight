@@ -1,6 +1,6 @@
 <template>
   <div class="article-bottom-padding">
-		<div class="post-list-title">{{ subCategory[selectedSubCategory] }} 게시글</div>
+		<div v-if="!isScrapList" class="post-list-title">{{ subCategory[selectedSubCategory] }} 게시글</div>
 		<div v-for="(article, idx) in communityArticles" :key="idx" class="post-list-item">
 			<post-list-item :article="article"></post-list-item>
 		</div>
@@ -20,9 +20,10 @@ import { mapState } from "vuex";
 
 export default {
   name: "PostList",
-  props: [ 'category' ],
+  props: [ 'category', 'isScrapList' ],
 	data() {
 		return {
+      userId: 1,
 			communityArticles: [],
       limit: 0,
       subCategory: [ "BEST", "일반", "정보", "질문", "익명" ],
@@ -30,7 +31,13 @@ export default {
     }
 	},
 	created() {
-		this.getInitialCommunityInfo();
+    this.userId = localStorage.getItem("userId");
+    if(this.isScrapList) {
+      this.getInitialScrapList();
+    }
+    else {
+      this.getInitialCommunityInfo();
+    }
 	},
   computed: {
     ...mapState([
@@ -88,12 +95,31 @@ export default {
         console.log(err)
       }
     },
+    async getInitialScrapList() {
+      try {
+        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.feed}${this.userId}${SERVER.ROUTES.scrap}?category=${this.category}&page=${this.limit}`)
+        this.communityArticles = response.data
+      } catch(err) {
+        console.log(err)
+      }
+    },
+    async getScrapList() {
+      try {
+        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.feed}${this.userId}${SERVER.ROUTES.scrap}?category=${this.category}&page=${this.limit}`)
+        return response.data
+      } catch(err) {
+        console.log(err)
+      }
+    },
     async infiniteHandler($state) {
       const EACH_LEN = 10;
       
       this.limit += 1;
       let data;
-      if(this.category == 3){
+      if(this.isScrapList) {
+        data = await this.getScrapList();
+      }
+      else if(this.category == 3){
         data = await this.getCommunityInfo();
       }
       else {
