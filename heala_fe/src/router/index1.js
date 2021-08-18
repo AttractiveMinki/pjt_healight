@@ -5,12 +5,18 @@ import CertifyImage from "@/views/challenge/my/CertifyImage";
 import Result from "@/views/challenge/my/Result";
 import CommunityNewMain from "@/views/community/CommunityNewMain";
 import SearchUser from "@/views/home/SearchUser";
+import CommentMore from "@/views/home/CommentMore";
 
 export default [
     {
         path: "/community/post/:id",
         name: "PostDetail",
         component: PostDetail,
+    },
+    {
+        path: "/community/post/:id/comments",
+        name: "CommentMore",
+        component: CommentMore,
     },
     {
         path: "/home/feed",
