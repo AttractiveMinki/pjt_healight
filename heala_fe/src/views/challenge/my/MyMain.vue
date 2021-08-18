@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="my-main">
     <Navbar />
     <ChallengeContainerMy />
     <el-row class="community">
@@ -39,27 +39,17 @@
                 <el-dialog :visible.sync="dialogVisible.fourth" width="95%">
                   <img :src="imgUrl.fourth" alt="" width="99%">
                 </el-dialog>
-                <button class="my-pictures-button">내 인증사진 모아보기</button>
+                <button class="my-pictures-button" @click="goToCertifyImage(with_challenge.id)">내 인증사진 <br> 모아보기</button>
                 
               </div>
             </el-col>
-              
-              <!-- 인증하기 -->
-              <!-- <div style="display: flex; justify-content: start; align-items: center; padding-left: 10px;">
-                <label class="input-file-button" for="input-file">+</label>
-                <input type="file" id="input-file" style="display: none;" @change="selectFile"/>
-                <img class="image" src="../../assets/img/writing_upload.png" alt="" @click="dialogVisible.first = true">
-              </div> -->
-              <el-col :span="6">
-                <label class="input-file-button" for="input-file">+</label>
-                <input type="file" id="input-file" style="display: none;" @change="selectFile"/>
-                {{ with_challenge.image }}
-                <el-image class="margin-left-10"
-                  style="width: 100%; height: 80px"
-                  :src="with_challenge.image" 
-                  >
-                </el-image>
-              </el-col>
+            <el-col :span="6">
+              <label class="input-file-button" for="input-file">+</label>
+              <input type="file" id="input-file" style="display: none;" @change="selectFile"/>
+              <!-- <img src="" alt="">
+              {{ with_challenge.image }} -->
+            </el-col>
+            <button id="submit" class="my-pictures-button" @click="uploadImage(with_challenge.id)" :class="{ disabled : !isSubmit }">인증하기</button>
           </div>
         </el-col>
       </el-col>
@@ -78,12 +68,34 @@ import axios from 'axios';
 
 export default {
   name: "MyMain",
+  data() {
+    return {
+      imgCnt: 0,
+      title: "",
+      category: "",
+      subject: "",
+      scope: "",
+      contents: "",
+      hashtag: "",
+      dialogVisible: {"first":false, "second":false, "third":false, "fourth":false, "fifth":false},
+      imgUrl: {"first":"", "second":"", "third":"", "fourth":"", "fifth":""},
+      values: "",
+      userId: 1,
+    }
+  },
   components: {
     Navbar,
     ChallengeContainerMy,
     Footer,
   },
+  created() {
+    this.userId = localStorage.getItem("userId");
+    this.getMyChallenge();
+  },
   methods: {
+    goToCertifyImage(withChallengeId) {
+      this.$router.push({ name: "CertifyImage", params: { withChallengeId }})
+    },
     SetCurrentPageId: function (getId) {
       this.$store.state.currentPageId = getId
     },
@@ -97,19 +109,24 @@ export default {
       else if(this.imgCnt === 4) this.imgUrl.fifth = URL.createObjectURL(file);
       this.imgCnt++;
     },
-    submit() {
-      // FormData에 전송할 데이터 저장
-      var formData  = new FormData();
-      for(var i = 0; i < this.imgCnt; i++) {
-        var imgFile = document.getElementsByClassName("image")[i];
-        var key = "image[" + i + "]";
-        formData.append(key, imgFile.files[0]);
-      }
-      formData.append("title", this.title);
-      formData.append("contents", this.contents);
-      formData.append("hashtag", this.hashtag);
-      // 서버로 FormData 전송
-      axios.post("http://localhost:8080/feed/post", formData, { headers: {'Content-Type' : 'multipart/form-data'}})
+    uploadImage(withChallengeId) {
+      let formData = new FormData()
+      let imgFile = document.getElementById("input-file").files[0]
+      formData.append("file", imgFile)
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`, formData, { headers: {"Content-Type" : "multipart/form-data"}})
+        .then(res => {
+          this.submit(res.data, withChallengeId)
+        })
+        .catch(err => {
+          console.error(err.response.data)
+        })
+      },
+    submit(certifyImage, withChallengeId) {
+      axios.post(SERVER.URL + SERVER.ROUTES.certify, {
+        image: certifyImage,
+        userId: this.userId,
+        withChallengeId,
+      })
         .then(response => {
           if(response.status === 200) {
             alert('등록 완료')
@@ -146,8 +163,9 @@ export default {
       dom.style.fontWeight = "bold";
       dom.style.color = "#ADEC6E";
     },
-    getMyChallenge: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getMyChallenge}${localStorage.getItem('userId')}`)
+    getMyChallenge() {
+      console.log(`${SERVER.URL}${SERVER.ROUTES.getMyChallenge}${this.userId}`);
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getMyChallenge}${this.userId}`)
         .then((res) => {
           this.values = res.data
         })
@@ -160,23 +178,6 @@ export default {
     ...mapState([
       "with_challenges",
     ])
-  },
-  mounted: function () {
-    this.getMyChallenge()
-  },
-  data: () => {
-    return {
-      imgCnt: 0,
-      title: "",
-      category: "",
-      subject: "",
-      scope: "",
-      contents: "",
-      hashtag: "",
-      dialogVisible: {"first":false, "second":false, "third":false, "fourth":false, "fifth":false},
-      imgUrl: {"first":"", "second":"", "third":"", "fourth":"", "fifth":""},
-      values: "",
-    }; 
   },
 }
 </script>
@@ -211,7 +212,7 @@ export default {
   }
   .text-title {
     font-weight: bold; 
-    font-size: 25px;
+    font-size: 16px;
     margin-bottom: 5px;
     white-space : nowrap; /* 한 줄 제한*/
     overflow : hidden; /* 넘어가는 글자 숨기기 */
@@ -233,28 +234,26 @@ export default {
     text-overflow: ellipsis ; /* 말 줄임표 추가 */
   }
   .text-hashtag {
-    font-size: small;
+    font-size: 12px;
     color: #1A8EFA;
     width: 100%;
     margin-bottom: 3px;
     display: contents;
   }
   .my-pictures-button {
-    width: 25vw;
-    height: 5vh;
+    /* width: 25vw; */
+    /* height: 5vh; */
     background: white;
     border: 2px solid #ADEC6E;
-    padding: 2px;
+    padding: 1px 5px;
     font-size: 10px;
   }
-
   .input-file-button{
     width: 40px;
     height: 40px;
     background-color:#ADEC6E;
     border-radius: 50%;
     color: white;
-    margin-right: 75px;
     cursor: pointer;
     font-size: 30px;
     font-weight: bold;
