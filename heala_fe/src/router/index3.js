@@ -10,9 +10,7 @@ import WithDetailReview from "@/views/challenge/with/WithDetailReview"
 import WithMainDiet from "@/views/challenge/with/WithMainDiet"
 import WithMainHeart from "@/views/challenge/with/WithMainHeart"
 import Profile from "@/views/my_page/Profile";
-// import ProfileTodoList from "@/views/my_page/ProfileTodoList";
 import ProfilePhysInfo from "@/views/my_page/ProfilePhysInfo";
-// import ProfileBadgeContainer from "@/views/my_page/ProfileBadgeContainer";
 import Scrap from "@/views/my_page/showmore/Scrap";
 import ChangePassword from "@/views/my_page/showmore/ChangePassword";
 import DietRecord from "@/views/my_page/record/DietRecord";
@@ -98,16 +96,6 @@ export default [
     name: "Profile",
     component: Profile,
   },
-  // {
-  //   path: "/profiletodolist/:id",
-  //   name: "ProfileTodoList",
-  //   component: ProfileTodoList,
-  // },
-  // {
-  //   path: "/profilebadgecontainer/:id",
-  //   name: "ProfileBadgeContainer",
-  //   component: ProfileBadgeContainer,
-  // },
   {
     path: "/profile/physinfo",
     name: "ProfilePhysInfo",

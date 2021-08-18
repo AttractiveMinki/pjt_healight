@@ -44,7 +44,7 @@
     </el-row>
     <div v-if="showMenu" class="menu-background" @click="showMenu = false"></div>
     <div v-if="showMenu" class="menu-list">
-      <!-- <div class="menu">수정하기</div> -->
+      <div class="menu">수정하기</div>
       <div class="menu" @click="showDeleteModal = true">삭제하기</div>
     </div>
     <modal v-if="showDeleteModal" @yes="deletePost()" @no="showDeleteModal = false">
@@ -242,8 +242,9 @@ export default {
   border-top: 1px solid;
 }
 .menu {
+  font-size: 13px;
   width: 100vw;
-  padding: 15px;
+  padding: 13px;
   border-bottom: 1px solid;
   border-left: 1px solid;
   border-right: 1px solid;
