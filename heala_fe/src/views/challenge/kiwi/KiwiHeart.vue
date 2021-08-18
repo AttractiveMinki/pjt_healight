@@ -3,7 +3,7 @@
     <ChallengeContainerKiwiDetail 
       category=2
     />
-    <el-row>
+    <el-row v-if="dataLoaded">
       <el-col :span="24" class="community">
         <div style="text-align:start; margin: 2vh 2vw;">
           <div>
@@ -135,6 +135,7 @@ export default {
   data: function () {
     return {
       challenges: [],
+      dataLoaded: false,
     }
   },
   components: {
@@ -146,6 +147,7 @@ export default {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHeartChallenge}` + localStorage.getItem('userId'))
         .then((res) => {
           this.challenges = res.data
+          this.dataLoaded = true
         })
         .catch((err) => {
           console.error(err.response.data)
@@ -165,7 +167,7 @@ export default {
         })
     },
   },
-  mounted: function () {
+  created: function () {
     this.getKiwiHeartChallenge()
   },
 

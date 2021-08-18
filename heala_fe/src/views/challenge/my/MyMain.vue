@@ -187,7 +187,7 @@ export default {
     /* margin-left: 2.5%; */
     border-radius: 5px;
     width: 100%;
-    height: calc(80vh - 140px);
+    height: calc(98vh - 162px - 3rem);
     border: 3px solid #ADEC6E;
     overflow : scroll;
   }

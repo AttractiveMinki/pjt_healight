@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="dataLoaded">
     <div class="display-flex justify-content-space-between align-items">
       <span><font-awesome-icon icon="arrow-left" class="padding-left cursor-pointer" @click="goBack()"/></span>
       <span class="text-decoration-title">챌린지 상세</span>
@@ -109,6 +109,7 @@ export default {
   data: function () {
     return {
       value: [],
+      dataLoaded: false,
     }
   },
   // props: {
@@ -124,6 +125,7 @@ export default {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?userId=${localStorage.getItem('userId')}&withChallengeId=${this.$route.params.id}`)
         .then((res) => {
           this.value = res.data
+          this.dataLoaded = true
         })
         .catch((err) => {
           console.log(err)
@@ -139,7 +141,7 @@ export default {
         })
     },
   },  
-  mounted: function () {
+  created: function () {
     this.getWithDetail()
   },
 }
