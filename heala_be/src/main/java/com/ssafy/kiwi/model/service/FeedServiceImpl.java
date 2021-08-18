@@ -77,11 +77,13 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	// 글 삭제
+	@Transactional
 	@Override
 	public boolean delete(int postId, int userId) {
 		boolean isPossible = false;
 		int checkId = postRepository.getById(postId).getUserId();
 		if (checkId == userId) {
+			postHashtagRepository.deleteAllByPostId(postId);
 			postRepository.deleteById(postId);
 			isPossible = true;
 		}
