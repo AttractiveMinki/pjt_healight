@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.kiwi.model.domain.entity.CertifyImage;
-import com.ssafy.kiwi.model.domain.entity.KiwiMission;
 import com.ssafy.kiwi.model.dto.WithChallengeIp;
 import com.ssafy.kiwi.model.service.KiwiChallengeService;
 import com.ssafy.kiwi.model.service.WithChallengeService;
@@ -57,8 +56,8 @@ public class ChallengeController {
 	@ApiOperation(value = "함께 챌린지 참여하기")
 	@PostMapping("/with/join")
 	public Object joinWithChallenge(@RequestParam int withChallengeId, @RequestParam int userId) {
-		withChallengeService.joinWithChallenge(withChallengeId, userId);
-		return new ResponseEntity<>(HttpStatus.OK);
+		if(withChallengeService.joinWithChallenge(withChallengeId, userId)) return new ResponseEntity<>(HttpStatus.OK);
+		else return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
 	
 	@ApiOperation(value = "키위 챌린지 목록 조회하기.")

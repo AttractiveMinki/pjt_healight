@@ -159,9 +159,13 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 	
 	//[함께 챌린지] 참가하기
 	@Override
-	public void joinWithChallenge(int withChallengeId, int userId) {
-		MyChallenge mychallenge = MyChallenge.builder().withChallengeId(withChallengeId).userId(userId).build();
-		myChallengeRepository.save(mychallenge);
+	public boolean joinWithChallenge(int withChallengeId, int userId) {
+		if(myChallengeRepository.countByWithChallengeIdAndUserId(withChallengeId, userId)==0) {
+			MyChallenge mychallenge = MyChallenge.builder().withChallengeId(withChallengeId).userId(userId).build();
+			myChallengeRepository.save(mychallenge);
+			return true;
+		}
+		else return false;
 	}
 	
 	//[함께 챌린지] 인증사진 모아보기
