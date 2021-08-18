@@ -12,8 +12,7 @@ export default {
   methods: {
     sendMain: function () {
       if (localStorage.getItem('userId')){
-        router.push({ name: "CommunityMain" })
-        // 홈피드 생기면 변경
+        router.push({ name: "HomeFeed" })
       }
       else {
         router.push({ name: "Login" })
