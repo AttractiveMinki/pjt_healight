@@ -23,6 +23,8 @@ import com.ssafy.kiwi.model.domain.repository.KiwiMissionRepository;
 import com.ssafy.kiwi.model.domain.repository.KiwiUserRepository;
 import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
+import com.ssafy.kiwi.model.dto.KiwiChallengeIp;
+import com.ssafy.kiwi.model.dto.KiwiMissionIp;
 
 import lombok.RequiredArgsConstructor;
 
@@ -266,14 +268,25 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 	//-------------------------admin---------------------------
 	//키위 챌린지 추가
 	@Override
-	public boolean makeKiwi(List<KiwiChallenge> kiwiChallenge) {
+	public boolean makeKiwi(List<KiwiChallengeIp> kiwiChallengeIp) {
+		List<KiwiChallenge> kiwiChallenge = new ArrayList<>();
+		for(KiwiChallengeIp kci : kiwiChallengeIp) {
+			if(kci.getCategory() == 3) kiwiChallenge.add(new KiwiChallenge(kci.getName(), kci.getIntroduction(),
+					kci.getCategory(), kci.getStartDate(), kci.getEndDate()));
+			else kiwiChallenge.add(new KiwiChallenge(kci.getName(), kci.getIntroduction(),
+					kci.getCategory()));
+		}
 		kiwiChallengeRepository.saveAll(kiwiChallenge);
 		return true;
 	}
 	
 	//키위 챌린지 미션 추가
 	@Override
-	public boolean makeKiwiMission(List<KiwiMission> kiwiMission) {
+	public boolean makeKiwiMission(List<KiwiMissionIp> kiwiMissionIp) {
+		List<KiwiMission> kiwiMission = new ArrayList<>();
+		for (KiwiMissionIp km : kiwiMissionIp) {
+			kiwiMission.add(new KiwiMission(km.getContent(), km.getPoint(), km.getBadge_id(), km.getCategory()));
+		}
 		kiwiMissionRepository.saveAll(kiwiMission);
 		return true;
 	}

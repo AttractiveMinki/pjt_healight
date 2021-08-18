@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.kiwi.model.domain.entity.Badge;
-import com.ssafy.kiwi.model.domain.entity.KiwiChallenge;
-import com.ssafy.kiwi.model.domain.entity.KiwiMission;
+import com.ssafy.kiwi.model.dto.KiwiChallengeIp;
+import com.ssafy.kiwi.model.dto.KiwiMissionIp;
 import com.ssafy.kiwi.model.service.KiwiChallengeService;
 
 import io.swagger.annotations.ApiOperation;
@@ -28,8 +28,8 @@ public class AdminController {
 	
 	@ApiOperation(value = "키위 챌린지 추가하기.")
 	@PostMapping("/kiwi/challenge")
-	public Object makeKiwi(@RequestBody List<KiwiChallenge> kiwiChallenge) {
-		if(kiwiChallengeService.makeKiwi(kiwiChallenge)) {
+	public Object makeKiwi(@RequestBody List<KiwiChallengeIp> kiwiChallengeIp) {
+		if(kiwiChallengeService.makeKiwi(kiwiChallengeIp)) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
@@ -37,8 +37,8 @@ public class AdminController {
 	
 	@ApiOperation(value = "키위 챌린지 미션 추가하기.")
 	@PostMapping("/kiwi/mission")
-	public Object makeKiwiMission(@RequestBody List<KiwiMission> kiwiMission) {
-		if(kiwiChallengeService.makeKiwiMission(kiwiMission)) {
+	public Object makeKiwiMission(@RequestBody List<KiwiMissionIp> kiwiMissionIp) {
+		if(kiwiChallengeService.makeKiwiMission(kiwiMissionIp)) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
