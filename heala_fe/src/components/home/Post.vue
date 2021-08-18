@@ -24,7 +24,7 @@
           <span class="post-user-name">{{ userName }}</span>
           {{ content }}
         </div>
-        <div class="comment-open">댓글 {{ commentCount }}개 더보기</div>
+        <div class="comment-open" @click="goToCommentMore">댓글 {{ commentCount }}개 더보기</div>
       </div>
     </div>
   </div>
@@ -126,7 +126,10 @@ export default {
       } catch(exp) {
         console.log(exp);
       }
-    }
+    },
+    goToCommentMore() {
+      this.$router.push({ name: "CommentMore", params: { id: this.id } });
+    },
   },
   components: {
     Star,
