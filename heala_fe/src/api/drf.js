@@ -36,8 +36,8 @@ export default {
     // 원석 #@
 
     // 주엽 #@
-    signup: "/user/signup/",
-    login: "/user/login/",
+    signup: "/auth/signup/",
+    login: "/auth/login/",
     community: "/community/",
     checkEmail: "/user/checkemail/",
     checkIdentity: "/user/checkidentity/",
