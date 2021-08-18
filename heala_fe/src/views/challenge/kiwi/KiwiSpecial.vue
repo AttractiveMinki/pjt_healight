@@ -167,10 +167,7 @@ export default {
     },
   },
   created: function () {
-<<<<<<< HEAD
-=======
     this.$store.commit("GET_USERID")
->>>>>>> 9f67e48c4f331207c0cd420a8b4e31114ba90a9d
     this.getKiwiSpecialChallenge()
   },
 
