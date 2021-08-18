@@ -10,9 +10,9 @@ public class HealaBeApplication {
 	
 	public static final String APPLICATION_LOCATIONS = "spring.config.location="+
 			"classpath:application.properties,"+
-			"classpath:aws.properties,"+
-			"classpath:datasource.properties,"+
-			"classpath:api.properties";
+			"classpath:application-aws.properties,"+
+			"classpath:application-datasource.properties,"+
+			"classpath:application-api-key.properties";
 
 	public static void main(String[] args) {
 		new SpringApplicationBuilder(HealaBeApplication.class)

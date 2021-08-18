@@ -15,7 +15,7 @@ public class Badge {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	private String name;
 	private String image;
 }
