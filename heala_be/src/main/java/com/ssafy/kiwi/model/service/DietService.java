@@ -2,7 +2,6 @@ package com.ssafy.kiwi.model.service;
 
 import java.text.ParseException;
 
-import com.ssafy.kiwi.model.domain.entity.Diet;
 import com.ssafy.kiwi.model.dto.DietInfoOp;
 import com.ssafy.kiwi.model.dto.DietIp;
 

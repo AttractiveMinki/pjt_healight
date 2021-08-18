@@ -26,7 +26,6 @@ import com.ssafy.kiwi.model.domain.repository.PostRepository;
 import com.ssafy.kiwi.model.domain.repository.FollowRepository;
 import com.ssafy.kiwi.model.domain.repository.HashtagRepository;
 import com.ssafy.kiwi.model.domain.repository.PostHashtagRepository;
-import com.ssafy.kiwi.model.domain.repository.PostRepository;
 import com.ssafy.kiwi.model.domain.repository.ScrapRepository;
 import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
