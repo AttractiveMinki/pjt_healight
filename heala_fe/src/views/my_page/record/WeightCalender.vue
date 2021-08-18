@@ -3,6 +3,7 @@
     <Navbar />
     <h1>체중 기록하기</h1>
     <WeiCalender />
+    <router-link :to="{ name: 'WeightRecordPast' }" class="past-weight-button" >과거 기록 확인하기</router-link>
   </div>
 </template>
 
@@ -12,6 +13,11 @@ import WeiCalender from '@/components/my_page/WeiCalender.vue'
 
 export default {
   name: "WeightCalender",
+    data () {
+      return {
+        userId: "",
+      }
+    },
   components: {
     Navbar,
     WeiCalender
@@ -39,5 +45,11 @@ export default {
 <style scoped>
   .is-selected {
     color: #1989FA;
+  }
+  .past-weight-button {
+    background: #ADEC6E;
+    border-width: 0px;
+    border-radius: 5px;
+    color: black;
   }
 </style>

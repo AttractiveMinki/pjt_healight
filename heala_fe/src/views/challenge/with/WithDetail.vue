@@ -95,7 +95,7 @@
 
     <!-- 유저가 참가중이라면 -->
 
-    <div v-if="value.participated == false" id="submit" style="background-color: #C4C4C4; color: white; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">참여중</div>
+    <div v-if="value.participated == true" id="submit" style="background-color: #C4C4C4; color: white; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">참여중</div>
     <div v-else id="submit" style="background-color: #65C506; color: white; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;" class="cursor-pointer" @click="joinChallenge()">참여하기</div>
   </div>
 </template>
