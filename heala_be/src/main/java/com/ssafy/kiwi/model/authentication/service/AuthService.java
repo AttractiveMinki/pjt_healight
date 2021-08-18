@@ -68,7 +68,7 @@ public class AuthService {
         // 5. 토큰 발급
         Map<String, Object> response = new HashMap<String, Object>();
         response.put("tokenDto", tokenDto);
-        response.put("id", mb.getIdentity());
+        response.put("id", mb.getId());
         response.put("name", mb.getName());
         response.put("image", mb.getImage());
         return response;
