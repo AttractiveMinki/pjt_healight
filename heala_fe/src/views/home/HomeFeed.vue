@@ -40,6 +40,8 @@ export default {
     created() {
       // this.userId = localStorage.getItem("userId");
       this.getPostData();
+      // footer 4로 설정
+      this.$store.state.selectedRouter = 0
     },
     methods: {
       async getPostData() {
