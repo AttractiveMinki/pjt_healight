@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.kiwi.model.domain.entity.Badge;
+import com.ssafy.kiwi.model.dto.BadgeIp;
 import com.ssafy.kiwi.model.dto.KiwiChallengeIp;
 import com.ssafy.kiwi.model.dto.KiwiMissionIp;
 import com.ssafy.kiwi.model.service.KiwiChallengeService;
@@ -46,8 +46,8 @@ public class AdminController {
 	
 	@ApiOperation(value = "배지 추가하기.")
 	@PostMapping("/badge")
-	public Object makeBadge(@RequestBody List<Badge> badge) {
-		if(kiwiChallengeService.makeBadge(badge)) {
+	public Object makeBadge(@RequestBody List<BadgeIp> badgeIp) {
+		if(kiwiChallengeService.makeBadge(badgeIp)) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 

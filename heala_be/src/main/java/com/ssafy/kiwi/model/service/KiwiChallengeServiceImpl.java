@@ -23,6 +23,7 @@ import com.ssafy.kiwi.model.domain.repository.KiwiMissionRepository;
 import com.ssafy.kiwi.model.domain.repository.KiwiUserRepository;
 import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
+import com.ssafy.kiwi.model.dto.BadgeIp;
 import com.ssafy.kiwi.model.dto.KiwiChallengeIp;
 import com.ssafy.kiwi.model.dto.KiwiMissionIp;
 
@@ -293,7 +294,11 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 
 	//배지 추가
 	@Override
-	public boolean makeBadge(List<Badge> badge) {
+	public boolean makeBadge(List<BadgeIp> badgeIp) {
+		List<Badge> badge = new ArrayList<>();
+		for(BadgeIp bi : badgeIp) {
+			badge.add(new Badge(bi.getName(), bi.getImage()));
+		}
 		badgeRepository.saveAll(badge);
 		return true;
 	}
