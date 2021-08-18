@@ -12,7 +12,7 @@
         {{ post.createdAt.substring(0, 10) }}
       </div>
       <div class="post-image-wrapper">
-        <img :src="imageURL" alt="" class="post-image">
+        <img :src="imageServer + $store.state.postDetail.image" alt="" class="post-image">
       </div>
       <div class="icon-wrapper">
         <star :like="postLike" @cancelStar="cancelStar" @star="star"></star>
@@ -71,7 +71,7 @@ export default {
     return {
       // scrapUI: this.$store.state.postScrap,
       userId: 1,
-      imageURL: SERVER.IMAGE_URL + this.$store.state.postDetail.image,
+      imageServer: SERVER.IMAGE_URL,
       replyCommentId: Number,
       placeholderMsg: "댓글을 입력해주세요",
       showMenu: false,

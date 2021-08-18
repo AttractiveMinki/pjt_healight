@@ -31,7 +31,7 @@ export default {
       userId: 1,
 			communityArticles: [],
       limit: 0,
-      subCategory: [ "일반", "정보", "질문", "BEST", ],
+      subCategory: [ "일반", "정보", "질문", "BEST" ],
       infiniteId: 0,
       searchAllPost: false,
       searchPostByCategory: false,

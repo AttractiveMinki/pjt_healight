@@ -53,4 +53,7 @@ public interface UserService {
 	// 팔로우, 언팔로우
     boolean follow(int userId, int followId);
 	boolean cancelFollow(int userId, int followId);
+
+	// 팔로우 확인
+    boolean getFollowByUserIdAndFollowId(int userId, int followId);
 }

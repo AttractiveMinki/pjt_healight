@@ -231,7 +231,7 @@ public class FeedServiceImpl implements FeedService {
 		
 		List<PostSimpleOp> list = new ArrayList<>();
 
-		Page<Post> postPage = postRepository.getByUserIdAndCategory(userId, category, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
+		Page<Post> postPage = postRepository.getByUserIdAndCategory(userId, category, PageRequest.of(page, 30, Sort.by("createdAt").descending()));
 		List<Post> postList = postPage.getContent();
 		
 		for (Post p : postList) {
@@ -249,7 +249,7 @@ public class FeedServiceImpl implements FeedService {
 		int num = followRepository.countFollowState(userId, myId);
 		if(num==2) num = 1; //맞팔인 경우
 		else num = 0; //그 외 경우
-		Page<Post> postPage = postRepository.getLimitByUserIdAndCategory(userId, num, category, PageRequest.of(page, 10, Sort.by("createdAt").descending()));
+		Page<Post> postPage = postRepository.getLimitByUserIdAndCategory(userId, num, category, PageRequest.of(page, 30, Sort.by("createdAt").descending()));
 		List<Post> postList = postPage.getContent();
 		
 		for (Post p : postList) {

@@ -5,7 +5,7 @@
       <div class="follow-list-item"
         v-for="(follow, index) in followList"
         v-bind:key="index">
-        <follow-list-item v-bind="follow"></follow-list-item>
+        <follow-list-item v-bind="follow" @follow="$emit('follow')" @unfollow="$emit('unfollow')"></follow-list-item>
       </div>
       <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spineer="waveDots">
         <div slot="no-more"></div>
@@ -94,9 +94,6 @@ export default {
         let data;
         if(this.isSearchList) data = this.getSearchUserList();
         else data = this.getFollowList();
-        // const response = await axios.get(SERVER.URL + SERVER.ROUTES.feed + this.$route.params.id + SERVER.ROUTES.followList
-        //   + `?myId=${this.userId}&type=${this.followListType}&page=${this.page}`);
-        // setTimeout(() => {
         if(data.length) {
           this.followList = this.followList.concat(data);
           $state.loaded();
@@ -111,7 +108,6 @@ export default {
       } catch(exp) {
         console.log(exp);
       }
-      // }, 300);
     }
   },
   components: {
