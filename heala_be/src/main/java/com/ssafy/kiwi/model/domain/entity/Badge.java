@@ -18,4 +18,10 @@ public class Badge {
 
 	private String name;
 	private String image;
+	
+	public Badge(String name, String image) {
+		super();
+		this.name = name;
+		this.image = image;
+	}
 }

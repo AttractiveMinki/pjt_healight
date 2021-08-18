@@ -26,5 +26,21 @@ public class KiwiChallenge {
 
 	@Column(name = "end_date")
 	private Date endDate;
+
+	public KiwiChallenge(String name, String introduction, int category, Date startDate, Date endDate) {
+		super();
+		this.name = name;
+		this.introduction = introduction;
+		this.category = category;
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
+
+	public KiwiChallenge(String name, String introduction, int category) {
+		super();
+		this.name = name;
+		this.introduction = introduction;
+		this.category = category;
+	}
 	
 }

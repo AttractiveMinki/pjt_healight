@@ -27,4 +27,13 @@ public class KiwiMission {
 	@OneToMany
 	@JoinColumn(name="mission_id")
 	private Collection<KiwiUser> kiwiUser;
+
+	public KiwiMission(String content, int point, Integer badge_id, int category) {
+		super();
+		this.content = content;
+		this.point = point;
+		this.badge_id = badge_id;
+		this.category = category;
+	}
+	
 }

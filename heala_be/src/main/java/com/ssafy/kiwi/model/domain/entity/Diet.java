@@ -37,4 +37,18 @@ public class Diet {
 	
 	@Column(name = "user_id")
 	private int userId;
+
+	public Diet(String foodName, double calory, double carbohydrate, double protein, double fat,
+			double sodium, int userId) {
+		super();
+		this.foodName = foodName;
+		this.calory = calory;
+		this.carbohydrate = carbohydrate;
+		this.protein = protein;
+		this.fat = fat;
+		this.sodium = sodium;
+		this.userId = userId;
+	}
+	
+	
 }

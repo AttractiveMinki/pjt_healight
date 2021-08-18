@@ -26,7 +26,6 @@ import com.ssafy.kiwi.model.domain.repository.PostRepository;
 import com.ssafy.kiwi.model.domain.repository.FollowRepository;
 import com.ssafy.kiwi.model.domain.repository.HashtagRepository;
 import com.ssafy.kiwi.model.domain.repository.PostHashtagRepository;
-import com.ssafy.kiwi.model.domain.repository.PostRepository;
 import com.ssafy.kiwi.model.domain.repository.ScrapRepository;
 import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
@@ -78,11 +77,13 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	// 글 삭제
+	@Transactional
 	@Override
 	public boolean delete(int postId, int userId) {
 		boolean isPossible = false;
 		int checkId = postRepository.getById(postId).getUserId();
 		if (checkId == userId) {
+			postHashtagRepository.deleteAllByPostId(postId);
 			postRepository.deleteById(postId);
 			isPossible = true;
 		}
