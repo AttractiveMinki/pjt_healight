@@ -257,18 +257,18 @@ export default new Vuex.Store({
     },
     INIT_USERID: function (state) {
       state.userId = ""
-      localStorage.setItem('userId', '');
+      localStorage.removeItem('userId');
     },
     INIT_USERIDENTITY: function (state) {
       state.userIdentity = ""
-      localStorage.setItem('userIdentity', '');
+      localStorage.removeItem('userIdentity');
     },
     INIT_USERNAME: function (state) {
       state.userName = ""
-      localStorage.setItem('userName', '');
+      localStorage.removeItem('userName');
     },
     INIT_USERIMAGE: function () {
-      localStorage.setItem('userImage', '');
+      localStorage.removeItem('userImage');
     },
     // SET_CHECKIDENTITY: function (state) {
     //   state.check_identity = false
