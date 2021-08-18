@@ -143,7 +143,7 @@ export default {
   },
   methods: {
     getKiwiHealthChallenge: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}` + localStorage.getItem('userId'))
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}` + this.$store.state.userId)
         .then((res) => {
           this.challenges = res.data
         })
@@ -153,8 +153,7 @@ export default {
     },
     certifyMission: function (missionId) {
       // 주소 이상하고, 챌린지 성공 실패 기준을 몰라 보류중
-      // axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}${localStorage.getItem('userId')}/${missionId}`)
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}${localStorage.getItem('userId')}/{missionId}?missionId=${missionId}`)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}${this.$store.state.userId}/{missionId}?missionId=${missionId}`)
         .then((res) => {
           console.log(res)
           // 챌린지 성공!
@@ -166,7 +165,8 @@ export default {
     },
 
   },
-  mounted: function () {
+  created: function () {
+    this.$store.commit("GET_USERID")
     this.getKiwiHealthChallenge()
   },
 

@@ -50,14 +50,14 @@
     },
     created () {
       this.type = "week"
+      this.$store.commit("GET_USERID")
       this.getWeightInformation()
-
     },
     methods: {
       // 주간 기록
       async getWeightInformation() {
         try {
-          const res = await axios.get(`${SERVER.URL}${SERVER.ROUTES.getWeightInformation}?type=${this.type}&userId=${localStorage.getItem('userId')}`)
+          const res = await axios.get(`${SERVER.URL}${SERVER.ROUTES.getWeightInformation}?type=${this.type}&userId=${this.$store.state.userId}`)
           this.recordDates = res.data
           if (this.recordDates) {
             // 최근 24개 BMI 계산
@@ -115,7 +115,7 @@
       // 월간 기록
       async getWeightInformationMonth() {
         try {
-          const res = await axios.get(`${SERVER.URL}${SERVER.ROUTES.getWeightInformation}?type=${this.type}&userId=${localStorage.getItem('userId')}`)
+          const res = await axios.get(`${SERVER.URL}${SERVER.ROUTES.getWeightInformation}?type=${this.type}&userId=${this.$store.state.userId}`)
           this.recordDates = res.data
           if (this.recordDates) {
             // 최근 24개 BMI 계산

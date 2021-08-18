@@ -60,7 +60,8 @@ export default {
     }
   },
   created() {
-    this.myId = localStorage.getItem("userId");
+    this.$store.commit("GET_USERID")
+    this.myId = this.$store.state.userId
   },
   computed: {
     commentUser() {

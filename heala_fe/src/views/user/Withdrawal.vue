@@ -58,13 +58,14 @@ export default {
         .then(() => {
           console.log('회원 인증 완료')
           if (localStorage.getItem('userIdentity') == data.identity) {
-            axios.delete(`${SERVER.URL}${SERVER.ROUTES.withdrawal}/${localStorage.getItem('userId')}`)
+            axios.delete(`${SERVER.URL}${SERVER.ROUTES.withdrawal}/${this.$store.state.userId}`)
             .then((res) => {
               console.log(res)
               alert('삭제가 완료되었습니다. 그동안 이용해주셔서 감사합니다.')
-              localStorage.setItem('userIdentity', '')
-              localStorage.setItem('userId', '')
-              localStorage.setItem('userNickname', '')
+              localStorage.removeItem('userIdentity')
+              localStorage.removeItem('jwt')
+              localStorage.removeItem('userName')
+              localStorage.removeItem('userImage')
               router.push({ name: "Login" })
             })
             .catch((err) => {
@@ -95,6 +96,9 @@ export default {
       isvisible: false,
       showDeleteModal: false,
     }
+  },
+  created () {
+    this.$store.commit("GET_USERID")
   },
   components: { 
     Modal, 
