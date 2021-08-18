@@ -15,6 +15,7 @@ import com.ssafy.kiwi.model.domain.repository.BodyInfoRepository;
 import com.ssafy.kiwi.model.domain.repository.DietRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
 import com.ssafy.kiwi.model.dto.DietInfoOp;
+import com.ssafy.kiwi.model.dto.DietIp;
 
 import lombok.RequiredArgsConstructor;
 
@@ -97,7 +98,9 @@ public class DietServiceImpl implements DietService {
 
 	//식단 기록
 	@Override
-	public boolean uploadDiet(Diet diet) {
+	public boolean uploadDiet(DietIp dietIp) {
+		Diet diet = new Diet(dietIp.getFoodName(), dietIp.getCalory(), dietIp.getCarbohydrate(),
+				dietIp.getProtein(), dietIp.getFat(), dietIp.getSodium(), dietIp.getUserId());
 		dietRepository.save(diet);
 		return true;
 	}

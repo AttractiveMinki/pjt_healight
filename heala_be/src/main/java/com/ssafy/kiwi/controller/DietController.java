@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.kiwi.model.domain.entity.Diet;
+import com.ssafy.kiwi.model.dto.DietIp;
 import com.ssafy.kiwi.model.service.DietService;
 
 import io.swagger.annotations.ApiOperation;
@@ -30,8 +31,7 @@ public class DietController {
 	
 	@ApiOperation(value = "하루 영양 정보 보기")
 	@GetMapping("/record")
-	public Object getToday(@RequestParam(value="userId", required=true) int userId,
-							@RequestParam(value="day", required=true) String day) throws ParseException {
+	public Object getToday(@RequestParam int userId, @RequestParam String day) throws ParseException {
 		return new ResponseEntity<>(dietService.getToday(userId, day), HttpStatus.OK);
 	}
 	
@@ -43,7 +43,7 @@ public class DietController {
 	
 	@ApiOperation(value = "식단 기록하기")
 	@PostMapping("/upload")
-	public Object uploadDiet(@RequestBody Diet dietIp) {
+	public Object uploadDiet(@RequestBody DietIp dietIp) {
 		if(dietService.uploadDiet(dietIp)) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
@@ -52,8 +52,7 @@ public class DietController {
 	
 	@ApiOperation(value = "식단 캘린더 보기")
 	@GetMapping("/calender")
-	public Object calenderDiet(@RequestParam(value="userId", required=true) int userId,
-								@RequestParam(value="month", required=true) String month) {
+	public Object calenderDiet(@RequestParam int userId, @RequestParam String month) {
 		return new ResponseEntity<>(dietService.calenderDiet(userId, month), HttpStatus.OK);
 	}
 	

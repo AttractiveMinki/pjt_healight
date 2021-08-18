@@ -4,6 +4,7 @@ import java.text.ParseException;
 
 import com.ssafy.kiwi.model.domain.entity.Diet;
 import com.ssafy.kiwi.model.dto.DietInfoOp;
+import com.ssafy.kiwi.model.dto.DietIp;
 
 public interface DietService {
 
@@ -14,7 +15,7 @@ public interface DietService {
 	Object getTodayList(int userId);
 
 	//식단 기록
-	boolean uploadDiet(Diet diet);
+	boolean uploadDiet(DietIp dietIp);
 
 	//식단 캘린더
 	Object calenderDiet(int userId, String month);
