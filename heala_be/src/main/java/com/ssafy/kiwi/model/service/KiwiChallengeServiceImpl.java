@@ -7,13 +7,13 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.kiwi.model.domain.authentication.entity.Member;
 import com.ssafy.kiwi.model.domain.entity.Badge;
 import com.ssafy.kiwi.model.domain.entity.Comment;
 import com.ssafy.kiwi.model.domain.entity.KiwiChallenge;
 import com.ssafy.kiwi.model.domain.entity.KiwiMission;
 import com.ssafy.kiwi.model.domain.entity.KiwiUser;
 import com.ssafy.kiwi.model.domain.entity.Post;
-import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.entity.UserBadge;
 import com.ssafy.kiwi.model.domain.repository.BadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.CommentRepository;
@@ -165,7 +165,7 @@ public class KiwiChallengeServiceImpl implements KiwiChallengeService {
 			userBadgeRepository.save(ub);
 		}
 		//포인트 적립
-		User user = userRepository.getById(userId);
+		Member user = userRepository.getById(userId);
 		int exp = user.getExp() + point;
 		user.setExp(exp);
 		userRepository.save(user);

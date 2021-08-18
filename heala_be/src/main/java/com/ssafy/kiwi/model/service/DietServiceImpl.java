@@ -8,9 +8,9 @@ import java.util.TreeSet;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.kiwi.model.domain.authentication.entity.Member;
 import com.ssafy.kiwi.model.domain.entity.BodyInfo;
 import com.ssafy.kiwi.model.domain.entity.Diet;
-import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.repository.BodyInfoRepository;
 import com.ssafy.kiwi.model.domain.repository.DietRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
@@ -42,7 +42,7 @@ public class DietServiceImpl implements DietService {
 		java.sql.Date date = java.sql.Date.valueOf(dateString);
 		
 		//유저, 신체 정보
-		User user = userRepository.getById(userId);
+		Member user = userRepository.getById(userId);
 		BodyInfo bodyInfo = bodyInfoRepository.getRecentByUserId(userId);
 		
 		DietInfoOp dietInfoOp = new DietInfoOp();
