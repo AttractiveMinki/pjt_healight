@@ -38,4 +38,7 @@ public interface FeedService {
 	// 스크랩 게시글 목록 가져오기
 	public Object getScrapList(int userId, int page);
 	
+	// 글에 연결된 해시태그들 가져오기
+	public Object getPostHashtags(int postId);
+	
 }
