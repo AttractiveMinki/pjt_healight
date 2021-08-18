@@ -8,10 +8,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.kiwi.model.domain.authentication.entity.Member;
 import com.ssafy.kiwi.model.domain.entity.CertifyImage;
 import com.ssafy.kiwi.model.domain.entity.ChallengeHashtag;
 import com.ssafy.kiwi.model.domain.entity.MyChallenge;
-import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.entity.WithChallenge;
 import com.ssafy.kiwi.model.domain.entity.WithChallengeHashtag;
 import com.ssafy.kiwi.model.domain.repository.CertifyImageRepository;
@@ -260,7 +260,7 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 		//사진 저장
 		certifyImageRepository.save(certifyImage);
 		//포인트 증가
-		User user = userRepository.getById(certifyImage.getUserId());
+		Member user = userRepository.getById(certifyImage.getUserId());
 		int exp = user.getExp();
 		exp += 10;
 		user.setExp(exp);

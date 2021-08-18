@@ -1,8 +1,10 @@
-package com.ssafy.kiwi.model.domain.entity;
+package com.ssafy.kiwi.model.domain.authentication.entity;
 
 import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,8 +24,8 @@ import java.sql.Date;
 @Setter
 @ToString
 @DynamicInsert
-@Table(name = "user")
-public class User {
+@Table(name = "member")
+public class Member {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,5 +42,8 @@ public class User {
 	private Date birth;
 	private String introduction;
 	private boolean admin;
+	
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
 
 }

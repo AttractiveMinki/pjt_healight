@@ -2,18 +2,17 @@ package com.ssafy.kiwi.controller;
 
 import java.util.*;
 
-import com.ssafy.kiwi.model.dto.ProfileIp;
-import com.ssafy.kiwi.model.dto.UserFollowOp;
-import com.ssafy.kiwi.model.dto.UserSimpleOp;
-import com.ssafy.kiwi.model.dto.CommentIdSetIp;
-import com.ssafy.kiwi.model.dto.UserIdSetIp;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ssafy.kiwi.model.domain.entity.User;
+import com.ssafy.kiwi.model.domain.authentication.entity.Member;
 import com.ssafy.kiwi.model.domain.entity.Follow;
+import com.ssafy.kiwi.model.dto.CommentIdSetIp;
+import com.ssafy.kiwi.model.dto.ProfileIp;
+import com.ssafy.kiwi.model.dto.UserFollowOp;
+import com.ssafy.kiwi.model.dto.UserIdSetIp;
+import com.ssafy.kiwi.model.dto.UserSimpleOp;
 import com.ssafy.kiwi.model.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +29,7 @@ public class UserController {
 	@ApiOperation(value = "아이디 중복 검사하기.")
 	@GetMapping("/checkidentity/{identity}")
 	public Object checkId(@PathVariable String identity) {
-		Optional<User> userOpt = userService.checkId(identity);
+		Optional<Member> userOpt = userService.checkId(identity);
 		if (!userOpt.isPresent()) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		} else {
@@ -41,7 +40,7 @@ public class UserController {
 	@ApiOperation(value = "이메일 중복 검사.")
 	@GetMapping("/checkemail/{email}")
 	public Object checkEmail(@PathVariable String email) {
-		Optional<User> userOpt = userService.checkEmail(email);
+		Optional<Member> userOpt = userService.checkEmail(email);
 		if (!userOpt.isPresent()) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		} else {
@@ -51,15 +50,15 @@ public class UserController {
 
 	@ApiOperation(value = "회원가입 하기.")
 	@PostMapping("/signup")
-	public Object signUp(@RequestBody User user) {
+	public Object signUp(@RequestBody Member user) {
 		userService.signUp(user);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "본인 인증(아이디, 비밀번호 일치 확인)")
 	@PostMapping("/checkAuthorization")
-	public Object authorize(@RequestBody User user) {
-		Optional<User> userOpt = userService.login(user.getIdentity(), user.getPassword());
+	public Object authorize(@RequestBody Member user) {
+		Optional<Member> userOpt = userService.login(user.getIdentity(), user.getPassword());
 		if (userOpt.isPresent()) {
 			return new ResponseEntity<>(true, HttpStatus.OK);
 		} else {
@@ -80,8 +79,8 @@ public class UserController {
 	
 	@ApiOperation(value = "로그인 하기.")
 	@PostMapping("/login")
-	public Object login(@RequestBody User user) {
-		Optional<User> userOpt = userService.login(user.getIdentity(), user.getPassword());
+	public Object login(@RequestBody Member user) {
+		Optional<Member> userOpt = userService.login(user.getIdentity(), user.getPassword());
 		if (userOpt.isPresent()) {
 			Map<String, Object> response = new HashMap<String, Object>();
 			response.put("id", userOpt.get().getId());
@@ -148,7 +147,7 @@ public class UserController {
 	@ApiOperation(value = "유저 exp 정보 불러오기")
 	@GetMapping("/exp")
 	public Object getUserExpByUserId(@RequestParam int userId) {
-		Integer exp = userService.getUserExpByUserId(userId);
+		Integer exp = userService.getMemberExpByUserId(userId);
 		if(exp != null){
 			return new ResponseEntity<>(exp, HttpStatus.OK);
 		}
@@ -171,5 +170,4 @@ public class UserController {
 	}
 	
 }
-
 

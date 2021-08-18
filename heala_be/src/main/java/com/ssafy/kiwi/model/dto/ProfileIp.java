@@ -2,8 +2,9 @@ package com.ssafy.kiwi.model.dto;
 
 import java.util.List;
 
-import com.ssafy.kiwi.model.domain.entity.User;
+import com.ssafy.kiwi.model.domain.authentication.entity.Member;
 import com.ssafy.kiwi.model.domain.entity.UserBadge;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.*;
@@ -11,6 +12,6 @@ import lombok.*;
 @Getter
 @Setter
 public class ProfileIp {
-	private User user;
+	private Member user;
 	private List<UserBadge> badges;
 }

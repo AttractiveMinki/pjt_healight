@@ -15,11 +15,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.ssafy.kiwi.authentication.jwt.JwtFilter;
+import com.ssafy.kiwi.model.domain.authentication.entity.Member;
 import com.ssafy.kiwi.model.domain.entity.Badge;
 import com.ssafy.kiwi.model.domain.entity.Hashtag;
 import com.ssafy.kiwi.model.domain.entity.Post;
 import com.ssafy.kiwi.model.domain.entity.PostHashtag;
-import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.entity.UserBadge;
 import com.ssafy.kiwi.model.domain.repository.CommunityRepository;
 import com.ssafy.kiwi.model.domain.repository.PostRepository;
@@ -203,7 +204,7 @@ public class FeedServiceImpl implements FeedService {
 	
 	// 게시글 제외 개인 피드 정보 가져오기
 	public Map<String, Object> getFeedInfo(int userId){
-		User user = userRepository.getById(userId);
+		Member user = userRepository.getById(userId);
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", user.getId());
 		map.put("identity", user.getIdentity());
@@ -264,7 +265,7 @@ public class FeedServiceImpl implements FeedService {
 	public List<UserFollowOp> getFollower(int userId, int myId, int page) {
 		Page<Integer> followerPage = followRepository.getFollowerIdsByUserId(userId, PageRequest.of(page, 15)); //id
 		List<Integer> follower = followerPage.getContent();
-		List<UserFollowOp> followers = userRepository.getUserFollowOpByIds(follower); //유저 정보
+		List<UserFollowOp> followers = userRepository.getMemberFollowOpByIds(follower); //유저 정보
 		for(UserFollowOp ufo : followers) { //팔로잉 여부 확인
 			int id = ufo.getId();
 			if(followRepository.countByFollowIdAndUserId(id, myId)==1) ufo.setFollow(true);
@@ -277,7 +278,7 @@ public class FeedServiceImpl implements FeedService {
 	public List<UserFollowOp> getFollowing(int userId, int myId, int page) {
 		Page<Integer> followingPage = followRepository.getFollowingIdsByUserId(userId, PageRequest.of(page, 15)); //id
 		List<Integer> following = followingPage.getContent();
-		List<UserFollowOp> followings = userRepository.getUserFollowOpByIds(following); //유저 정보
+		List<UserFollowOp> followings = userRepository.getMemberFollowOpByIds(following); //유저 정보
 		for(UserFollowOp ufo : followings) { //팔로잉 여부 확인
 			int id = ufo.getId();
 			if(followRepository.countByFollowIdAndUserId(id, myId)==1) ufo.setFollow(true);

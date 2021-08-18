@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+import com.ssafy.kiwi.model.domain.authentication.entity.Member;
 import com.ssafy.kiwi.model.domain.entity.*;
 
 import org.springframework.data.domain.Page;
@@ -18,7 +19,6 @@ import com.ssafy.kiwi.model.domain.repository.FollowRepository;
 import com.ssafy.kiwi.model.domain.repository.LikeUserRepository;
 import com.ssafy.kiwi.model.domain.repository.UserBadgeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
-
 import com.ssafy.kiwi.model.dto.ProfileIp;
 import com.ssafy.kiwi.model.dto.UserFollowOp;
 import com.ssafy.kiwi.model.dto.UserSimpleOp;
@@ -36,26 +36,26 @@ public class UserServiceImpl implements UserService {
     
     //아이디 중복 검사
 	@Override
-	public Optional<User> checkId(String identity) {
+	public Optional<Member> checkId(String identity) {
 		return userRepository.getUserByIdentity(identity);
 	}
 
 	//이메일 중복 검사
 	@Override
-	public Optional<User> checkEmail(String email) {
+	public Optional<Member> checkEmail(String email) {
 		return userRepository.getUserByEmail(email);
 	}
 
 	//회원가입
 	@Override
-	public void signUp(User user) {
+	public void signUp(Member user) {
 		userRepository.save(user);
 	}
 	
 	//회원 탈퇴
 	@Override
 	public boolean delete(int userId) {
-		Optional<User> user = userRepository.findById(userId);
+		Optional<Member> user = userRepository.findById(userId);
 		if (user.isPresent()) {
 			userRepository.deleteById(user.get().getId());
 			return true;
@@ -66,20 +66,20 @@ public class UserServiceImpl implements UserService {
 
 	//로그인
 	@Override
-	public Optional<User> login(String identity, String password) {
+	public Optional<Member> login(String identity, String password) {
 		return userRepository.getUserByIdentityAndPassword(identity, password);
 	}
 
 	
 	//유저 정보 조회하기 - optional user type
 	@Override
-	public Optional<User> getUser(int userId) {
+	public Optional<Member> getUser(int userId) {
 		return Optional.of(userRepository.getUserById(userId));
 	}
 	
 	//유저 정보 조회하기 - user type
 	@Override
-	public User getUserProfile(int userId) {
+	public Member getUserProfile(int userId) {
 		return userRepository.getUserById(userId);
 	}
 	
@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
 	//프로필 편집 조회하기
 	@Override
 	public Map<String, Object> getProfile(int userId) {
-		Optional<User> userOpt = userRepository.findById(userId);
+		Optional<Member> userOpt = userRepository.findById(userId);
 		Map<String, Object> response = new HashMap<>();
 		if(userOpt.isPresent()) {
 			response.put("image", userOpt.get().getImage());
@@ -118,10 +118,10 @@ public class UserServiceImpl implements UserService {
 	//프로필 편집 반영하기
 	@Override
 	public boolean updateUser(int userId, ProfileIp profileIp) throws IllegalStateException, IOException {
-		User updateUser = getUserProfile(userId);
+		Member updateUser = getUserProfile(userId);
 		boolean user_update = false;
 		boolean badge_update = false;
-		User user = profileIp.getUser();
+		Member user = profileIp.getUser();
 		List<UserBadge> badges = profileIp.getBadges();
 
 		//프로필 사진 변경
@@ -157,8 +157,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean follow(int userId, int followId) {
 		// userId 와 followId 에 해당하는 유저가 있는지 검사
-		Optional<User> user = userRepository.findById(userId);
-		Optional<User> followUser = userRepository.findById(followId);
+		Optional<Member> user = userRepository.findById(userId);
+		Optional<Member> followUser = userRepository.findById(followId);
 		if(!user.isPresent() || !followUser.isPresent()) {
 			return false;
 		}
@@ -190,7 +190,7 @@ public class UserServiceImpl implements UserService {
 	// 유저 간단 정보 여러 명 불러오기
 	@Override
 	public List<UserSimpleOp> getUserSimpleInfoAll(List<Integer> userIdSet) {
-		return userRepository.getUserSimpleInfoByIds(userIdSet);
+		return userRepository.getMemberSimpleInfoByIds(userIdSet);
 	}
 
 	@Override
@@ -199,8 +199,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Integer getUserExpByUserId(int userId) {
-		return userRepository.getUserExpByUserId(userId);
+	public Integer getMemberExpByUserId(int userId) {
+		return userRepository.getMemberExpByUserId(userId);
 	}
 
 	// id로 유저 존재여부 확인
@@ -213,7 +213,7 @@ public class UserServiceImpl implements UserService {
 	// 단어를 identity나 name에 포함하는 유저 검색
 	@Override
 	public List<UserFollowOp> getUserListByWord(int userId, String word, int page) {
-		Page<UserFollowOp> userListPage = userRepository.getUserListByWord(userId, word, PageRequest.of(page, 20, Sort.by("id").descending())); // word 포함하는 유저 리스트
+		Page<UserFollowOp> userListPage = userRepository.getMemberListByWord(userId, word, PageRequest.of(page, 20, Sort.by("id").descending())); // word 포함하는 유저 리스트
 		List<UserFollowOp> userList = userListPage.getContent();
 		for (UserFollowOp user : userList) { // 팔로잉 여부 확인
 			int otherUserId = user.getId();

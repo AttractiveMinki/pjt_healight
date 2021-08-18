@@ -7,8 +7,8 @@ import java.util.TreeSet;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.kiwi.model.domain.authentication.entity.Member;
 import com.ssafy.kiwi.model.domain.entity.BodyInfo;
-import com.ssafy.kiwi.model.domain.entity.User;
 import com.ssafy.kiwi.model.domain.repository.BodyInfoRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
 import com.ssafy.kiwi.model.dto.BodyInfoIp;
@@ -34,7 +34,7 @@ public class BodyServiceImpl implements BodyService {
 	@Override
 	public boolean registerBody(BodyInfoIp bodyInfoIp) {
 		//생일, 성별 갱신
-		User user = userRepository.getById(bodyInfoIp.getUserId());
+		Member user = userRepository.getById(bodyInfoIp.getUserId());
 		user.setBirth(bodyInfoIp.getBirth());
 		user.setGender(bodyInfoIp.isGender());
 		userRepository.save(user);

@@ -15,6 +15,7 @@ target/
 src/main/resources/aws.properties
 src/main/resources/datasource.properties
 src/main/resources/api.properties
+src/main/resources/jwt.properties
 
 ### IntelliJ IDEA ###
 .idea

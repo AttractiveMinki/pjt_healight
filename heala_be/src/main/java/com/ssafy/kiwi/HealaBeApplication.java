@@ -12,7 +12,9 @@ public class HealaBeApplication {
 			"classpath:application.properties,"+
 			"classpath:aws.properties,"+
 			"classpath:datasource.properties,"+
-			"classpath:api.properties";
+			"classpath:api.properties,"+
+			"classpath:jwt.properties";
+	
 
 	public static void main(String[] args) {
 		new SpringApplicationBuilder(HealaBeApplication.class)
