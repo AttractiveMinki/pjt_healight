@@ -35,7 +35,8 @@ export default {
     }
   },
   created() {
-    this.userId = localStorage.getItem("userId");
+    this.$store.commit("GET_USERID")
+    this.userId = this.$store.state.userId
     if(this.isSearchList) {
       this.getInitialSearchUserList();
     }

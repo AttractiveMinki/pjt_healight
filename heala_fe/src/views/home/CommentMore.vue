@@ -56,7 +56,8 @@ export default {
     }
   },
   created() {
-    this.userId = localStorage.getItem("userId");
+    this.$store.commit("GET_USERID")
+    this.userId = this.$store.state.userId
     this.postId = this.$route.params.id;
     this.$store.dispatch("setPostComments", { postId: this.postId });
     this.getPost();

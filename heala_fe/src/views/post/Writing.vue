@@ -193,7 +193,7 @@ export default {
       } else {
         data.post.anonymous = 1
       }
-      data.post.userId = localStorage.getItem('userId')
+      data.post.userId = this.$store.state.userId
       console.log('data--------------------', data)
       // 서버로 FormData 전송
       axios.post(`${SERVER.URL}${SERVER.ROUTES.feedPost}`, data)
@@ -256,6 +256,9 @@ export default {
     goBack: function () {
       this.$router.go(-1)
     },
+  },
+  created () {
+    this.$store.commit("GET_USERID")
   },
 };
 </script>

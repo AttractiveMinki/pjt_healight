@@ -249,13 +249,14 @@ export default {
     },
   },
   created () {
-    this.foods.userId = localStorage.getItem('userId')
+    this.$store.commit("GET_USERID")
+    this.foods.userId = this.$store.state.userId
 
     // 현재 보고 있는 프로필 주인의 id 주소창에서 가져오기
     this.userId = this.$route.path.split('/')[3]
 
     // 내 아이디 localStorage에서 가져오기
-    this.myId = localStorage.getItem('userId')
+    this.myId = this.$store.state.userId
 
     // 다른 사람꺼 보려 하면 추방
     if (this.userId != this.myId) {

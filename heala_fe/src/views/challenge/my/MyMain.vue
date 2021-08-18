@@ -147,7 +147,7 @@ export default {
       dom.style.color = "#ADEC6E";
     },
     getMyChallenge: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getMyChallenge}${localStorage.getItem('userId')}`)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getMyChallenge}${this.$store.state.userId}`)
         .then((res) => {
           this.values = res.data
         })
@@ -161,7 +161,8 @@ export default {
       "with_challenges",
     ])
   },
-  mounted: function () {
+  created: function () {
+    this.$store.commit("GET_USERID")
     this.getMyChallenge()
   },
   data: () => {
