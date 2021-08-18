@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.kiwi.model.domain.entity.CertifyImage;
+import com.ssafy.kiwi.model.dto.CertifyImageIp;
 import com.ssafy.kiwi.model.dto.WithChallengeIp;
 import com.ssafy.kiwi.model.service.KiwiChallengeService;
 import com.ssafy.kiwi.model.service.WithChallengeService;
@@ -75,7 +75,7 @@ public class ChallengeController {
 	@ApiOperation(value = "키위 챌린지 미션 성공 여부 확인하기.")
 	@GetMapping("/kiwi/{category}/{userId}/{missionId}")
 	public Object completeKiwiMission(@PathVariable int category, @PathVariable int userId,
-			@RequestParam(value="missionId", required=true) int missionId) {
+			@RequestParam(value="missionId") int missionId) {
 		return new ResponseEntity<>(kiwiChallengeService.completeKiwiMission(category, userId, missionId), HttpStatus.OK);
 	}
 	
@@ -88,8 +88,8 @@ public class ChallengeController {
 	
 	@ApiOperation(value = "마이 챌린지 인증하기.")
 	@PostMapping("/my/certify")
-	public ResponseEntity<Object> certifyMyChallenge(@RequestBody CertifyImage certifyImage) {
-		if(withChallengeService.certifyMyChallenge(certifyImage)) {
+	public ResponseEntity<Object> certifyMyChallenge(@RequestBody CertifyImageIp certifyImageIp) {
+		if(withChallengeService.certifyMyChallenge(certifyImageIp)) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -97,15 +97,15 @@ public class ChallengeController {
 	
 	@ApiOperation(value = "마이 챌린지 결과 조회하기.")
 	@GetMapping("/my/result")
-	public Object resultMyChallenge(@RequestParam(value="userId", required=true) int userId,
-			@RequestParam(value="withChallengeId", required=true) int withChallengeId) {
+	public Object resultMyChallenge(@RequestParam(value="userId") int userId,
+			@RequestParam(value="withChallengeId") int withChallengeId) {
 		return new ResponseEntity<>(withChallengeService.resultMyChallenge(userId, withChallengeId), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "마이 챌린지 인증사진 모아보기.")
 	@GetMapping("/my/photo")
-	public Object photoMyChallenge(@RequestParam(value="userId", required=true) int userId,
-			@RequestParam(value="withChallengeId", required=true) int withChallengeId) {
+	public Object photoMyChallenge(@RequestParam(value="userId") int userId,
+			@RequestParam(value="withChallengeId") int withChallengeId) {
 		return new ResponseEntity<>(withChallengeService.photoMyChallenge(userId, withChallengeId), HttpStatus.OK);		
 	}
 	
