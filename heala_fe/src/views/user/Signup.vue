@@ -33,14 +33,14 @@
 
       <el-row type="flex" justify="center" align="middle">
         <el-col :span="22">
-          <input type="text" class='get-input bg-gray' id="name" v-model="name" v-bind:class="{error : error.name, complete:!error.name&&name.length>0}" placeholder=" 닉네임" maxlength="15" required >
+          <input type="text" class='get-input bg-gray remove-lr-padding' id="name" v-model="name" v-bind:class="{error : error.name, complete:!error.name&&name.length>0}" placeholder=" 닉네임" maxlength="15" required >
         </el-col> 
       </el-row>
       <div class="error-text" v-if="error.name">{{error.name}}</div>
 
       <el-row type="flex" justify="center" align="middle">
         <el-col :span="22">
-          <input type="password" class='get-input bg-gray' id="password" v-model="password" v-bind:class="{error : error.password, complete:!error.password&&password.length>0}" placeholder=" 비밀번호" maxlength="20" required>
+          <input type="password" class='get-input bg-gray remove-lr-padding' id="password" v-model="password" v-bind:class="{error : error.password, complete:!error.password&&password.length>0}" placeholder=" 비밀번호" maxlength="20" required>
         </el-col>
       </el-row>
       <div class="error-text" v-if="error.password">{{ error.password }}</div>
@@ -49,7 +49,7 @@
           <input
             type="password" 
             id="passwordConfirm" 
-            class="get-input bg-gray"
+            class="get-input bg-gray remove-lr-padding"
             maxlength="20"
             v-model="passwordConfirm"
             v-bind:class="{error : error.passwordConfirm, complete:!error.passwordConfirm&&passwordConfirm.length!==0}"
@@ -235,7 +235,7 @@ export default {
 
 <style scoped>
   .logo-image {
-    width: 100%;
+    width: 50%;
   }
   .bg-white {
     background: rgb(197, 223, 189);
@@ -292,5 +292,8 @@ export default {
   }
   .get-input:focus {
     outline: none;
+  }
+  .remove-lr-padding {
+    padding: 0px 1px;
   }
 </style>
