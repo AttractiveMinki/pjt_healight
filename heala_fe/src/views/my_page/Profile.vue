@@ -46,7 +46,8 @@
     <div class="badge-container">
       <div v-if="user.badge.length">
         <div class="badge-image-wrapper" v-for="(badgeItem, idx) in user.badge" v-bind:key="idx">
-          <img class="badge-image" :src="imageServer + badgeItem.image" alt="badge">
+          <img class="badge-image" :src="badgeItem.image" alt="badge">
+          <!-- <img class="badge-image" :src="imageServer + badgeItem.image" alt="badge"> -->
         </div>
       </div>
       <div v-else>
