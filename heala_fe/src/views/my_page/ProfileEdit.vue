@@ -47,7 +47,7 @@
           <span v-for="(value, idx) in data.badges" :key="idx" >
             <span :class="{selected: value.selected == true}" class="margin-2 post-image" @click="selectBadge(value)">
               <!-- {{ value.badge.image }} -->
-              <img :src=" value.badge.image" alt="" class="post-image">
+              <img :src="imageServer + value.badge.image" alt="" class="post-image">
               <!-- <img :src="imageServer + value.badge.image" alt="" class="post-image"> -->
             </span>
           </span>
@@ -222,6 +222,7 @@ export default {
         this.data.badges = response.data.badges;
         this.originalImage = response.data.image
         console.log(this.data.user.image)
+        console.log(this.data.badges)
         this.originalIdentity = response.data.identity;
       })
       .catch(error => {
