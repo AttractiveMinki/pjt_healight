@@ -10,7 +10,7 @@
       <br>
       <br>
       <div class="password-box get-input bg-gray introduce-text-align-start">
-        <input type="password" id="password" class="get-input bg-gray artificial-padding-right" v-model="data.password" maxlength="20" placeholder=" 비밀번호(문자, 숫자 포함 8자리 이상)" required>
+        <input type="password" id="password" class="get-input bg-gray artificial-padding-right" v-model="data.password" maxlength="20" placeholder=" 비밀번호(문자, 숫자 포함 8자리 이상)" @keyup.enter="login(data)" required>
         <span class="el-icon-chat-line-round text-align:right" @click="toggleIcon"></span>
       </div>
       <br>
