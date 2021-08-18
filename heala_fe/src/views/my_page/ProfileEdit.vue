@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="container">
     <Navbar />
     <el-row>
       <el-col :span="24">
@@ -15,6 +15,7 @@
     <div>
       <!-- 프로필 사진 -->
       <img v-if="data.user.image == ''" src="@/assets/img/profile/user.png" alt="profile_image" width="92" height="92" style="border-radius: 50%;">
+      <img v-else-if="this.selectKey != 1" :src="imageServer + data.user.image" alt="profile_image" width="92" height="92" style="border-radius: 50%;">
       <img v-else :src="data.user.image" alt="profile_image" width="92" height="92" style="border-radius: 50%;"><br>
       <label for="change_image" class="btn-file">
         <span style="font-size: 13px; font-weight: bold; color: #ADEC6E;">프로필 사진 변경</span>
@@ -56,7 +57,7 @@
       <br>
 
     </div>
-    <button id="submit" class="get-input" @click="uploadImage()" :disabled="!isSubmit" :class="{disabled : !isSubmit}">저장</button>
+    <button id="submit" class="get-input" @click="uploadImage(data)" :disabled="!isSubmit" :class="{disabled : !isSubmit}">저장</button>
 
   </div>
 </template>
@@ -102,42 +103,38 @@ export default {
       originalIdentity: "",
       imageServer: SERVER.IMAGE_URL,
       identity: "",
+      selectKey: 0 // 0이면 web에 있는 프로필 사진 갖고오기, 1이면 변경된 프로필 사진 갖고오기
     };
   },
   methods: {
     selectFile(e) {
       const file = e.target.files[0];
       this.data.user.image = URL.createObjectURL(file);
+      // 사진을 변경했으므로 변경한 사진을 보여준다.
+      this.selectKey = 1
     },
     uploadImage(data) {
       let formData = new FormData()
       let imgFile = document.getElementById("change_image").files[0]
       formData.append("file", imgFile)
-      console.log(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`)
-      console.log(imgFile)
-      console.log(imgFile.file)
       axios.post(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`, formData, { headers: {"Content-Type" : "multipart/form-data"}})
         .then(res => {
           data.user.image = res.data
           this.submit(data)
         })
         .catch(err => {
-          console.log('이미지 업로드 중 에러')
           console.error(err.response.data)
         })
       },
     submit(data) {
-      console.log(data, 'data------------')
-      console.log(`${SERVER.URL}${SERVER.ROUTES.profile}${this.data.user.id}`)
       axios.patch(`${SERVER.URL}${SERVER.ROUTES.profile}${this.data.user.id}`, data)
         .then(response => {
           if(response.status === 200) {
             alert('설정 변경이 완료되었습니다.');
-            router.push({ name: "Profile" })
+            router.push({ name: "Profile", params: { id: this.data.user.id }})
           }
         })
         .catch(error => {
-          console.log('글 업로드 중 에러')
           console.error(error.response.data)
         });
     },
@@ -171,8 +168,6 @@ export default {
       if (this.data.user.identity.length == 0)
         this.error.identity = "아이디를 입력해주세요."
       else this.error.identity = false;
-      console.log(this.originalIdentity, this.data.user.identity, this.data.user.identity.length)
-
       
       let isSubmit = true;
       Object.values(this.error).map(v => {
@@ -214,7 +209,6 @@ export default {
     axios.get(`${SERVER.URL}${SERVER.ROUTES.profile}${this.data.user.id}`)
       .then(response => {     
         // this.image = require("@/assets/img/profile/" + response.data.image);
-        console.log(response)
         this.data.user.image = response.data.image
         this.data.user.identity = response.data.identity;
         this.identity = response.data.identity;
@@ -239,6 +233,9 @@ export default {
   #submit {
     position: fixed;
     bottom: 0rem;
+  }
+  #container {
+    margin-bottom: 50px;
   }
   
   .btn-file{
@@ -281,7 +278,8 @@ export default {
     width: 100%;
     height: 50px;
     background-color: #ADEC6E;
-    color: white;
+    border: 0px;
+    color: black;
   }
   .go-withdrawal {
     display: inline;
