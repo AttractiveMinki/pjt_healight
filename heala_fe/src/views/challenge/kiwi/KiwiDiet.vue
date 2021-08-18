@@ -156,6 +156,12 @@ export default {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}${localStorage.getItem('userId')}/{missionId}?missionId=${missionId}`)
         .then((res) => {
           console.log(res)
+          if (res.data == "") {
+            alert('챌린지 실패')
+          } else {
+            alert('챌린지 성공!')
+          }
+          
           // 챌린지 성공!
         })
         .catch((err) => {

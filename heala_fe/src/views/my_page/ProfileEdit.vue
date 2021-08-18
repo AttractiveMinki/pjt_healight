@@ -45,13 +45,14 @@
         <el-col :span="6" style="font-weight: bold; font-size: 13px;">대표 뱃지 설정</el-col>
         <el-col :span="18">
           <span v-for="(value, idx) in data.badges" :key="idx" >
-            <span :class="{selected: value.selected == true}" class="margin-2" @click="selectBadge(value)">
-              {{ value.badge.image}}
-              <img :src="imageServer + value.badge.image" alt="" class="post-image">
+            <span :class="{selected: value.selected == true}" class="margin-2 post-image" @click="selectBadge(value)">
+              <!-- {{ value.badge.image }} -->
+              <img :src=" value.badge.image" alt="" class="post-image">
+              <!-- <img :src="imageServer + value.badge.image" alt="" class="post-image"> -->
             </span>
           </span>
           <br>
-          <div style="font-size: 13px; color: #606266;">최대 6개 설정 가능합니다</div>
+          <div style="font-size: 13px; color: #606266; margin-top: 2vw">최대 6개 설정 가능합니다</div>
           </el-col>
       </el-row>
       <br>
@@ -103,7 +104,8 @@ export default {
       originalIdentity: "",
       imageServer: SERVER.IMAGE_URL,
       identity: "",
-      selectKey: 0 // 0이면 web에 있는 프로필 사진 갖고오기, 1이면 변경된 프로필 사진 갖고오기
+      selectKey: 0, // 0이면 web에 있는 프로필 사진 갖고오기, 1이면 변경된 프로필 사진 갖고오기
+      originalImage: "",
     };
   },
   methods: {
@@ -114,12 +116,15 @@ export default {
       this.selectKey = 1
     },
     uploadImage(data) {
+      if (this.originalImage == this.data.user.image) {
+        this.submit(data)
+      }
       let formData = new FormData()
       let imgFile = document.getElementById("change_image").files[0]
       formData.append("file", imgFile)
       axios.post(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`, formData, { headers: {"Content-Type" : "multipart/form-data"}})
         .then(res => {
-          data.user.image = res.data
+          this.data.user.image = res.data
           this.submit(data)
         })
         .catch(err => {
@@ -215,7 +220,8 @@ export default {
         this.data.user.name = response.data.name;
         this.data.user.introduction = response.data.introduction;
         this.data.badges = response.data.badges;
-
+        this.originalImage = response.data.image
+        console.log(this.data.user.image)
         this.originalIdentity = response.data.identity;
       })
       .catch(error => {
@@ -302,5 +308,8 @@ export default {
   }
   .margin-2 {
     margin: 2px;
+  }
+  .post-image {
+    width: 6%;
   }
 </style>
