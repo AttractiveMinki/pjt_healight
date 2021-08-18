@@ -531,7 +531,7 @@ export default new Vuex.Store({
 
           // commit("SET_TOKEN", res.data.token) // jwt 사용시 적용
           // dispatch("verifyUser", data) // 관리자 권한 검증
-          router.push({ name: "CommunityMain" }) // 홈 피드 구현 후 변경
+          router.push({ name: "HomeFeed" }) // 홈 피드 구현 후 변경
       })
         .catch((err) => {
           console.log(err)
