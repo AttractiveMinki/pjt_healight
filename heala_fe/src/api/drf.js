@@ -1,5 +1,5 @@
-// const SERVER_URL = process.env.VUE_APP_SERVER_URL
-const SERVER_URL = "http://localhost:8080/api"
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
+// const SERVER_URL = "http://localhost:8080/api"
 // const SERVER_URL = "http://i5a605.p.ssafy.io:8080/api"
 const IMAGE_SERVER_URL = "https://kiwiimg-bucket.s3.ap-northeast-2.amazonaws.com/"
 
