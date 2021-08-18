@@ -25,7 +25,6 @@ public class SwaggerConfig {
           .build();                                           
     }
 
-
 	private ApiInfo swaggerInfo() {
 		return new ApiInfoBuilder().title("Kiwi API")
 				.description("Kiwi API Reference for Developers")
