@@ -8,7 +8,7 @@
       <div class="follow-user-identity">{{ identity }}</div>
     </div>
     <div class="follow-button">
-      <follow :following="follow" :followId="id"></follow>
+      <follow :following="follow" :followId="id" @follow="$emit('follow')" @unfollow="$emit('unfollow')"></follow>
     </div>
   </div>
 </template>

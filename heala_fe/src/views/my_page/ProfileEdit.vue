@@ -100,7 +100,7 @@ export default {
       
       // 서버로 FormData 전송
       // axios.patch("http://localhost:8080/user/profile", formData , { headers: {'Content-Type' : 'multipart/form-data'}})
-      axios.patch(`${SERVER.URL}${SERVER.ROUTES.userProfile}${localStorage.getItem('userId')}`, formData , { headers: {'Content-Type' : 'multipart/form-data'}})
+      axios.patch(`${SERVER.URL}${SERVER.ROUTES.profile}${localStorage.getItem('userId')}`, formData , { headers: {'Content-Type' : 'multipart/form-data'}})
         .then(response => {
           if(response.status === 200) {
             alert('설정 변경이 완료되었습니다.');
@@ -165,6 +165,7 @@ export default {
   },
   data: () => {
     return {
+      userId: 1,
       image: "",
       name: "",
       identity: "",
@@ -185,9 +186,10 @@ export default {
       this.checkForm();
     },
   },
-  mounted() {
+  created() {
+    this.userId = localStorage.getItem('userId');
     // 프로필 기존 정보 불러오기
-    axios.get(`${SERVER.URL}${SERVER.ROUTES.userProfile}${localStorage.getItem('userId')}`)
+    axios.get(`${SERVER.URL}${SERVER.ROUTES.profile}${this.userId}`)
       .then(response => {     
         // this.image = require("@/assets/img/profile/" + response.data.image);
         this.identity = response.data.identity;

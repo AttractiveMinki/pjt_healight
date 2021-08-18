@@ -181,6 +181,13 @@ public class UserServiceImpl implements UserService {
 		return true;
 	}
 
+	@Override
+	public boolean getFollowByUserIdAndFollowId(int userId, int followId) {
+		Optional<Follow> follow = followRepository.findByFollowIdAndUserId(followId, userId);
+		if(follow.isPresent()) return true;
+		return false;
+	}
+
 	// 유저 간단 정보(아이디, 이름, 프로필사진) 불러오기
 	@Override
 	public UserSimpleOp getUserSimpleInfo(int userId) {

@@ -1,6 +1,7 @@
 <template>
   <div class="user-image-wrapper" v-bind:style="{ width: width + 'px', height: height + 'px'}">
-    <img :src="imageURL" alt="@/assets/image/user.png" class="user-image">
+    <img v-if="image" :src="imageServer + image" alt="profile_image" class="user-image">
+    <img v-else src="@/assets/image/user.png" alt="" class="user-image">
   </div>
 </template>
 
@@ -12,7 +13,7 @@ export default {
     props: [ "image", "width", "height" ],
     data() {
       return {
-        imageURL: SERVER.IMAGE_URL + this.image,
+        imageServer: SERVER.IMAGE_URL,
       }
     },
 }
