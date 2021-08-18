@@ -12,10 +12,10 @@ target/
 .settings
 .springBeans
 .sts4-cache
-src/main/resources/aws.properties
-src/main/resources/datasource.properties
-src/main/resources/api.properties
-src/main/resources/jwt.properties
+src/main/resources/application-aws.properties
+src/main/resources/application-datasource.properties
+src/main/resources/application-api-key.properties
+src/main/resources/application-jwt.properties
 
 ### IntelliJ IDEA ###
 .idea
