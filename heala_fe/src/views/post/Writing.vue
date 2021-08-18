@@ -132,9 +132,25 @@ export default {
      
       dialogVisible: {"first":false, "second":false, "third":false, "fourth":false, "fifth":false},
       imgUrl: {"first":"", "second":"", "third":"", "fourth":"", "fifth":""},
+    
+      postId: 0,
     }; 
   },
+  created() {
+    if(this.$route.params.postId) {
+      this.postId = this.$route.params.postId;
+      this.getPost();
+    }
+  },
   methods: {
+    async getPost() {
+      try {
+        const response = await axios.get(SERVER.URL + SERVER.ROUTES.post + `${this.postId}`);
+        this.data.post = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     selectFile(e) {
       const file = e.target.files[0];
       document.getElementsByClassName("image")[this.imgCnt].src = URL.createObjectURL(file);
