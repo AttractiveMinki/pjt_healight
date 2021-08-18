@@ -15,7 +15,13 @@ public class Badge {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	private String name;
 	private String image;
+	
+	public Badge(String name, String image) {
+		super();
+		this.name = name;
+		this.image = image;
+	}
 }

@@ -2,9 +2,9 @@ package com.ssafy.kiwi.model.service;
 
 import java.util.*;
 
-import com.ssafy.kiwi.model.domain.entity.CertifyImage;
 import com.ssafy.kiwi.model.domain.entity.MyChallenge;
 import com.ssafy.kiwi.model.domain.entity.WithChallenge;
+import com.ssafy.kiwi.model.dto.CertifyImageIp;
 import com.ssafy.kiwi.model.dto.CertifyImageOp;
 import com.ssafy.kiwi.model.dto.WithChallengeIp;
 
@@ -28,10 +28,10 @@ public interface WithChallengeService {
 	public List<Map<String, Object>> getMyChallenge(int userId);
 
 	// 함께 챌린지 참여하기
-	public void joinWithChallenge(int withChallengeId, int userId);
+	public boolean joinWithChallenge(int withChallengeId, int userId);
 	
 	// 마이 챌린지 - 인증하기
-	public boolean certifyMyChallenge(CertifyImage certifyImage);
+	public boolean certifyMyChallenge(CertifyImageIp certifyImageIp);
 
 	// 마이 챌린지 - 결과보기
 	public Object resultMyChallenge(int userId, int withChallengeId);

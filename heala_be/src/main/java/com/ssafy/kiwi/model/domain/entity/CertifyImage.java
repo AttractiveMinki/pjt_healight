@@ -11,6 +11,7 @@ import lombok.*;
 @Entity
 @Builder
 @Getter
+@Setter
 public class CertifyImage {
 	
 	@Id

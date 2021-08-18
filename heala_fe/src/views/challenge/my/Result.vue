@@ -42,12 +42,6 @@
     <div class="certify-image-container">
       <div class="certify-image-header">인증 모아보기</div>
       <div class="certify-images-wrapper">
-        <!-- <div class="certify-image-wrapper"
-          v-for="(images, index) in resultData.certifyImage"
-          v-bind:key="images.id">
-          <img v-show="index < 5" :src="require(`@/assets/image/${images.image}`)" alt="@/assets/image/error.jpg" class="certify-image">
-          <div v-show="index == 5" class="certify-image">전체사진 보러가기</div>
-        </div> -->
         <div class="certify-image-wrapper"
           v-for="(index, i) in certifyImageLimit"
           v-bind:key="i">
@@ -95,7 +89,7 @@ export default {
     },
     created() {
         // user setting
-        // this.userId = localStorage.getItem("userId");
+        this.userId = localStorage.getItem("userId");
         // 결과 정보 불러오기 + certifyImageLimit 세팅
         this.getResultData();
         // user exp 정보 불러오기 + level 계산

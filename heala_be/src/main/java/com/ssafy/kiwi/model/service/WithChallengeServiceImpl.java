@@ -20,6 +20,7 @@ import com.ssafy.kiwi.model.domain.repository.MyChallengeRepository;
 import com.ssafy.kiwi.model.domain.repository.UserRepository;
 import com.ssafy.kiwi.model.domain.repository.WithChallengeHashtagRepository;
 import com.ssafy.kiwi.model.domain.repository.WithChallengeRepository;
+import com.ssafy.kiwi.model.dto.CertifyImageIp;
 import com.ssafy.kiwi.model.dto.CertifyImageOp;
 import com.ssafy.kiwi.model.dto.CertifyImageSimpleOp;
 import com.ssafy.kiwi.model.dto.WithChallengeIp;
@@ -159,9 +160,13 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 	
 	//[함께 챌린지] 참가하기
 	@Override
-	public void joinWithChallenge(int withChallengeId, int userId) {
-		MyChallenge mychallenge = MyChallenge.builder().withChallengeId(withChallengeId).userId(userId).build();
-		myChallengeRepository.save(mychallenge);
+	public boolean joinWithChallenge(int withChallengeId, int userId) {
+		if(myChallengeRepository.countByWithChallengeIdAndUserId(withChallengeId, userId)==0) {
+			MyChallenge mychallenge = MyChallenge.builder().withChallengeId(withChallengeId).userId(userId).build();
+			myChallengeRepository.save(mychallenge);
+			return true;
+		}
+		else return false;
 	}
 	
 	//[함께 챌린지] 인증사진 모아보기
@@ -257,7 +262,13 @@ public class WithChallengeServiceImpl implements WithChallengeService {
 
 	//[마이 챌린지] 인증하기
 	@Override
-	public boolean certifyMyChallenge(CertifyImage certifyImage) {
+	public boolean certifyMyChallenge(CertifyImageIp certifyImageIp) {
+		
+		CertifyImage certifyImage = new CertifyImage();
+		certifyImage.setImage(certifyImageIp.getImage());
+		certifyImage.setUserId(certifyImageIp.getUserId());
+		certifyImage.setWithChallengeId(certifyImageIp.getWithChallengeId());
+		
 		//사진 저장
 		certifyImageRepository.save(certifyImage);
 		//포인트 증가

@@ -1,28 +1,25 @@
 <template>
-  <div>
+  <div class="profile-container">
     <!-- 별명 로그인한 사용자 ->계정 주인으로 바꾸기, props 사용해야 할 듯 -->
-    <Navbar 
-    
-    />
+    <Navbar />
     <el-row style="align-items:center">
       <el-col :span="6" style="padding: 3vw">
-        <img v-if="user.image == '' " src="@/assets/img/profile/user.png" alt="profile_image" width="62" height="62" style="border-radius: 50%;">
-        <img v-else :src="user.image" alt="profile_image" width="62" height="62" style="border-radius: 50%;"><br>
+        <user-image v-if="user.image" :image="user.image" :width=62 :height=62></user-image>
       </el-col>
       <el-col :span="18" style="text-align: -webkit-right; padding: 3vw">
         <!-- 사용자와 프로필 주인이 같다면 -->
         <span v-if="userId == myId" id="square" style="margin-top: 10px"><router-link :to="{ name: 'ProfileEdit' }" class="text-decoration-none challenge-make">프로필 편집</router-link></span>
 
         <!-- 사용자와 프로필 주인이 다르다면 -->
-        <span v-else id="square" style="margin-top: 10px"><router-link :to="{ name: 'ProfileEdit' }" class="text-decoration-none challenge-make">팔로잉 팔로우 구현하기</router-link></span>
-        <!-- 메시지 -->
-        <!-- 팔로잉 -->
+        <div v-else class="follow-button">
+          <follow :following="isFollowing" :followId="userId" :isFeedFollow=true></follow>
+        </div>
       </el-col>
     </el-row>
     <el-row style="text-align: start; padding: 2vw">
       <el-col :span="12">
-        <span style="font-size: 14px; font-weight: bold; padding: 1px"> {{ user.name }} <!-- 스파르타꾹스 --> </span>
-        <span style="font-size: 11px"> Lv. {{ user.id }} <!-- exp--></span>
+        <span style="font-size: 14px; font-weight: bold; padding: 1px"> {{ user.name }}</span>
+        <span style="font-size: 11px"> Lv. {{ user.level }}</span>
       </el-col>
     </el-row>
     <el-row style="text-align: start; padding: 2vw">
@@ -30,147 +27,150 @@
         <span style="font-size: 13px"> {{ user.introduction }}<!-- 나는야 스파르타꾹스. 유튜브 많이 보러 와주세요--></span>
       </el-col>
     </el-row>
-    <!-- <el-row style="text-align: space-between; font-size: 12px">
-      <el-col :span="12">
-        <span style="padding: 2vw"> <span style="font-weight: bold; font-size: 13px; padding: 1vw">231--><!-- {{ user.following }} --><!--</span>팔로잉</span>  
-        <span style="padding: 2vw"> <span style="font-weight: bold; font-size: 13px; padding: 1vw">583--><!-- {{ user.follower }} --><!--</span>팔로워</span>
-      </el-col>
-    </el-row>
-    <div id="underline"></div> -->
 
     <el-row>
-      <!-- 팔로우/팔로잉 수 구하는 통신 필요함 -->
       <div class="follow-info-wrapper">
-        <div class="follow-info" @click="following">231 팔로잉</div>
-        <div class="follow-info" @click="follower">583 팔로워</div>
+        <div class="follow-info" @click="following">{{ user.following }} 팔로잉</div>
+        <div class="follow-info" @click="follower">{{ user.follower }} 팔로워</div>
       </div>
     </el-row>
 
     <!-- FollowList -->
     <div class="follow-list-container">
-      <follow-list v-if="showFollowingList" :followListType=1></follow-list>
+      <follow-list v-if="showFollowingList" :followListType=1 @follow="user.following++" @unfollow="user.following--"></follow-list>
     </div>
     <div class="follow-list-container">
-      <follow-list v-if="showFollowerList" :followListType=2></follow-list>
+      <follow-list v-if="showFollowerList" :followListType=2 @follow="user.following++" @unfollow="user.following--"></follow-list>
     </div>
 
-    <el-row style="text-align: start">
-      <!-- 배지 뭐갖고있는지 계산 -->
-      <img class="image" src="@/assets/image/health/health_challenge.png" alt="health badge" style="width: 10vw; padding: 2vw">
-      <el-dialog width="20px">
-        <img alt="" width="20px">
-      </el-dialog>
-      <img class="image" src="@/assets/image/diet/diet_dia.png" alt="diet badge" style="width: 10vw; padding: 2vw">
-      <el-dialog  width="95%">
-        <img alt="" width="99%">
-      </el-dialog>
-      <img class="image" src="@/assets/image/heart/heart_silver.png" alt="heart badge" style="width: 10vw; padding: 2vw">
-      <el-dialog width="95%">
-        <img alt="" width="99%">
-      </el-dialog>
-    </el-row>
+    <div class="badge-container">
+      <div v-if="user.badge.length">
+        <div class="badge-image-wrapper" v-for="(badgeItem, idx) in user.badge" v-bind:key="idx">
+          <img class="badge-image" :src="imageServer + badgeItem.image" alt="badge">
+        </div>
+      </div>
+      <div v-else>
+        <div class="no-badge-text">아직 대표 뱃지가 설정되지 않았어요!</div>
+      </div>
+    </div>
 
     <el-row class="justify-content-space-between align-items-center">
-      <el-col :span="12" style="background: #ADEC6E; height: 5vh">
-        <router-link :to="{ name: 'Profile', params: { id: userId } }" class="text-decoration-none selected-category"><font-awesome-icon :icon="['far', 'images']" style="margin-top: 1.5vh" /></router-link> 
-      </el-col>
-      <el-col :span="11" v-if="userId == myId">
-        <!-- 내 계정이라면 -->
-        <router-link :to="{ name: 'ProfileTodoList', params: { id: userId } }" class="text-decoration-none">오늘의 할 일</router-link> 
-      </el-col>
-      <!-- 내 계정이 아니라면 -->
-      <el-col :span="11" v-else>
-        <router-link :to="{ name: 'ProfileBadgeContainer', params: { id: userId } }" class="text-decoration-none">배지 보관함</router-link> 
-      </el-col>
+      <div class="select-tab" :class="{ selected: showFeed }" @click="showFeed = true">
+        <div><font-awesome-icon :icon="['far', 'images']" class="select-tab-icon" /></div> 
+      </div>
+      <div class="select-tab" :class="{ selected: !showFeed }" @click="showFeed = false">
+        <div v-if="userId == myId" class="select-tab-title">오늘의 할 일</div>
+        <div v-else class="select-tab-title">뱃지 보관함</div>
+      </div>
     </el-row>
-    <Category />
+    <div v-if="showFeed">
+      <Category />
+      <profile-post></profile-post>
+    </div>
+    <div v-else-if="myId == userId">
+      <profile-todo-list></profile-todo-list>
+    </div>
+    <div v-else-if="myId != userId">
+      <profile-badge-container></profile-badge-container>
+    </div>
     <Footer class="kiwi-footer"></Footer>
   </div>
 </template>
 
 <script>
-import SERVER from "@/api/drf.js"
+import SERVER from "@/api/drf.js";
 import axios from 'axios';
-import Navbar from "@/components/my_page/Navbar"
-import Category from "@/components/my_page/profile/Category"
-import Footer from "@/components/home/Footer"
-import FollowList from "@/components/my_page/FollowList"
+import Navbar from "@/components/my_page/Navbar";
+import Category from "@/components/my_page/profile/Category";
+import Footer from "@/components/home/Footer";
+import FollowList from "@/components/my_page/FollowList";
+import Follow from "@/components/my_page/Follow";
+import UserImage from "@/components/UserImage";
+import ProfileTodoList from "@/components/my_page/profile/ProfileTodoList";
+import ProfileBadgeContainer from "@/components/my_page/profile/ProfileBadgeContainer";
+import ProfilePost from "@/components/my_page/profile/ProfilePost";
 
 export default {
   name: "Profile",
   data: () => {
     return {
+      imageServer: SERVER.IMAGE_URL,
       user: {
-        id: "",
+        id: 0,
         identity: "",
         image: "",
         name: "",
-        exp: "",
+        exp: 0,
+        level: 0,
         introduction: "",
         badge: [],
-        follower: "",
-        following: "",
+        follower: 0,
+        following: 0,
         exercise: [],
         food: [],
         heart: [],
       },
       // 보고 있는 프로필 계정 주인의 id
       userId: "",
+      isFollowing: 1,
       
       // 로그인 한 내 아이디
       myId: "",
 
       showFollowingList: false,
       showFollowerList: false,
+
+      showFeed: true,
     };
   },
-  // props: {
-  //   id: {
-  //     type: String,
-  //   }
-  // },
   components: {
     Navbar,
     Category,
     Footer,
+    Follow,
     FollowList,
+    UserImage,
+    ProfileTodoList,
+    ProfileBadgeContainer,
+    ProfilePost,
   },
   created() {
     // footer 4로 설정
     this.$store.state.selectedRouter = 4
   
     // 현재 보고 있는 프로필 주인의 id 주소창에서 가져오기
-    this.userId = this.$route.path.split('/')[2]
+    this.userId = this.$route.params.id;
 
     // 내 아이디 localStorage에서 가져오기
     this.myId = localStorage.getItem('userId')
 
-    // 내 꺼 보기
-    if (this.userId == this.myId) {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.userProfile}${this.myId}/my`)
-        .then(response => {     
-          // this.image = require("@/assets/img/profile/" + response.data.image);
-          this.user = response.data
-        })
-        .catch(error => {
-          console.log(error);
-          console.error(error.response.data);
-        });
-    }
-    // 다른 사람꺼 보기
-    else {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.userProfile}${this.userId}/${this.myId}`)
-        .then(response => {     
-          // this.image = require("@/assets/img/profile/" + response.data.image);
-          this.user = response.data
-        })
-        .catch(error => {
-          console.log(error);
-          console.error(error.response.data);
-        });
-    }
+    this.getProfile();
+    this.getFollowing();
   },
   methods: {
+    async getProfile() {
+      try {
+        let response;
+        if(this.userId == this.myId) {
+          response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.userProfile}${this.myId}/my`);
+        } else {
+          response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.userProfile}${this.userId}/${this.myId}`);
+        }
+        this.user = response.data;
+        this.setLevel(this.user.exp);
+      } catch (error) {
+        console.log(error);
+        console.error(error.response.data);
+      }
+    },
+    async getFollowing() {
+      try {
+        const response = await axios.get(SERVER.URL + SERVER.ROUTES.follow + `?userId=${this.myId}&followId=${this.userId}`);
+        this.isFollowing = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     following() {
       if(this.showFollowerList) this.showFollowerList = false;
       this.showFollowingList ^= 1;
@@ -178,7 +178,18 @@ export default {
     follower() {
       if(this.showFollowingList) this.showFollowingList = false;
       this.showFollowerList ^= 1;
-    }
+    },
+    setLevel(exp) {
+      for (let i = 0; i < 100; i++) {
+        if(exp >= 10000 * i){
+          exp -= 10000 * i;
+          continue;
+        }
+        let levelOne = Math.floor(exp / (1000 * i));
+        this.user.level = (i - 1) * 10 + levelOne;
+        break;
+      }
+    },
   },
 }
 </script>
@@ -195,13 +206,15 @@ export default {
   border-color: #ADEC6E;
   border-radius: 30px;
   height: 36px;
-  
 }
-#underline {
-  width: 48vw;
-  height: 1px;
-  background: #C4C4C4;
-  /* background: linear-gradient(90deg, #C4C4C4 50%, gray 50%) 반반 나눠서 색칠하기*/
+.profile-container {
+  font-size: 13px;
+}
+.follow-button {
+  position: relative;
+  top: 15px;
+  text-align: center;
+  height: 62px;
 }
 .follow-info-wrapper {
   float: left;
@@ -211,14 +224,59 @@ export default {
 }
 .follow-info {
   display: inline-block;
-  font-size: 13px;
   font-weight: bold;
   margin: auto 5px;
 }
 .follow-list-container {
   position: relative;
 }
-
+.select-tab {
+  width: 50%;
+  height: 5vh;
+  background: #f5f5f5;
+  position: relative;
+}
+.select-tab:hover {
+  cursor: pointer;
+}
+.select-tab-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.select-tab-icon {
+  margin-top: 1.5vh;
+  font-size: 15px;
+}
+.selected {
+  background: #ADEC6E;
+}
+.badge-container {
+  height: 50px;
+  text-align: left;
+  margin: 0px 5px;
+}
+.badge-image-wrapper {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  margin: 10px 5px;
+  display: inline-block;
+}
+.badge-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.no-badge-text {
+  color: #bebebe;
+  padding: 15px;
+}
+.kiwi-footer {
+  z-index: 5;
+}
 .text-decoration-none {
   text-decoration: none;
   color: black;
@@ -230,8 +288,5 @@ export default {
 .align-items-center {
   display: flex;
   align-items: center;
-}
-.kiwi-footer {
-  z-index: 5;
 }
 </style>

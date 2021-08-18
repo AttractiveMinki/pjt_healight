@@ -30,6 +30,8 @@ export default {
     userSearch: "/user/search",
     postSearch: "/community/search",
     postSearchCategory: "/community/category/search",
+    profile: "/user/profile/",
+    badge: "/badge",
 
     // 원석 #@
 

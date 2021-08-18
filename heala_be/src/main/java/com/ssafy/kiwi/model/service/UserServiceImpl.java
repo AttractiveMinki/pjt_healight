@@ -1,8 +1,6 @@
 package com.ssafy.kiwi.model.service;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 import com.ssafy.kiwi.model.domain.entity.*;
@@ -12,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.kiwi.model.domain.repository.FollowRepository;
 import com.ssafy.kiwi.model.domain.repository.LikeUserRepository;
@@ -179,6 +176,13 @@ public class UserServiceImpl implements UserService {
 		if(!follow.isPresent()) return false;
 		followRepository.delete(follow.get());
 		return true;
+	}
+
+	@Override
+	public boolean getFollowByUserIdAndFollowId(int userId, int followId) {
+		Optional<Follow> follow = followRepository.findByFollowIdAndUserId(followId, userId);
+		if(follow.isPresent()) return true;
+		return false;
 	}
 
 	// 유저 간단 정보(아이디, 이름, 프로필사진) 불러오기

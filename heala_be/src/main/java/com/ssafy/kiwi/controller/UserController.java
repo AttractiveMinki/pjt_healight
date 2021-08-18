@@ -109,6 +109,14 @@ public class UserController {
 		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 
+	@ApiOperation(value = "팔로우 조회하기.")
+	@GetMapping("/follow")
+	public Object follow(@RequestParam int userId, @RequestParam int followId) {
+		if(userService.getFollowByUserIdAndFollowId(userId, followId)) {
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(false, HttpStatus.OK);
+	}
 	
 	@ApiOperation(value = "팔로우하기.")
 	@PostMapping("/follow")

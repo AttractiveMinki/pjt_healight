@@ -86,9 +86,7 @@ public class FeedController {
 	
 	@ApiOperation(value = "팔로워 / 팔로잉 목록 보기")
 	@GetMapping("/{userId}/followList")
-	public Object getOtherFollower(@PathVariable int userId,
-			@RequestParam(value="myId", required=true) int myId,
-			@RequestParam(value="type", required=true) int follow, int page) {
+	public Object getOtherFollower(@PathVariable int userId, @RequestParam int myId, @RequestParam int follow, int page) {
 		if(userService.existId(myId) && userService.existId(userId)) {
 			if(follow == 1) return new ResponseEntity<>(feedService.getFollowing(userId, myId, page), HttpStatus.OK);
 			else if(follow == 2) return new ResponseEntity<>(feedService.getFollower(userId, myId, page), HttpStatus.OK);
@@ -99,8 +97,7 @@ public class FeedController {
 	
 	@ApiOperation(value = "스크랩한 게시글 목록 보기")
 	@GetMapping("/{userId}/scrap")
-	public Object getScrapList(@PathVariable int userId,
-			@RequestParam int page) {
+	public Object getScrapList(@PathVariable int userId, @RequestParam int page) {
 		return new ResponseEntity<>(feedService.getScrapList(userId, page), HttpStatus.OK);
 	}
 	

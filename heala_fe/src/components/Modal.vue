@@ -1,49 +1,45 @@
 <template>
-    <div>
+  <div class="modal-container">
     <transition name="modal">
       <div class="modal-mask">
-          <div class="modal-wrapper">
-              <div class="modal-container">
-                  <div class="modal-header">
-                      <slot name="header">
-                          기본 헤더
-                      </slot>
-                  </div>
-
-                  <div class="modal-body">
-                      <slot name="body">
-                          기본바디: ~~ 하시겠습니까?
-                      </slot>
-                  </div>
-
-                  <div class="modal-footer">
-                      <slot name="footer">
-                          <button class="modal-button modal-default-button" @click="$emit('yes')">
-                              예
-                          </button>
-                          <button class="modal-button modal-important-button" @click="$emit('no')">
-                              아니오
-                          </button>
-                      </slot>
-                  </div>
-              </div>
+        <div class="modal-wrapper">
+          <div class="modal-container">
+            <div class="modal-header">
+              <slot name="header">
+                기본 헤더
+              </slot>
+            </div>
+            <div class="modal-body">
+              <slot name="body">
+                기본바디: ~~ 하시겠습니까?
+              </slot>
+            </div>
+            <div class="modal-footer">
+              <slot name="footer">
+                <button class="modal-button modal-default-button" @click="$emit('yes')">
+                  예
+                </button>
+                <button class="modal-button modal-important-button" @click="$emit('no')">
+                  아니오
+                </button>
+              </slot>
+            </div>
           </div>
+        </div>
       </div>
     </transition>
-    </div>
+  </div>
 </template>
 <script>
 
 export default {
-    name: 'Modal',
-    data() {
-        return {
-            
-        }
-    },
+  name: 'Modal',
 }
 </script>
 <style>
+.modal-container {
+  text-align: center;
+}
 .modal-mask {
   position: fixed;
   z-index: 9998;
