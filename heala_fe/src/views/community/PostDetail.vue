@@ -96,7 +96,7 @@ export default {
     },
   },
   created() {
-    // this.userId = localStorage.getItem("userId");
+    this.userId = localStorage.getItem("userId");
     let postId = this.$route.params.id;
     this.$store.dispatch("setPostDetail", { postId });
     this.$store.dispatch("setPostComments", { postId });
