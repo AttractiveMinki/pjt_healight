@@ -5,16 +5,15 @@
     </div>
     <h1>로그인</h1>
     <el-row>
-      <el-col :span="24"><div class="introduce-text-align-start">아이디</div>
-        <input type="text" class='get-input bg-gray' id="identity" v-model="data.identity" maxlength="20" required>
-      </el-col>
       <br>
-      <el-col :span="24"><div class="introduce-text-align-start">비밀번호</div>
-        <div class="password-box get-input bg-gray introduce-text-align-start">
-          <input type="password" id="password" class="get-input bg-gray artificial-padding-right" v-model="data.password" maxlength="20" required>
-          <span class="el-icon-chat-line-round text-align:right" @click="toggleIcon"></span>
-        </div>
-      </el-col>
+      <input type="text" class='get-input bg-gray' id="identity" v-model="data.identity" maxlength="20" placeholder=" 아이디" required>
+      <br>
+      <br>
+      <div class="password-box get-input bg-gray introduce-text-align-start">
+        <input type="password" id="password" class="get-input bg-gray artificial-padding-right" v-model="data.password" maxlength="20" placeholder=" 비밀번호(문자, 숫자 포함 8자리 이상)" required>
+        <span class="el-icon-chat-line-round text-align:right" @click="toggleIcon"></span>
+      </div>
+      <br>
       <button class="bg-green get-input join-button-setting" @click="login(data)">로그인</button>
       <button class="bg-white get-input join-button-setting" @click="goSignup()">가입하기</button>
     </el-row>
@@ -64,7 +63,7 @@ export default {
 
 <style scoped>
   .logo-image {
-    width: 100%;
+    width: 50%;
   }
   .bg-white {
     background: rgb(197, 223, 189);
