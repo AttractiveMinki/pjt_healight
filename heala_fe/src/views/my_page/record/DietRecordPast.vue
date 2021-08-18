@@ -113,7 +113,6 @@ export default {
   },
   methods: {
     getDietRecordPast: function () {
-      console.log(`${SERVER.URL}${SERVER.ROUTES.getDietRecordToday}?day=${this.recordYear}${this.recordMonth}${this.recordDate}&userId=${localStorage.getItem('userId')}`)
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getDietRecordToday}?day=${this.recordYear}${this.recordMonth}${this.recordDate}&userId=${localStorage.getItem('userId')}`)
         .then((res) => {
           this.diet.calory = res.data.calory

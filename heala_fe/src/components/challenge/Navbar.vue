@@ -47,7 +47,7 @@ export default {
     font-size: 50px;
     font-weight: bold;
     margin-left: 5%;
-    margin-bottom: 2%;
+    margin-bottom: 2vh;
   }
   .challenge-text {
     width: 40%;
@@ -55,7 +55,7 @@ export default {
     font-size: 16px;
   }
   .challenge-make {
-    font-size: 13px;
+    font-size: 10px;
     padding-right: 5px;
   }
   .plus-button {

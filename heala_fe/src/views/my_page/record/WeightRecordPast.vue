@@ -1,25 +1,22 @@
 <template>
   <div>
     <Navbar />
-    <h1>체중 기록하기</h1>
-    <WeiCalender />
+    <h1>체중 기록 확인</h1>
+    <VueChartJS />
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/my_page/Navbar"
-import WeiCalender from '@/components/my_page/WeiCalender.vue'
+import VueChartJS from '@/components/my_page/chart/VueChartJS'
 
 export default {
-  name: "WeightCalender",
+  name: "WeightRecordPast",
   components: {
     Navbar,
-    WeiCalender
+    VueChartJS,
   },
-  methods: {
-
-  },
-  mounted() {
+  created() {
     // 현재 보고 있는 프로필 주인의 id 주소창에서 가져오기
     this.userId = this.$route.path.split('/')[3]
 
@@ -35,9 +32,6 @@ export default {
 }
 </script>
 
-
 <style scoped>
-  .is-selected {
-    color: #1989FA;
-  }
+
 </style>

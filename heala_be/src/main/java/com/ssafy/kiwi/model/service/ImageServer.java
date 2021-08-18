@@ -64,6 +64,17 @@ public class ImageServer {
     	double dValue = Math.random();
     	return time+dValue;
     }
+
+	public String registerKiwiImageIntoServer(MultipartFile file) throws IOException {
+		
+		String name = file.getOriginalFilename();
+		int point = name.indexOf(".");
+		String newName = "admin/" + name.substring(0, point);
+		
+    	s3Client.putObject(new PutObjectRequest(bucket, newName, file.getInputStream(), null)
+    			.withCannedAcl(CannedAccessControlList.PublicRead));
+    	return newName;
+	}
     
     
 }

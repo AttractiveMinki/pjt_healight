@@ -102,7 +102,6 @@ export default {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiChallenge}`)
         .then((res) => {
           this.data = res.data
-          // console.log(res)
         })
         .catch((err) => {
           console.log(err)

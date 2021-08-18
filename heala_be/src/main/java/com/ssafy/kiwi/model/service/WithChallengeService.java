@@ -28,7 +28,7 @@ public interface WithChallengeService {
 	public List<Map<String, Object>> getMyChallenge(int userId);
 
 	// 함께 챌린지 참여하기
-	public void joinWithChallenge(int withChallengeId, int userId);
+	public boolean joinWithChallenge(int withChallengeId, int userId);
 	
 	// 마이 챌린지 - 인증하기
 	public boolean certifyMyChallenge(CertifyImage certifyImage);

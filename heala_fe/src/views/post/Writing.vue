@@ -34,7 +34,7 @@
     <!-- 제목 -->
     <el-row type="flex" align="middle">
       <el-col :span="6" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">제목</el-col>
-      <el-col :span="17" style="padding-left: 10px;"><el-input placeholder="제목을 작성해주세요" v-model="title" clearable></el-input></el-col>
+      <el-col :span="17" style="padding-left: 10px;"><el-input placeholder="제목을 작성해주세요" v-model="data.post.title" clearable></el-input></el-col>
       <el-col :span="1"></el-col>
     </el-row><hr>
     <!-- 카테고리 -->
@@ -42,66 +42,66 @@
       <el-col :span="6" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">카테고리</el-col>
       <el-col :span="3" class="category" style="font-size: 13px;">
         <label for="input-radio" style="cursor: pointer;">운동</label>
-        <input @click="category_click" type="radio" id="input-radio" v-model="category" value="0" style="display: none;"/>
+        <input @click="category_click" type="radio" id="input-radio" v-model="data.post.category" value="0" style="display: none;"/>
       </el-col>
       <el-col :span="3" class="category" style="font-size: 13px;">
         <label for="input-radio2" style="cursor: pointer;">식단</label>
-        <input @click="category_click" type="radio" id="input-radio2" v-model="category" value="1" style="display: none;"/>
+        <input @click="category_click" type="radio" id="input-radio2" v-model="data.post.category" value="1" style="display: none;"/>
       </el-col>
       <el-col :span="3" class="category" style="font-size: 13px;">
         <label for="input-radio3" style="cursor: pointer;">마음</label>
-        <input @click="category_click" type="radio" id="input-radio3" v-model="category" value="2" style="display: none;"/>
+        <input @click="category_click" type="radio" id="input-radio3" v-model="data.post.category" value="2" style="display: none;"/>
       </el-col>
       <el-col :span="9"></el-col>
     </el-row><hr>
     <!-- 주제 -->
     <el-row type="flex" align="middle">
       <el-col :span="6" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">주제</el-col>
-      <el-col :span="3" class="subject" style="font-size: 13px;">
+      <el-col :span="3" class="subCategory" style="font-size: 13px;">
         <label for="input-radio4" style="cursor: pointer;">피드</label>
-        <input @click="subject_click" type="radio" id="input-radio4" v-model="subject" value="0" style="display: none;"/>
+        <input @click="subCategory_click" type="radio" id="input-radio4" v-model="data.post.subCategory" value="0" style="display: none;"/>
       </el-col>
-      <el-col :span="3" class="subject" style="font-size: 13px;">
+      <el-col :span="3" class="subCategory" style="font-size: 13px;">
         <label for="input-radio5" style="cursor: pointer;">정보</label>
-        <input @click="subject_click" type="radio" id="input-radio5" v-model="subject" value="1" style="display: none;"/>
+        <input @click="subCategory_click" type="radio" id="input-radio5" v-model="data.post.subCategory" value="1" style="display: none;"/>
       </el-col>
-      <el-col :span="3" class="subject" style="font-size: 13px;">
+      <el-col :span="3" class="subCategory" style="font-size: 13px;">
         <label for="input-radio6" style="cursor: pointer;">질문</label>
-        <input @click="subject_click" type="radio" id="input-radio6" v-model="subject" value="2" style="display: none;"/>
+        <input @click="subCategory_click" type="radio" id="input-radio6" v-model="data.post.subCategory" value="2" style="display: none;"/>
       </el-col>
       <el-col :span="9"></el-col>
     </el-row><hr>
     <!-- 공개범위 -->
     <el-row type="flex" align="middle">
       <el-col :span="6" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">공개범위</el-col>
-      <el-col :span="3" class="scope" style="font-size: 13px;">
+      <el-col :span="3" class="access" style="font-size: 13px;">
         <label for="input-radio7" style="cursor: pointer;">전체</label>
-        <input @click="scope_click" type="radio" id="input-radio7" v-model="scope" value="0" style="display: none;"/>
+        <input @click="access_click" type="radio" id="input-radio7" v-model="data.post.access" value="0" style="display: none;"/>
       </el-col>
-      <el-col :span="3" class="scope" style="font-size: 13px;">
+      <el-col :span="3" class="access" style="font-size: 13px;">
         <label for="input-radio8" style="cursor: pointer;">팔로우</label>
-        <input @click="scope_click" type="radio" id="input-radio8" v-model="scope" value="1" style="display: none;"/>
+        <input @click="access_click" type="radio" id="input-radio8" v-model="data.post.access" value="1" style="display: none;"/>
       </el-col>
-      <el-col :span="3" class="scope" style="font-size: 13px;">
+      <el-col :span="3" class="access" style="font-size: 13px;">
         <label for="input-radio9" style="cursor: pointer;">자신</label>
-        <input @click="scope_click" type="radio" id="input-radio9" v-model="scope" value="2" style="display: none;"/>
+        <input @click="access_click" type="radio" id="input-radio9" v-model="data.post.access" value="2" style="display: none;"/>
       </el-col>
       <el-col :span="5"></el-col>
-      <el-col :span="3" class="scope" style="font-size: 13px;">
-        <label v-if="category==2" for="input-radio10" style="cursor: pointer;">익명</label>
-        <input @click="anonymous_click" id="input-radio10" v-model="anonymous" style="display: none;" />
+      <el-col :span="3" class="access" style="font-size: 13px;">
+        <label v-if="data.post.category==2" for="input-radio10" style="cursor: pointer;">익명</label>
+        <input @click="anonymous_click" id="input-radio10" v-model="data.post.anonymous" style="display: none;" />
       </el-col>
       <el-col :span="1"></el-col>
     </el-row><hr>
     <!-- 내용 -->
-    <textarea class="textarea" rows="15" placeholder="글 내용을 작성해주세요" v-model="contents"></textarea><hr>
+    <textarea class="textarea" rows="15" placeholder="글 내용을 작성해주세요" v-model="data.post.content"></textarea><hr>
     <!-- 해시태그 -->
     <el-row type="flex" align="middle">
       <el-col :span="6" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">해시태그</el-col>
-      <el-col :span="17" style="padding-left: 10px;"><el-input placeholder="해시태그를 작성해주세요" v-model="hashtag" clearable></el-input></el-col>
+      <el-col :span="17" style="padding-left: 10px;"><el-input placeholder="해시태그를 작성해주세요" v-model="data.hashtag.word" clearable></el-input></el-col>
       <el-col :span="1"></el-col>
     </el-row>
-    <div id="submit" @click="uploadImage()" style="margin-top: 20px; background-color: #ADEC6E; color: white; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center; cursor: pointer;">저장</div>
+    <div id="submit" @click="checkData(data)" style="margin-top: 20px; background-color: #ADEC6E; color: white; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center; cursor: pointer;">저장</div>
   </div>
 </template>
 
@@ -110,6 +110,30 @@ import SERVER from "@/api/drf.js"
 import axios from 'axios';
 
 export default {
+  name: "Writing",
+  data: () => {
+    return {
+      imgCnt: 0,
+      data: {
+        post: {
+          title: "",
+          category: "",
+          subCategory: "",
+          access: "",
+          anonymous: "",
+          content: "",
+          image: "",
+          userId: "",
+        },
+        hashtag: {
+          word: "",
+        }
+      },
+     
+      dialogVisible: {"first":false, "second":false, "third":false, "fourth":false, "fifth":false},
+      imgUrl: {"first":"", "second":"", "third":"", "fourth":"", "fifth":""},
+    }; 
+  },
   methods: {
     selectFile(e) {
       const file = e.target.files[0];
@@ -121,25 +145,41 @@ export default {
       else if(this.imgCnt === 4) this.imgUrl.fifth = URL.createObjectURL(file);
       this.imgCnt++;
     },
-    uploadImage() {
+    checkData(data) {
+      console.log(document.getElementById("input-file").files[0])
+      if (document.getElementById("input-file").files[0] == undefined) {
+        alert('이미지를 입력하세요.')
+      }
+      else if (data.title == "" ) {
+        alert('제목을 입력하세요.')
+      }
+      else if (data.title == "" ) {
+        alert('제목을 입력하세요.')
+      }
+      else if (data.category == "") {
+        alert('카테고리를 선택하세요.')
+      }
+      else if (data.subCategory == "") {
+        alert('주제를 선택하세요.')
+      }
+      else if (data.access == "") {
+        alert('공개범위를 선택하세요.')
+      }
+      else if (data.content == "") {
+        alert('글 내용을 작성하세요.')
+      }
+      else {
+        this.uploadImage(data)
+      }
+    },
+    uploadImage(data) {
       let formData = new FormData()
-      let imgFile = document.getElementsByClassName("image")[0]
-      // let file = "image[" + 0 + "]"
+      let imgFile = document.getElementById("input-file").files[0]
       formData.append("file", imgFile)
-      // console.log(imgFile)
-      for (var key of formData.keys()) {
-        console.log(key)
-      }
-      for (var value of formData.values()) {
-        console.log(value)
-      }
-      console.log(imgFile)
-      console.log(formData)
-      console.log(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`)
-      axios.post(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`, formData, { headers: {'Content-Type' : 'multipart/form-data'}})
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`, formData, { headers: {"Content-Type" : "multipart/form-data"}})
         .then(res => {
-          console.log('통신 성공')
-          console.log(res)
+          this.data.post.image = res.data
+          this.submit(data)
         })
         .catch(err => {
           console.log('통신 실패')
@@ -147,34 +187,23 @@ export default {
         })
     // submit(res)
     },
-
-    submit() {
-      // FormData에 전송할 데이터 저장
-      var formData  = new FormData();
-      for(var i = 0; i < this.imgCnt; i++) {
-        console.log(document.getElementsByClassName("image")[i]);
-        var imgFile = document.getElementsByClassName("image")[i];
-        var key = "image[" + i + "]";
-        formData.append(key, imgFile);
-      }
-      formData.append("title", this.title);
-      formData.append("contents", this.contents);
-      formData.append("hashtag", this.hashtag);
-      if (this.anonymous == false || this.category != 2) {
-        formData.append("anonymous", false);
+    submit(data) {
+      if (data.anonymous == false || data.category != 2) {
+        data.post.anonymous = 0
       } else {
-        formData.append("anonymous", true);
+        data.post.anonymous = 1
       }
-      console.log(formData, 'formData')
+      data.post.userId = localStorage.getItem('userId')
+      console.log('data--------------------', data)
       // 서버로 FormData 전송
-      axios.post(`${SERVER.URL}${SERVER.ROUTES.feedPost}`, formData, { headers: {'Content-Type' : 'multipart/form-data'}})
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.feedPost}`, data)
         .then(response => {
           if(response.status === 200) {
             console.log("등록 완료");
           }
         })
-        .catch(error => {
-          console.log(error);
+        .catch(err => {
+          console.error(err.response.data)
         });
     },
     category_click(e) {
@@ -190,19 +219,19 @@ export default {
       dom.style.fontWeight = "bold";
       dom.style.color = "#ADEC6E";
     },
-    subject_click(e) {
+    subCategory_click(e) {
       for(var i = 0; i < 3; i++) {
-        document.getElementsByClassName("subject")[i].style.fontWeight = "normal";
-        document.getElementsByClassName("subject")[i].style.color = "black";
+        document.getElementsByClassName("subCategory")[i].style.fontWeight = "normal";
+        document.getElementsByClassName("subCategory")[i].style.color = "black";
       }
       let dom = e.target.parentNode;
       dom.style.fontWeight = "bold";
       dom.style.color = "#ADEC6E";
     },
-    scope_click(e) {
+    access_click(e) {
       for(var i = 0; i < 3; i++) {
-        document.getElementsByClassName("scope")[i].style.fontWeight = "normal";
-        document.getElementsByClassName("scope")[i].style.color = "black";
+        document.getElementsByClassName("access")[i].style.fontWeight = "normal";
+        document.getElementsByClassName("access")[i].style.color = "black";
       }
       let dom = e.target.parentNode;
       dom.style.fontWeight = "bold";
@@ -227,20 +256,6 @@ export default {
     goBack: function () {
       this.$router.go(-1)
     },
-  },
-  data: () => {
-    return {
-      imgCnt: 0,
-      title: "",
-      category: "",
-      subject: "",
-      scope: "",
-      contents: "",
-      hashtag: "",
-      dialogVisible: {"first":false, "second":false, "third":false, "fourth":false, "fifth":false},
-      imgUrl: {"first":"", "second":"", "third":"", "fourth":"", "fifth":""},
-      anonymous: "",
-    }; 
   },
 };
 </script>
@@ -276,5 +291,8 @@ export default {
     resize: none;
     width: 100%;
     height: 15vh;
+  }
+  .textarea:focus {
+    outline: none;
   }
 </style>

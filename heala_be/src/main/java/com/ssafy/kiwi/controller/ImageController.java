@@ -24,7 +24,13 @@ public class ImageController {
 	final private ImageServer imageServer;
 	
 	@PostMapping
-	public Object registerImageIntoServer(@RequestParam MultipartFile file) throws IOException {
+	public Object registerImageIntoServer(@RequestParam("file") MultipartFile file) throws IOException {
 		return new ResponseEntity<String>(imageServer.registerImageIntoServer(file), HttpStatus.OK);
 	}
+	
+	@PostMapping("/kiwi")
+	public Object registerKiwiImageIntoServer(@RequestParam MultipartFile file) throws IOException {
+		return new ResponseEntity<String>(imageServer.registerKiwiImageIntoServer(file), HttpStatus.OK);
+	}
+	
 }

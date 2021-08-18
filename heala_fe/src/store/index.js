@@ -239,9 +239,7 @@ export default new Vuex.Store({
       state.feeds = feeds
     },
     SET_USERID: function (state, res) {
-      // state.userid = res.userid
-      // localStorage.setItem('userid', res.userid); // 백엔드에서 보내주는 양식에 맞게 수정하면 끝
-      localStorage.setItem('userId', res.data); // 백엔드에서 보내주는 양식에 맞게 수정하면 끝
+      localStorage.setItem('userId', res.data.id); 
     },
     SET_USERIDENTITY: function (state, data) {
       state.userIdentity = data.identity
@@ -250,21 +248,27 @@ export default new Vuex.Store({
     SET_USERIDENTITY2: function (state, data) {
       state.userIdentity = data.identity
     },
-    SET_USERNAME: function (state, data) {
-      state.userName = data.userName
-      localStorage.setItem('userName', data.userName);
+    SET_USERNAME: function (state, res) {
+      state.userName = res.data.name
+      localStorage.setItem('userName', res.data.name);
+    },
+    SET_USERIMAGE: function (state, res) {
+      localStorage.setItem('userImage', res.data.image);
     },
     INIT_USERID: function (state) {
       state.userId = ""
-      localStorage.setItem('userId', '');
+      localStorage.removeItem('userId');
     },
     INIT_USERIDENTITY: function (state) {
       state.userIdentity = ""
-      localStorage.setItem('userIdentity', '');
+      localStorage.removeItem('userIdentity');
     },
     INIT_USERNAME: function (state) {
       state.userName = ""
-      localStorage.setItem('userName', '');
+      localStorage.removeItem('userName');
+    },
+    INIT_USERIMAGE: function () {
+      localStorage.removeItem('userImage');
     },
     // SET_CHECKIDENTITY: function (state) {
     //   state.check_identity = false
@@ -505,9 +509,6 @@ export default new Vuex.Store({
 
     // 주엽 #@
     signup: function ({ commit }, data) {
-      // console.log(SERVER.URL)
-      // console.log(SERVER.ROUTES.signup)
-      // console.log(data)
       axios.post(SERVER.URL + SERVER.ROUTES.signup, data)
         .then(() => {
           commit("SET_USERIDENTITY2", data)
@@ -520,20 +521,19 @@ export default new Vuex.Store({
     },
     login: function ({ commit }, data) {
       // event.preventDefault()
-      console.log(data)
-      console.log(SERVER.URL + SERVER.ROUTES.login, data)
       axios.post(SERVER.URL + SERVER.ROUTES.login, data)
         .then((res) => {
+          console.log(res)
           commit("SET_USERID", res)
-          // commit("SET_USERNAME", res)
           commit("SET_USERIDENTITY", data)
+          commit("SET_USERNAME", res)
+          commit("SET_USERIMAGE", res)
 
           // commit("SET_TOKEN", res.data.token) // jwt 사용시 적용
           // dispatch("verifyUser", data) // 관리자 권한 검증
           router.push({ name: "CommunityMain" }) // 홈 피드 구현 후 변경
       })
         .catch((err) => {
-          console.log("로그인 에러 발생")
           console.log(err)
           console.error(err.response.data)
           alert('존재하지 않는 회원이거나, 비밀번호가 일치하지 않습니다.')
@@ -542,7 +542,8 @@ export default new Vuex.Store({
     logout: function ({ commit }) {
       commit("INIT_USERID")
       commit("INIT_USERIDENTITY")
-      // commit("INIT_USERNAME")
+      commit("INIT_USERNAME")
+      commit("INIT_USERIMAGE")
       router.push({ name: "Login" })
     },
 
@@ -550,8 +551,7 @@ export default new Vuex.Store({
     getFeeds: function ({ commit }) {
       // const headers = getters.config
       axios.get(SERVER.URL + SERVER.ROUTES.community + "/main/")
-        .then((res) => {
-          console.log(res)
+        .then(() => {
           commit("SET_FEEDS")
       })
         .catch((err) => {

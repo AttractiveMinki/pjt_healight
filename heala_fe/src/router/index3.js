@@ -2,10 +2,6 @@ import Signup from "@/views/user/Signup"
 import Login from "@/views/user/Login"
 import SignupSuccess from "@/views/user/SignupSuccess"
 import Withdrawal from "@/views/user/Withdrawal"
-import CommunityMain from "@/views/community/CommunityMain"
-import Health from "@/views/community/Health"
-import Diet from "@/views/community/Diet"
-import Heart from "@/views/community/Heart"
 import WithMain from "@/views/challenge/with/WithMain"
 import WithMake from "@/views/challenge/with/WithMake"
 import WithDetail from "@/views/challenge/with/WithDetail"
@@ -25,6 +21,7 @@ import DietRecordCreate from "@/views/my_page/record/DietRecordCreate";
 import DietRecordCalender from "@/views/my_page/record/DietRecordCalender";
 import DietRecordPast from "@/views/my_page/record/DietRecordPast";
 import WeightCalender from "@/views/my_page/record/WeightCalender";
+import WeightRecordPast from "@/views/my_page/record/WeightRecordPast";
 import KiwiMain from "@/views/challenge/kiwi/KiwiMain"
 import KiwiHealth from "@/views/challenge/kiwi/KiwiHealth"
 import KiwiDiet from "@/views/challenge/kiwi/KiwiDiet"
@@ -60,26 +57,6 @@ export default [
     path: "/user/withdrawal",
     name: "Withdrawal",
     component: Withdrawal,
-  },
-  {
-    path: "/community/Communitymain",
-    name: "CommunityMain",
-    component: CommunityMain,
-  },
-  {
-    path: "/community/health",
-    name: "Health",
-    component: Health,
-  },
-  {
-    path: "/community/diet",
-    name: "Diet",
-    component: Diet,
-  },
-  {
-    path: "/community/heart",
-    name: "Heart",
-    component: Heart,
   },
   {
     path: "/challenge/with/withmain",
@@ -172,9 +149,14 @@ export default [
     component: DietRecordPast,
   },
   {
-    path: "/profile/weightcalender",
+    path: "/profile/weightcalender/:id",
     name: "WeightCalender",
     component: WeightCalender,
+  },
+  {
+    path: "/profile/weightpastrecord/:id",
+    name: "WeightRecordPast",
+    component: WeightRecordPast,
   },
   {
     path: "/challenge/kiwimain",
