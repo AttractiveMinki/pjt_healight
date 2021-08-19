@@ -160,7 +160,7 @@ export default {
           if (res.data == "") {
             alert("챌린지 실패");
           } else {
-            $alert("챌린지 성공!");
+            alert("챌린지 성공!");
             history.go(0); // 새로고침
           }
           // 챌린지 성공!
