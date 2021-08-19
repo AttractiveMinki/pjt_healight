@@ -164,8 +164,9 @@ export default {
         .then(response => {
           if(response.status === 200) {
             alert('설정 변경이 완료되었습니다.');
-            if (this.originalIdentity != this.data.user.identity) {
-              alert('변경하신 아이디는 재로그인 이후 반영됩니다.')
+            if (this.originalIdentity != data.user.identity) {
+              localStorage.setItem('userIdentity', data.user.identity)
+              alert('들어왔쥬')
             }
             router.push({ name: "Profile", params: { id: this.data.user.id }})
           }
