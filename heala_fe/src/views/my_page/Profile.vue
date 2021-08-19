@@ -49,8 +49,12 @@
           <img class="badge-image" :src="imageServer + badgeItem.image" alt="badge">
         </div>
       </div>
-      <div v-else>
-        <div class="no-badge-text">아직 대표 뱃지가 설정되지 않았어요!</div>
+      <div v-else class="badge-notice">
+        <span class="no-badge-text">아직 대표 뱃지가 설정되지 않았어요!</span>
+        <span class="padding-left-3vw">
+          <router-link :to="{ name: 'ProfileEdit' }" class="text-decoration-none challenge-make">+배지 설정하러 가기</router-link>
+        </span>
+        
       </div>
     </div>
 
@@ -199,98 +203,107 @@ export default {
 </script>
 
 <style scoped>
-#square {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80%;
-  background: white;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #ADEC6E;
-  border-radius: 30px;
-  height: 36px;
-}
-.profile-container {
-  font-size: 13px;
-}
-.follow-button {
-  position: relative;
-  top: 15px;
-  text-align: center;
-  height: 62px;
-}
-.follow-info-wrapper {
-  float: left;
-  border-bottom: 1px solid #C4C4C4;
-  text-align: left;
-  padding: 2px 5px;
-}
-.follow-info {
-  display: inline-block;
-  font-weight: bold;
-  margin: auto 5px;
-}
-.follow-list-container {
-  position: relative;
-}
-.select-tab {
-  width: 50%;
-  height: 5vh;
-  background: #f5f5f5;
-  position: relative;
-}
-.select-tab:hover {
-  cursor: pointer;
-}
-.select-tab-title {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.select-tab-icon {
-  margin-top: 1.5vh;
-  font-size: 15px;
-}
-.selected {
-  background: #ADEC6E;
-}
-.badge-container {
-  height: 50px;
-  text-align: left;
-  margin: 0px 5px;
-}
-.badge-image-wrapper {
-  width: 30px;
-  height: 30px;
-  position: relative;
-  margin: 10px 5px;
-  display: inline-block;
-}
-.badge-image {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.no-badge-text {
-  color: #bebebe;
-  padding: 15px;
-}
-.kiwi-footer {
-  z-index: 5;
-}
-.text-decoration-none {
-  text-decoration: none;
-  color: black;
-}
-.challenge-make {
-  font-size: 13px;
-  padding-right: 5px;
-}
-.align-items-center {
-  display: flex;
-  align-items: center;
-}
+  #square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    background: white;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #ADEC6E;
+    border-radius: 30px;
+    height: 36px;
+  }
+  .profile-container {
+    font-size: 13px;
+  }
+  .follow-button {
+    position: relative;
+    top: 15px;
+    text-align: center;
+    height: 62px;
+  }
+  .follow-info-wrapper {
+    float: left;
+    border-bottom: 1px solid #C4C4C4;
+    text-align: left;
+    padding: 2px 5px;
+  }
+  .follow-info {
+    display: inline-block;
+    font-weight: bold;
+    margin: auto 5px;
+  }
+  .follow-list-container {
+    position: relative;
+  }
+  .select-tab {
+    width: 50%;
+    height: 5vh;
+    background: #f5f5f5;
+    position: relative;
+  }
+  .select-tab:hover {
+    cursor: pointer;
+  }
+  .select-tab-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .select-tab-icon {
+    margin-top: 1.5vh;
+    font-size: 15px;
+  }
+  .selected {
+    background: #ADEC6E;
+  }
+  .badge-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    text-align: left;
+    margin: 0px 5px;
+  }
+  .badge-image-wrapper {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    margin: 10px 5px;
+    display: inline-block;
+  }
+  .badge-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .no-badge-text {
+    color: #bebebe;
+    padding: 15px;
+  }
+  .kiwi-footer {
+    z-index: 5;
+  }
+  .text-decoration-none {
+    text-decoration: none;
+    color: black;
+  }
+  .challenge-make {
+    font-size: 13px;
+    padding-right: 5px;
+  }
+  .align-items-center {
+    display: flex;
+    align-items: center;
+  }
+  .badge-notice {
+    width: 100%;
+  }
+  .padding-left-3vw {
+    padding-left: 3vw;
+  }
 </style>
