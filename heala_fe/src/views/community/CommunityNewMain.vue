@@ -46,6 +46,9 @@ export default {
       keyword: "",
     }
   },
+  created() {
+    this.$store.state.selectedRouter = 1;
+  },
   methods: {
     search(keyword) {
       this.keyword = keyword;
