@@ -26,13 +26,8 @@
 
     <el-row style="margin:1vh">
       <el-col :span="11">
-<<<<<<< .merge_file_a08956
         <div style="font-size:18px;">탄수화물</div>
         <div style="margin: 0.5vh"><span style="font-size:18px; font-weight: bold">{{ parseInt(diet.carbohydrate) }}g</span><span style="font-size:13px;"> / {{ recommend.carbohydrate }}</span></div>
-=======
-        <div style="font-size:16px; font-family: 'TmoneyRoundWindRegular';">탄수화물</div>
-        <div style="margin: 0.5vh"><span style="font-size:16px; font-weight: bold">{{ diet.carbohydrate }}g</span><span style="font-size:13px;"> / {{ recommend.carbohydrate }}</span></div>
->>>>>>> .merge_file_a12180
       </el-col>
       <el-col :span="11">
         <el-progress :stroke-width="24" :percentage="parseInt(((diet.carbohydrate / recommend.carbohydrate) * 100).toFixed(2))" :color="colors" style="margin: 0.5vh"></el-progress>
@@ -41,13 +36,8 @@
 
     <el-row style="margin:1vh">
       <el-col :span="11">
-<<<<<<< .merge_file_a08956
         <div style="font-size:18px;">단백질</div>
         <div style="margin: 0.5vh"><span style="font-size:18px; font-weight: bold">{{ parseInt(diet.protein) }}g</span><span style="font-size:13px;"> / {{ recommend.protein }}</span></div>
-=======
-        <div style="font-size:16px; font-family: 'TmoneyRoundWindRegular';">단백질</div>
-        <div style="margin: 0.5vh"><span style="font-size:16px; font-weight: bold">{{ diet.protein }}g</span><span style="font-size:13px;"> / {{ recommend.protein }}</span></div>
->>>>>>> .merge_file_a12180
       </el-col>
       <el-col :span="11">
         <el-progress :stroke-width="24" :percentage="parseInt(((diet.protein / recommend.protein) * 100).toFixed(2))" :color="colors"></el-progress>
@@ -56,13 +46,8 @@
 
     <el-row style="margin:1vh">
       <el-col :span="11">
-<<<<<<< .merge_file_a08956
         <div style="font-size:18px;">지방</div>
         <div style="margin: 0.5vh"><span style="font-size:18px; font-weight: bold">{{ parseInt(diet.fat) }}g</span><span style="font-size:13px;"> / {{ recommend.fat }}</span></div>
-=======
-        <div style="font-size:16px; font-family: 'TmoneyRoundWindRegular';">지방</div>
-        <div style="margin: 0.5vh"><span style="font-size:16px; font-weight: bold">{{ diet.fat }}g</span><span style="font-size:13px;"> / {{ recommend.fat }}</span></div>
->>>>>>> .merge_file_a12180
       </el-col>
       <el-col :span="11">
         <el-progress :stroke-width="24" :percentage="parseInt(((diet.fat / recommend.fat) * 100).toFixed(2))" :color="colors"></el-progress>
