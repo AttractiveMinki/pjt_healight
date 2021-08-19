@@ -3,22 +3,22 @@
     <Navbar />
     <el-row style="margin: 2vh">
       <el-col :span="24">
-        <h1>식단 기록하기</h1>
-        <div v-if="recommend.calory - diet.calory > 0" style="font-size:18px">하루 권장 섭취량 {{ recommend.calory - diet.calory }}kcal 남았습니다.</div>
+        <h1 style="font-family: 'TmoneyRoundWindRegular';">식단 기록하기</h1>
+        <div v-if="recommend.calory - diet.calory > 0" style="font-size:18px; font-family: 'TmoneyRoundWindRegular'">하루 권장 섭취량 {{ recommend.calory - diet.calory }}kcal 남았습니다.</div>
         <div v-else>하루 권장 섭취량에서 {{ diet.calory - recommend.calory }}kcal 초과하였습니다.</div>
       </el-col>
     </el-row>
     <el-row style="display: flex; justify-content: center">
       <el-col :span="20">
         <div v-for="(food, idx) in food_list" :key="idx" style="margin: 4vw">
-          <div class="food-box">
+          <div class="food-box" style=" font-family:'TmoneyRoundWindRegular'">
             {{ food }}
           </div>
         </div>
       </el-col>
     </el-row>
     <router-link :to="{ name: 'DietRecordCreate' }" class="text-decoration-none">
-      <div id="submit" style="background-color: #ADEC6E; color: black; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">식단 추가하기</div>
+      <div id="submit" style="background-color: #ADEC6E; color: black; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center; font-family: 'TmoneyRoundWindRegular'">식단 추가하기</div>
     </router-link>
 
 

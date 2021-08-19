@@ -1,12 +1,13 @@
 <template>
   <div >
     <Navbar />
-    <h1>먹은 음식 등록</h1>
-    <h2>검색해서 입력하기</h2>
+    <h1 style="font-family: 'TmoneyRoundWindRegular';">먹은 음식 등록</h1>
+    <h2 style="font-family: 'TmoneyRoundWindRegular'">검색해서 입력하기</h2>
 
     <!-- <input type="text" class='get-input bg-gray' id="foodName" v-model="data.foodName" > -->
     <input type="text" id="foodNameSearch" v-model="foodNameSearch" style="margin-right: 2vw" @keyup.enter="getFoodInfo()">
-    <el-button @click="getFoodInfo()">음식 검색</el-button>
+    <el-button style="font-family:'TmoneyRoundWindRegular';" @click="getFoodInfo()">음식 검색</el-button>
+
     <div v-if="foodList">
       <div v-for="food, idx in foodList" :key="idx">
         <button class="select-food-button" @click="selectNutrient(food)">
@@ -16,7 +17,7 @@
       </div>
     </div>
     <hr>
-    <h2>영양정보 사진으로 입력하기</h2>
+    <h2 style = "font-family: 'TmoneyRoundWindRegular'">영양정보 사진으로 입력하기</h2>
     <div style="font-size: 13px">제품 뒷편에 있는</div>
     <div style="font-size: 13px">영양정보 사진을 첨부해보세요!</div>
     <br>
@@ -32,10 +33,10 @@
       </label>
     </div>
     <div>
-      <button class="bg-green get-input join-button-setting" @click="submit()">하단 자동입력</button>
+      <button class="bg-green get-input join-button-setting" style="font-family: 'TmoneyRoundWindRegular';" @click="submit()">하단 자동입력</button>
     </div>
 
-    <h2>직접 입력하기</h2>
+    <h2 style="font-family: 'TmoneyRoundWindRegular'">직접 입력하기</h2>
     <el-row>
       <el-col :span="24"><div class="introduce-text-align-start">음식 이름</div>
         <input type="text" class='get-input bg-gray' id="foods-name" v-model="foods.foodName" maxlength="20" placeholder="음식 이름을 입력하세요.">
@@ -61,7 +62,7 @@
     <button @click="plus" class="select-food-number">+1개</button>
     <button @click="twice" class="select-food-number">2배</button>
     <br>
-    <button id="addFoods" class="bg-green get-input join-button-setting" @click="addFoods(foods)">추가하기</button>
+    <button id="addFoods" style="font-family: 'TmoneyRoundWindRegular'" slot="" class="bg-green get-input join-button-setting" @click="addFoods(foods)">추가하기</button>
     </el-row>
   </div>
 </template>

@@ -4,12 +4,12 @@
     <el-row>
       <el-col :span="12">
         <router-link :to="{ name: 'ProfilePhysInfo' }" class="text-decoration-none">
-          <span v-if="register == false" style="color: red; font-size: 13px">프로필 등록 후 사용하세요</span>
+          <span v-if="register == false" style="color: red; font-size: 13px">신체 정보 등록 후 이용하세요</span>
         </router-link>
         
-        <h2>하루 영양 정보</h2>
+        <h2 style="font-family: 'TmoneyRoundWindRegular';">하루 영양 정보</h2>
         <div style="font-size:18px"> <span style="font-weight: bold">{{ diet.calory }}kcal </span> / {{ recommend.calory }}</div>
-        <div v-if="diet.calory - recommend.calory < 0" style="font-size:18px; color: #289B2D">{{ (100 - (diet.calory / recommend.calory) * 100).toFixed(2)}}% 남음</div>
+        <div v-if="diet.calory - recommend.calory < 0" style="font-size:18px; color: #289B2D; font-family: 'TmoneyRoundWindRegular';">{{ (100 - (diet.calory / recommend.calory) * 100).toFixed(2)}}% 남음</div>
         <div v-else style="font-size:18px; color: #F57053">{{ ((diet.calory / recommend.calory) * 100).toFixed(2)}}% 초과</div>
         <br>
         <div>
@@ -26,8 +26,8 @@
 
     <el-row style="margin:1vh">
       <el-col :span="11">
-        <div style="font-size:18px;">탄수화물</div>
-        <div style="margin: 0.5vh"><span style="font-size:18px; font-weight: bold">{{ diet.carbohydrate }}g</span><span style="font-size:13px;"> / {{ recommend.carbohydrate }}</span></div>
+        <div style="font-size:16px; font-family: 'TmoneyRoundWindRegular';">탄수화물</div>
+        <div style="margin: 0.5vh"><span style="font-size:16px; font-weight: bold">{{ diet.carbohydrate }}g</span><span style="font-size:13px;"> / {{ recommend.carbohydrate }}</span></div>
       </el-col>
       <el-col :span="11">
         <el-progress :stroke-width="24" :percentage="parseInt(((diet.carbohydrate / recommend.carbohydrate) * 100).toFixed(2))" :color="colors" style="margin: 0.5vh"></el-progress>
@@ -36,8 +36,8 @@
 
     <el-row style="margin:1vh">
       <el-col :span="11">
-        <div style="font-size:18px;">단백질</div>
-        <div style="margin: 0.5vh"><span style="font-size:18px; font-weight: bold">{{ diet.protein }}g</span><span style="font-size:13px;"> / {{ recommend.protein }}</span></div>
+        <div style="font-size:16px; font-family: 'TmoneyRoundWindRegular';">단백질</div>
+        <div style="margin: 0.5vh"><span style="font-size:16px; font-weight: bold">{{ diet.protein }}g</span><span style="font-size:13px;"> / {{ recommend.protein }}</span></div>
       </el-col>
       <el-col :span="11">
         <el-progress :stroke-width="24" :percentage="parseInt(((diet.protein / recommend.protein) * 100).toFixed(2))" :color="colors"></el-progress>
@@ -46,8 +46,8 @@
 
     <el-row style="margin:1vh">
       <el-col :span="11">
-        <div style="font-size:18px;">지방</div>
-        <div style="margin: 0.5vh"><span style="font-size:18px; font-weight: bold">{{ diet.fat }}g</span><span style="font-size:13px;"> / {{ recommend.fat }}</span></div>
+        <div style="font-size:16px; font-family: 'TmoneyRoundWindRegular';">지방</div>
+        <div style="margin: 0.5vh"><span style="font-size:16px; font-weight: bold">{{ diet.fat }}g</span><span style="font-size:13px;"> / {{ recommend.fat }}</span></div>
       </el-col>
       <el-col :span="11">
         <el-progress :stroke-width="24" :percentage="parseInt(((diet.fat / recommend.fat) * 100).toFixed(2))" :color="colors"></el-progress>
@@ -56,15 +56,15 @@
 
     <el-row style="margin:1vh">
       <el-col :span="11">
-        <div style="font-size:18px;">나트륨</div>
-        <div style="margin: 0.5vh"><span style="font-size:18px; font-weight: bold">{{ diet.sodium }}mg</span><span style="font-size:13px;"> / {{ recommend.sodium }}</span></div>
+        <div style="font-size:16px; font-family: 'TmoneyRoundWindRegular';">나트륨</div>
+        <div style="margin: 0.5vh"><span style="font-size:16px; font-weight: bold">{{ diet.sodium }}mg</span><span style="font-size:13px;"> / {{ recommend.sodium }}</span></div>
       </el-col>
       <el-col :span="11">
         <el-progress :stroke-width="24" :percentage="parseInt(((diet.sodium / recommend.sodium) * 100).toFixed(2))" :color="colors"></el-progress>
       </el-col>
     </el-row>
     <router-link :to="{ name: 'DietRecordDetail' }" class="text-decoration-none cursor-pointer">
-      <div id="submit" style="background-color: #ADEC6E; color: black; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">식단 기록보기</div>
+      <div id="submit" style="background-color: #ADEC6E; color: black; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center; font-size: 13px;">식단 기록보기</div>
     </router-link>
   </div>
 </template>
@@ -192,8 +192,17 @@ export default {
     background: #F2F2F2;
   }
   #submit {
-    position: fixed;
-    bottom: 0rem;
+  position: fixed;
+  bottom: 0px;
+  background-color: #ADEC6E;
+  color: black;
+  width: 100%;
+  height: 48px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: TmoneyRoundWindRegular; 
   }
   .text-decoration-none {
     text-decoration: none;
