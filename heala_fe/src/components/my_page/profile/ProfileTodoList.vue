@@ -93,8 +93,6 @@ export default {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getDietRecord}${this.$store.state.userId}`)
         .then((res) => {
           this.food_length = res.data.length
-          console.log('식단기록받기 완려')
-          console.log(this.food_length)
       })
         .catch((err) => {
           this.$alert("에러가 발생했습니다.");
