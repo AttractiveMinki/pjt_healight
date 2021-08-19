@@ -20,7 +20,7 @@ export default {
       }
     },
   },
-  mounted: function () {
+  created: function () {
     this.$store.commit("GET_USERID")
     this.sendMain()
   },
