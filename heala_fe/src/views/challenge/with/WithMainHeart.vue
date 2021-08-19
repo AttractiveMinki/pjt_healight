@@ -67,6 +67,7 @@ export default {
     return {
       withChallenges: [],
       limit: 0,
+      imageServer: SERVER.IMAGE_URL,
     };
   },
   components: {
