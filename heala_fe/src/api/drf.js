@@ -32,6 +32,7 @@ export default {
     postSearchCategory: "/community/category/search",
     profile: "/user/profile/",
     badge: "/badge",
+    certify: "/challenge/my/certify",
 
     // 원석 #@
 
