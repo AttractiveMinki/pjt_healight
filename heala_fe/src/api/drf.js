@@ -33,6 +33,7 @@ export default {
     profile: "/user/profile/",
     badge: "/badge",
     certify: "/challenge/my/certify",
+    postHashtag: "/feed/post/hashtag/",
 
     // 원석 #@
 

@@ -11,7 +11,7 @@
           <font-awesome-icon icon="user-friends"/>
         </el-col>
       </router-link>
-      <router-link :to="{ name: 'writing' }" class="text-decoration-none color-black" @click.native="changeRouter(2)" :class="{selected: selectedRouter == 2}">
+      <router-link :to="{ name: 'Writing' }" class="text-decoration-none color-black" @click.native="changeRouter(2)" :class="{selected: selectedRouter == 2}">
         <el-col :span="4">
           <font-awesome-icon :icon="['far', 'plus-square']" />
         </el-col>

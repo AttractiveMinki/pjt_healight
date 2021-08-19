@@ -9,7 +9,7 @@ export default [
   },
   {
     path: "/writing",
-    name: "writing",
+    name: "Writing",
     component: Writing,
   },
 ]

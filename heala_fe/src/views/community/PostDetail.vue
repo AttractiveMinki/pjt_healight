@@ -22,10 +22,12 @@
       </div>
       <el-row>
         <div class="post-user">
-          <user-image :image="postUser.image"></user-image>
+          <user-image v-if="!post.anonymous" :image="postUser.image"></user-image>
+          <user-image v-else></user-image>
         </div>
         <div class="post-content">
-          <span class="post-user-name">{{ postUser.name }}</span>
+          <span v-if="!post.anonymous" class="post-user-name">{{ postUser.name }}</span>
+          <span v-else class="post-user-name">익명</span>
           {{ post.content }}
         </div>
       </el-row>
@@ -44,7 +46,7 @@
     </el-row>
     <div v-if="showMenu" class="menu-background" @click="showMenu = false"></div>
     <div v-if="showMenu" class="menu-list">
-      <div class="menu">수정하기</div>
+      <div class="menu" @click="goToPostEdit">수정하기</div>
       <div class="menu" @click="showDeleteModal = true">삭제하기</div>
     </div>
     <modal v-if="showDeleteModal" @yes="deletePost()" @no="showDeleteModal = false">
@@ -133,20 +135,20 @@ export default {
     userCheck() {
       return this.post.userId == this.userId;
     },
-    deletePost() {
+    async deletePost() {
       this.showDeleteModal = false;
       this.showMenu = false;
-      axios
-        .delete(SERVER.URL + SERVER.ROUTES.feedPost
+      try {
+        await axios.delete(SERVER.URL + SERVER.ROUTES.feedPost
         + `?userId=${this.userId}&postId=${this.post.id}`)
-        .then(() => {
-
-        })
-        .catch((exp) => {
-            console.log(`게시글 삭제에 실패했습니다: ${exp}`)
-        });
+      } catch (error) {
+        console.log(`게시글 삭제에 실패했습니다: ${error}`)
+      }
       this.$router.go(-1);
     },
+    goToPostEdit() {
+      this.$router.push({ name: "PostEdit", params: { postId: this.post.id }});
+    }
   },
   components: { InputMessage, KiwiHeader, Star, UserImage, Comment, Modal, },
 }
@@ -162,7 +164,7 @@ export default {
   font-size: 14px;
   font-weight: bold;
   margin: 10px 0px 10px 5px;
-  width: calc(100% - 60px);
+  width: calc(100% - 70px);
   text-align: left;
   display: inline-block;
 }
@@ -220,6 +222,8 @@ export default {
   width: calc(100% - 40px);
   margin: 0px 0px 0px 5px;
   display: inline-block;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 .comment-container {
   font-size: 13px;
