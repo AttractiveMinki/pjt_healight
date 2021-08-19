@@ -420,7 +420,6 @@ export default new Vuex.Store({
       // event.preventDefault()
       axios.post(SERVER.URL + SERVER.ROUTES.login, data)
         .then((res) => {
-          console.log(res)
           commit('SET_TOKEN', res.data.tokenDto.accessToken)
           commit('GET_USERID')
           commit("SET_USERIDENTITY", data)

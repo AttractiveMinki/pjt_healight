@@ -8,7 +8,7 @@
         {{ createdAt.substring(0, 10) }}
       </div>
       <div class="post-image-wrapper">
-        <img :src="imageURL" alt="" class="post-image">
+        <img :src="imageServer + image" alt="" class="post-image">
       </div>
       <div class="icon-wrapper">
         <star :like="postLike" @cancelStar="cancelStar" @star="star"></star>
@@ -17,11 +17,11 @@
         <font-awesome-icon :icon="['far', 'bookmark']" v-else @click="scrap" class="icon icon-bookmark" />
       </div>
       <div>
-        <div class="post-user">
+        <div class="post-user" @click="goToFeed(userId)">
           <user-image :image="userImage"></user-image>
         </div>
         <div @click="elipsis ^= 1" :class="{ 'post-content': !elipsis, 'post-content-elipsis': elipsis }">
-          <span class="post-user-name">{{ userName }}</span>
+          <span class="post-user-name" @click.stop="goToFeed(userId)">{{ userName }}</span>
           {{ content }}
         </div>
         <div class="comment-open" @click="goToCommentMore">댓글 {{ commentCount }}개 더보기</div>
@@ -42,7 +42,7 @@ export default {
   props: [ "id", "title", "createdAt", "image", "likes", "anonymous", "category", "subCategory", "access", "content", "userId"],
   data() {
     return {
-      imageURL: SERVER.IMAGE_URL + this.image,
+      imageServer: SERVER.IMAGE_URL,
       currentUserId: 1,
       userImage: "",
       userName: "",
@@ -130,6 +130,9 @@ export default {
     },
     goToCommentMore() {
       this.$router.push({ name: "CommentMore", params: { id: this.id } });
+    },
+    goToFeed(userId) {
+      this.$router.push({ name: "Profile", params: { id: userId}});
     },
   },
   components: {
