@@ -3,10 +3,10 @@
     <!-- 별명 로그인한 사용자 ->계정 주인으로 바꾸기, props 사용해야 할 듯 -->
     <Navbar />
     <el-row style="align-items:center">
-      <el-col :span="6" style="padding: 3vw">
+      <el-col :span="6" style="padding: 4vw">
         <user-image v-if="user.image" :image="user.image" :width=62 :height=62></user-image>
       </el-col>
-      <el-col :span="18" style="text-align: -webkit-right; padding: 3vw">
+      <el-col :span="18" style="text-align: -webkit-right; padding: 3vw ">
         <!-- 사용자와 프로필 주인이 같다면 -->
         <span v-if="userId == myId" id="square" style="margin-top: 10px"><router-link :to="{ name: 'ProfileEdit' }" class="text-decoration-none challenge-make">프로필 편집</router-link></span>
 
@@ -18,11 +18,11 @@
     </el-row>
     <el-row style="text-align: start; padding: 2vw">
       <el-col :span="12">
-        <span style="font-size: 14px; font-weight: bold; padding: 1px"> {{ user.name }}</span>
+        <span style="font-size: 14px; font-weight: bold; padding: 2vw"> {{ user.name }}</span>
         <span style="font-size: 11px"> Lv. {{ user.level }}</span>
       </el-col>
     </el-row>
-    <el-row style="text-align: start; padding: 2vw">
+    <el-row style="text-align: start; padding: 0 4vw 2vw 4vw">
       <el-col>
         <span style="font-size: 13px"> {{ user.introduction }}<!-- 나는야 스파르타꾹스. 유튜브 많이 보러 와주세요--></span>
       </el-col>
@@ -229,7 +229,7 @@ export default {
 .follow-info {
   display: inline-block;
   font-weight: bold;
-  margin: auto 5px;
+  margin: auto 3vw;
 }
 .follow-list-container {
   position: relative;
