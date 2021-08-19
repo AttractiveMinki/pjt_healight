@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar />
+    <Navbar :userIdentity="myIdentity" />
     <div class="scrap-list-title">저장한 게시글</div>
     <post-list :isScrapList=true></post-list>
   </div>
@@ -14,6 +14,7 @@ export default {
   name: "Scrap",
   data() {
     return {
+      myIdentity: localStorage.getItem("userIdentity"),
     }
   },
   methods: {

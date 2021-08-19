@@ -1,7 +1,7 @@
 <template>
   <div class="profile-container">
     <!-- 별명 로그인한 사용자 ->계정 주인으로 바꾸기, props 사용해야 할 듯 -->
-    <Navbar />
+    <Navbar :userIdentity="user.identity" />
     <el-row style="align-items:center">
       <el-col :span="6" style="padding: 4vw">
         <user-image v-if="user.image" :image="user.image" :width=62 :height=62></user-image>
