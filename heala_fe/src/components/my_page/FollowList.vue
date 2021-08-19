@@ -57,7 +57,7 @@ export default {
     async getInitialFollowList() {
       try{
         const response = await axios.get(SERVER.URL + SERVER.ROUTES.feed + this.$route.params.id + SERVER.ROUTES.followList
-        + `?myId=${this.userId}&type=${this.followListType}&page=${this.page}`);
+        + `?myId=${this.userId}&follow=${this.followListType}&page=${this.page}`);
         this.followList = response.data;
       } catch(exp) {
         console.log(exp);
@@ -66,7 +66,7 @@ export default {
     async getFollowList() {
       try{
         const response = await axios.get(SERVER.URL + SERVER.ROUTES.feed + this.$route.params.id + SERVER.ROUTES.followList
-        + `?myId=${this.userId}&type=${this.followListType}&page=${this.page}`);
+        + `?myId=${this.userId}&follow=${this.followListType}&page=${this.page}`);
         return response.data;
       } catch(exp) {
         console.log(exp);

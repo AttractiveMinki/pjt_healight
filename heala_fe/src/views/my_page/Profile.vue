@@ -51,9 +51,9 @@
       </div>
       <div v-else class="badge-notice">
         <span class="no-badge-text">아직 대표 뱃지가 설정되지 않았어요!</span>
-        <span class="padding-left-3vw">
+        <!-- <span class="padding-left-3vw">
           <router-link :to="{ name: 'ProfileEdit' }" class="text-decoration-none challenge-make">+배지 설정하러 가기</router-link>
-        </span>
+        </span> -->
         
       </div>
     </div>
@@ -266,7 +266,8 @@ export default {
     width: 100%;
     height: 50px;
     text-align: left;
-    margin: 0px 5px;
+    padding: 0px 5px;
+    box-sizing: border-box;
   }
   .badge-image-wrapper {
     width: 30px;

@@ -4,8 +4,8 @@
       <img class="logo-image" src="@/assets/image/kiwi_logo.png" />
       <div class="icon-wrapper">
         <font-awesome-icon :icon="['fas', 'search']" class="icon" @click="userSearch" />
-        <font-awesome-icon :icon="['far', 'envelope']" class="icon" />
-        <font-awesome-icon :icon="['far', 'bell']" class="icon" />
+        <!-- <font-awesome-icon :icon="['far', 'envelope']" class="icon" />
+        <font-awesome-icon :icon="['far', 'bell']" class="icon" /> -->
       </div>
     </div>
     <div class="header-height"></div>
