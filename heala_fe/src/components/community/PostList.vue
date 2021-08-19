@@ -67,13 +67,13 @@ export default {
     },
     selectedSubCategory() {
       this.initPage();
+      this.$emit("changeSubCategory");
       if(this.category == 3) {
         this.getInitialCommunityInfo();
       }
       else {
         this.getInitialPostListByCategory();
       }
-      this.$emit("changeSubCategory");
     },
     keyword() {
       this.initPage();
@@ -125,6 +125,7 @@ export default {
       try {
         const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}category?category=${this.category}&page=${this.limit}&subCategory=${this.$store.state.selectedSubCategory}`)
         this.communityArticles = response.data
+        console.log(response.data);
       } catch(err) {
         console.log(err)
       }
