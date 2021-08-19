@@ -28,7 +28,7 @@ public class CommunityServiceImpl implements CommunityService {
 	final private ScrapRepository scrapRepository;
 
 	// Best 글에 들어갈 좋아요 기준 설정
-	private final int CRITERION = 100;
+	private final int CRITERION = 50;
 	private final int publicAccess = 0;
 
 	
