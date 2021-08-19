@@ -62,11 +62,7 @@
     <button @click="plus" class="select-food-number">+1개</button>
     <button @click="twice" class="select-food-number">2배</button>
     <br>
-<<<<<<< .merge_file_a14548
-    <button id="addFoods" class="bg-green get-input join-button-setting" @click="checkFoods(foods)">추가하기</button>
-=======
     <button id="addFoods" style="font-family: 'TmoneyRoundWindRegular'" slot="" class="bg-green get-input join-button-setting" @click="addFoods(foods)">추가하기</button>
->>>>>>> .merge_file_a16612
     </el-row>
   </div>
 </template>
