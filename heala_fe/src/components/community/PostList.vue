@@ -44,7 +44,7 @@ export default {
       this.getInitialScrapList();
     }
     else {
-      this.$store.state.selectedSubCategory = 3;
+      this.$store.state.selectedSubCategory = 0;
       this.getInitialCommunityInfo();
     }
 	},
@@ -57,7 +57,7 @@ export default {
     category() {
       this.initPage();
       if(this.category == 3) {
-        this.$store.state.selectedSubCategory = 3;
+        this.$store.state.selectedSubCategory = 0;
         this.getInitialCommunityInfo();
       }
       else {
@@ -81,7 +81,7 @@ export default {
         this.searchPostByCategory = false;
         this.searchAllPost = false;
         if(this.category == 3) {
-          this.$store.state.selectedSubCategory = 3;
+          this.$store.state.selectedSubCategory = 0;
           this.getInitialCommunityInfo();
         }
         else {
