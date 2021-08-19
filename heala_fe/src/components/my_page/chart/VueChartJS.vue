@@ -45,7 +45,7 @@
         currentDay: new Date().getDate(),
         calcDates: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
         hotcalcDates: [[], [], [], [], [], []],
-        toggleMessage: "월간 기록 보기",
+        toggleMessage: "월간 기록 보러 가기",
       }
     },
     created () {
@@ -258,12 +258,12 @@
         if (this.type == "week") {
           this.type = "month"
           this.getWeightInformationMonth()
-          this.toggleMessage="주간 기록 보기"
+          this.toggleMessage="주간 기록 보러 가기"
         }
         else {
           this.type = "week"
           this.getWeightInformation()
-          this.toggleMessage="월간 기록 보기"
+          this.toggleMessage="월간 기록 보러 가기"
         }
       },
     }

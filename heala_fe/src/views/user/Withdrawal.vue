@@ -2,7 +2,7 @@
   <div>
     <Navbar />
     <div>
-      <img class="logo-image" src="@/assets/image/kiwi_logo.png" />
+      <img class="logo-image" src="@/assets/image/kiwi_logo.png" style="width: 50%" />
     </div>
     <h1>회원 탈퇴</h1>
     <el-row>
