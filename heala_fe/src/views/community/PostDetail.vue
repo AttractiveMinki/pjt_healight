@@ -33,9 +33,9 @@
       </el-row>
       <div class="comment-container">
         <comment
-          v-for="comment in comments"
+          v-for="(comment, idx) in comments"
           v-bind="comment"
-          v-bind:key="comment.id"
+          v-bind:key="idx"
           @reply="reply"
         ></comment>
       </div>
@@ -73,6 +73,7 @@ export default {
     return {
       // scrapUI: this.$store.state.postScrap,
       userId: 1,
+      postId: 0,
       imageServer: SERVER.IMAGE_URL,
       replyCommentId: Number,
       placeholderMsg: "댓글을 입력해주세요",
@@ -98,9 +99,10 @@ export default {
     },
   },
   created() {
-    this.$store.commit("GET_USERID")
-    this.userId = this.$store.state.userId
+    this.$store.commit("GET_USERID");
+    this.userId = this.$store.state.userId;
     let postId = this.$route.params.id;
+    this.postId = this.$route.params.id;
     this.$store.dispatch("setPostDetail", { postId });
     this.$store.dispatch("setPostComments", { postId });
     this.$store.dispatch("setPostScrap", { postId });
@@ -108,18 +110,18 @@ export default {
   },
   methods: {
     cancelStar() {
-      this.$store.dispatch("cancelLikePost", { postId: this.post.id });
+      this.$store.dispatch("cancelLikePost", { postId: this.postId });
     },
     star() {
-      this.$store.dispatch("likePost", { postId: this.post.id });
+      this.$store.dispatch("likePost", { postId: this.postId });
     },
     cancelScrap() {
       this.scrapUI = 0;
-      this.$store.dispatch("cancelScrapPost", { postId: this.post.id });
+      this.$store.dispatch("cancelScrapPost", { postId: this.postId });
     },
     scrap() {
       this.scrapUI = 1;
-      this.$store.dispatch("scrapPost", { postId: this.post.id });
+      this.$store.dispatch("scrapPost", { postId: this.postId });
     },
     reply(id) {
       this.replyCommentId = id;
@@ -130,7 +132,7 @@ export default {
       this.placeholderMsg = "댓글을 입력해주세요";
     },
     createComment(message) {
-      this.$store.dispatch("createComment", { message, postId: this.post.id, commentId: this.replyCommentId });
+      this.$store.dispatch("createComment", { message, postId: this.postId, commentId: this.replyCommentId });
     },
     userCheck() {
       return this.post.userId == this.userId;
@@ -140,14 +142,14 @@ export default {
       this.showMenu = false;
       try {
         await axios.delete(SERVER.URL + SERVER.ROUTES.feedPost
-        + `?userId=${this.userId}&postId=${this.post.id}`)
+        + `?userId=${this.userId}&postId=${this.postId}`)
       } catch (error) {
         console.log(`게시글 삭제에 실패했습니다: ${error}`)
       }
       this.$router.go(-1);
     },
     goToPostEdit() {
-      this.$router.push({ name: "PostEdit", params: { postId: this.post.id }});
+      this.$router.push({ name: "PostEdit", params: { postId: this.postId }});
     }
   },
   components: { InputMessage, KiwiHeader, Star, UserImage, Comment, Modal, },
