@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="head-text">Challenge</div>
+    <div class="head-text" style="font-family:SDSamliphopangche_Outline">Challenge</div>
     <el-row>
       <el-col :span="24" class="justify-content-space-between">
         <span class="challenge-text">다양한 챌린지에 <br>도전해보세요!</span>
@@ -45,9 +45,10 @@ export default {
   .head-text {
     text-align: start;
     font-size: 50px;
-    font-weight: bold;
+    /* font-weight: bold; */
     margin-left: 5%;
     margin-bottom: 2vh;
+    margin-top: 20px;
   }
   .challenge-text {
     width: 40%;
