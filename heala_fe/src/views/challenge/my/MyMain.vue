@@ -80,7 +80,7 @@ export default {
       dialogVisible: {"first":false, "second":false, "third":false, "fourth":false, "fifth":false},
       imgUrl: {"first":"", "second":"", "third":"", "fourth":"", "fifth":""},
       values: "",
-      userId: 1,
+      userId: "",
     }
   },
   components: {
@@ -88,9 +88,9 @@ export default {
     ChallengeContainerMy,
     Footer,
   },
-  created() {
-    this.userId = localStorage.getItem("userId");
-    this.getMyChallenge();
+  created: function () {
+    this.$store.commit("GET_USERID")
+    this.getMyChallenge()
   },
   methods: {
     goToCertifyImage(withChallengeId) {
@@ -163,9 +163,8 @@ export default {
       dom.style.fontWeight = "bold";
       dom.style.color = "#ADEC6E";
     },
-    getMyChallenge() {
-      console.log(`${SERVER.URL}${SERVER.ROUTES.getMyChallenge}${this.userId}`);
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getMyChallenge}${this.userId}`)
+    getMyChallenge: function () {
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getMyChallenge}${this.$store.state.userId}`)
         .then((res) => {
           this.values = res.data
         })
@@ -179,6 +178,7 @@ export default {
       "with_challenges",
     ])
   },
+
 }
 </script>
 
@@ -188,7 +188,7 @@ export default {
     /* margin-left: 2.5%; */
     border-radius: 5px;
     width: 100%;
-    height: calc(80vh - 140px);
+    height: calc(98vh - 162px - 3rem);
     border: 3px solid #ADEC6E;
     overflow : scroll;
   }

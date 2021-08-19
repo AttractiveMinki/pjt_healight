@@ -47,7 +47,7 @@ public interface UserRepository extends JpaRepository<Member,Integer>{
 	Boolean getGenderByMemberId(int userId);
 	
 	// 해당 단어가 identity 또는 name에 포함된 회원 조회
-	@Query(value = "SELECT new com.ssafy.kiwi.model.dto.UserFollowOp(u.id, u.identity, u.name, u.image) FROM Member u WHERE u.identity LIKE %:word% OR u.name LIKE %:word% AND u.id != :userId")
+	@Query(value = "SELECT new com.ssafy.kiwi.model.dto.UserFollowOp(u.id, u.identity, u.name, u.image) FROM Member u WHERE (u.identity LIKE %:word% OR u.name LIKE %:word%) AND u.id != :userId")
 	Page<UserFollowOp> getMemberListByWord(@Param("userId") int userId, @Param("word") String word, Pageable page);
 	
 }

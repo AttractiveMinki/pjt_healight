@@ -30,7 +30,8 @@ export default {
     this.userId = this.$route.path.split('/')[3]
 
     // 내 아이디 localStorage에서 가져오기
-    this.myId = localStorage.getItem('userId')
+    this.$store.commit("GET_USERID")
+    this.myId = this.$store.state.userId
 
     // 나만보기
     if (this.userId != this.myId) {

@@ -217,7 +217,7 @@ export default {
 
     getMonthWeiRecord: function () {
       let Month = ('0000' + this.currentYear).slice(-4) + '-' +  ('00' + this.currentMonth).slice(-2)
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getMonthWeiRecord}?month=${Month}&userId=${localStorage.getItem('userId')}`)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getMonthWeiRecord}?month=${Month}&userId=${this.$store.state.userId}`)
         .then((res) => {
           this.recordDates = res.data
         })
@@ -229,7 +229,7 @@ export default {
     async setTodayWeight() {
       try {
         let data= {
-          "userId": localStorage.getItem('userId'),
+          "userId": this.$store.state.userId,
           "weight": this.weight,
         }
         await axios.post(`${SERVER.URL}${SERVER.ROUTES.getMonthWeiRecord}`, data)
@@ -242,7 +242,8 @@ export default {
   mounted(){
     this.init();
     this.getMonthWeiRecord()
-    this.userId = localStorage.getItem('userId')
+    this.$store.commit("GET_USERID")
+    this.userId = this.$store.state.userId
   },
   watch: {
     currentYear: function() {

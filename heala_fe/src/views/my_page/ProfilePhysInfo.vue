@@ -93,7 +93,8 @@ export default {
     },
   },
   created() {
-    this.data.userId = localStorage.getItem('userId')
+    this.$store.commit("GET_USERID")
+    this.data.userId = this.$store.state.userId
   },
   // mounted() {
   //   // 프로필 기존 정보 불러오기 -> 함수를 선언하고 따로 뺀 뒤, mounted에는 함수 이름만 호출하면 될 듯.
