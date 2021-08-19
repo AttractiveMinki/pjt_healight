@@ -8,9 +8,11 @@ import "element-ui/lib/theme-chalk/index.css";
 import "./plugins/element.js";
 import "@/fontAwesomeIcon.js";
 import '@/assets/css/main.css'
+import VueSimpleAlert from "vue-simple-alert";
 
 Vue.config.productionTip = false;
 Vue.use(Element);
+Vue.use(VueSimpleAlert);
 
 new Vue({
   router,

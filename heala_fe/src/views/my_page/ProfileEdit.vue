@@ -47,7 +47,7 @@
           <span v-for="(value, idx) in data.badges" :key="idx" class="select-block-setting">
             <span :class="{selected: value.selected == true}" class="post-image" @click="selectBadge(value)">
               <!-- {{ value.badge.image }} -->
-              <img :src="imageServer + value.badge.image" alt="" class="post-image">
+              <img :src="imageServer + value.badge.image" alt="badge_image" :title=value.badge.name class="post-image">
               <!-- <img :src="imageServer + value.badge.image" alt="" class="post-image"> -->
             </span>
           </span>
@@ -139,33 +139,6 @@ export default {
             alert('이미지 업로드 과정에서 에러가 발생했습니다.')
           })
       },
-    // login: function (data) {
-    //   // event.preventDefault()
-    //   let data = {
-    //     identity: this.data.user.identity,
-    //     password: this.password
-    //   }
-    //   console.log(data)
-    //   axios.post(SERVER.URL + SERVER.ROUTES.login, data)
-    //     .then((res) => {
-    //       console.log(res)
-    //       commit('SET_TOKEN', res.data.tokenDto.accessToken)
-    //       commit('GET_USERID')
-    //       commit("SET_USERIDENTITY", data)
-    //       commit("SET_USERNAME", res)
-    //       commit("SET_USERIMAGE", res)
-          
-    //   })
-    //     .catch((err) => {
-    //       console.error(err.response.data)
-    //       if (this.originalIdentity == this.data.user.identity) {
-    //         alert('비밀번호가 일치하지 않습니다.')
-    //       } else {
-    //         alert
-    //       }
-          
-    //   })
-    // },
     submit(data) {
       axios.patch(`${SERVER.URL}${SERVER.ROUTES.profile}${this.data.user.id}`, data)
         .then(response => {
