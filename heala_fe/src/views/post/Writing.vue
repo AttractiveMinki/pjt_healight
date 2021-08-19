@@ -87,7 +87,6 @@
 <script>
 import SERVER from "@/api/drf.js"
 import axios from 'axios';
-import router from "@/router/index.js"
 
 export default {
   name: "Writing",
