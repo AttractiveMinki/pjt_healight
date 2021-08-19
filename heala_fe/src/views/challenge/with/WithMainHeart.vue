@@ -23,20 +23,17 @@
                 <router-link :to="{ name: 'WithDetail' , params: { id: value.withChallenge.id } }" class="text-decoration-none">
                   <el-col :span="18" class="margin-left-10">
                     <div class="text-align-start text-title">{{ value.withChallenge.title }}</div>
-                    <br>
                     <div class="text-align-start text-content">{{ value.withChallenge.introduction }}</div>
-                    <div class="text-overflow">
+                    <div class="text-align-start text-overflow">
                       <span v-for="(hashtag, idx2) in value.hashtags" :key="idx2">
-                        <span class="text-align-start text-hashtag">#{{ hashtag }}</span>
+                        <span class="text-align-start text-hashtag">#{{ hashtag }} </span>
                       </span>
                     </div>
-                    <el-col class="display-flex justify-content-space-between"><span class="community-title">{{ value.withChallenge.startDate }}</span> <span class="fix-width"><font-awesome-icon :icon="['far', 'star']" class="padding-right"/>{{ value.withChallenge.endDate }}</span></el-col>
                   </el-col>
                   <el-col :span="6">
-                    {{ value.withChallenge.image }}
                     <el-image class="margin-left-10"
                       style="width: 100%; height: 80px"
-                      :src="value.withChallenge.image" 
+                      :src="imageServer + value.withChallenge.image" 
                       >
                     </el-image>
                   </el-col>
@@ -178,7 +175,7 @@ export default {
   }
   .text-title {
     font-weight: bold; 
-    font-size: 25px;
+    font-size: 15px;
     margin-bottom: 5px;
     white-space : nowrap; /* 한 줄 제한*/
     overflow : hidden; /* 넘어가는 글자 숨기기 */
@@ -202,6 +199,7 @@ export default {
   }
   .text-hashtag {
     font-size: small;
+    color: #1A8EFA;
     width: 100%;
     margin-bottom: 3px;
     display: contents; 

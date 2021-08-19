@@ -53,7 +53,7 @@ export default {
   .challenge-text {
     width: 40%;
     font-weight: bold; 
-    font-size: 18px;
+    font-size: 17px;
     text-align: left;
   }
   .challenge-make {
