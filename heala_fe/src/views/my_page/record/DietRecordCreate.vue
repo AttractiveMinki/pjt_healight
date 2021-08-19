@@ -110,7 +110,6 @@ export default {
   },
   methods: {
     getFoodInfo() {
-      console.log('들어왔쥬')
       if (this.foodNameSearch != '')
       {
         axios.get(`${SERVER.URL}${SERVER.ROUTES.getFoodnutrient}?desc_kor=${this.foodNameSearch}`)
