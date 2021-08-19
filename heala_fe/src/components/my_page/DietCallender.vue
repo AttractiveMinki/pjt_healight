@@ -213,7 +213,7 @@ export default {
 
     getMonthDietRecord: function () {
       let Month = ('0000' + this.currentYear).slice(-4) + '-' +  ('00' + this.currentMonth).slice(-2)
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getMonthDietRecord}?userId=${localStorage.getItem('userId')}&month=${Month}`)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getMonthDietRecord}?userId=${this.$store.state.userId}&month=${Month}`)
         .then((res) => {
           this.recordDates = res.data
         })
@@ -225,8 +225,9 @@ export default {
   },
   mounted (){
     this.init()
+    this.$store.commit("GET_USERID")
     this.getMonthDietRecord()
-    this.userId = localStorage.getItem('userId')
+    this.userId = this.$store.state.userId
   },
   watch: {
     currentYear: function() {

@@ -56,7 +56,7 @@ export default {
       this.$router.go(-1)
     },
     getWithDetail: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?userId=${localStorage.getItem('userId')}&withChallengeId=${this.$route.params.id}`)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?userId=${this.$store.state.userId}&withChallengeId=${this.$route.params.id}`)
         .then((res) => {
           this.value = res.data
         })
@@ -65,7 +65,7 @@ export default {
         })
     },
     joinChallenge: function () {
-      axios.post(`${SERVER.URL}${SERVER.ROUTES.joinWithChallenge}?userId=${localStorage.getItem('userId')}&withChallengeId=${this.$route.params.id}`)
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.joinWithChallenge}?userId=${this.$store.state.userId}&withChallengeId=${this.$route.params.id}`)
         .then (() => {
         })
         .catch((err) => {
@@ -73,7 +73,8 @@ export default {
         })
     },
   },  
-  mounted: function () {
+  created: function () {
+    this.$store.commit("GET_USERID")
     this.getWithDetail()
   },
 }

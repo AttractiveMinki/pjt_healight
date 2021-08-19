@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="dataLoaded">
     <div class="display-flex justify-content-space-between align-items">
       <span><font-awesome-icon icon="arrow-left" class="padding-left cursor-pointer" @click="goBack()"/></span>
       <span class="text-decoration-title">챌린지 상세</span>
@@ -109,6 +109,7 @@ export default {
   data: function () {
     return {
       value: [],
+      dataLoaded: false,
     }
   },
   // props: {
@@ -121,16 +122,17 @@ export default {
       this.$router.go(-1)
     },
     getWithDetail: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?userId=${localStorage.getItem('userId')}&withChallengeId=${this.$route.params.id}`)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithDetail}?userId=${this.$store.state.userId}&withChallengeId=${this.$route.params.id}`)
         .then((res) => {
           this.value = res.data
+          this.dataLoaded = true
         })
         .catch((err) => {
           console.log(err)
         })
     },
     joinChallenge: function () {
-      axios.post(`${SERVER.URL}${SERVER.ROUTES.joinWithChallenge}?userId=${localStorage.getItem('userId')}&withChallengeId=${this.$route.params.id}`)
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.joinWithChallenge}?userId=${this.$store.state.userId}&withChallengeId=${this.$route.params.id}`)
         .then (() => {
           alert('챌린지에 참가하셨습니다.')
         })
@@ -139,7 +141,8 @@ export default {
         })
     },
   },  
-  mounted: function () {
+  created: function () {
+    this.$store.commit("GET_USERID")
     this.getWithDetail()
   },
 }

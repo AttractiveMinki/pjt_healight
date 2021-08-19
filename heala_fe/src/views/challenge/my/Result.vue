@@ -89,7 +89,8 @@ export default {
     },
     created() {
         // user setting
-        this.userId = localStorage.getItem("userId");
+        this.$store.commit("GET_USERID")
+        this.userId = this.$store.state.userId
         // 결과 정보 불러오기 + certifyImageLimit 세팅
         this.getResultData();
         // user exp 정보 불러오기 + level 계산

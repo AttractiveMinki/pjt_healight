@@ -5,6 +5,7 @@ import SERVER from "@/api/drf.js"
 import router from "@/router/index.js"
 import util from "@/util.js"
 import axios from "axios"
+import jwt_decode from "jwt-decode"
 
 Vue.use(Vuex);
 
@@ -65,7 +66,7 @@ export default new Vuex.Store({
 
     // 주엽 #@
     userIdentity: "",
-    userId: 1,
+    userId: "",
     userName: "",
     currentPageId: 0,
     currentPageCategory: 0,
@@ -75,107 +76,9 @@ export default new Vuex.Store({
     // check_email: true,
     // check_identity: true,
 
-    // recent_challenges: [],
-    recent_challenges: [
-      {title: '숨쉬기'},
-      {title: '1km 러닝'},
-      {title: '수영하기'},
-      {title: '숨쉬기'},
-      {title: '1km 러닝'},
-      {title: '수영하기'},
-      {title: '숨쉬기'},
-      {title: '1km 러닝'},
-      {title: '수영하기'},
-    ],
-    // feeds: [],
-    feeds: [
-      {
-        id: 1,
-        image:"cat.jpg",
-        title:"안뇽",
-        category:0,
-        sub_category:2,
-        access:"",
-        content:"오늘 근육 잘먹었쥬?오늘 근육 잘먹었쥬?오늘 근육 잘먹었쥬?오늘 근육 잘먹었쥬?오늘 근육 잘먹었쥬?오늘 근육 잘먹었쥬?오늘 근육 잘먹었쥬?오늘 근육 잘먹었쥬?오늘 근육 잘먹었쥬?",
-        likes:10,
-        anonymous:0,
-        created_at:"2021.07.27 22:45",
-        updated_at:"2021.07.27 22:45",
-        user_id: 12123,
-      },
-      {
-        id: 2,
-        image:"cat.jpg",
-        title:"헬로우",
-        category:2,
-        sub_category:1,
-        access:"",
-        content:"만나서 반가워열",
-        likes:3,
-        anonymous:0,
-        created_at:"2021.07.27 19:04",
-        updated_at:"2021.07.27 19:04",
-        user_id: 522,
-      },
-      {
-        id: 3,
-        image:"cat.jpg",
-        title:"일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십",
-        category:1,
-        sub_category:0,
-        access:"",
-        content:"오늘 정말 힘들고 지치는 하루였는데 우리 치즈 때문에 힘이 난다~!",
-        likes:6,
-        anonymous:0,
-        created_at:"2021.07.16 16:45",
-        updated_at:"2021.07.16 16:45",
-        user_id: 329,
-      },
-    ],
-    with_challenges: [
-      {
-        id : 1,
-        title : "Daily 1km 러닝",
-        category : 0,
-        start_date : "",
-        end_date : "",
-        image : "www.naver.com",
-        certify_info : "",
-        introduction : "러닝 어렵지 않아요! 운동화만 있으면 준비 끝",
-        user_id : "",
-        certify_day : "",
-        certify_week : "",
-      },
-      {
-        id : 2,
-        title : "Daily 1km 러닝",
-        category : 0,
-        start_date : "",
-        end_date : "",
-        image : "www.naver.com",
-        certify_info : "",
-        introduction : "러닝 어렵지 않아요! 운동화만 있으면 준비 끝",
-        user_id : "",
-        certify_day : "",
-        certify_week : "",
-      },
-      {
-        id : 3,
-        title : "Daily 1km 러닝",
-        category : 0,
-        start_date : "",
-        end_date : "",
-        image : "www.naver.com",
-        certify_info : "",
-        introduction : "러닝 어렵지 않아요! 운동화만 있으면 준비 끝",
-        user_id : "",
-        certify_day : "",
-        certify_week : "",
-      },
-    ]
     // jwt 사용시 적용
-    // authToken: localStorage.getItem("jwt"), // 로그인시 필요한 토큰
-    // decoded: "",
+    authToken: localStorage.getItem("jwt"), // 로그인시 필요한 토큰
+    decoded: "",
   },
   getters: {
     // 한길 #@
@@ -186,9 +89,16 @@ export default new Vuex.Store({
     // 원석 #@
 
     // 주엽 #@
-    isLoggedIn: function () {
+    isLoggedIn: function (state) {
       // authToken이 있으면 True, 없으면 False
-      return localStorage.getItem('userId') === "" ? true : false
+      return state.authToken ? true : false
+      // return localStorage.getItem('userId') === "" ? true : false
+    },
+    // header에 붙일 정보
+    config: function (state) {
+      return {
+        Authorization: `JWT ${state.authToken}`
+      }
     },
   },
   mutations: {
@@ -229,18 +139,30 @@ export default new Vuex.Store({
 
     // 주엽 #@
     // jwt 사용시 적용
-    // SET_TOKEN: function (state, token) {
-    //   // 1. JWT를 변경
-    //   state.authToken = token
-    //   // 2. Local storage의 값도 변경
-    //   state.decoded = localStorage.setItem("jwt", token)
-    // },
+    SET_TOKEN: function (state, token) {
+      // 1. JWT를 변경
+      state.authToken = token
+      // 2. Local storage의 값도 변경
+      state.decoded = localStorage.setItem("jwt", token)
+    },
+
+    // token 으로 userid 가져오기
+    GET_USERID: function (state) {
+      state.decoded = jwt_decode(state.authToken)
+      if (state.authToken) {
+        state.userId = state.decoded.sub
+      } else {
+        state.decoded = ""
+        state.userId = ""
+      }
+    },
+
     SET_FEEDS: function (state, feeds) {
       state.feeds = feeds
     },
-    SET_USERID: function (state, res) {
-      localStorage.setItem('userId', res.data.id); 
-    },
+    // SET_USERID: function (state, res) {
+    //   localStorage.setItem('userId', res.data.id); 
+    // },
     SET_USERIDENTITY: function (state, data) {
       state.userIdentity = data.identity
       localStorage.setItem('userIdentity', data.identity);
@@ -255,10 +177,10 @@ export default new Vuex.Store({
     SET_USERIMAGE: function (state, res) {
       localStorage.setItem('userImage', res.data.image);
     },
-    INIT_USERID: function (state) {
-      state.userId = ""
-      localStorage.removeItem('userId');
-    },
+    // INIT_USERID: function (state) {
+    //   state.userId = ""
+    //   localStorage.removeItem('userId');
+    // },
     INIT_USERIDENTITY: function (state) {
       state.userIdentity = ""
       localStorage.removeItem('userIdentity');
@@ -270,18 +192,14 @@ export default new Vuex.Store({
     INIT_USERIMAGE: function () {
       localStorage.removeItem('userImage');
     },
-    // SET_CHECKIDENTITY: function (state) {
-    //   state.check_identity = false
-    // },
-    // SET_CHECKEMAIL: function (state) {
-    //   state.check_email = false
-    // },
-    // INIT_CHECKIDENTITY: function (state) {
-    //   state.check_identity = true
-    // },
-    // INIT_CHECKEMAIL: function (state) {
-    //   state.check_email = true
-    // },
+    REMOVE_TOKEN: function (state) {
+      // 1. JWT 변경
+      localStorage.removeItem('jwt')
+      // 2. Local Storage에서 JWT 삭제
+      state.authToken = ""
+      state.decoded = ""
+    },
+
   },
   actions: {
     // 한길 #@
@@ -348,7 +266,7 @@ export default new Vuex.Store({
       axios
       .post(SERVER.URL + SERVER.ROUTES.commentLikes, {
         commentIdSet: commentIds,
-        userId: localStorage.getItem("userId"),
+        userId: this.state.userId,
       })
       .then((response) =>
         store.commit("setCommentLikes", { commentLikes: response.data })
@@ -381,7 +299,7 @@ export default new Vuex.Store({
       axios
         .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.like, {
           // userId: store.state.loginUser.id,
-          userId: localStorage.getItem("userId"),
+          userId: this.state.userId,
           postId: postId,
         })
         .then((response) => {
@@ -399,7 +317,7 @@ export default new Vuex.Store({
     cancelLikePost(store, { postId }){
       axios
         .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.like
-          + `?userId=${localStorage.getItem("userId")}&postId=${postId}`)
+          + `?userId=${this.state.userId}&postId=${postId}`)
         .then((response) => {
           store.commit("setPostLike", { like: response.data })
         })
@@ -415,7 +333,7 @@ export default new Vuex.Store({
     scrapPost(store, { postId }){
       axios
         .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.scrap, {
-          userId: localStorage.getItem("userId"),
+          userId: this.state.userId,
           postId,
         })
         .then((response) => {
@@ -433,7 +351,7 @@ export default new Vuex.Store({
     cancelScrapPost(store, { postId }){
       axios
         .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.scrap
-          + `?userId=${localStorage.getItem("userId")}&postId=${postId}`)
+          + `?userId=${this.state.userId}&postId=${postId}`)
         .then((response) => {
           store.commit("setPostScrap", { scrap: response.data })
         })
@@ -450,7 +368,7 @@ export default new Vuex.Store({
       axios
         .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment, {
           text: payload.message,
-          userId: localStorage.getItem("userId"),
+          userId: this.state.userId,
           postId: payload.postId,
           commentId: payload.commentId,
         })
@@ -474,7 +392,7 @@ export default new Vuex.Store({
     likeComment(store, payload) {
       axios
         .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment + SERVER.ROUTES.like, {
-          userId: localStorage.getItem("userId"),
+          userId: this.state.userId,
           commentId: payload.commentId,
         })
         .then(() => {
@@ -492,7 +410,7 @@ export default new Vuex.Store({
     cancelLikeComment(store, payload) {
       axios
         .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment + SERVER.ROUTES.like
-          + `?userId=${localStorage.getItem("userId")}&commentId=${payload.commentId}`)
+          + `?userId=${this.state.userId}&commentId=${payload.commentId}`)
         .then(() => {
           store.commit("setCommentLikeCancel", { commentId: payload.commentId, userId: store.state.loginUser.id })
         })
@@ -524,13 +442,11 @@ export default new Vuex.Store({
       axios.post(SERVER.URL + SERVER.ROUTES.login, data)
         .then((res) => {
           console.log(res)
-          commit("SET_USERID", res)
+          commit('SET_TOKEN', res.data.tokenDto.accessToken)
+          commit('GET_USERID')
           commit("SET_USERIDENTITY", data)
           commit("SET_USERNAME", res)
           commit("SET_USERIMAGE", res)
-
-          // commit("SET_TOKEN", res.data.token) // jwt 사용시 적용
-          // dispatch("verifyUser", data) // 관리자 권한 검증
           router.push({ name: "HomeFeed" }) // 홈 피드 구현 후 변경
       })
         .catch((err) => {
@@ -544,6 +460,7 @@ export default new Vuex.Store({
       commit("INIT_USERIDENTITY")
       commit("INIT_USERNAME")
       commit("INIT_USERIMAGE")
+      commit("REMOVE_TOKEN")
       router.push({ name: "Login" })
     },
 

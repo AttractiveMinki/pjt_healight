@@ -89,6 +89,7 @@ import UserImage from "@/components/UserImage";
 import ProfileTodoList from "@/components/my_page/profile/ProfileTodoList";
 import ProfileBadgeContainer from "@/components/my_page/profile/ProfileBadgeContainer";
 import ProfilePost from "@/components/my_page/profile/ProfilePost";
+import { mapMutations } from "vuex";
 
 export default {
   name: "Profile",
@@ -137,12 +138,12 @@ export default {
   created() {
     // footer 4로 설정
     this.$store.state.selectedRouter = 4
-  
+
     // 현재 보고 있는 프로필 주인의 id 주소창에서 가져오기
     this.userId = this.$route.params.id;
-
     // 내 아이디 localStorage에서 가져오기
-    this.myId = localStorage.getItem('userId')
+    this.$store.commit("GET_USERID")
+    this.myId = this.$store.state.userId
 
     this.getProfile();
     this.getFollowing();
@@ -190,6 +191,9 @@ export default {
         break;
       }
     },
+    ...mapMutations([
+      'GET_USERID',
+    ])
   },
 }
 </script>

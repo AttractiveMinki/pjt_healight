@@ -3,7 +3,7 @@
     <ChallengeContainerKiwiDetail 
       category=2
     />
-    <el-row>
+    <el-row v-if="dataLoaded">
       <el-col :span="24" class="community">
         <div style="text-align:start; margin: 2vh 2vw;">
           <div>
@@ -135,6 +135,7 @@ export default {
   data: function () {
     return {
       challenges: [],
+      dataLoaded: false,
     }
   },
   components: {
@@ -143,9 +144,10 @@ export default {
 
   methods: {
     getKiwiHeartChallenge: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHeartChallenge}` + localStorage.getItem('userId'))
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHeartChallenge}` + this.$store.state.userId)
         .then((res) => {
           this.challenges = res.data
+          this.dataLoaded = true
         })
         .catch((err) => {
           console.error(err.response.data)
@@ -153,8 +155,7 @@ export default {
     },
     certifyMission: function (missionId) {
       // 주소 이상하고, 챌린지 성공 실패 기준을 몰라 보류중
-      // axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}${localStorage.getItem('userId')}/${missionId}`)
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}${localStorage.getItem('userId')}/{missionId}?missionId=${missionId}`)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}${this.$store.state.userId}/{missionId}?missionId=${missionId}`)
         .then((res) => {
           console.log(res)
           // 챌린지 성공!
@@ -165,7 +166,8 @@ export default {
         })
     },
   },
-  mounted: function () {
+  created: function () {
+    this.$store.commit("GET_USERID")
     this.getKiwiHeartChallenge()
   },
 
