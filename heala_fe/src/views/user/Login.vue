@@ -1,21 +1,23 @@
 <template>
   <div>
-    <div>
+    <div style="padding-top: 20vh">
       <img class="logo-image" src="@/assets/image/kiwi_logo.png" />
     </div>
-    <h1>로그인</h1>
+    <!-- <h1>로그인</h1> -->
     <el-row>
       <br>
-      <input type="text" class='get-input bg-gray' id="identity" v-model="data.identity" maxlength="20" placeholder=" 아이디" required>
+      <br>
+      <input type="text" class='get-input bg-gray' id="identity" v-model="data.identity" maxlength="20" placeholder="  아이디" required>
       <br>
       <br>
-      <div class="password-box get-input bg-gray introduce-text-align-start">
-        <input type="password" id="password" class="get-input bg-gray artificial-padding-right" v-model="data.password" maxlength="20" placeholder=" 비밀번호(문자, 숫자 포함 8자리 이상)" @keyup.enter="login(data)" required>
-        <span class="el-icon-chat-line-round text-align:right" @click="toggleIcon"></span>
-      </div>
+      <input type="password" id="password" class="get-input bg-gray" v-model="data.password" maxlength="20" placeholder="  비밀번호(문자, 숫자 포함 8자리 이상)" @keyup.enter="login(data)" required>
+      <!-- <div class="password-box get-input bg-gray introduce-text-align-start">
+        
+        <span class="el-icon-chat-line-round text-align:right" @click="toggleIcon"></span> 
+      </div> -->
       <br>
       <button class="bg-green get-input join-button-setting" @click="login(data)">로그인</button>
-      <button class="bg-white get-input join-button-setting" @click="goSignup()">가입하기</button>
+      <div class="signup-botton" @click="goSignup()">가입하기</div>
     </el-row>
   </div>
 </template>
@@ -63,7 +65,7 @@ export default {
 
 <style scoped>
   .logo-image {
-    width: 50%;
+    width: 60%;
   }
   .bg-white {
     background: rgb(197, 223, 189);
@@ -78,14 +80,23 @@ export default {
   }
   .bg-gray {
     background: #F0F0F0;
+    margin: 0;
   }
   .get-input {
     border-width: 0px;
     border-radius: 5px;
     width: 80%;
-    height: 40px;
-    margin-bottom: 20px;
-    padding: 0px 2px;
+    height: 50px;
+    /* margin-bottom: 10px; */
+  }
+  .signup-botton {
+    text-align: center;
+    /* border-width: 0px; */
+    /* border-radius: 5px; */
+    height: 40vh;
+    margin: 10px 20px;
+    /* padding: 0px 2px; */
+    color: #76D418;
   }
   .introduce-text-align-start {
     display: block;
@@ -111,9 +122,6 @@ export default {
   .text-decoration-none {
     text-decoration: none;
     color: black;
-  }
-  .artificial-padding-right {
-    padding-right: 10%;
   }
   .get-input:focus {
     outline: none;
