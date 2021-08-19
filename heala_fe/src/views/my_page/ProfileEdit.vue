@@ -40,8 +40,8 @@
       <el-row type="flex" align="middle" style="margin-bottom: 20px;">
         <el-col :span="6" style="font-weight: bold; font-size: 13px;">대표 뱃지 설정</el-col>
         <el-col :span="18">
-          <span v-for="(value, idx) in data.badges" :key="idx" >
-            <span :class="{selected: value.selected == true}" class="margin-2 post-image" @click="selectBadge(value)">
+          <span v-for="(value, idx) in data.badges" :key="idx" class="select-block-setting">
+            <span :class="{selected: value.selected == true}" class="post-image" @click="selectBadge(value)">
               <!-- {{ value.badge.image }} -->
               <img :src="imageServer + value.badge.image" alt="" class="post-image">
               <!-- <img :src="imageServer + value.badge.image" alt="" class="post-image"> -->
@@ -343,14 +343,24 @@ export default {
     color: black;
   }
   .selected {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
     border: 2px #7EE01D solid;
+    padding: 2px;
+  }
+  .select-block-setting {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin: 2vw;
   }
   .margin-2 {
     margin: 2px;
   }
   .post-image {
-    width: 6%;
-    margin: 1vw;
+    width: 30px;
+    height: 30px;
   }
   .set-button {
     width: 95%;

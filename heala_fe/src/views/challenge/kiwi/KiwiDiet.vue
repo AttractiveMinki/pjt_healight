@@ -161,6 +161,7 @@ export default {
             alert('챌린지 실패')
           } else {
             alert('챌린지 성공!')
+            history.go(0);
           }
           
           // 챌린지 성공!
