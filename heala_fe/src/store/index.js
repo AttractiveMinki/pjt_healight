@@ -162,10 +162,6 @@ export default new Vuex.Store({
     SET_USERIMAGE: function (state, res) {
       localStorage.setItem('userImage', res.data.image);
     },
-    // INIT_USERID: function (state) {
-    //   state.userId = ""
-    //   localStorage.removeItem('userId');
-    // },
     INIT_USERIDENTITY: function (state) {
       state.userIdentity = ""
       localStorage.removeItem('userIdentity');
@@ -439,7 +435,6 @@ export default new Vuex.Store({
       })
     },
     logout: function ({ commit }) {
-      commit("INIT_USERID")
       commit("INIT_USERIDENTITY")
       commit("INIT_USERNAME")
       commit("INIT_USERIMAGE")
