@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       imageURL: SERVER.IMAGE_URL + this.image,
-      currentUserId: 1,
+      currentUserId: "",
       userImage: "",
       userName: "",
       commentCount: 0,
