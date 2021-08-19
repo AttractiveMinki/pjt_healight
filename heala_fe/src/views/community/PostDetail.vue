@@ -102,6 +102,7 @@ export default {
     this.$store.commit("GET_USERID");
     this.userId = this.$store.state.userId;
     let postId = this.$route.params.id;
+    this.postId = this.$route.params.id;
     this.$store.dispatch("setPostDetail", { postId });
     this.$store.dispatch("setPostComments", { postId });
     this.$store.dispatch("setPostScrap", { postId });
