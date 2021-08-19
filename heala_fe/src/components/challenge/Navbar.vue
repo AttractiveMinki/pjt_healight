@@ -30,7 +30,7 @@ export default {
     border-color: #ADEC6E;
     border-radius: 30px;
     height: 36px;
-    
+    margin-right: 5vw;
   }
   .text-decoration-none {
     text-decoration: none;
@@ -39,10 +39,10 @@ export default {
   .justify-content-space-between {
     display: flex;
     justify-content: space-between;
-    margin-left: 5%;
+    /* margin-left: 5%; */
     /* margin-right: 5%; */
     /* padding-left: 25px; */
-    padding-right: 9%;
+    /* padding-right: 9%; */
   }
   .head-text {
     text-align: start;
@@ -57,6 +57,7 @@ export default {
     font-weight: bold; 
     font-size: 18px;
     text-align: left;
+    padding-left: 5vw; 
   }
   .challenge-make {
     font-size: 13px;
