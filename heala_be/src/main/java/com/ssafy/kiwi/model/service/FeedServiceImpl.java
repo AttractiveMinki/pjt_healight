@@ -295,5 +295,15 @@ public class FeedServiceImpl implements FeedService {
 		List<Post> scrapList = scrapPage.getContent();
 		return scrapList;
 	}
+
+	@Override
+	public Object getPostHashtags(int postId) {
+		List<Integer> hashtagIds = postHashtagRepository.getHashtagIdsByPostId(postId);
+		List<String> res = new ArrayList<String>();
+		for (int i = 0, size=hashtagIds.size(); i < size; i++) {
+			res.add(hashtagRepository.getHashtagByHashtagId(hashtagIds.get(i)));
+		}
+		return res;
+	}
 	
 }
