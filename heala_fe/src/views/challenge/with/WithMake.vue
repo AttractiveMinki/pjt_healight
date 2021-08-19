@@ -52,9 +52,9 @@
         <span style="text-align: left; padding-left: 16px; font-size: 14px; font-weight: bold;">기간 설정</span>
       </el-col>
       <el-col :span="17" style="padding-left: 10px;">
-        <el-input type="date" class="get-input" style="width:35%" v-model="data.withChallenge.startDate" placeholder="시작 날짜를 선택하세요." onfocus="(this.type='date')" id="date"></el-input>
+        <el-input type="date" class="get-input" style="width:43%" v-model="data.withChallenge.startDate" placeholder="시작 날짜를 선택하세요." onfocus="(this.type='date')" id="date"></el-input>
         <span> ~ </span>
-        <el-input type="date" class="get-input" style="width:35%" v-model="data.withChallenge.endDate" placeholder="종료 날짜를 선택하세요."></el-input>
+        <el-input type="date" class="get-input" style="width:43%" v-model="data.withChallenge.endDate" placeholder="종료 날짜를 선택하세요."></el-input>
       </el-col>
     </el-row>
     <hr>
@@ -63,7 +63,7 @@
         <span style="text-align: left; padding-left: 16px; font-size: 14px; font-weight: bold;">인증 방법</span>
       </el-col>
      <el-col :span="17" style="padding-left: 10px;">
-        <el-input type="textarea" class="get-input" style="width:90%; height:50px; resize: none" v-model="data.withChallenge.certifyInfo" placeholder="예) 오늘 날짜와 운동 기구 혹은 운동 결과가 보이는 인증샷 찍기"></el-input>
+        <el-input type="textarea" class="get-input" style="width:90%; height:55px; resize: none" v-model="data.withChallenge.certifyInfo" placeholder="예) 오늘 날짜와 운동 기구 혹은 운동 결과가 보이는 인증샷 찍기"></el-input>
       </el-col>
     </el-row>
     <hr>
@@ -72,7 +72,7 @@
         <span style="text-align: left; padding-left: 16px; font-size: 14px; font-weight: bold;">소개글</span>
       </el-col>
      <el-col :span="17" style="padding-left: 10px;">
-        <textarea class="get-input" style="padding: 5px 15px; width:82%; height:170px; resize: none; border-color: rgb(225 225 225); border-radius: 5px" v-model="data.withChallenge.introduction" placeholder="예) 매일 꾸준한 운동으로 기초 체력을 기릅시다!"></textarea>
+        <el-input type="textarea" rows="9" class="get-input" style="width:90%; height:200px; resize: none; border-color: rgb(225 225 225); border-radius: 5px" v-model="data.withChallenge.introduction" placeholder="예) 매일 꾸준한 운동으로 기초 체력을 기릅시다!"></el-input>
       </el-col>
     </el-row>  
     <hr>
@@ -86,6 +86,7 @@
     </el-row>       
       <!-- <el-button @click="checkChallenge(data)" size="small" type="primary" round style="background-color: #ADEC6E; border: 1px solid #ADEC6E; color: black;">만들기</el-button> -->
       <div id="submit" @click="checkChallenge(data)">만들기</div>
+  <div style="height: 8vh"></div>
   </div>
 </template>
 
