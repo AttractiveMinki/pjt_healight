@@ -4,7 +4,7 @@
       category=0
     />
     <br>
-    <el-row>
+    <el-row v-if="dataLoaded">
       <el-col :span="24" class="community">
         <div style="text-align:start; margin: 2vh 2vw;">
           <div>
@@ -136,6 +136,7 @@ export default {
   data: function () {
     return {
       challenges: [],
+      dataLoaded: false,
     }
   },
   components: {
@@ -146,6 +147,7 @@ export default {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}` + this.$store.state.userId)
         .then((res) => {
           this.challenges = res.data
+          this.dataLoaded = true
         })
         .catch((err) => {
           console.error(err.response.data)

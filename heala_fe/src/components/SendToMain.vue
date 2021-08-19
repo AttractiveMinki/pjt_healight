@@ -11,7 +11,8 @@ export default {
   name: "SendToMain",
   methods: {
     sendMain: function () {
-      if (localStorage.getItem('userId')){
+      this.$store.commit("GET_USERID")
+      if (this.$store.state.userId){
         router.push({ name: "HomeFeed" })
       }
       else {
@@ -20,6 +21,7 @@ export default {
     },
   },
   mounted: function () {
+    this.$store.commit("GET_USERID")
     this.sendMain()
   },
 }
