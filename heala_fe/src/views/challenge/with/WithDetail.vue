@@ -73,8 +73,7 @@
 
     <el-row>
       <el-col id="challenge-certifyinfo" style="margin: 2%; text-align: start">
-        <!-- <router-link :to="{ name: 'WithDetail' }" class="text-decoration-category selected-category" >소개</router-link>  -->
-        인증하러가기
+        <router-link :to="{ name: 'MyMain' }" class="text-decoration-category selected-category" >인증하러가기</router-link> 
       </el-col>
     </el-row>
 
