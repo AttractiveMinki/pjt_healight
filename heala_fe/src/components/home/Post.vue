@@ -54,7 +54,8 @@ export default {
     }
   },
   created() {
-    this.currentUserId = localStorage.getItem("userId");
+    this.$store.commit("GET_USERID")
+    this.currentUserId = this.$store.state.userId
     // user 불러오기
     this.getUser();
     // 댓글 개수 불러오기

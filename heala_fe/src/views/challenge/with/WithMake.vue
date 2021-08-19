@@ -197,8 +197,9 @@ export default {
       this.data.withChallenge.image = URL.createObjectURL(file);
     },
   },
-  mounted () {
-    this.data.withChallenge.userId = localStorage.getItem('userId')
+  created () {
+    this.$store.commit("GET_USERID")
+    this.data.withChallenge.userId = this.$store.state.userId
   },
 }
 </script>

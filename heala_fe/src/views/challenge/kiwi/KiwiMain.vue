@@ -2,10 +2,27 @@
   <div>
     <Navbar />
     <ChallengeContainerKiwi />
-    <el-row class="community">
-      <el-col :span="24" class="community-box">
+    <el-row class="community" v-if="dataLoaded">
+      <el-col :span="24" class="community-box-special">
         <el-row>
           <router-link :to="{ name: 'KiwiSpecial' }" class="text-decoration-none">
+            <el-col :span="18" class="community-inside-special">
+              <div class="text-align-start text-title">{{ data[3].name }}</div>
+              <div class="text-align-start">{{ data[3].introduction }}</div>
+              <br>
+              <div>기간: {{ data[3].startDate }} ~ {{ data[3].endDate }}</div>
+            </el-col>
+            <el-col :span="6">
+              <img v-if="image == data[3].image" src="@/assets/img/profile/user.png" alt="profile_image" width="70" height="70" style="border-radius: 50%;">
+              <img v-else :src="image" alt="image" width="70" height="70" style="border-radius: 50%;"><br>
+              <!-- {{ data[3].image }} -->
+            </el-col>
+          </router-link>
+        </el-row>
+      </el-col>
+      <el-col :span="24" class="community-box">
+        <el-row>
+          <router-link :to="{ name: 'KiwiHealth' }" class="text-decoration-none">
             <el-col :span="18" class="community-inside">
               <div class="text-align-start text-title">{{ data[0].name }}</div>
               <div class="text-align-start">{{ data[0].introduction }}</div>
@@ -20,7 +37,7 @@
       </el-col>
       <el-col :span="24" class="community-box">
         <el-row>
-          <router-link :to="{ name: 'KiwiHealth' }" class="text-decoration-none">
+          <router-link :to="{ name: 'KiwiDiet' }" class="text-decoration-none">
             <el-col :span="18" class="community-inside">
               <div class="text-align-start text-title">{{ data[1].name }}</div>
               <div class="text-align-start">{{ data[1].introduction }}</div>
@@ -35,7 +52,7 @@
       </el-col>
       <el-col :span="24" class="community-box">
         <el-row>
-          <router-link :to="{ name: 'KiwiDiet' }" class="text-decoration-none"> 
+          <router-link :to="{ name: 'KiwiHeart' }" class="text-decoration-none"> 
             <el-col :span="18" class="community-inside">
               <div class="text-align-start text-title">{{ data[2].name }}</div>
               <div class="text-align-start">{{ data[2].introduction }}</div>
@@ -44,23 +61,6 @@
               <img v-if="image == data[2].image" src="@/assets/img/profile/user.png" alt="profile_image" width="70" height="70" style="border-radius: 50%;">
               <img v-else :src="image" alt="image" width="70" height="70" style="border-radius: 50%;"><br>
               <!-- {{ data[2].image }} -->
-            </el-col>
-          </router-link>
-        </el-row>
-      </el-col>
-      <el-col :span="24" class="community-box">
-        <el-row>
-          <router-link :to="{ name: 'KiwiHeart' }" class="text-decoration-none">
-            <el-col :span="18" class="community-inside">
-              <div class="text-align-start text-title">{{ data[3].name }}</div>
-              <div class="text-align-start">{{ data[3].introduction }}</div>
-              <br>
-              <div>기간: {{ data[3].startDate }} ~ {{ data[3].endDate }}</div>
-            </el-col>
-            <el-col :span="6">
-              <img v-if="image == data[3].image" src="@/assets/img/profile/user.png" alt="profile_image" width="70" height="70" style="border-radius: 50%;">
-              <img v-else :src="image" alt="image" width="70" height="70" style="border-radius: 50%;"><br>
-              <!-- {{ data[3].image }} -->
             </el-col>
           </router-link>
         </el-row>
@@ -90,6 +90,7 @@ export default {
         // startDate: "",
         // endDate: "",
       },
+      dataLoaded: false,
     }
   },
   components: {
@@ -102,13 +103,15 @@ export default {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiChallenge}`)
         .then((res) => {
           this.data = res.data
+          console.log(this.data)
+          this.dataLoaded = true
         })
         .catch((err) => {
           console.log(err)
         })
     },
   },
-  mounted: function () {
+  created: function () {
     this.getKiwiChallenge()
   },
 }
@@ -138,7 +141,7 @@ export default {
     /* margin-left: 2.5%; */
     border-radius: 5px;
     width: 100%;
-    height: calc(80vh - 140px);
+    height: calc(98vh - 162px - 3rem);
     border: 3px solid #ADEC6E;
     overflow : scroll;
   }
@@ -147,7 +150,15 @@ export default {
     padding: 5px;
     border-radius: 5px;
     width: 100%;
-    height: 14vh;
+    height: 15vh;
+    border: 1.5px solid darkgrey;
+  }
+  .community-box-special {
+    /* margin-left: 2.5%; */
+    padding: 5px;
+    border-radius: 5px;
+    width: 100%;
+    height: 22vh;
     border: 1.5px solid darkgrey;
   }
   .community-inside {
@@ -156,6 +167,14 @@ export default {
     border-radius: 5px;
     /* width: 100%; */
     height: 13vh;
+    border: 1.5px solid darkgrey;
+  }
+  .community-inside-special {
+    /* margin-left: 2.5%; */
+    padding: 5px;
+    border-radius: 5px;
+    /* width: 100%; */
+    height: 20vh;
     border: 1.5px solid darkgrey;
   }
 </style>

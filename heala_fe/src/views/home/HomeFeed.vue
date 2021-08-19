@@ -38,9 +38,10 @@ export default {
       }
     },
     created() {
-      // this.userId = localStorage.getItem("userId");
+      // this.$store.commit("GET_USERID")
+      // this.userId = this.$store.state.userId
       this.getPostData();
-      // footer 4로 설정
+      // footer 0으로 설정
       this.$store.state.selectedRouter = 0
     },
     methods: {

@@ -209,7 +209,8 @@ export default {
     },
   },
   created() {
-    this.data.user.id = localStorage.getItem('userId');
+    this.$store.commit("GET_USERID")
+    this.data.user.id = this.$store.state.userId
     // 프로필 기존 정보 불러오기
     axios.get(`${SERVER.URL}${SERVER.ROUTES.profile}${this.data.user.id}`)
       .then(response => {     

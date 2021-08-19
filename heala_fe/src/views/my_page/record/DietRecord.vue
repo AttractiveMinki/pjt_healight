@@ -136,7 +136,7 @@ export default {
       this.day = day
     },
     getDietRecordToday: function () {
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getDietRecordToday}?day=${this.year}${this.month}${this.date}&userId=${localStorage.getItem('userId')}`)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getDietRecordToday}?day=${this.year}${this.month}${this.date}&userId=${this.$store.state.userId}`)
         .then((res) => {
           this.diet.calory = res.data.calory
           this.diet.carbohydrate = res.data.carbohydrate
@@ -168,7 +168,8 @@ export default {
     this.userId = this.$route.path.split('/')[3]
 
     // 내 아이디 localStorage에서 가져오기
-    this.myId = localStorage.getItem('userId')
+    this.$store.commit("GET_USERID")
+    this.myId = this.$store.state.userId
 
     // 내 꺼 보기
     if (this.userId == this.myId) {
