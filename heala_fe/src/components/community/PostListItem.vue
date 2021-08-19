@@ -3,7 +3,7 @@
     <router-link :to="{ name: 'PostDetail',  params: { id: article.id } }" class="text-decoration-none align-self">
       <el-row>
         <div class="post-image-wrapper">
-          <img :src="imageURL" alt="" class="post-image">
+          <img :src="imageServer + article.image" alt="" class="post-image">
         </div>
         <div class="post-content">
           <div class="text-align-start text-title">{{ article.title }}</div>
@@ -32,7 +32,7 @@ export default {
   props: [ 'article' ],
   data() {
     return {
-      imageURL: SERVER.IMAGE_URL + this.article.image,
+      imageServer: SERVER.IMAGE_URL,
     }
   },
 }

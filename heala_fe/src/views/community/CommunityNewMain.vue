@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       category: 3,
-      subCategory: 3,
+      subCategory: 0,
       keyword: "",
     }
   },

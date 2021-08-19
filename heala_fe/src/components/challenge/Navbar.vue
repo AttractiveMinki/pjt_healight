@@ -30,7 +30,7 @@ export default {
     border-color: #ADEC6E;
     border-radius: 30px;
     height: 36px;
-    
+    margin-right: 5vw;
   }
   .text-decoration-none {
     text-decoration: none;
@@ -55,6 +55,7 @@ export default {
     font-weight: bold; 
     font-size: 17px;
     text-align: left;
+    padding-left: 5vw; 
   }
   .challenge-make {
     font-size: 13px;

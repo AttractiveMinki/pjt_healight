@@ -30,7 +30,7 @@ export default {
     }
   },
   created() {
-    this.image = localStorage.getItem("image");
+    this.image = localStorage.getItem("userImage");
   },
   mounted() {
     this.$nextTick(() => {

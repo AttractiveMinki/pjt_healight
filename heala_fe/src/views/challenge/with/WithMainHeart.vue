@@ -180,6 +180,7 @@ export default {
     white-space : nowrap; /* 한 줄 제한*/
     overflow : hidden; /* 넘어가는 글자 숨기기 */
     text-overflow: ellipsis; /* 말 줄임표 추가 */
+    font-family: 'TmoneyRoundWindRegular';
   }
   .recent-title {
     white-space : nowrap; /* 한 줄 제한*/

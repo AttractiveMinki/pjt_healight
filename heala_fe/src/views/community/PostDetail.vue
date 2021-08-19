@@ -21,12 +21,12 @@
         <font-awesome-icon :icon="['far', 'bookmark']" v-else @click="scrap" class="icon icon-bookmark" />
       </div>
       <el-row>
-        <div class="post-user">
+        <div class="post-user" @click="goToFeed(post.userId)">
           <user-image v-if="!post.anonymous" :image="postUser.image"></user-image>
           <user-image v-else></user-image>
         </div>
         <div class="post-content">
-          <span v-if="!post.anonymous" class="post-user-name">{{ postUser.name }}</span>
+          <span v-if="!post.anonymous" class="post-user-name" @click="goToFeed(post.userId)">{{ postUser.name }}</span>
           <span v-else class="post-user-name">익명</span>
           {{ post.content }}
         </div>
@@ -150,7 +150,10 @@ export default {
     },
     goToPostEdit() {
       this.$router.push({ name: "PostEdit", params: { postId: this.postId }});
-    }
+    },
+    goToFeed(userId) {
+      this.$router.push({ name: "Profile", params: { id: userId }});
+    },
   },
   components: { InputMessage, KiwiHeader, Star, UserImage, Comment, Modal, },
 }

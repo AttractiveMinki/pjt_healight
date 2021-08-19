@@ -10,7 +10,7 @@
           {{ text }}
           <div class="comment-info">
             <button class="comment-button">{{ createdAt.substring(0, 10) }}</button>
-            <button class="comment-button">추천 {{ likes }}개</button>
+            <button class="comment-button">추천 {{ likes + likeUI }}개</button>
             <button v-if="!commentId" @click="showReplyModal = true" class="comment-button comment-reply">답글 달기</button>
             <modal v-if="showReplyModal" @yes="replyComment" @no="showReplyModal = false">
               <div slot="header">답글</div>
@@ -23,7 +23,7 @@
             </modal>
           </div>
         </div>
-        <star :like="like" @cancelStar="cancelStar" @star="star" class="star"></star>
+        <star :like="commentLike" @cancelStar="cancelStar" @star="star" class="star"></star>
       </div>
     </div>
     <div v-if="childrenComment">
@@ -52,16 +52,14 @@ export default {
       showDeleteModal: false,
 
       myId: 0,
-
-      // commentUser: {
-      //   name: "",
-      //   image: "",
-      // }
+      likeUI: 0,
+      commentLike: false,
     }
   },
   created() {
     this.$store.commit("GET_USERID")
     this.myId = this.$store.state.userId
+    // this.commentLike = this.$store.state.commentLikes.find(commentId => commentId == this.id) > -1;
   },
   computed: {
     commentUser() {
@@ -71,12 +69,37 @@ export default {
       return this.$store.state.commentLikes.find(commentId => commentId == this.id) > -1;
     },
   },
+  watch: {
+    like() {
+      this.commentLike = this.like;
+    }
+  },
   methods: {
-    cancelStar() {
-      this.$store.dispatch("cancelLikeComment", { commentId: this.id });
+    async cancelStar() {
+      this.likeUI -= 1;
+      // this.$store.dispatch("cancelLikeComment", { commentId: this.id });
+      try {
+        const response = await axios
+          .delete(SERVER.URL + SERVER.ROUTES.postComment + SERVER.ROUTES.like +
+            `?userId=${this.myId}&commentId=${this.id}`);
+        this.commentLike = response.data;
+      } catch (error) {
+        alert("댓글 좋아요 취소에 오류가 발생했습니다.");
+      }
     },
-    star() {
-      this.$store.dispatch("likeComment", { commentId: this.id });
+    async star() {
+      this.likeUI += 1;
+      // this.$store.dispatch("likeComment", { commentId: this.id });
+      try {
+        const response = await axios
+          .post(SERVER.URL + SERVER.ROUTES.postComment + SERVER.ROUTES.like, {
+            userId: this.myId,
+            commentId: this.id,
+          });
+        this.commentLike = response.data;
+      } catch (error) {
+        alert("댓글 좋아요에 오류가 발생했습니다.");
+      }
     },
     replyComment() {
       this.showReplyModal = false;

@@ -262,6 +262,8 @@ export default {
     margin-bottom: 10px;
     width: 100%;
     height: 40px;
+    padding-left: 10px;
+    box-sizing: border-box;
   }
   .introduce-text-align-start {
     display: block;
@@ -285,7 +287,8 @@ export default {
   }
   .error-text {
     color: red;
-    margin-bottom: 10px;
+    font-size: 11px;
+    margin-bottom: 8px;
   }
   .disabled {
     background: gray;

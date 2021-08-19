@@ -346,7 +346,7 @@ export default new Vuex.Store({
     },
     createComment(store, payload) {
       axios
-        .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment, {
+        .post(SERVER.URL + SERVER.ROUTES.postComment, {
           text: payload.message,
           userId: store.state.userId,
           postId: payload.postId,
@@ -371,7 +371,7 @@ export default new Vuex.Store({
     },
     likeComment(store, payload) {
       axios
-        .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment + SERVER.ROUTES.like, {
+        .post(SERVER.URL + SERVER.ROUTES.postComment + SERVER.ROUTES.like, {
           userId: store.state.userId,
           commentId: payload.commentId,
         })
@@ -388,7 +388,7 @@ export default new Vuex.Store({
     },
     cancelLikeComment(store, payload) {
       axios
-        .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment + SERVER.ROUTES.like
+        .delete(SERVER.URL + SERVER.ROUTES.postComment + SERVER.ROUTES.like
           + `?userId=${store.state.userId}&commentId=${payload.commentId}`)
         .then(() => {
           store.commit("setCommentLikeCancel", { commentId: payload.commentId, userId: store.state.userId })

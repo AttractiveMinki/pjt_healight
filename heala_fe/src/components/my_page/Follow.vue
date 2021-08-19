@@ -1,7 +1,7 @@
 <template>
   <div>
-    <button class="following" v-if="isFollowing" @click="clickFollowing">팔로잉</button>
-    <button class="follow" @click="follow" v-else>팔로우</button>
+    <button class="following" v-if="isFollowing" @click.stop="clickFollowing">팔로잉</button>
+    <button class="follow" @click.stop="follow" v-else>팔로우</button>
     <!-- $store.state.userid 확인해보고 비어있으면 팔로우 눌렀을 때 로그인 화면으로 이동 -->
     <modal v-if="showModal" @yes="cancelFollow" @no="showModal = false">
       <div slot="header">팔로우 취소</div>
