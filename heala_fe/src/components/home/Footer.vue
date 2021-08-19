@@ -18,7 +18,7 @@
       </router-link>
       <router-link :to="{ name: 'WithMain' }" class="text-decoration-none color-black" @click.native="changeRouter(3)" :class="{selected: selectedRouter == 3}" >
         <el-col :span="5">
-          <font-awesome-icon :icon="['fas', 'running']" />
+          <font-awesome-icon :icon="['fas', 'crown']" />
         </el-col>
       </router-link>
       <router-link :to="{ name: 'Profile', params: { id: userId } }" @click="changeRouter(4)" :class="{selected: selectedRouter == 4}" class="text-decoration-none color-black" >
@@ -70,18 +70,19 @@ export default {
 </script>
 
 <style scoped>
-  #footer{
-    position: fixed;
-    background-color: whitesmoke; /*임의색상*/
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 3rem;
-  }
-  .selected {
-    color: #ADEC6E !important;
-  }
-  .color-black {
-    color: black;
-  }
+#footer{
+  position: fixed;
+  background-color: whitesmoke; /*임의색상*/
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  height: 48px;
+  font-size: 17px;
+}
+.selected {
+  color: #ADEC6E !important;
+}
+.color-black {
+  color: black;
+}
 </style>

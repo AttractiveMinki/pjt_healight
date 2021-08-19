@@ -4,9 +4,9 @@
     <h1>식단 캘린더</h1>
     <DietCallender />
     <br>
-    <div> 내 식단 정보를 달력에서 확인해보세요! </div>
+    <div class="notice"> 내가 기록한 식단 정보를 확인해보세요! </div>
     <br>
-    <div class="selected-date"> 식단이 입력된 날을 클릭해보세요!</div>
+    <div class="selected-date notice"> 식단이 입력된 날을 클릭해보세요!</div>
   </div>
 </template>
 
@@ -32,5 +32,9 @@ export default {
     text-decoration: underline;
     text-decoration-color: orange;
     padding-bottom: 1vw;
+  }
+  .notice {
+    font-weight: bold;
+    font-size: 13px;
   }
 </style>

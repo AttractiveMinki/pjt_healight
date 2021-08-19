@@ -10,7 +10,8 @@ import {
   faArrowLeft,
   faBookmark as fasBookmark,
   faStar as fasStar,
-  faSearch
+  faSearch,
+  faCrown
 } from "@fortawesome/free-solid-svg-icons";
 import { 
   faBookmark as farBookmark,
@@ -27,7 +28,7 @@ import { faStar, faBell, faImages, faPlusSquare } from "@fortawesome/free-regula
 
 // 한길 #@
 // 불러온 아이콘을 라이브러리에 담습니다.
-library.add(faEllipsisV, faArrowLeft, fasBookmark, fasStar, faSearch);
+library.add(faEllipsisV, faArrowLeft, fasBookmark, fasStar, faSearch, faCrown);
 library.add(farBookmark, farStar, farComment, faEnvelope);
 
 // 주엽 #@

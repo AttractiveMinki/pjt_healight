@@ -17,13 +17,8 @@
 //import axios from 'axios';
 
 export default {
-  methods: {
-    
-  },
-  data: () => {
-    return {
-      
-    };
+  created() {
+    this.$store.state.selectedRouter = 3;
   },
 };
 </script>

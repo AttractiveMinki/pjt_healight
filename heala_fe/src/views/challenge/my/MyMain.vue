@@ -49,7 +49,7 @@
               <!-- <img src="" alt="">
               {{ with_challenge.image }} -->
             </el-col>
-            <button id="submit" class="my-pictures-button" @click="uploadImage(with_challenge.id)" :class="{ disabled : !isSubmit }">인증하기</button>
+            <button id="submit" class="my-pictures-button" @click="uploadImage(with_challenge.id)">인증하기</button>
           </div>
         </el-col>
       </el-col>
@@ -91,6 +91,7 @@ export default {
   created() {
     this.$store.commit("GET_USERID");
     this.getMyChallenge();
+    this.$store.state.selectedRouter = 3;
   },
   methods: {
     goToCertifyImage(withChallengeId) {
