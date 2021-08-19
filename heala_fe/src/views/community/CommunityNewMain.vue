@@ -46,8 +46,8 @@ export default {
       keyword: "",
     }
   },
-  created() {
-    this.$store.state.selectedRouter = 1;
+  created () {
+    this.$store.state.selectedRouter = 1
   },
   methods: {
     search(keyword) {
@@ -55,10 +55,6 @@ export default {
     }
   },
   components: { CommunityCategoryBar, SearchBox, PostList, Footer, },
-  created () {
-    // footer 1로 설정
-    this.$store.state.selectedRouter = 1
-  },
 }
 </script>
 
