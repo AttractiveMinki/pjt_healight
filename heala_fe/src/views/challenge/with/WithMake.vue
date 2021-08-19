@@ -9,8 +9,8 @@
     <div class="display-flex justify-content-space-between align-items">
     </div>
     <el-row type="flex" align="middle">
-      <el-col :span="6" class="community" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">
-        <span style="text-align: left; padding-left: 16px; font-size: 14px; font-weight: bold;">대표 사진</span>
+      <el-col :span="6" class="community" style="text-align: left; padding-left: 30px; font-size: 14px; font-weight: bold;">
+        대표 사진
       </el-col>
       <!-- <el-row type="flex" align="middle">
       <el-col :span="6" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">제목</el-col>
@@ -28,8 +28,8 @@
     </el-row>
     <hr>
     <el-row type="flex" align="middle">
-      <el-col :span="6" class="community" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">
-        <span style="text-align: left; padding-left: 16px; font-size: 14px; font-weight: bold;">제목</span>
+      <el-col :span="6" class="community" style="text-align: left; padding-left: 30px; font-size: 14px; font-weight: bold;">
+        제목
       </el-col>
       <el-col :span="17" style="padding-left: 10px;">
         <el-input type="text" class="get-input" v-model="data.withChallenge.title" style="width:90%" placeholder="예) 하루 1시간 운동하기"></el-input>
@@ -37,8 +37,8 @@
     </el-row>
     <hr>
     <el-row type="flex" align="middle">
-      <el-col :span="6" class="community" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">
-        <span style="text-align: left; padding-left: 16px; font-size: 14px; font-weight: bold;">카테고리</span>
+      <el-col :span="6" class="community" style="text-align: left; padding-left: 30px; font-size: 14px; font-weight: bold;">
+        카테고리
       </el-col>
       <el-col :span="17" style="padding-left: 10px;" >
         <el-button size="medium" id="category" class="getCategory" @click="changeCategory(0)">운동</el-button>
@@ -48,8 +48,8 @@
     </el-row>
     <hr>
     <el-row type="flex" align="middle">
-      <el-col :span="6" class="community" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">
-        <span style="text-align: left; padding-left: 16px; font-size: 14px; font-weight: bold;">기간 설정</span>
+      <el-col :span="6" class="community" style="text-align: left; padding-left: 30px; font-size: 14px; font-weight: bold;">
+        기간 설정
       </el-col>
       <el-col :span="17" style="padding-left: 10px;">
         <el-input type="date" class="get-input" style="width:43%" v-model="data.withChallenge.startDate" placeholder="시작 날짜를 선택하세요." onfocus="(this.type='date')" id="date"></el-input>
@@ -59,8 +59,8 @@
     </el-row>
     <hr>
     <el-row type="flex" align="middle">
-      <el-col :span="6" class="community" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">
-        <span style="text-align: left; padding-left: 16px; font-size: 14px; font-weight: bold;">인증 방법</span>
+      <el-col :span="6" class="community" style="text-align: left; padding-left: 30px; font-size: 14px; font-weight: bold;">
+        인증 방법
       </el-col>
      <el-col :span="17" style="padding-left: 10px;">
         <el-input type="textarea" class="get-input" style="width:90%; height:55px; resize: none" v-model="data.withChallenge.certifyInfo" placeholder="예) 오늘 날짜와 운동 기구 혹은 운동 결과가 보이는 인증샷 찍기"></el-input>
@@ -68,8 +68,8 @@
     </el-row>
     <hr>
     <el-row type="flex" align="middle">
-      <el-col :span="6" class="community" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">
-        <span style="text-align: left; padding-left: 16px; font-size: 14px; font-weight: bold;">소개글</span>
+      <el-col :span="6" class="community" style="text-align: left; padding-left: 30px; font-size: 14px; font-weight: bold;">
+        소개글
       </el-col>
      <el-col :span="17" style="padding-left: 10px;">
         <el-input type="textarea" rows="9" class="get-input" style="width:90%; height:200px; resize: none; border-color: rgb(225 225 225); border-radius: 5px" v-model="data.withChallenge.introduction" placeholder="예) 매일 꾸준한 운동으로 기초 체력을 기릅시다!"></el-input>
@@ -77,8 +77,8 @@
     </el-row>  
     <hr>
     <el-row type="flex" align="middle">
-      <el-col :span="6" class="community" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">
-        <span style="text-align: left; padding-left: 16px; font-size: 14px; font-weight: bold;">해시태그</span>
+      <el-col :span="6" class="community" style="text-align: left; padding-left: 30px; font-size: 14px; font-weight: bold;">
+        해시태그
       </el-col>
       <el-col :span="17" style="padding-left: 10px;">
         <el-input type="text" class="get-input" v-model="data.challengeHashtag.word" style="width:90%" placeholder="예) #매일 #운동 #가족같은분위기"></el-input>
@@ -184,7 +184,7 @@ export default {
       axios.post(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`, formData, { headers: {"Content-Type" : "multipart/form-data"}})
         .then(res => {
           data.withChallenge.image = res.data
-          // this.createChallenge(data)
+          this.createChallenge(data)
         })
         .catch(err => {
           console.error(err.response.data)
