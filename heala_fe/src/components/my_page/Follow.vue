@@ -1,6 +1,7 @@
 <template>
   <div>
-    <button class="following" v-if="isFollowing" @click.stop="clickFollowing">팔로잉</button>
+    <button class="following" v-if="isFeedFollow && following" @click.stop="clickFollowing">팔로잉</button>
+    <button class="following" v-else-if="!isFeedFollow && isFollowing" @click.stop="clickFollowing">팔로잉</button>
     <button class="follow" @click.stop="follow" v-else>팔로우</button>
     <!-- $store.state.userid 확인해보고 비어있으면 팔로우 눌렀을 때 로그인 화면으로 이동 -->
     <modal v-if="showModal" @yes="cancelFollow" @no="showModal = false">
@@ -32,9 +33,12 @@ export default {
   },
   methods: {
     clickFollowing() {
-      this.$emit("unfollow");
-      if(this.feedFollow) this.showModal = true;
-      else this.cancelFollow();
+      if(this.feedFollow) {
+        this.showModal = true;
+      }
+      else {
+        this.cancelFollow();
+      }
     },
     async follow() {
       this.isFollowing = true;
@@ -52,6 +56,7 @@ export default {
     async cancelFollow() {
       if(this.feedFollow) this.showModal = false;
       this.isFollowing = false;
+      this.$emit("unfollow");
       try{
         await axios.delete(SERVER.URL + SERVER.ROUTES.follow
         + `?userId=${this.userId}&followId=${this.followId}`);
