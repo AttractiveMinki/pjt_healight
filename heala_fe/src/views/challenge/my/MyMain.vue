@@ -89,7 +89,7 @@ export default {
     Footer,
   },
   created() {
-    this.userId = localStorage.getItem("userId");
+    this.$store.commit("GET_USERID");
     this.getMyChallenge();
   },
   methods: {
@@ -177,24 +177,6 @@ export default {
     ...mapState([
       "with_challenges",
     ])
-  },
-  created: function () {
-    this.$store.commit("GET_USERID")
-    this.getMyChallenge()
-  },
-  data: () => {
-    return {
-      imgCnt: 0,
-      title: "",
-      category: "",
-      subject: "",
-      scope: "",
-      contents: "",
-      hashtag: "",
-      dialogVisible: {"first":false, "second":false, "third":false, "fourth":false, "fifth":false},
-      imgUrl: {"first":"", "second":"", "third":"", "fourth":"", "fifth":""},
-      values: "",
-    }; 
   },
 }
 </script>

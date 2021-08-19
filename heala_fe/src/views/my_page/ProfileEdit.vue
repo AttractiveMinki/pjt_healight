@@ -19,7 +19,8 @@
       <img v-else :src="data.user.image" alt="profile_image" width="92" height="92" style="border-radius: 50%;"><br>
       <label for="change_image" class="btn-file">
         <span style="font-size: 13px; font-weight: bold; color: #ADEC6E;">프로필 사진 변경</span>
-      <input type="file" id="change_image" style="display: none;" @change="selectFile" /></label>
+        <input type="file" id="change_image" style="display: none;" @change="selectFile" />
+      </label>
       <!-- 이름 -->
       <el-row type="flex" align="middle" style="margin: 30px 0 20px 0;">
         <el-col :span="6" style="font-weight: bold; font-size: 13px;">이름</el-col>
