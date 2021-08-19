@@ -80,7 +80,7 @@ export default {
       dialogVisible: {"first":false, "second":false, "third":false, "fourth":false, "fifth":false},
       imgUrl: {"first":"", "second":"", "third":"", "fourth":"", "fifth":""},
       values: "",
-      userId: 1,
+      userId: "",
     }
   },
   components: {
@@ -88,9 +88,9 @@ export default {
     ChallengeContainerMy,
     Footer,
   },
-  created() {
-    this.userId = localStorage.getItem("userId");
-    this.getMyChallenge();
+  created: function () {
+    this.$store.commit("GET_USERID")
+    this.getMyChallenge()
   },
   methods: {
     goToCertifyImage(withChallengeId) {
@@ -178,24 +178,7 @@ export default {
       "with_challenges",
     ])
   },
-  created: function () {
-    this.$store.commit("GET_USERID")
-    this.getMyChallenge()
-  },
-  data: () => {
-    return {
-      imgCnt: 0,
-      title: "",
-      category: "",
-      subject: "",
-      scope: "",
-      contents: "",
-      hashtag: "",
-      dialogVisible: {"first":false, "second":false, "third":false, "fourth":false, "fifth":false},
-      imgUrl: {"first":"", "second":"", "third":"", "fourth":"", "fifth":""},
-      values: "",
-    }; 
-  },
+
 }
 </script>
 
