@@ -178,11 +178,12 @@ export default {
   }
   .text-title {
     font-weight: bold; 
-    font-size: 25px;
+    font-size: 17px;
     margin-bottom: 5px;
     white-space : nowrap; /* 한 줄 제한*/
     overflow : hidden; /* 넘어가는 글자 숨기기 */
     text-overflow: ellipsis; /* 말 줄임표 추가 */
+    font-family: 'TmoneyRoundWindRegular';
   }
   .recent-title {
     white-space : nowrap; /* 한 줄 제한*/
