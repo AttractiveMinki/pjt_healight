@@ -12,16 +12,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     // 한길 #@
-    loginUser: {
-      id: 2,
-      name: "나다",
-      image: "blue.jpg",
-    },
     postDetail: {
       id: 1,
       title: "기본 init 데이터",
       createdAt: "07/27 13:56",
-      image: "blue.jpg",
+      image: "admin/default",
       likes: 0,
       anonymous: 0,
       category: 1,
@@ -33,7 +28,7 @@ export default new Vuex.Store({
     postUser: {
       id: 2,
       name: "안나짱",
-      image: "user.png",
+      image: "admin/default",
     },
     postScrap: false,
     postLike: false,
@@ -42,25 +37,15 @@ export default new Vuex.Store({
       {
         id: 1,
         name: "1번 유저",
-        image: "user.png",
+        image: "admin/default",
       },
       {
         id: 2,
         name: "2번 유저",
-        image: "blue.jpg",
+        image: "admin/default",
       },
     ],
     commentLikes: [],
-    isFollowingList: [
-      {
-        follow_id: 2,
-        isFollowing: true,
-      },
-      {
-        follow_id: 3,
-        isFollowing: false,
-      },
-    ],
 
     // 원석 #@
 
@@ -266,7 +251,7 @@ export default new Vuex.Store({
       axios
       .post(SERVER.URL + SERVER.ROUTES.commentLikes, {
         commentIdSet: commentIds,
-        userId: this.state.userId,
+        userId: store.state.userId,
       })
       .then((response) =>
         store.commit("setCommentLikes", { commentLikes: response.data })
@@ -277,7 +262,7 @@ export default new Vuex.Store({
     },
     setPostScrap(store, { postId }){
       axios
-        .get(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.scrap + `?postId=${postId}&userId=${store.state.loginUser.id}`)
+        .get(SERVER.URL + SERVER.ROUTES.postScrap + `?postId=${postId}&userId=${store.state.userId}`)
         .then((response) => {
           store.commit("setPostScrap", { scrap: response.data })
         })
@@ -287,7 +272,7 @@ export default new Vuex.Store({
     },
     setPostLike(store, { postId }){
       axios
-        .get(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.like + `?postId=${postId}&userId=${store.state.loginUser.id}`)
+        .get(SERVER.URL + SERVER.ROUTES.postLike + `?postId=${postId}&userId=${store.state.userId}`)
         .then((response) => {
           store.commit("setPostLike", { like: response.data })
         })
@@ -297,9 +282,8 @@ export default new Vuex.Store({
     },
     likePost(store, { postId }){
       axios
-        .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.like, {
-          // userId: store.state.loginUser.id,
-          userId: this.state.userId,
+        .post(SERVER.URL + SERVER.ROUTES.postLike, {
+          userId: store.state.userId,
           postId: postId,
         })
         .then((response) => {
@@ -316,8 +300,8 @@ export default new Vuex.Store({
     },
     cancelLikePost(store, { postId }){
       axios
-        .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.like
-          + `?userId=${this.state.userId}&postId=${postId}`)
+        .delete(SERVER.URL + SERVER.ROUTES.postLike
+          + `?userId=${store.state.userId}&postId=${postId}`)
         .then((response) => {
           store.commit("setPostLike", { like: response.data })
         })
@@ -332,8 +316,8 @@ export default new Vuex.Store({
     },
     scrapPost(store, { postId }){
       axios
-        .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.scrap, {
-          userId: this.state.userId,
+        .post(SERVER.URL + SERVER.ROUTES.postScrap, {
+          userId: store.state.userId,
           postId,
         })
         .then((response) => {
@@ -350,8 +334,8 @@ export default new Vuex.Store({
     },
     cancelScrapPost(store, { postId }){
       axios
-        .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.scrap
-          + `?userId=${this.state.userId}&postId=${postId}`)
+        .delete(SERVER.URL + SERVER.ROUTES.postScrap
+          + `?userId=${store.state.userId}&postId=${postId}`)
         .then((response) => {
           store.commit("setPostScrap", { scrap: response.data })
         })
@@ -368,7 +352,7 @@ export default new Vuex.Store({
       axios
         .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment, {
           text: payload.message,
-          userId: this.state.userId,
+          userId: store.state.userId,
           postId: payload.postId,
           commentId: payload.commentId,
         })
@@ -392,11 +376,10 @@ export default new Vuex.Store({
     likeComment(store, payload) {
       axios
         .post(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment + SERVER.ROUTES.like, {
-          userId: this.state.userId,
+          userId: store.state.userId,
           commentId: payload.commentId,
         })
         .then(() => {
-          // store.commit("setCommentLike", { userId: store.state.loginUser.id, like: true })
           store.commit("setCommentLike", { commentId: payload.commentId });
         })
         .catch((exp) => {
@@ -410,9 +393,9 @@ export default new Vuex.Store({
     cancelLikeComment(store, payload) {
       axios
         .delete(SERVER.URL + SERVER.ROUTES.post + SERVER.ROUTES.comment + SERVER.ROUTES.like
-          + `?userId=${this.state.userId}&commentId=${payload.commentId}`)
+          + `?userId=${store.state.userId}&commentId=${payload.commentId}`)
         .then(() => {
-          store.commit("setCommentLikeCancel", { commentId: payload.commentId, userId: store.state.loginUser.id })
+          store.commit("setCommentLikeCancel", { commentId: payload.commentId, userId: store.state.userId })
         })
         .catch((exp) => {
           if(exp.response.status == 404) {
