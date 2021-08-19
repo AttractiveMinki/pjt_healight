@@ -33,6 +33,9 @@ export default {
   width: 80%;
   font-weight: bold;
   display: inline-block;
+  font-size: 19px;
+  /* font-family: 'ELAND_Choice_M'; */
+  font-family: 'TmoneyRoundWindRegular';
 }
 .ellipsis {
   width: 5px;
