@@ -3,9 +3,7 @@
     <div class="feed-header">
       <img class="logo-image" src="@/assets/image/kiwi_logo.png" />
       <div class="icon-wrapper">
-        <font-awesome-icon :icon="['fas', 'search']" class="icon" />
-        <font-awesome-icon :icon="['far', 'envelope']" class="icon" @click="userSearch"/>
-        <font-awesome-icon :icon="['far', 'bell']" class="icon" />
+        <font-awesome-icon :icon="['fas', 'search']" class="icon" style="font-size: 18px" @click="userSearch" />
       </div>
     </div>
     <div class="header-height"></div>

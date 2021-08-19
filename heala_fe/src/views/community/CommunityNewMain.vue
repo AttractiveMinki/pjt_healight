@@ -42,9 +42,12 @@ export default {
   data() {
     return {
       category: 3,
-      subCategory: 3,
+      subCategory: 0,
       keyword: "",
     }
+  },
+  created () {
+    this.$store.state.selectedRouter = 1
   },
   methods: {
     search(keyword) {

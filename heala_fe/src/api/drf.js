@@ -12,6 +12,7 @@ export default {
     follow: "/user/follow",
     post: "/community/post/",
     comment: "/comment",
+    postComment: "/community/post/comment",
     like: "/like",
     scrap: "/scrap",
     commentUsers: "/user/comment",

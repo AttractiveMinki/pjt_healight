@@ -1,11 +1,15 @@
 <template>
   <div>
+    <div>
+      <kiwi-header>
+        <template v-slot:title>글쓰기
+        </template>
+      </kiwi-header>
+    </div>
     <!-- 이미지 -->
-    <el-row style="display: flex; align-items: center">
-      <el-col :span="2">
-        <font-awesome-icon icon="arrow-left" class="padding-left cursor-pointer" @click="goBack()"/>
-      </el-col>
-      <el-col :span="22" style="display: flex; justify-content: start; align-items: center; padding-left: 10px;">
+    <el-row type="flex" align="middle" style="padding: 0.5vh 0">
+      <el-col :span="6" class="community" style="text-align: left; padding-left: 30px; font-size: 14px; font-weight: bold;">사진</el-col>
+      <el-col :span="18" style="display: flex; justify-content: start; align-items: center; padding-left: 10px;">
         <label class="input-file-button" for="input-file">+</label>
         <input type="file" id="input-file" style="display: none;" @change="selectFile"/>
         <img v-if="editing && !imageChanged" class="image" :src="imageServer + data.post.image" alt="" @click="dialogVisible.first = true">
@@ -20,62 +24,62 @@
     <hr>
     <!-- 제목 -->
     <el-row type="flex" align="middle">
-      <el-col :span="6" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">제목</el-col>
+      <el-col :span="6" style="text-align: left; padding-left: 30px; font-size: 14px; font-weight: bold;">제목</el-col>
       <el-col :span="17" style="padding-left: 10px;"><el-input placeholder="제목을 작성해주세요" v-model="data.post.title" clearable></el-input></el-col>
       <el-col :span="1"></el-col>
     </el-row><hr>
     <!-- 카테고리 -->
-    <el-row type="flex" align="middle">
-      <el-col :span="6" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">카테고리</el-col>
-      <el-col :span="4" class="category" style="font-size: 13px;">
+    <el-row type="flex" align="middle" style="padding: 0.5vh 0">
+      <el-col :span="6" style="text-align: left; padding-left: 30px; font-size: 14px; font-weight: bold;">카테고리</el-col>
+      <el-col :span="4" class="category" style="font-size: 14px;">
         <div :class="{ selected: data.post.category == 0}" @click="data.post.category = 0">운동</div>
       </el-col>
-      <el-col :span="4" class="category" style="font-size: 13px;">
+      <el-col :span="4" class="category" style="font-size: 14px;">
         <div :class="{ selected: data.post.category == 1}" @click="data.post.category = 1">식단</div>
       </el-col>
-      <el-col :span="4" class="category" style="font-size: 13px;">
+      <el-col :span="4" class="category" style="font-size: 14px;">
         <div :class="{ selected: data.post.category == 2}" @click="data.post.category = 2">마음</div>
       </el-col>
       <el-col :span="6"></el-col>
     </el-row><hr>
     <!-- 주제 -->
-    <el-row type="flex" align="middle">
-      <el-col :span="6" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">주제</el-col>
-      <el-col :span="4" class="subCategory" style="font-size: 13px;">
+    <el-row type="flex" align="middle" style="padding: 0.5vh 0">
+      <el-col :span="6" style="text-align: left; padding-left: 30px; font-size: 14px; font-weight: bold;">주제</el-col>
+      <el-col :span="4" class="subCategory" style="font-size: 14px;">
         <div :class="{ selected: data.post.subCategory == 0}" @click="data.post.subCategory = 0">일반</div>
       </el-col>
-      <el-col :span="4" class="subCategory" style="font-size: 13px;">
+      <el-col :span="4" class="subCategory" style="font-size: 14px;">
         <div :class="{ selected: data.post.subCategory == 1}" @click="data.post.subCategory = 1">정보</div>
       </el-col>
-      <el-col :span="4" class="subCategory" style="font-size: 13px;">
+      <el-col :span="4" class="subCategory" style="font-size: 14px;">
         <div :class="{ selected: data.post.subCategory == 2}" @click="data.post.subCategory = 2">질문</div>
       </el-col>
       <el-col :span="6"></el-col>
     </el-row><hr>
     <!-- 공개범위 -->
-    <el-row type="flex" align="middle">
-      <el-col :span="6" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">공개범위</el-col>
-      <el-col :span="4" class="access" style="font-size: 13px;">
+    <el-row type="flex" align="middle" style="padding: 0.5vh 0">
+      <el-col :span="6" style="text-align: left; padding-left: 30px; font-size: 14px; font-weight: bold;">공개범위</el-col>
+      <el-col :span="4" class="access" style="font-size: 14px;">
         <div :class="{ selected: data.post.access == 0}" @click="data.post.access = 0">전체</div>
       </el-col>
-      <el-col :span="4" class="access" style="font-size: 13px;">
+      <el-col :span="4" class="access" style="font-size: 14px;">
         <div :class="{ selected: data.post.access == 1}" @click="data.post.access = 1">친구</div>
       </el-col>
-      <el-col :span="4" class="access" style="font-size: 13px;">
+      <el-col :span="4" class="access" style="font-size: 14px;">
         <div :class="{ selected: data.post.access == 2}" @click="data.post.access = 2">비공개</div>
       </el-col>
       <el-col :span="2"></el-col>
-      <el-col :span="3" class="access" style="font-size: 13px;">
+      <el-col :span="3" class="access" style="font-size: 14px;">
         <div v-if="data.post.category==2" :class="{ selected: data.post.anonymous}" @click="data.post.anonymous ^= 1">익명</div>
       </el-col>
       <el-col :span="1"></el-col>
     </el-row><hr>
     <!-- 내용 -->
-    <textarea class="textarea" placeholder="글 내용을 작성해주세요" v-model="data.post.content"></textarea>
+    <textarea class="textarea" style="padding-left: 30px; font-size: 14px;" placeholder="글 내용을 작성해주세요" v-model="data.post.content"></textarea>
     <hr>
     <!-- 해시태그 -->
     <el-row type="flex" align="middle">
-      <el-col :span="6" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">해시태그</el-col>
+      <el-col :span="6" style="text-align: left; padding-left: 30px; font-size: 14px; font-weight: bold;">해시태그</el-col>
       <el-col :span="17" style="padding-left: 10px;"><el-input placeholder="#달리기 #추천_메뉴" v-model="data.hashtag.word" clearable></el-input></el-col>
       <el-col :span="1"></el-col>
     </el-row>
@@ -85,6 +89,7 @@
 </template>
 
 <script>
+import KiwiHeader from "@/components/KiwiHeader";
 import SERVER from "@/api/drf.js"
 import axios from 'axios';
 
@@ -161,22 +166,22 @@ export default {
     checkData() {
       console.log("this.data.post.title", this.data.post.title);
       if (this.data.post.image == "" && document.getElementById("input-file").files[0] == undefined) {
-        alert('이미지를 입력하세요.')
+        this.$alert("이미지를 입력하세요.");
       }
       else if (this.data.post.title == "" ) {
-        alert('제목을 입력하세요.')
+        this.$alert("제목을 입력하세요.");
       }
       else if (this.data.post.title.length > 40 ) {
-        alert('제목은 40자 이내로 작성해주세요.')
+        this.$alert("제목은 40자 이내로 작성해주세요.");
       }
       else if (this.data.post.content == "") {
-        alert('글 내용을 작성하세요.')
+        this.$alert("글 내용을 작성하세요.");
       }
       else if (this.data.post.content.length > 1500) {
-        alert('내용은 1500자 이내로 작성해주세요.')
+        this.$alert("내용은 1500자 이내로 작성해주세요.");
       }
       else if (this.data.hashtag.word.length > 20) {
-        alert('해시태그는 20자 이내로 작성해주세요.')
+        this.$alert("해시태그는 20자 이내로 작성해주세요.");
       }
       else {
         this.uploadImage()
@@ -196,7 +201,7 @@ export default {
           this.submit()
         })
         .catch(err => {
-          alert('이미지를 업로드하는 도중 에러가 발생했습니다.')
+          this.$alert("이미지를 업로드하는 도중 에러가 발생했습니다.");
           console.log('통신 실패')
           console.error(err.response.data)
         })
@@ -216,6 +221,7 @@ export default {
         }
         else await axios.post(`${SERVER.URL}${SERVER.ROUTES.feedPost}`, data);
         alert('등록이 완료되었습니다.')
+        this.$alert("Hello Vue Simple Alert.");
         if(this.editing) {
           this.$router.go(-1);
         } else {
@@ -230,6 +236,9 @@ export default {
       this.$router.go(-1)
     },
   },
+  components: {
+    KiwiHeader,
+  }
 };
 </script>
 
@@ -238,13 +247,14 @@ export default {
   position: fixed;
   bottom: 0px;
   background-color: #ADEC6E;
-  color: white;
+  color: black;
   width: 100%;
   height: 48px;
   display:flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  font-family: TmoneyRoundWindRegular;
 }
 
 hr {

@@ -44,6 +44,7 @@ export default {
       this.getInitialScrapList();
     }
     else {
+      this.$store.state.selectedSubCategory = 0;
       this.getInitialCommunityInfo();
     }
 	},
@@ -56,7 +57,7 @@ export default {
     category() {
       this.initPage();
       if(this.category == 3) {
-        this.$store.state.selectedSubCategory = 3;
+        this.$store.state.selectedSubCategory = 0;
         this.getInitialCommunityInfo();
       }
       else {
@@ -66,8 +67,13 @@ export default {
     },
     selectedSubCategory() {
       this.initPage();
-      this.getInitialPostListByCategory();
       this.$emit("changeSubCategory");
+      if(this.category == 3) {
+        this.getInitialCommunityInfo();
+      }
+      else {
+        this.getInitialPostListByCategory();
+      }
     },
     keyword() {
       this.initPage();
@@ -75,7 +81,7 @@ export default {
         this.searchPostByCategory = false;
         this.searchAllPost = false;
         if(this.category == 3) {
-          this.$store.state.selectedSubCategory = 3;
+          this.$store.state.selectedSubCategory = 0;
           this.getInitialCommunityInfo();
         }
         else {
@@ -119,6 +125,7 @@ export default {
       try {
         const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}category?category=${this.category}&page=${this.limit}&subCategory=${this.$store.state.selectedSubCategory}`)
         this.communityArticles = response.data
+        console.log(response.data);
       } catch(err) {
         console.log(err)
       }
@@ -141,7 +148,7 @@ export default {
     },
     async getInitialScrapList() {
       try {
-        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.feed}${this.userId}${SERVER.ROUTES.scrap}?category=${this.category}&page=${this.limit}`)
+        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.feed}${this.userId}${SERVER.ROUTES.scrap}?page=${this.limit}`)
         this.communityArticles = response.data
       } catch(err) {
         console.log(err)
@@ -157,7 +164,7 @@ export default {
     },
     async getScrapList() {
       try {
-        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.feed}${this.userId}${SERVER.ROUTES.scrap}?category=${this.category}&page=${this.limit}`)
+        const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.feed}${this.userId}${SERVER.ROUTES.scrap}?page=${this.limit}`)
         return response.data
       } catch(err) {
         console.log(err)

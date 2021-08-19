@@ -1,9 +1,13 @@
 <template>
   <div>
     <Navbar />
-    <h1>체중 기록하기</h1>
+    <h1 style="font-family: 'TmoneyRoundWindRegular';">체중 기록하기</h1>
     <WeiCalender />
-    <router-link :to="{ name: 'WeightRecordPast' }" class="past-weight-button" >과거 기록 확인하기</router-link>
+    <br>
+    <div>
+      <router-link :to="{ name: 'WeightRecordPast' }" class="past-weight-button" >과거 기록 확인하기</router-link>
+    </div>
+    
   </div>
 </template>
 
@@ -35,7 +39,7 @@ export default {
 
     // 나만보기
     if (this.userId != this.myId) {
-      alert('다른 사람의 계정입니다. 열람하실 수 없습니다.')
+      alert("다른 사람의 계정은 열람하실 수 없습니다.");
       this.$router.go(-1)
     }
   },
@@ -48,9 +52,12 @@ export default {
     color: #1989FA;
   }
   .past-weight-button {
+    text-decoration: none;
     background: #ADEC6E;
     border-width: 0px;
     border-radius: 5px;
     color: black;
+    font-size: 13px;
+    margin-top: 2vh;
   }
 </style>

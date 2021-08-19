@@ -2,7 +2,7 @@
   <div>
     <div class="badge-container">
       <div class="badge-image-wrapper" v-for="(badge, idx) in badges" :key="idx">
-        <img class="badge-image" :src="imageServer + badge.image" alt="badge image">
+        <img class="badge-image" :src="imageServer + badge.image" :title="badge.name" alt="badge image">
       </div>
     </div>
     <div class="rest"></div>

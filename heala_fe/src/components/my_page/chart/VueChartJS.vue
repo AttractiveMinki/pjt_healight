@@ -45,7 +45,7 @@
         currentDay: new Date().getDate(),
         calcDates: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
         hotcalcDates: [[], [], [], [], [], []],
-        toggleMessage: "월간 기록 보기",
+        toggleMessage: "월간 기록 보러 가기",
       }
     },
     created () {
@@ -205,7 +205,7 @@
         }
         else
         {
-          alert('최근 24주 이내 기록만 확인할 수 있습니다.')
+          this.$alert('최근 24주 이내 기록만 확인할 수 있습니다.');
         }
       },
       pageup() {
@@ -215,7 +215,7 @@
         }
         else
         {
-          alert('미래의 기록은 확인할 수 없습니다.')
+          this.$alert('미래의 기록은 확인할 수 없습니다.');
         }
       },
       // getRandomInt () {
@@ -258,12 +258,12 @@
         if (this.type == "week") {
           this.type = "month"
           this.getWeightInformationMonth()
-          this.toggleMessage="주간 기록 보기"
+          this.toggleMessage="주간 기록 보러 가기"
         }
         else {
           this.type = "week"
           this.getWeightInformation()
-          this.toggleMessage="월간 기록 보기"
+          this.toggleMessage="월간 기록 보러 가기"
         }
       },
     }

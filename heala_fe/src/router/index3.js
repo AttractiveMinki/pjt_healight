@@ -26,15 +26,16 @@ import KiwiDiet from "@/views/challenge/kiwi/KiwiDiet"
 import KiwiHeart from "@/views/challenge/kiwi/KiwiHeart"
 import KiwiSpecial from "@/views/challenge/kiwi/KiwiSpecial"
 import MyMain from "@/views/challenge/my/MyMain"
-import SendToMain from "@/components/SendToMain"
+// import SendToMain from "@/components/SendToMain"
 import OCRTest from "@/components/my_page/profile/OCRTest"
 import PageNotFound from "@/components/home/PageNotFound"
 
 export default [
   {
     path: "/",
-    name: "SendToMain",
-    component: SendToMain,
+    redirect: '/user/login'
+    // name: "SendToMain",
+    // component: SendToMain,
   },
   {
     path: "/user/signup",
