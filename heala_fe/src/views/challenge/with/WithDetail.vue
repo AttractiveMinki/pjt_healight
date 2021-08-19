@@ -134,7 +134,7 @@ export default {
     joinChallenge: function () {
       axios.post(`${SERVER.URL}${SERVER.ROUTES.joinWithChallenge}?userId=${this.$store.state.userId}&withChallengeId=${this.$route.params.id}`)
         .then (() => {
-          alert('챌린지에 참가하셨습니다.')
+          this.$alert("챌린지에 참가하셨습니다.");
         })
         .catch((err) => {
           console.log(err)

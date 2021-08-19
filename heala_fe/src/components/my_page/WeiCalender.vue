@@ -234,7 +234,7 @@ export default {
           "weight": this.weight,
         }
         await axios.post(`${SERVER.URL}${SERVER.ROUTES.getMonthWeiRecord}`, data)
-        alert('체중 입력이 완료되었습니다.')
+        this.$alert("체중 입력이 완료되었습니다.");
       } catch(err) {
         console.log(err)
       }

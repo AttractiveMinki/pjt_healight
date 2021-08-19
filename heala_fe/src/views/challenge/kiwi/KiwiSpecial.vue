@@ -159,9 +159,9 @@ export default {
         .then((res) => {
           console.log(res)
           if (res.data == "") {
-            alert('챌린지 실패')
+            this.$alert("챌린지 실패");
           } else {
-            alert('챌린지 성공!')
+            this.$alert("챌린지 성공!");
             history.go(0);
           }
           // 챌린지 성공!

@@ -39,7 +39,7 @@ export default {
 
     // 나만보기
     if (this.userId != this.myId) {
-      alert('다른 사람의 계정입니다. 열람하실 수 없습니다.')
+      alert("다른 사람의 계정은 열람하실 수 없습니다.");
       this.$router.go(-1)
     }
   },

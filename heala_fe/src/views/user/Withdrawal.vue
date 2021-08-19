@@ -61,7 +61,7 @@ export default {
             axios.delete(`${SERVER.URL}${SERVER.ROUTES.withdrawal}/${this.$store.state.userId}`)
             .then((res) => {
               console.log(res)
-              alert('삭제가 완료되었습니다. 그동안 이용해주셔서 감사합니다.')
+              this.$alert("삭제가 완료되었습니다. 그동안 이용해주셔서 감사합니다.");
               localStorage.removeItem('userIdentity')
               localStorage.removeItem('jwt')
               localStorage.removeItem('userName')
@@ -72,7 +72,7 @@ export default {
               console.log(err.response.data)
             })
           } else {
-            alert('현재 접속한 아이디와 탈퇴하는 아이디가 다릅니다. 재접속 후 시도해주세요.')
+            this.$alert("현재 접속한 아이디와 탈퇴하는 아이디가 다릅니다. 재접속 후 시도해주세요.");
           }
           this.showDeleteModal = false
 
@@ -82,7 +82,7 @@ export default {
         .catch((err) => {
           console.log(err)
           console.error(err.response.data)
-          alert('아이디나 비밀번호가 일치하지 않습니다.')
+          this.$alert("아이디나 비밀번호가 일치하지 않습니다.");
           this.showDeleteModal = false
       })
     },
