@@ -8,17 +8,19 @@
     </el-row>
     <div>
       <!-- 프로필 사진 -->
+      <br>
       <img v-if="data.user.image == ''" src="@/assets/img/profile/user.png" alt="profile_image" width="92" height="92" style="border-radius: 50%;">
       <img v-else-if="this.selectKey != 1" :src="imageServer + data.user.image" alt="profile_image" width="92" height="92" style="border-radius: 50%;">
       <img v-else :src="data.user.image" alt="profile_image" width="92" height="92" style="border-radius: 50%;"><br>
+      <br>
       <label for="change_image" class="btn-file">
         <span style="font-size: 13px; font-weight: bold; color: #4CB748;">프로필 사진 변경</span>
       <input type="file" id="change_image" style="display: none;" @change="selectFile" /></label>
       <!-- 아이디 -->
       <el-row type="flex" align="middle" style="margin: 30px 0 20px 0;">
         <el-col :span="6" style="font-weight: bold; font-size: 13px;">아이디</el-col>
-        <el-col :span="13"><input class="set-button" placeholder="아이디를 작성해주세요" v-model="identity" clearable style="background-color"></el-col>
-        <el-col :span="4"><button class="check-identity-button" size="small" type="primary" round @click="checkIdentity(data.user.identity)">중복확인</button></el-col>
+        <el-col :span="12"><input class="set-button" placeholder="아이디를 작성해주세요" v-model="identity" clearable style="background-color"></el-col>
+        <el-col :span="5" style="display: grid; justify-content: end;"><button class="check-identity-button" size="small" type="primary" round @click="checkIdentity(data.user.identity)">중복확인</button></el-col>
       </el-row>
       <div class="error-text" v-if="error.identity">{{ error.identity }}</div>
       <div class="error-text" v-if="error.check_identity">{{ error.check_identity }}</div>
@@ -331,7 +333,8 @@ export default {
     width: 100%;
     height: 3vh;
     background-color: white;
-    color: b;
+    border: 1px gray solid;
+    border-radius: 5px;
     padding: 1vw;
     margin: 2vw;
   }
@@ -347,6 +350,7 @@ export default {
   }
   .post-image {
     width: 6%;
+    margin: 1vw;
   }
   .set-button {
     width: 95%;
@@ -368,12 +372,12 @@ export default {
     padding-top: 2vh;
   }
   .check-identity-button {
-    width: 85%;
+    width: 100%;
     height: 4vh;
     font-size: 12px;
     background-color: white; 
     color: black;
     border-radius: 20px;
-    border: 1px solid #ADEC6E; 
+    border: 1.5px #4CB748 solid; 
   }
 </style>
