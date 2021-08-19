@@ -23,28 +23,23 @@
                 <el-col style="text-align: start"><span>{{ with_challenge.startDate }} ~ {{ with_challenge.endDate  }}</span></el-col>
               </router-link>
               <div style="display: flex; justify-content: start; align-items: center; padding-left: 10px;">
-                <img class="image" src="@/assets/img/writing_upload.png" alt="" @click="dialogVisible.first = true">
+                <!-- 작게 보기 -->
+                <img v-if="certify.image == ''" class="image" src="@/assets/img/writing_upload.png" alt="">
+                <img v-else :src="certify.image" style="width: 25px; height: 25px; margin-right: 5px" alt="certify_image" @click="dialogVisible.first = true">
+                <!-- 크게 보기 -->
                 <el-dialog :visible.sync="dialogVisible.first" width="95%">
-                  <img :src="imgUrl.first" alt="" width="99%">
+                  <img :src="certify.image" alt="certify_image" width="99%">
                 </el-dialog>
-                <img class="image" src="@/assets/img/writing_upload.png" alt="" @click="dialogVisible.second = true">
-                <el-dialog :visible.sync="dialogVisible.second" width="95%">
-                  <img :src="imgUrl.second" alt="" width="99%">
-                </el-dialog>
-                <img class="image" src="@/assets/img/writing_upload.png" alt="" @click="dialogVisible.third = true">
-                <el-dialog :visible.sync="dialogVisible.third" width="95%">
-                  <img :src="imgUrl.third" alt="" width="99%">
-                </el-dialog>
-                <img class="image" src="@/assets/img/writing_upload.png" alt="" @click="dialogVisible.fourth = true">
-                <el-dialog :visible.sync="dialogVisible.fourth" width="95%">
-                  <img :src="imgUrl.fourth" alt="" width="99%">
-                </el-dialog>
+
                 <button class="my-pictures-button" @click="goToCertifyImage(with_challenge.id)">내 인증사진 <br> 모아보기</button>
                 
               </div>
             </el-col>
             <el-col :span="6">
-              <label class="input-file-button" for="input-file">+</label>
+              <label for="input-file">
+                <font-awesome-icon icon="image" class="input-file-button" alt="사진을 선택하세요." />
+                <div class="margin-tb">사진 첨부하기</div>
+              </label>
               <input type="file" id="input-file" style="display: none;" @change="selectFile"/>
               <!-- <img src="" alt="">
               {{ with_challenge.image }} -->
@@ -70,6 +65,11 @@ export default {
   name: "MyMain",
   data() {
     return {
+      certify: {
+        image: "",
+        userId: "",
+        withChallengeId: "",
+      },
       imgCnt: 0,
       title: "",
       category: "",
@@ -77,10 +77,9 @@ export default {
       scope: "",
       contents: "",
       hashtag: "",
-      dialogVisible: {"first":false, "second":false, "third":false, "fourth":false, "fifth":false},
-      imgUrl: {"first":"", "second":"", "third":"", "fourth":"", "fifth":""},
+      dialogVisible: {"first":false},
+      imgUrl: {"first":""},
       values: "",
-      userId: "",
     }
   },
   components: {
@@ -90,6 +89,7 @@ export default {
   },
   created() {
     this.$store.commit("GET_USERID");
+    this.certify.userId = this.$store.state.userId
     this.getMyChallenge();
     this.$store.state.selectedRouter = 3;
   },
@@ -100,15 +100,11 @@ export default {
     SetCurrentPageId: function (getId) {
       this.$store.state.currentPageId = getId
     },
+
     selectFile(e) {
       const file = e.target.files[0];
-      document.getElementsByClassName("image")[this.imgCnt].src = URL.createObjectURL(file);
-      if(this.imgCnt === 0) this.imgUrl.first = URL.createObjectURL(file);
-      else if(this.imgCnt === 1) this.imgUrl.second = URL.createObjectURL(file);
-      else if(this.imgCnt === 2) this.imgUrl.third = URL.createObjectURL(file);
-      else if(this.imgCnt === 3) this.imgUrl.fourth = URL.createObjectURL(file);
-      else if(this.imgCnt === 4) this.imgUrl.fifth = URL.createObjectURL(file);
-      this.imgCnt++;
+      this.certify.image = URL.createObjectURL(file);
+      console.log(this.certify.image)
     },
     uploadImage(withChallengeId) {
       let formData = new FormData()
@@ -116,53 +112,26 @@ export default {
       formData.append("file", imgFile)
       axios.post(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`, formData, { headers: {"Content-Type" : "multipart/form-data"}})
         .then(res => {
-          this.submit(res.data, withChallengeId)
+          this.certify.image = res.data
+          this.certify.withChallengeId = withChallengeId
+          this.submit(this.certify)
         })
         .catch(err => {
+          alert('이미지 업로드에 실패했습니다.')
           console.error(err.response.data)
         })
       },
-    submit(certifyImage, withChallengeId) {
-      axios.post(SERVER.URL + SERVER.ROUTES.certify, {
-        image: certifyImage,
-        userId: this.userId,
-        withChallengeId,
-      })
+    submit(certify) {
+      axios.post(SERVER.URL + SERVER.ROUTES.certify, certify)
         .then(response => {
           if(response.status === 200) {
             alert('등록 완료')
           }
         })
         .catch(error => {
+          alert('오류가 발생했습니다.')
           console.log(error);
         });
-    },
-    category_click(e) {
-      for(var i = 0; i < 3; i++) {
-        document.getElementsByClassName("category")[i].style.fontWeight = "normal";
-        document.getElementsByClassName("category")[i].style.color = "black";
-      }
-      let dom = e.target.parentNode;
-      dom.style.fontWeight = "bold";
-      dom.style.color = "#ADEC6E";
-    },
-    subject_click(e) {
-      for(var i = 0; i < 3; i++) {
-        document.getElementsByClassName("subject")[i].style.fontWeight = "normal";
-        document.getElementsByClassName("subject")[i].style.color = "black";
-      }
-      let dom = e.target.parentNode;
-      dom.style.fontWeight = "bold";
-      dom.style.color = "#ADEC6E";
-    },
-    scope_click(e) {
-      for(var i = 0; i < 3; i++) {
-        document.getElementsByClassName("scope")[i].style.fontWeight = "normal";
-        document.getElementsByClassName("scope")[i].style.color = "black";
-      }
-      let dom = e.target.parentNode;
-      dom.style.fontWeight = "bold";
-      dom.style.color = "#ADEC6E";
     },
     getMyChallenge: function () {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getMyChallenge}${this.$store.state.userId}`)
@@ -250,17 +219,21 @@ export default {
   }
   .input-file-button{
     width: 40px;
-    height: 40px;
+    height: 30px;
     background-color:#ADEC6E;
-    border-radius: 50%;
     color: white;
     cursor: pointer;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
+    margin-top: 10px;
   }
   .image {
     width: 20px;
     height: 20px;
     margin-right: 10px; border-radius: 5px; cursor: pointer;
+  }
+  .margin-tb {
+    font-size: 11px;
+    margin-bottom: 10px;;
   }
 </style>

@@ -10,8 +10,12 @@
       <!-- 프로필 사진 -->
       <br>
       <img v-if="data.user.image == ''" src="@/assets/img/profile/user.png" alt="profile_image" width="92" height="92" style="border-radius: 50%;">
-      <img v-else-if="this.selectKey != 1" :src="imageServer + data.user.image" alt="profile_image" width="92" height="92" style="border-radius: 50%;">
-      <img v-else :src="data.user.image" alt="profile_image" width="92" height="92" style="border-radius: 50%;"><br>
+      <img v-else-if="this.selectKey != 1" :src="imageServer + data.user.image" alt="profile_image" width="92" height="92" style="border-radius: 50%;" @click="dialogVisible.first = true">
+      <img v-else :src="data.user.image" alt="profile_image" width="92" height="92" style="border-radius: 50%;" @click="dialogVisible.first = true"><br>
+      <el-dialog :visible.sync="dialogVisible.first" width="95%">
+        <img v-if="this.selectKey != 1" :src="imageServer + data.user.image" alt="profile_image" width="99%">
+        <img v-else :src="data.user.image" alt="profile_image" width="99%"><br>
+      </el-dialog>
       <br>
       <label for="change_image" class="btn-file">
         <span style="font-size: 13px; font-weight: bold; color: #4CB748;">프로필 사진 변경</span>
@@ -107,6 +111,7 @@ export default {
       identity: "",
       selectKey: 0, // 0이면 web에 있는 프로필 사진 갖고오기, 1이면 변경된 프로필 사진 갖고오기
       originalImage: "",
+      dialogVisible: {"first":false },
     };
   },
   methods: {
