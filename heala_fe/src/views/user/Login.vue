@@ -17,7 +17,7 @@
       </div> -->
       <br>
       <button class="bg-green get-input join-button-setting" @click="login(data)">로그인</button>
-      <div class="signup-botton" @click="goSignup()">가입하기</div>
+      <div class="signup-button" @click="goSignup()">가입하기</div>
     </el-row>
   </div>
 </template>
@@ -86,15 +86,18 @@ export default {
     border-width: 0px;
     border-radius: 5px;
     width: 80%;
-    height: 50px;
+    height: 40px;
+    padding-left: 10px;
+    box-sizing: border-box;
     /* margin-bottom: 10px; */
   }
-  .signup-botton {
+  .signup-button {
     text-align: center;
     /* border-width: 0px; */
     /* border-radius: 5px; */
-    height: 40vh;
-    margin: 10px 20px;
+    width: 100px;
+    height: 30px;
+    margin: 20px auto;
     /* padding: 0px 2px; */
     color: #76D418;
   }
