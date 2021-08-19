@@ -39,10 +39,8 @@ export default {
   .justify-content-space-between {
     display: flex;
     justify-content: space-between;
-    /* margin-left: 5%; */
-    /* margin-right: 5%; */
-    /* padding-left: 25px; */
-    /* padding-right: 9%; */
+    padding-left: 5%;
+    padding-right: 5%;
   }
   .head-text {
     text-align: start;
@@ -55,7 +53,7 @@ export default {
   .challenge-text {
     width: 40%;
     font-weight: bold; 
-    font-size: 18px;
+    font-size: 17px;
     text-align: left;
     padding-left: 5vw; 
   }

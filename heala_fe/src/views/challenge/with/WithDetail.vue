@@ -26,7 +26,7 @@
       <el-col :span="24" class="text-decoration-title">
         <el-image class="margin-left-10"
           style="width: 100%; height: 20vh"
-          :src="value.withChallenge.image" 
+          :src="imageServer + value.withChallenge.image" 
           >
         </el-image>
       </el-col>
@@ -73,8 +73,7 @@
 
     <el-row>
       <el-col id="challenge-certifyinfo" style="margin: 2%; text-align: start">
-        <!-- <router-link :to="{ name: 'WithDetail' }" class="text-decoration-category selected-category" >소개</router-link>  -->
-        인증하러가기
+        <router-link :to="{ name: 'MyMain' }" class="text-decoration-category selected-category" >인증하러가기</router-link> 
       </el-col>
     </el-row>
 
@@ -110,6 +109,7 @@ export default {
     return {
       value: [],
       dataLoaded: false,
+      imageServer: SERVER.IMAGE_URL,
     }
   },
   // props: {
@@ -173,7 +173,7 @@ export default {
     font-weight: bold;
   }
   .text-challenge-title {
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
   }
   .text-hashtag-detail {

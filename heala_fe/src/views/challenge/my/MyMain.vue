@@ -22,6 +22,9 @@
                 </div>
                 <el-col style="text-align: start"><span>{{ with_challenge.startDate }} ~ {{ with_challenge.endDate  }}</span></el-col>
               </router-link>
+              <div style="text-align: start; font-size: 11px">
+                달성률: {{ with_challenge.achievement }}%
+              </div>
               <div style="display: flex; justify-content: start; align-items: center; padding-left: 10px;">
                 <!-- 작게 보기 -->
                 <img v-if="certify.image == ''" class="image" src="@/assets/img/writing_upload.png" alt="">
@@ -41,8 +44,6 @@
                 <div class="margin-tb">사진 첨부하기</div>
               </label>
               <input type="file" id="input-file" style="display: none;" @change="selectFile"/>
-              <!-- <img src="" alt="">
-              {{ with_challenge.image }} -->
             </el-col>
             <button id="submit" class="my-pictures-button" @click="uploadImage(with_challenge.id)">인증하기</button>
           </div>
@@ -181,7 +182,7 @@ export default {
   }
   .text-title {
     font-weight: bold; 
-    font-size: 16px;
+    font-size: 15px;
     margin-bottom: 5px;
     white-space : nowrap; /* 한 줄 제한*/
     overflow : hidden; /* 넘어가는 글자 숨기기 */
