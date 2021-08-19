@@ -1,7 +1,7 @@
 <template>
   <div class="user-image-wrapper" v-bind:style="{ width: width + 'px', height: height + 'px'}">
     <img v-if="image" :src="imageServer + image" alt="profile_image" class="user-image">
-    <img v-else src="@/assets/image/user.png" alt="" class="user-image">
+    <img v-else :src="imageServer + `admin/default`" alt="" class="user-image">
   </div>
 </template>
 
