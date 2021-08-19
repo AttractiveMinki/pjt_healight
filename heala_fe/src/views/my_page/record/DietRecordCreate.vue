@@ -21,7 +21,7 @@
     <div style="font-size: 13px">영양정보 사진을 첨부해보세요!</div>
     <br>
     <div>
-      <img v-if="image == ''" src="@/assets/img/profile/user.png" alt="profile_image" width="92" height="92" style="border-radius: 50%;">
+      <img v-if="image == ''" src="@/assets/img/nutri_info.png" alt="profile_image" width="92" height="92">
       <img v-else :src="image" alt="profile_image" width="92" height="92"><br>
       <label for="image" class="btn-file">
         <input name="image" type="file" @change="selectFile" id="change_image"/>
@@ -61,7 +61,7 @@
     <button @click="plus" class="select-food-number">+1개</button>
     <button @click="twice" class="select-food-number">2배</button>
     <br>
-    <button id="addFoods" class="bg-green get-input join-button-setting" @click="addFoods(foods)">추가하기</button>
+    <button id="addFoods" class="bg-green get-input join-button-setting" @click="checkFoods(foods)">추가하기</button>
     </el-row>
   </div>
 </template>
@@ -109,21 +109,54 @@ export default {
   },
   methods: {
     getFoodInfo() {
+      console.log('들어왔쥬')
       if (this.foodNameSearch != '')
       {
         axios.get(`${SERVER.URL}${SERVER.ROUTES.getFoodnutrient}?desc_kor=${this.foodNameSearch}`)
           .then((res) => {
+            
             this.foodList = res.data.body.items
+            if (this.foodList == undefined) {
+              alert('조회된 내용이 없습니다. ㅠ_ㅠ \n 상품의 이름을 검색해보세요! \n ex) 초코파이')
+            }
           })
           .catch((err) => {
             console.log(err)
           })
       }
+      else {
+        alert('음식의 이름을 넣어주세요!')
+      }
+    },
+    checkFoods(foods) {
+      if (foods['foodName'] === "") {
+        alert('음식 이름을 입력해주세요!')
+      }
+      else if (foods['calory'] === "") {
+        alert('칼로리 값을 입력해주세요!')
+      }
+      else if (foods['carbohydrate'] === "") {
+        alert('탄수화물 값을 입력해주세요!')
+      }
+      else if (foods['protein'] === "") {
+        alert('단백질 값을 입력해주세요!')
+      }
+      else if (foods['fat'] === "") {
+        alert('지방 값을 입력해주세요!')
+      }
+      else if (foods['sodium'] === "") {
+        alert('나트륨 값을 입력해주세요!')
+      }
+      else {
+        this.addFoods(foods)
+      }
     },
     addFoods(foods) {
+      foods.calory = parseInt(foods.calory)
+      foods.sodium = parseInt(foods.sodium)
       axios.post(`${SERVER.URL}${SERVER.ROUTES.dietupload}`, foods)
         .then (() => {
-          alert('추가 완료!')
+          alert('식단 추가 완료!')
           this.foods['foodName'] = ""
           this.foods['calory'] = ""
           this.foods['carbohydrate'] = ""
@@ -133,7 +166,7 @@ export default {
           scrollBy(0, -document.body.scrollHeight) // 맨 위로 올랴줌
         })
         .catch(() => {
-          console.log('추가 실패')
+          alert('식단을 추가하던 중 오류가 발생했습니다. ㅜ_ㅜ')
         })
     },
     selectFile(e) {
@@ -151,6 +184,7 @@ export default {
       })
       .catch((err) => {
         console.log(err)
+        alert('이미지 인식에 실패하였습니다. ㅠ_ㅠ \n 다른 이미지로 다시 시도해보아요!')
       })
     },
     findNutrient: function (value) {

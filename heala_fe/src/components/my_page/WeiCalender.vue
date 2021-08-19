@@ -74,6 +74,7 @@
         </tr>
       </el-row>
     <div v-if="currentYear == new Date().getFullYear() && currentMonth == new Date().getMonth() + 1">
+      <div class="notice">오늘 체중 기록하기</div>
       <input type="number" class="get-weight" v-model="weight"> kg <el-button @click="setTodayWeight()">저장</el-button>
     </div>
     </table>
@@ -276,11 +277,16 @@ export default {
   }
   .selected-date {
     position: absolute;
-    width: 7vw;
+    width: 5vw;
     height: 1vw;
     background: orange;
   }
   .get-weight:focus {
     outline: none;
+  }
+  .notice{
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 1vh;
   }
 </style>

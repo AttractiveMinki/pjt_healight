@@ -3,6 +3,7 @@
     <Navbar />
     <h1>체중 기록하기</h1>
     <WeiCalender />
+    <br>
     <router-link :to="{ name: 'WeightRecordPast' }" class="past-weight-button" >과거 기록 확인하기</router-link>
   </div>
 </template>
@@ -48,9 +49,11 @@ export default {
     color: #1989FA;
   }
   .past-weight-button {
+    text-decoration: none;
     background: #ADEC6E;
     border-width: 0px;
     border-radius: 5px;
     color: black;
+    font-size: 13px;
   }
 </style>
