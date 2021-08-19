@@ -126,7 +126,7 @@ export default {
 <style scoped>
   #square {
     width: 100%;
-    height: 10px;
+    height: 5px;
     background: #8CBE88;
   }
   #recent-square {
@@ -225,6 +225,7 @@ export default {
     background: #8CBE88;
   }
   .container-box-detail {
+    padding-top: 5px;
     border-radius: 5px;
     height: 30px;
   }
