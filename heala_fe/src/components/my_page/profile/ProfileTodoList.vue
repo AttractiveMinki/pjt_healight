@@ -19,7 +19,7 @@
               <div>식단 기록하기</div>
           </el-col>
           <el-col :span="6">
-            <img class="image" :src="imageServer + `admin/default`" alt="diet">
+            <img class="image" :src="imageServer + `admin/diet`" alt="diet">
           </el-col>
         </el-row>
       </router-link>
@@ -30,7 +30,7 @@
               <div>체중 기록하기</div>
           </el-col>
           <el-col :span="6">
-            <img class="image" :src="imageServer + `admin/default`" alt="physic">
+            <img class="image" :src="imageServer + `admin/body`" alt="physic">
           </el-col>
         </el-row>
       </router-link>
