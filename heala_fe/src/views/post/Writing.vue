@@ -288,7 +288,7 @@ export default {
 
   hr {
     border: 1px solid rgba(240,240,240,1);
-  }
+    }
   .input-file-button{
     width: 40px;
     height: 40px;

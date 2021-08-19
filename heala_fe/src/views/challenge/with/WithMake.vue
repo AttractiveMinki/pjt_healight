@@ -1,88 +1,96 @@
 <template>
   <div>
-    <div class="display-flex justify-content-space-between align-items">
-      <span><font-awesome-icon icon="arrow-left" class="padding-left cursor-pointer" @click="goBack()"/></span>
-      <span class="text-title">챌린지 만들기</span>
-      <!-- <button class="button-color">작성</button> -->
-      <el-button @click="checkChallenge(data)" size="small" type="primary" round style="background-color: #ADEC6E; border: 1px solid #ADEC6E; color: black;">작성</el-button>
+    <div>
+      <kiwi-header>
+        <template v-slot:title>챌린지 만들기
+        </template>
+      </kiwi-header>
     </div>
-    <div id="square" class="margin-line"></div>
-    <el-row>
-      <el-col :span="6" class="community">
-        <span style="font-weight: bold; font-size: 15px">챌린지</span> <br>
-        <span style="font-weight: bold; font-size: 15px">대표 이미지</span>
+    <div class="display-flex justify-content-space-between align-items">
+    </div>
+    <el-row type="flex" align="middle">
+      <el-col :span="6" class="community" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">
+        <span style="text-align: left; padding-left: 16px; font-size: 14px; font-weight: bold;">대표 사진</span>
       </el-col>
+      <!-- <el-row type="flex" align="middle">
+      <el-col :span="6" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">제목</el-col>
+      <el-col :span="17" style="padding-left: 10px;"><el-input placeholder="제목을 작성해주세요" v-model="data.post.title" clearable></el-input></el-col>
+      <el-col :span="1"></el-col>
+    </el-row><hr> -->
       <el-col :span="18">
-        <img v-if="data.withChallenge.image == ''" src="@/assets/img/profile/user.png" alt="profile_image" width="92" height="92" style="border-radius: 50%;">
-        <img v-else :src="data.withChallenge.image" alt="profile_image" width="92" height="92" style="border-radius: 50%;"><br>
+        <img v-if="data.withChallenge.image == ''" src="@/assets/img/challenge.png" alt="profile_image" width="92" height="92" style="border-radius: 10%; border-style: solid; border-color: #f0f0f0">
+        <img v-else :src="data.withChallenge.image" alt="profile_image" width="92" height="92" style="border-radius: 10%;"><br>
         <label for="image" class="btn-file">
-          <span style="font-size: 13px; font-weight: bold; color: #ADEC6E;">챌린지 대표 이미지 변경</span>
+          <span style="font-size: 13px; font-weight: bold; color: #76D418;">이미지 선택하기</span>
           <input name="image" type="file" @change="selectFile" id="change_image"/>
         </label>
       </el-col>
     </el-row>
-    <div id="square" class="margin-line"></div>
-    <el-row>
-      <el-col :span="6" class="community">
-        <span style="font-weight: bold">제목</span>
+    <hr>
+    <el-row type="flex" align="middle">
+      <el-col :span="6" class="community" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">
+        <span style="text-align: left; padding-left: 16px; font-size: 14px; font-weight: bold;">제목</span>
       </el-col>
-      <el-col :span="18">
-        <input type="text" class="get-input" v-model="data.withChallenge.title" style="width:90%" placeholder="예) 하루 1시간 운동하기">
-      </el-col>
-    </el-row>
-    <div id="square" class="margin-line"></div>
-    <el-row>
-      <el-col :span="6" class="community">
-        <span style="font-weight: bold">카테고리</span>
-      </el-col>
-      <el-col :span="18" >
-        <el-button size="small" id="category" class="getCategory" @click="changeCategory(0)">운동</el-button>
-        <el-button size="small" id="category" class="getCategory" @click="changeCategory(1)">식단</el-button>
-        <el-button size="small" id="category" class="getCategory" @click="changeCategory(2)">마음</el-button>
+      <el-col :span="17" style="padding-left: 10px;">
+        <el-input type="text" class="get-input" v-model="data.withChallenge.title" style="width:90%" placeholder="예) 하루 1시간 운동하기"></el-input>
       </el-col>
     </el-row>
-    <div id="square" class="margin-line"></div>
-    <el-row>
-      <el-col :span="6" class="community">
-        <span style="font-weight: bold; font-size: 15px">챌린지 기간</span>
+    <hr>
+    <el-row type="flex" align="middle">
+      <el-col :span="6" class="community" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">
+        <span style="text-align: left; padding-left: 16px; font-size: 14px; font-weight: bold;">카테고리</span>
       </el-col>
-      <el-col :span="18">
-        <input type="date" class="get-input" style="width:35%" v-model="data.withChallenge.startDate" placeholder="시작 날짜를 선택하세요." onfocus="(this.type='date')" id="date">
+      <el-col :span="17" style="padding-left: 10px;" >
+        <el-button size="medium" id="category" class="getCategory" @click="changeCategory(0)">운동</el-button>
+        <el-button size="medium" id="category" class="getCategory" @click="changeCategory(1)">식단</el-button>
+        <el-button size="medium" id="category" class="getCategory" @click="changeCategory(2)">마음</el-button>
+      </el-col>
+    </el-row>
+    <hr>
+    <el-row type="flex" align="middle">
+      <el-col :span="6" class="community" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">
+        <span style="text-align: left; padding-left: 16px; font-size: 14px; font-weight: bold;">기간 설정</span>
+      </el-col>
+      <el-col :span="17" style="padding-left: 10px;">
+        <el-input type="date" class="get-input" style="width:35%" v-model="data.withChallenge.startDate" placeholder="시작 날짜를 선택하세요." onfocus="(this.type='date')" id="date"></el-input>
         <span> ~ </span>
-        <input type="date" class="get-input" style="width:35%" v-model="data.withChallenge.endDate" placeholder="종료 날짜를 선택하세요.">
+        <el-input type="date" class="get-input" style="width:35%" v-model="data.withChallenge.endDate" placeholder="종료 날짜를 선택하세요."></el-input>
       </el-col>
     </el-row>
-    <div id="square" class="margin-line"></div>
-    <el-row>
-      <el-col :span="6" class="community">
-        <span style="font-weight: bold">인증 방법</span>
+    <hr>
+    <el-row type="flex" align="middle">
+      <el-col :span="6" class="community" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">
+        <span style="text-align: left; padding-left: 16px; font-size: 14px; font-weight: bold;">인증 방법</span>
       </el-col>
-     <el-col :span="18">
-        <textarea class="get-input" style="width:90%; height:50px; resize: none" v-model="data.withChallenge.certifyInfo" placeholder="예) 오늘 날짜와 운동 기구 혹은 운동 결과가 보이는 인증샷 찍기"></textarea>
+     <el-col :span="17" style="padding-left: 10px;">
+        <el-input type="textarea" class="get-input" style="width:90%; height:50px; resize: none" v-model="data.withChallenge.certifyInfo" placeholder="예) 오늘 날짜와 운동 기구 혹은 운동 결과가 보이는 인증샷 찍기"></el-input>
       </el-col>
     </el-row>
-    <div id="square" class="margin-line"></div>
-    <el-row>
-      <el-col :span="6" class="community">
-        <span style="font-weight: bold; font-size: 15px">챌린지 소개</span>
+    <hr>
+    <el-row type="flex" align="middle">
+      <el-col :span="6" class="community" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">
+        <span style="text-align: left; padding-left: 16px; font-size: 14px; font-weight: bold;">소개글</span>
       </el-col>
-     <el-col :span="18" type="flex">
-        <textarea class="get-input" style="width:90%; height:150px; resize: none" v-model="data.withChallenge.introduction" placeholder="예) 매일 꾸준한 운동으로 기초 체력을 기릅시다!"></textarea>
+     <el-col :span="17" style="padding-left: 10px;">
+        <textarea class="get-input" style="padding: 5px 15px; width:82%; height:170px; resize: none; border-color: rgb(225 225 225); border-radius: 5px" v-model="data.withChallenge.introduction" placeholder="예) 매일 꾸준한 운동으로 기초 체력을 기릅시다!"></textarea>
       </el-col>
     </el-row>  
-    <div id="square" class="margin-line"></div>
-    <el-row>
-      <el-col :span="6" class="community">
-        <span style="font-weight: bold">해시태그</span>
+    <hr>
+    <el-row type="flex" align="middle">
+      <el-col :span="6" class="community" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">
+        <span style="text-align: left; padding-left: 16px; font-size: 14px; font-weight: bold;">해시태그</span>
       </el-col>
-      <el-col :span="18">
-        <input type="text" class="get-input" v-model="data.challengeHashtag.word" style="width:90%" placeholder="예) #매일 #운동 #가족같은분위기">
+      <el-col :span="17" style="padding-left: 10px;">
+        <el-input type="text" class="get-input" v-model="data.challengeHashtag.word" style="width:90%" placeholder="예) #매일 #운동 #가족같은분위기"></el-input>
       </el-col>
     </el-row>       
+      <!-- <el-button @click="checkChallenge(data)" size="small" type="primary" round style="background-color: #ADEC6E; border: 1px solid #ADEC6E; color: black;">만들기</el-button> -->
+      <div id="submit" @click="checkChallenge(data)">만들기</div>
   </div>
 </template>
 
 <script>
+import KiwiHeader from "@/components/KiwiHeader";
 import axios from 'axios'
 import SERVER from "@/api/drf.js"
 import router from "@/router/index.js"
@@ -201,6 +209,9 @@ export default {
     this.$store.commit("GET_USERID")
     this.data.withChallenge.userId = this.$store.state.userId
   },
+  components: {
+    KiwiHeader,
+  }
 }
 </script>
 
@@ -262,4 +273,23 @@ export default {
   .get-input:focus {
     outline: none; 
   }
+  hr {
+    border: 1px solid #f0f0f0;
+  }
+  #submit {
+  position: fixed;
+  bottom: 0px;
+  background-color: #ADEC6E;
+  color: black;
+  width: 100%;
+  height: 48px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: TmoneyRoundWindRegular;
+}
+textarea::placeholder {
+	color: #cecfd1;
+}
 </style>
