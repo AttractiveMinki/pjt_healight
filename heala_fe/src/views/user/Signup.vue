@@ -3,7 +3,8 @@
     <div>
       <img class="logo-image" src="@/assets/image/kiwi_logo.png" />
     </div>
-    <h1>회원 가입</h1>
+    <br>
+    <!-- <h1>회원 가입</h1> -->
     <div>
       <el-row type="flex" justify="center" align="middle" style="margin: 0 0 0 0;">
           <el-col :span="15" align="middle">
@@ -235,6 +236,7 @@ export default {
 
 <style scoped>
   .logo-image {
+    padding-top: 10%;
     width: 50%;
   }
   .bg-white {
