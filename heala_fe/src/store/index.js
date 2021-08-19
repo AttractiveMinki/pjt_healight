@@ -429,7 +429,7 @@ export default new Vuex.Store({
       })
         .catch((err) => {
           console.log(err)
-          this.$alert("존재하지 않는 회원이거나, 비밀번호가 일치하지 않습니다.");
+          alert("존재하지 않는 회원이거나, 비밀번호가 일치하지 않습니다.");
       })
     },
     logout: function ({ commit }) {

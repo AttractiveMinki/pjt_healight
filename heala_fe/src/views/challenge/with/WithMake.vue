@@ -147,28 +147,28 @@ export default {
       let end = new Date(data.withChallenge.endDate)
       // data.user_id = userid
       if (data.withChallenge.title.length == 0){
-        this.$alert("제목을 작성해주세요.");
+        alert("제목을 작성해주세요.");
       }
       else if (data.withChallenge.category == -1){
-        this.$alert("카테고리를 선택해주세요.");
+        alert("카테고리를 선택해주세요.");
       }
       else if (data.withChallenge.startDate == ''){
-        this.$alert("챌린지 시작 날짜를 선택해주세요.");
+        alert("챌린지 시작 날짜를 선택해주세요.");
       }
       else if (data.withChallenge.endDate == ''){
-        this.$alert("챌린지 종료 날짜를 선택해주세요.");
+        alert("챌린지 종료 날짜를 선택해주세요.");
       }
       else if (start > end) {
-        this.$alert("시작 날짜는 종료 날짜보다 일러야 합니다.");
+        alert("시작 날짜는 종료 날짜보다 일러야 합니다.");
       }
       else if (data.withChallenge.certifyInfo.length == 0){
-        this.$alert("인증 방법을 작성해주세요.");
+        alert("인증 방법을 작성해주세요.");
       }
       else if (data.withChallenge.introduction.length == 0){
-        this.$alert("챌린지 소개를 작성해주세요.");
+        alert("챌린지 소개를 작성해주세요.");
       }
       else if (data.withChallenge.image == "") {
-        this.$alert("챌린지 대표 이미지를 설정해주세요.");
+        alert("챌린지 대표 이미지를 설정해주세요.");
       }
       else {
         this.uploadImage(data)
@@ -193,11 +193,11 @@ export default {
     createChallenge: function (data) {
       axios.post(`${SERVER.URL}${SERVER.ROUTES.withMake}`, data)
         .then(() => {
-          this.$alert("성공적으로 글이 작성되었습니다.");
+          alert("성공적으로 글이 작성되었습니다.");
           router.push({ name: "WithMain" })
         })
         .catch((err) => {
-          this.$alert("전송 실패");
+          alert("전송 실패");
           console.error(err)
         })
     },

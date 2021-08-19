@@ -30,7 +30,7 @@ import SERVER from "@/api/drf.js";
 export default {
     data() {
       return {
-        userId: 1,
+        userId: "",
         postData: [],
         limit: 0,
       }
