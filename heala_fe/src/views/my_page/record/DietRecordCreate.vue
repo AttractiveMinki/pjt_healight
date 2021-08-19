@@ -118,7 +118,7 @@ export default {
             
             this.foodList = res.data.body.items
             if (this.foodList == undefined) {
-              alert('조회된 내용이 없습니다. ㅠ_ㅠ \n 상품의 이름을 검색해보세요! \n ex) 초코파이')
+              this.$alert("조회된 내용이 없습니다. ㅠ_ㅠ \n 상품의 이름을 검색해보세요! \n ex) 초코파이");
             }
           })
           .catch((err) => {
@@ -126,27 +126,27 @@ export default {
           })
       }
       else {
-        alert('음식의 이름을 넣어주세요!')
+        this.$alert("음식의 이름을 넣어주세요!");
       }
     },
     checkFoods(foods) {
       if (foods['foodName'] === "") {
-        alert('음식 이름을 입력해주세요!')
+        this.$alert("음식 이름을 입력해주세요!");
       }
       else if (foods['calory'] === "") {
-        alert('칼로리 값을 입력해주세요!')
+        this.$alert("칼로리 값을 입력해주세요!");
       }
       else if (foods['carbohydrate'] === "") {
-        alert('탄수화물 값을 입력해주세요!')
+        this.$alert("탄수화물 값을 입력해주세요!");
       }
       else if (foods['protein'] === "") {
-        alert('단백질 값을 입력해주세요!')
+        this.$alert("단백질 값을 입력해주세요!");
       }
       else if (foods['fat'] === "") {
-        alert('지방 값을 입력해주세요!')
+        this.$alert("지방 값을 입력해주세요!");
       }
       else if (foods['sodium'] === "") {
-        alert('나트륨 값을 입력해주세요!')
+        this.$alert("나트륨 값을 입력해주세요!");
       }
       else {
         this.addFoods(foods)
@@ -157,7 +157,7 @@ export default {
       foods.sodium = parseInt(foods.sodium)
       axios.post(`${SERVER.URL}${SERVER.ROUTES.dietupload}`, foods)
         .then (() => {
-          alert('식단 추가 완료!')
+          this.$alert("식단 추가 완료!");
           this.foods['foodName'] = ""
           this.foods['calory'] = ""
           this.foods['carbohydrate'] = ""
@@ -167,7 +167,7 @@ export default {
           scrollBy(0, -document.body.scrollHeight) // 맨 위로 올랴줌
         })
         .catch(() => {
-          alert('식단을 추가하던 중 오류가 발생했습니다. ㅜ_ㅜ')
+          this.$alert("식단을 추가하던 중 오류가 발생했습니다. ㅜ_ㅜ");
         })
     },
     selectFile(e) {
@@ -185,7 +185,7 @@ export default {
       })
       .catch((err) => {
         console.log(err)
-        alert('이미지 인식에 실패하였습니다. ㅠ_ㅠ \n 다른 이미지로 다시 시도해보아요!')
+        this.$alert("이미지 인식에 실패하였습니다. ㅠ_ㅠ \n 다른 이미지로 다시 시도해보아요!");
       })
     },
     findNutrient: function (value) {
@@ -295,7 +295,7 @@ export default {
 
     // 다른 사람꺼 보려 하면 추방
     if (this.userId != this.myId) {
-      alert('다른 사람의 계정입니다. 열람하실 수 없습니다.')
+      alert("다른 사람의 계정은 열람하실 수 없습니다.")
       this.$router.go(-1)
     }
     this.number = 0

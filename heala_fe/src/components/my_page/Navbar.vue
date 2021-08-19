@@ -25,19 +25,18 @@
         </el-col>
         <el-col :span="6" class="padding-right">
           <el-submenu index="2">
-            <template slot="title">
-              <font-awesome-icon icon="ellipsis-v" />
-            </template>
-            <el-menu-item index="2-1">
-              <router-link :to="{ name: 'Scrap' }" class="text-decoration-none">저장한 게시글</router-link>
-            </el-menu-item>
-            <el-menu-item index="2-2">
-              <router-link :to="{ name: 'ChangePassword' }" class="text-decoration-none">비밀번호 변경</router-link>
-            </el-menu-item>
-            <!-- <el-menu-item index="2-3">
-              <router-link :to="{ name: 'Withdrawal' }" class="text-decoration-none">회원 탈퇴하기</router-link>
-            </el-menu-item> -->
-            <el-menu-item index="2-3" @click="logout">로그아웃</el-menu-item>
+            <template slot="title"><font-awesome-icon icon="ellipsis-v" /></template>
+              <el-menu-item index="2-1">
+                <router-link :to="{ name: 'Scrap' }" class="text-decoration-none">저장한 게시글</router-link>
+              </el-menu-item>
+              <el-menu-item index="2-2" @click="logout">로그아웃</el-menu-item>
+              <!-- <el-menu-item index="2-3">
+                <router-link :to="{ name: 'ChangePassword' }" class="text-decoration-none">비밀번호 변경</router-link>
+              </el-menu-item> -->
+              <!-- <el-menu-item index="2-3">
+                <router-link :to="{ name: 'Withdrawal' }" class="text-decoration-none">회원 탈퇴하기</router-link>
+              </el-menu-item> -->
+              
             <!-- <el-menu-item index="2-4">신고</el-menu-item> -->
           </el-submenu>
           <!-- <el-menu-item index="3">

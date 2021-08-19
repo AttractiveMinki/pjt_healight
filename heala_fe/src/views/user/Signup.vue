@@ -171,13 +171,13 @@ export default {
     checkIdentity: function (identity) {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.checkIdentity}${identity}`)
         .then(() => {
-          alert("사용 가능합니다!")
+          this.$alert("사용 가능합니다!");
           this.error.check_identity = false
           // commit("SET_CHECKIDENTITY", res)
           this.checkForm();
       })
         .catch(() => {
-          alert("이미 존재하는 아이디입니다.")
+          this.$alert("이미 존재하는 아이디입니다.");
           this.error.check_identity = "이미 존재하는 아이디입니다."
           
           // commit("INIT_CHECKIDENTITY")
@@ -186,13 +186,13 @@ export default {
     checkEmail: function (email) {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.checkEmail}${email}`)
         .then(() => {
-          alert("사용 가능합니다!")
+          this.$alert("사용 가능합니다!");
           //// commit("SET_CHECKEMAIL", res)
           this.error.check_email = false
           this.checkForm();
       })
         .catch(() => {
-          alert("이미 존재하는 이메일입니다.")
+          this.$alert("이미 존재하는 이메일입니다.");
           // commit("INIT_CHECKEMAIL")
           this.error.check_email = "이미 존재하는 이메일입니다."
           // console.log(`${SERVER.URL}${SERVER.ROUTES.checkEmail}${email}`)

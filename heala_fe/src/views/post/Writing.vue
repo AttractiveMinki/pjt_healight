@@ -166,22 +166,22 @@ export default {
     checkData() {
       console.log("this.data.post.title", this.data.post.title);
       if (this.data.post.image == "" && document.getElementById("input-file").files[0] == undefined) {
-        alert('이미지를 입력하세요.')
+        this.$alert("이미지를 입력하세요.");
       }
       else if (this.data.post.title == "" ) {
-        alert('제목을 입력하세요.')
+        this.$alert("제목을 입력하세요.");
       }
       else if (this.data.post.title.length > 40 ) {
-        alert('제목은 40자 이내로 작성해주세요.')
+        this.$alert("제목은 40자 이내로 작성해주세요.");
       }
       else if (this.data.post.content == "") {
-        alert('글 내용을 작성하세요.')
+        this.$alert("글 내용을 작성하세요.");
       }
       else if (this.data.post.content.length > 1500) {
-        alert('내용은 1500자 이내로 작성해주세요.')
+        this.$alert("내용은 1500자 이내로 작성해주세요.");
       }
       else if (this.data.hashtag.word.length > 20) {
-        alert('해시태그는 20자 이내로 작성해주세요.')
+        this.$alert("해시태그는 20자 이내로 작성해주세요.");
       }
       else {
         this.uploadImage()
@@ -201,7 +201,7 @@ export default {
           this.submit()
         })
         .catch(err => {
-          alert('이미지를 업로드하는 도중 에러가 발생했습니다.')
+          this.$alert("이미지를 업로드하는 도중 에러가 발생했습니다.");
           console.log('통신 실패')
           console.error(err.response.data)
         })
@@ -221,6 +221,7 @@ export default {
         }
         else await axios.post(`${SERVER.URL}${SERVER.ROUTES.feedPost}`, data);
         alert('등록이 완료되었습니다.')
+        this.$alert("Hello Vue Simple Alert.");
         if(this.editing) {
           this.$router.go(-1);
         } else {

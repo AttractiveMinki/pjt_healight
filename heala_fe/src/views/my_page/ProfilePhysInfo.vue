@@ -85,11 +85,11 @@ export default {
       console.log(data)
       axios.post(`${SERVER.URL}${SERVER.ROUTES.profilePhysInfo}`, data)
       .then(() => {
-        alert('신체 정보가 등록되었습니다!')
+        this.$alert("신체 정보가 등록되었습니다!");
         this.$router.push({ name: "Profile", params: {id: this.data.userId} })
       })
       .catch((err) => {
-        alert('오류가 발생했습니다.')
+        this.$alert("오류가 발생했습니다.");
         console.log(err)
       })
     },

@@ -177,7 +177,7 @@ export default {
     }
     // 다른 사람꺼 보기
     else {
-      alert('다른 사람의 계정입니다. 열람하실 수 없습니다.')
+      alert("다른 사람의 계정은 열람하실 수 없습니다.")
       this.$router.go(-1)
     }
   },

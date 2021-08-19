@@ -97,7 +97,7 @@ export default {
           console.log(this.food_length)
       })
         .catch((err) => {
-          alert("에러가 발생했습니다.")
+          this.$alert("에러가 발생했습니다.");
           console.error(err.response.data)
       })
     },

@@ -36,7 +36,9 @@
 <script>
 import Navbar from "@/components/my_page/Navbar"
 import PV from "password-validator";
-
+import axios from "axios"
+import SERVER from "@/api/drf.js"
+import router from "@/router/index.js"
 
 export default {
   name: "Scrap",
@@ -120,18 +122,19 @@ export default {
       });
       this.isSubmit = isSubmit;
     },
-    // passwordChange: function () {
-    //   axios.post(`${SERVER.URL}${SERVER.ROUTES.passwordChange}`, data)
-    //     .then(() => {
-    //       alert('패스워드가 정상적으로 변경되었습니다.')
-    //       router.push({ name: "Profile" })
-    //   })
-    //     .catch((err) => {
-    //       alert("비밀번호가 일치하지 않습니다.")
-    //       // console.log(`${SERVER.URL}${SERVER.ROUTES.checkEmail}${email}`)
-    //       console.error(err.response.data)
-    //   })
-    // },
+    passwordChange: function () {
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.passwordChange}`, this.data)
+        .then(() => {
+          this.$alert("패스워드가 정상적으로 변경되었습니다.")
+          router.push({ name: "Profile" })
+      })
+        .catch((err) => {
+          console.log(`${SERVER.URL}${SERVER.ROUTES.passwordChange}`)
+          console.log(this.data)
+          this.$alert("비밀번호가 일치하지 않습니다.")
+          console.error(err.response.data)
+      })
+    },
   },
 
 }
