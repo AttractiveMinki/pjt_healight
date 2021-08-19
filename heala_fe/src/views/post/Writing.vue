@@ -76,7 +76,7 @@
     <!-- 해시태그 -->
     <el-row type="flex" align="middle">
       <el-col :span="6" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">해시태그</el-col>
-      <el-col :span="17" style="padding-left: 10px;"><el-input placeholder="해시태그를 작성해주세요" v-model="data.hashtag.word" clearable></el-input></el-col>
+      <el-col :span="17" style="padding-left: 10px;"><el-input placeholder="#달리기 #추천_메뉴" v-model="data.hashtag.word" clearable></el-input></el-col>
       <el-col :span="1"></el-col>
     </el-row>
     <div class="rest"></div>
@@ -87,12 +87,13 @@
 <script>
 import SERVER from "@/api/drf.js"
 import axios from 'axios';
+import router from "@/router/index.js"
 
 export default {
   name: "Writing",
   data: () => {
     return {
-      imgCnt: 0,
+      // imgCnt: 0,
       data: {
         post: {
           title: "",
@@ -154,7 +155,7 @@ export default {
     },
     selectFile(e) {
       const file = e.target.files[0];
-      document.getElementsByClassName("image")[this.imgCnt].src = URL.createObjectURL(file);
+      document.getElementsByClassName("image")[0].src = URL.createObjectURL(file);
       this.imageChanged = true;
       this.imgUrl.first = URL.createObjectURL(file);
     },
@@ -162,23 +163,29 @@ export default {
       if (this.data.post.image == "" && document.getElementById("input-file").files[0] == undefined) {
         alert('이미지를 입력하세요.')
       }
-      else if (data.title == "" ) {
+      else if (data.post.title == "" ) {
         alert('제목을 입력하세요.')
       }
-      else if (data.title == "" ) {
-        alert('제목을 입력하세요.')
+      else if (data.post.title.length > 40 ) {
+        alert('제목은 40자 이내로 작성해주세요.')
       }
-      else if (data.category == "") {
+      else if (data.post.category == "") {
         alert('카테고리를 선택하세요.')
       }
-      else if (data.subCategory == "") {
+      else if (data.post.subCategory == "") {
         alert('주제를 선택하세요.')
       }
-      else if (data.access == "") {
+      else if (data.post.access == "") {
         alert('공개범위를 선택하세요.')
       }
-      else if (data.content == "") {
+      else if (data.post.content == "") {
         alert('글 내용을 작성하세요.')
+      }
+      else if (data.post.content.length > 1500) {
+        alert('내용은 1500자 이내로 작성해주세요.')
+      }
+      else if (data.hashtag.word.length > 20) {
+        alert('해시태그는 20자 이내로 작성해주세요.')
       }
       else {
         this.uploadImage(data)
@@ -198,6 +205,7 @@ export default {
           this.submit(data)
         })
         .catch(err => {
+          alert('이미지를 업로드하는 도중 에러가 발생했습니다.')
           console.log('통신 실패')
           console.error(err.response.data)
         })
@@ -215,16 +223,18 @@ export default {
           await axios.patch(SERVER.URL + SERVER.ROUTES.feedPost + `?postId=${this.$route.params.postId}`, data);
         }
         else await axios.post(`${SERVER.URL}${SERVER.ROUTES.feedPost}`, data);
+        alert('등록이 완료되었습니다.')
+        if(this.editing) {
+          this.$router.go(-1);
+        } else {
+          this.$router.push({ name: "CommunityNewMain" })
+        }
       } catch (error) {
+        alert('글자 수 제한을 확인해주세요.\n 제목: 40자, 내용: 1500자, 해시태그: 20자')
         console.log(error);
       }
-      this.$router.go(-1);
     },
     category_click(e) {
-      // if (this.anonymous != false && e.target.defaultValue != 2) {
-      //   alert('마음 카테고리만 익명을 사용할 수 있습니다.')
-      //   return
-      // }
       for(var i = 0; i < 3; i++) {
         document.getElementsByClassName("category")[i].style.fontWeight = "normal";
         document.getElementsByClassName("category")[i].style.color = "black";

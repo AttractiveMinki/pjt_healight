@@ -80,7 +80,7 @@ export default {
       dialogVisible: {"first":false, "second":false, "third":false, "fourth":false, "fifth":false},
       imgUrl: {"first":"", "second":"", "third":"", "fourth":"", "fifth":""},
       values: "",
-      userId: 1,
+      userId: "",
     }
   },
   components: {
