@@ -36,7 +36,7 @@ export default {
     padding-top: 20px;
   }
   .container-box-detail {
-    border-radius: 5px;
+    /* border-radius: 5px; */
     height: 30px;
   }
   .align-self {

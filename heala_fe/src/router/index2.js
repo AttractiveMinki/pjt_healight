@@ -1,6 +1,5 @@
 import ProfileEdit from "../views/my_page/ProfileEdit.vue";
 import Writing from "../views/post/Writing.vue";
-// import HealHome from "../views/challenge/kiwi/Home.vue";
 
 export default [
   {
@@ -10,12 +9,7 @@ export default [
   },
   {
     path: "/writing",
-    name: "writing",
+    name: "Writing",
     component: Writing,
   },
-  // {
-  //   path: "/healHome",
-  //   name: "healHome",
-  //   component: HealHome,
-  // },
 ]

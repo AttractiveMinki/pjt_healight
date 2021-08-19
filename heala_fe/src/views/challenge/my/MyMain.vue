@@ -88,9 +88,9 @@ export default {
     ChallengeContainerMy,
     Footer,
   },
-  created: function () {
-    this.$store.commit("GET_USERID")
-    this.getMyChallenge()
+  created() {
+    this.$store.commit("GET_USERID");
+    this.getMyChallenge();
   },
   methods: {
     goToCertifyImage(withChallengeId) {
@@ -178,7 +178,6 @@ export default {
       "with_challenges",
     ])
   },
-
 }
 </script>
 

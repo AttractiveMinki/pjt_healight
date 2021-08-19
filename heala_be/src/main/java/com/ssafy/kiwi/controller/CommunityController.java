@@ -34,7 +34,8 @@ public class CommunityController {
 	@GetMapping
 	public ResponseEntity<List<Post>> getAllPostList(@RequestParam int subCategory, int page) {
 		if(subCategory == 3) return new ResponseEntity<>(communityService.getAllBestPostList(page), HttpStatus.OK);
-		else return new ResponseEntity<>(communityService.getAllPostList(page), HttpStatus.OK);
+		else if(subCategory == 0) return new ResponseEntity<>(communityService.getAllPostList(page), HttpStatus.OK);
+		else return new ResponseEntity<>(HttpStatus.CONFLICT);
 	} 
 	
 	@ApiOperation(value = "카테고리와 서브 카테고리에 맞는 글 목록 가져오기")

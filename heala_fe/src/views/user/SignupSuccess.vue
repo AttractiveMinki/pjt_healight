@@ -3,10 +3,11 @@
     <div>
       heala-logos
     </div>
-    <h1>{{ userIdentity }} 회원님</h1>
-    <h1>가입을 축하합니다!</h1>
+    <h2><span class="green">K</span>eepIng WellbeIng</h2>
+    <h2>{{ userIdentity }}님</h2>
+    <h2>환영합니다</h2>
     <br>
-    <h2>내 손 안의 건강 SNS, kiwi</h2>
+    <h2>내 손 안의 건강 SNS, KIWI</h2>
     <h2>지금 시작해보세요!</h2>
     <br>
     <button class="bg-green get-input join-button-setting" @click="gotoLogin()">로그인 화면으로 이동</button>
@@ -51,5 +52,9 @@ export default {
     height: 45px;
     width: 80%;
     cursor: pointer;
+  }
+
+  .green{
+    color: #ADEC6E;
   }
 </style>

@@ -217,7 +217,7 @@ public class UserServiceImpl implements UserService {
 	// 단어를 identity나 name에 포함하는 유저 검색
 	@Override
 	public List<UserFollowOp> getUserListByWord(int userId, String word, int page) {
-		Page<UserFollowOp> userListPage = userRepository.getMemberListByWord(userId, word, PageRequest.of(page, 20, Sort.by("id").descending())); // word 포함하는 유저 리스트
+		Page<UserFollowOp> userListPage = userRepository.getMemberListByWord(word, PageRequest.of(page, 20, Sort.by("id").descending())); // word 포함하는 유저 리스트
 		List<UserFollowOp> userList = userListPage.getContent();
 		for (UserFollowOp user : userList) { // 팔로잉 여부 확인
 			int otherUserId = user.getId();

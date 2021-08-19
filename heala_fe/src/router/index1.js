@@ -6,6 +6,7 @@ import Result from "@/views/challenge/my/Result";
 import CommunityNewMain from "@/views/community/CommunityNewMain";
 import SearchUser from "@/views/home/SearchUser";
 import CommentMore from "@/views/home/CommentMore";
+import Writing from "@/views/post/Writing";
 
 export default [
     {
@@ -47,5 +48,10 @@ export default [
         path: "/search/user",
         name: "SearchUser",
         component: SearchUser,
-    }
+    },
+    {
+        path: "/writing/:postId",
+        name: "PostEdit",
+        component: Writing,
+    },
 ]
