@@ -17,21 +17,21 @@
       <!-- 아이디 -->
       <el-row type="flex" align="middle" style="margin: 30px 0 20px 0;">
         <el-col :span="6" style="font-weight: bold; font-size: 13px;">아이디</el-col>
-        <el-col :span="12"><input class="set-button" placeholder="아이디를 작성해주세요" v-model="identity" clearable style="background-color"></el-col>
-        <el-col :span="6"><el-button size="small" type="primary" round style="background-color: white; border: 1px solid #ADEC6E; color: black; border-radius: 30%;" @click="checkIdentity(data.user.identity)">중복확인</el-button></el-col>
+        <el-col :span="13"><input class="set-button" placeholder="아이디를 작성해주세요" v-model="identity" clearable style="background-color"></el-col>
+        <el-col :span="4"><button class="check-identity-button" size="small" type="primary" round @click="checkIdentity(data.user.identity)">중복확인</button></el-col>
       </el-row>
       <div class="error-text" v-if="error.identity">{{ error.identity }}</div>
       <div class="error-text" v-if="error.check_identity">{{ error.check_identity }}</div>
       <!-- 이름 -->
       <el-row type="flex" align="middle" style="margin-bottom: 20px;">
         <el-col :span="6" style="font-weight: bold; font-size: 13px;">이름</el-col>
-        <el-col :span="12"><input class="set-button" placeholder="이름을 작성해주세요" v-model="data.user.name" clearable></el-col>
-        <el-col :span="6"></el-col>
+        <el-col :span="17"><input class="set-button" placeholder="이름을 작성해주세요" v-model="data.user.name" clearable></el-col>
+        <el-col :span="1"></el-col>
       </el-row>
       <!-- 내 소개 -->
       <el-row type="flex" align="middle" style="margin-bottom: 20px;">
         <el-col :span="6" style="font-weight: bold; font-size: 13px;">내 소개</el-col>
-        <el-col :span="17"><textarea class="textarea set-button" rows="5" placeholder="내 소개를 작성해주세요" v-model="data.user.introduction"></textarea></el-col>
+        <el-col :span="17"><textarea class="textarea" rows="5" placeholder="내 소개를 작성해주세요" v-model="data.user.introduction"></textarea></el-col>
         <el-col :span="1"></el-col>
       </el-row>
       <!-- 대표 뱃지 설정 -->
@@ -330,8 +330,8 @@ export default {
     font-size: 13px;
     width: 100%;
     height: 3vh;
-    background-color: red;
-    color: white;
+    background-color: white;
+    color: b;
     padding: 1vw;
     margin: 2vw;
   }
@@ -349,18 +349,31 @@ export default {
     width: 6%;
   }
   .set-button {
-    width: 90%;
+    width: 95%;
     height: 4vh;
-    border: #CBD2D2 1px solid;
-    border-radius: 10%;
+    border: #CBD2D2 1.5px solid;
+    border-radius: 50px;
+    padding-left: 3vw;
   }
   .set-button:focus {
     outline: none;
   }
   .textarea {
     resize: none;
-    width: 90%;
+    width: 95%;
     height: 15vh;
-    padding: 2vh 1vw;
+    border: #CBD2D2 1.5px solid;
+    border-radius: 20px;
+    padding-left: 3vw;
+    padding-top: 2vh;
+  }
+  .check-identity-button {
+    width: 85%;
+    height: 4vh;
+    font-size: 12px;
+    background-color: white; 
+    color: black;
+    border-radius: 20px;
+    border: 1px solid #ADEC6E; 
   }
 </style>
