@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <h1>체중 기록하기</h1>
+    <h1 style="font-family: 'TmoneyRoundWindRegular';">체중 기록하기</h1>
     <WeiCalender />
     <router-link :to="{ name: 'WeightRecordPast' }" class="past-weight-button" >과거 기록 확인하기</router-link>
   </div>

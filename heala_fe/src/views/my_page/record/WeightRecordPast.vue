@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <h1>체중 기록 확인</h1>
+    <h1 style="font-family: 'TmoneyRoundWindRegular';">체중 기록 확인</h1>
     <VueChartJS />
   </div>
 </template>
