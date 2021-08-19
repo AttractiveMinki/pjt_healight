@@ -164,6 +164,9 @@ export default {
         .then(response => {
           if(response.status === 200) {
             alert('설정 변경이 완료되었습니다.');
+            console.log(data, '--------data')
+            console.log(this.originalIdentity, '-----------identity')
+            console.log(data.user.identity, '-d----useridentity')
             if (this.originalIdentity != data.user.identity) {
               localStorage.setItem('userIdentity', data.user.identity)
               alert('들어왔쥬')
