@@ -3,9 +3,9 @@
     <div class="head-text" style="font-family:SDSamliphopangche_Outline">Challenge</div>
     <el-row>
       <el-col :span="24" class="justify-content-space-between">
-        <span class="challenge-text">다양한 챌린지에 <br>도전해보세요!</span>
+        <span class="challenge-text" style="font-family:IM_Hyemin-Bold">다양한 챌린지에<br>도전해보세요!</span>
         <span id="square" style="text-align:center">
-          <router-link :to="{ name: 'WithMake' }" class="text-decoration-none challenge-make">나만의 챌린지 만들기</router-link>
+          <router-link :to="{ name: 'WithMake' }" class="text-decoration-none challenge-make" style="font-family:TmoneyRoundWindRegular">챌린지 만들기</router-link>
           <font-awesome-icon icon="plus" class="plus-button"/>
         </span>
       </el-col>
@@ -39,8 +39,10 @@ export default {
   .justify-content-space-between {
     display: flex;
     justify-content: space-between;
-    /* padding-left: 5%;
-    padding-right: 5%; */
+    margin-left: 5%;
+    /* margin-right: 5%; */
+    /* padding-left: 25px; */
+    padding-right: 9%;
   }
   .head-text {
     text-align: start;
@@ -53,10 +55,11 @@ export default {
   .challenge-text {
     width: 40%;
     font-weight: bold; 
-    font-size: 16px;
+    font-size: 18px;
+    text-align: left;
   }
   .challenge-make {
-    font-size: 10px;
+    font-size: 13px;
     padding-right: 5px;
   }
   .plus-button {
