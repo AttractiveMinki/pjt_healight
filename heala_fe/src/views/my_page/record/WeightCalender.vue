@@ -4,7 +4,10 @@
     <h1>체중 기록하기</h1>
     <WeiCalender />
     <br>
-    <router-link :to="{ name: 'WeightRecordPast' }" class="past-weight-button" >과거 기록 확인하기</router-link>
+    <div>
+      <router-link :to="{ name: 'WeightRecordPast' }" class="past-weight-button" >과거 기록 확인하기</router-link>
+    </div>
+    
   </div>
 </template>
 
@@ -55,5 +58,6 @@ export default {
     border-radius: 5px;
     color: black;
     font-size: 13px;
+    margin-top: 2vh;
   }
 </style>

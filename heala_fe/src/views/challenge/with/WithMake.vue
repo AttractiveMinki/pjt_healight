@@ -184,7 +184,7 @@ export default {
       axios.post(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`, formData, { headers: {"Content-Type" : "multipart/form-data"}})
         .then(res => {
           data.withChallenge.image = res.data
-          // this.createChallenge(data)
+          this.createChallenge(data)
         })
         .catch(err => {
           console.error(err.response.data)
