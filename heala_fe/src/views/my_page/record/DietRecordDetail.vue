@@ -94,7 +94,7 @@ export default {
           this.food_list = res.data
       })
         .catch((err) => {
-          this.$alert("에러가 발생했습니다.");
+          alert("에러가 발생했습니다.");
           console.error(err.response.data)
       })
     },

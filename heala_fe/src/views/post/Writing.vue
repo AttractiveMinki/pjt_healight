@@ -164,7 +164,6 @@ export default {
       this.imgUrl.first = URL.createObjectURL(file);
     },
     checkData() {
-      console.log("this.data.post.title", this.data.post.title);
       if (this.data.post.image == "" && document.getElementById("input-file").files[0] == undefined) {
         this.$alert("이미지를 입력하세요.");
       }
@@ -300,5 +299,8 @@ hr {
 }
 .rest {
   height: 48px;
+}
+.el-message-box {
+  width: 90% !important;
 }
 </style>

@@ -118,7 +118,7 @@ export default {
           this.submit(this.certify)
         })
         .catch(err => {
-          this.$alert("이미지 업로드에 실패했습니다.");
+          alert("이미지 업로드에 실패했습니다.");
           console.error(err.response.data)
         })
       },
@@ -126,11 +126,11 @@ export default {
       axios.post(SERVER.URL + SERVER.ROUTES.certify, certify)
         .then(response => {
           if(response.status === 200) {
-            this.$alert("등록 완료");
+            alert("등록 완료");
           }
         })
         .catch(error => {
-          this.$alert("오류가 발생했습니다.");
+          alert("오류가 발생했습니다.");
           console.log(error);
         });
     },

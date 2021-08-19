@@ -117,7 +117,7 @@ export default {
             
             this.foodList = res.data.body.items
             if (this.foodList == undefined) {
-              this.$alert("조회된 내용이 없습니다. ㅠ_ㅠ \n 상품의 이름을 검색해보세요! \n ex) 초코파이");
+              alert("조회된 내용이 없습니다. ㅠ_ㅠ \n 상품의 이름을 검색해보세요! \n ex) 초코파이");
             }
           })
           .catch((err) => {
@@ -125,27 +125,27 @@ export default {
           })
       }
       else {
-        this.$alert("음식의 이름을 넣어주세요!");
+        alert("음식의 이름을 넣어주세요!");
       }
     },
     checkFoods(foods) {
       if (foods['foodName'] === "") {
-        this.$alert("음식 이름을 입력해주세요!");
+        alert("음식 이름을 입력해주세요!");
       }
       else if (foods['calory'] === "") {
-        this.$alert("칼로리 값을 입력해주세요!");
+        alert("칼로리 값을 입력해주세요!");
       }
       else if (foods['carbohydrate'] === "") {
-        this.$alert("탄수화물 값을 입력해주세요!");
+        alert("탄수화물 값을 입력해주세요!");
       }
       else if (foods['protein'] === "") {
-        this.$alert("단백질 값을 입력해주세요!");
+        alert("단백질 값을 입력해주세요!");
       }
       else if (foods['fat'] === "") {
-        this.$alert("지방 값을 입력해주세요!");
+        alert("지방 값을 입력해주세요!");
       }
       else if (foods['sodium'] === "") {
-        this.$alert("나트륨 값을 입력해주세요!");
+        alert("나트륨 값을 입력해주세요!");
       }
       else {
         this.addFoods(foods)
@@ -156,7 +156,7 @@ export default {
       foods.sodium = parseInt(foods.sodium)
       axios.post(`${SERVER.URL}${SERVER.ROUTES.dietupload}`, foods)
         .then (() => {
-          this.$alert("식단 추가 완료!");
+          alert("식단 추가 완료!");
           this.foods['foodName'] = ""
           this.foods['calory'] = ""
           this.foods['carbohydrate'] = ""
@@ -166,7 +166,7 @@ export default {
           scrollBy(0, -document.body.scrollHeight) // 맨 위로 올랴줌
         })
         .catch(() => {
-          this.$alert("식단을 추가하던 중 오류가 발생했습니다. ㅜ_ㅜ");
+          alert("식단을 추가하던 중 오류가 발생했습니다. ㅜ_ㅜ");
         })
     },
     selectFile(e) {
@@ -184,7 +184,7 @@ export default {
       })
       .catch((err) => {
         console.log(err)
-        this.$alert("이미지 인식에 실패하였습니다. ㅠ_ㅠ \n 다른 이미지로 다시 시도해보아요!");
+        alert("이미지 인식에 실패하였습니다. ㅠ_ㅠ \n 다른 이미지로 다시 시도해보아요!");
       })
     },
     findNutrient: function (value) {
