@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="container">
     <Navbar />
     <el-row>
       <el-col :span="24">
@@ -7,62 +7,58 @@
       </el-col>
     </el-row>
     <el-row class="justify-content-right">
-      <!-- <el-col :span="18">
-        <span>
-          d
-        </span>
-      </el-col>
-      <el-col :span="6"> -->
       <!-- 회원 탈퇴하기 -->
       <router-link :to="{ name: 'Withdrawal' }">
-        <span id="submitwithdrawal" class="go-withdrawal">회원 탈퇴</span>
+        <span id="submitwithdrawal" class="go-withdrawal text-decoration-none">회원 탈퇴</span>
       </router-link>
-      <!-- </el-col> -->
     </el-row>
     <div>
       <!-- 프로필 사진 -->
-      <img v-if="image == ''" src="@/assets/img/profile/user.png" alt="profile_image" width="92" height="92" style="border-radius: 50%;">
-      <img v-else :src="image" alt="profile_image" width="92" height="92" style="border-radius: 50%;"><br>
-      <label for="image" class="btn-file"><span style="font-size: 13px; font-weight: bold; color: #ADEC6E;">프로필 사진 변경</span><input name="image" type="file" @change="selectFile" id="change_image"/></label>
+      <img v-if="data.user.image == ''" src="@/assets/img/profile/user.png" alt="profile_image" width="92" height="92" style="border-radius: 50%;">
+      <img v-else-if="this.selectKey != 1" :src="imageServer + data.user.image" alt="profile_image" width="92" height="92" style="border-radius: 50%;">
+      <img v-else :src="data.user.image" alt="profile_image" width="92" height="92" style="border-radius: 50%;"><br>
+      <label for="change_image" class="btn-file">
+        <span style="font-size: 13px; font-weight: bold; color: #ADEC6E;">프로필 사진 변경</span>
+      <input type="file" id="change_image" style="display: none;" @change="selectFile" /></label>
       <!-- 이름 -->
       <el-row type="flex" align="middle" style="margin: 30px 0 20px 0;">
         <el-col :span="6" style="font-weight: bold; font-size: 13px;">이름</el-col>
-        <el-col :span="12"><el-input placeholder="이름을 작성해주세요" v-model="name" clearable></el-input></el-col>
+        <el-col :span="12"><el-input placeholder="이름을 작성해주세요" v-model="data.user.name" clearable></el-input></el-col>
         <el-col :span="6"></el-col>
       </el-row>
       <!-- 아이디 -->
       <el-row type="flex" align="middle" style="margin-bottom: 20px;">
         <el-col :span="6" style="font-weight: bold; font-size: 13px;">아이디</el-col>
         <el-col :span="12"><el-input placeholder="아이디를 작성해주세요" v-model="identity" clearable style="background-color"></el-input></el-col>
-        <el-col :span="6"><el-button size="small" type="primary" round style="background-color: white; border: 1px solid #ADEC6E; color: black;" @click="checkIdentity(identity)">중복확인</el-button></el-col>
+        <el-col :span="6"><el-button size="small" type="primary" round style="background-color: white; border: 1px solid #ADEC6E; color: black;" @click="checkIdentity(data.user.identity)">중복확인</el-button></el-col>
       </el-row>
       <div class="error-text" v-if="error.identity">{{ error.identity }}</div>
       <div class="error-text" v-if="error.check_identity">{{ error.check_identity }}</div>
       <!-- 내 소개 -->
       <el-row type="flex" align="middle" style="margin-bottom: 20px;">
         <el-col :span="6" style="font-weight: bold; font-size: 13px;">내 소개</el-col>
-        <el-col :span="17"><el-input type="textarea" rows="5" placeholder="내 소개를 작성해주세요" v-model="introduction"></el-input></el-col>
+        <el-col :span="17"><el-input type="textarea" rows="5" placeholder="내 소개를 작성해주세요" v-model="data.user.introduction"></el-input></el-col>
         <el-col :span="1"></el-col>
       </el-row>
       <!-- 대표 뱃지 설정 -->
       <el-row type="flex" align="middle" style="margin-bottom: 20px;">
         <el-col :span="6" style="font-weight: bold; font-size: 13px;">대표 뱃지 설정</el-col>
         <el-col :span="18">
-          <span v-for="(badge, idx) in badges" :key="idx" >
-            <span :class="{selected: badge.selected == true}" class="margin-2" @click="selectBadge(badge)">
-              <!-- {{ badge.badge.id}}
-              이름: {{ badge.badge.name}} -->
-              {{ badge.badge.image}}
+          <span v-for="(value, idx) in data.badges" :key="idx" >
+            <span :class="{selected: value.selected == true}" class="margin-2 post-image" @click="selectBadge(value)">
+              <!-- {{ value.badge.image }} -->
+              <img :src="imageServer + value.badge.image" alt="" class="post-image">
+              <!-- <img :src="imageServer + value.badge.image" alt="" class="post-image"> -->
             </span>
           </span>
           <br>
-          <div style="font-size: 13px; color: #606266;">최대 6개 설정 가능합니다</div>
+          <div style="font-size: 13px; color: #606266; margin-top: 2vw">최대 6개 설정 가능합니다</div>
           </el-col>
       </el-row>
       <br>
 
     </div>
-    <button id="submit" class="get-input" @click="submit()" :disabled="!isSubmit" :class="{disabled : !isSubmit}">저장</button>
+    <button id="submit" class="get-input" @click="uploadImage(data)" :disabled="!isSubmit" :class="{disabled : !isSubmit}">저장</button>
 
   </div>
 </template>
@@ -75,36 +71,72 @@ import router from "@/router/index.js"
 
 export default {
   name: "ProfileEdit",
+  data: () => {
+    return {
+      data: {
+        badges: [
+          {
+            badge: {
+              id: "",
+              image: "",
+              name: "",
+            },
+            badge_id: "",
+            id: "",
+            selected: "",
+            user_id: "",
+          }
+        ],
+        user: {
+          id: "",
+          name: "",
+          identity: "",
+          image: "",
+          introduction: "",
+        },
+      },
+      error: {
+        identity: false,
+        check_identity: false,
+      },
+      check_identity: "",
+      isSubmit: false,
+      originalIdentity: "",
+      imageServer: SERVER.IMAGE_URL,
+      identity: "",
+      selectKey: 0, // 0이면 web에 있는 프로필 사진 갖고오기, 1이면 변경된 프로필 사진 갖고오기
+      originalImage: "",
+    };
+  },
   methods: {
     selectFile(e) {
       const file = e.target.files[0];
-      this.image = URL.createObjectURL(file);
+      this.data.user.image = URL.createObjectURL(file);
+      // 사진을 변경했으므로 변경한 사진을 보여준다.
+      this.selectKey = 1
     },
-    submit() {
-      // FormData에 전송할 데이터 저장
-      let formData  = new FormData();
-      let imgFile = document.getElementById('change_image');
-      formData.append('image', imgFile.files[0]);
-      formData.append('name', this.name);
-      formData.append('identity', this.identity);
-      formData.append('introduction', this.introduction);
-      // console.log(this.$store.state.userid)
-      // for (var key of formData.keys()) {
-      //   console.log(key, '--key');
-      // }
-
-      // for (var value of formData.values()) {
-      //   console.log(value, '--value');
-      // }
-
-      
-      // 서버로 FormData 전송
-      // axios.patch("http://localhost:8080/user/profile", formData , { headers: {'Content-Type' : 'multipart/form-data'}})
-      axios.patch(`${SERVER.URL}${SERVER.ROUTES.profile}${localStorage.getItem('userId')}`, formData , { headers: {'Content-Type' : 'multipart/form-data'}})
+    uploadImage(data) {
+      if (this.originalImage == this.data.user.image) {
+        this.submit(data)
+      }
+      let formData = new FormData()
+      let imgFile = document.getElementById("change_image").files[0]
+      formData.append("file", imgFile)
+      axios.post(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`, formData, { headers: {"Content-Type" : "multipart/form-data"}})
+        .then(res => {
+          this.data.user.image = res.data
+          this.submit(data)
+        })
+        .catch(err => {
+          console.error(err.response.data)
+        })
+      },
+    submit(data) {
+      axios.patch(`${SERVER.URL}${SERVER.ROUTES.profile}${this.data.user.id}`, data)
         .then(response => {
           if(response.status === 200) {
             alert('설정 변경이 완료되었습니다.');
-            router.push({ name: "Profile" })
+            router.push({ name: "Profile", params: { id: this.data.user.id }})
           }
         })
         .catch(error => {
@@ -118,7 +150,7 @@ export default {
           this.checkForm();
       })
         .catch((error) => {
-          if (this.originalIdentity == this.identity){
+          if (this.originalIdentity == this.data.user.identity){
             this.error.check_identity = false
             this.checkForm();
           }
@@ -130,12 +162,17 @@ export default {
           }
       })
     },
+    watchIdentityChange () {
+      if (this.originalIdentity != this.data.user.identity && this.data.user.identity.length >= 1)
+      {
+        this.error.check_identity = "아이디 중복 확인 버튼을 눌러주세요."
+      }
+      this.checkForm()
+    },
     checkForm() {
-      if (this.identity.length == 0)
+      if (this.data.user.identity.length == 0)
         this.error.identity = "아이디를 입력해주세요."
       else this.error.identity = false;
-      if (this.originalIdentity != this.identity && this.identity.length >= 1)
-        this.error.check_identity = "아이디 중복 확인 버튼을 눌러주세요."
       
       let isSubmit = true;
       Object.values(this.error).map(v => {
@@ -145,8 +182,8 @@ export default {
     },
     selectBadge(badge) {
       let number = 0
-      for (let i = 0; i < this.badges.length; i++) {
-        if (this.badges[i].selected == true) {
+      for (let i = 0; i < this.data.badges.length; i++) {
+        if (this.data.badges[i].selected == true) {
           number += 1
         }
       }
@@ -163,40 +200,29 @@ export default {
   components: {
     Navbar,
   },
-  data: () => {
-    return {
-      userId: 1,
-      image: "",
-      name: "",
-      identity: "",
-      introduction: "",
-      badges: [],
-      error: {
-        identity: false,
-        check_identity: false,
-      },
-      check_identity: "",
-      isSubmit: false,
-      originalIdentity: "",
-    };
-  },
+
   watch: {
     identity: function() {
+      this.data.user.identity = this.identity
       this.error.check_identity = false
-      this.checkForm();
+      this.watchIdentityChange();
     },
   },
   created() {
-    this.userId = localStorage.getItem('userId');
+    this.data.user.id = localStorage.getItem('userId');
     // 프로필 기존 정보 불러오기
-    axios.get(`${SERVER.URL}${SERVER.ROUTES.profile}${this.userId}`)
+    axios.get(`${SERVER.URL}${SERVER.ROUTES.profile}${this.data.user.id}`)
       .then(response => {     
         // this.image = require("@/assets/img/profile/" + response.data.image);
+        this.data.user.image = response.data.image
+        this.data.user.identity = response.data.identity;
         this.identity = response.data.identity;
-        this.name = response.data.name;
-        this.introduction = response.data.introduction;
-        this.badges = response.data.badges;
-
+        this.data.user.name = response.data.name;
+        this.data.user.introduction = response.data.introduction;
+        this.data.badges = response.data.badges;
+        this.originalImage = response.data.image
+        console.log(this.data.user.image)
+        console.log(this.data.badges)
         this.originalIdentity = response.data.identity;
       })
       .catch(error => {
@@ -214,6 +240,9 @@ export default {
   #submit {
     position: fixed;
     bottom: 0rem;
+  }
+  #container {
+    margin-bottom: 50px;
   }
   
   .btn-file{
@@ -256,7 +285,8 @@ export default {
     width: 100%;
     height: 50px;
     background-color: #ADEC6E;
-    color: white;
+    border: 0px;
+    color: black;
   }
   .go-withdrawal {
     display: inline;
@@ -270,10 +300,17 @@ export default {
     padding: 1vw;
     margin: 2vw;
   }
+  .text-decoration-none {
+    text-decoration: none;
+    color: black;
+  }
   .selected {
     border: 2px #7EE01D solid;
   }
   .margin-2 {
     margin: 2px;
+  }
+  .post-image {
+    width: 6%;
   }
 </style>

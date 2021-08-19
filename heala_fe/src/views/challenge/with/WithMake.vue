@@ -169,10 +169,13 @@ export default {
       let formData = new FormData()
       let imgFile = document.getElementById("change_image").files[0]
       formData.append("file", imgFile)
+      console.log(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`)
+      console.log(imgFile)
+      console.log(imgFile.file)
       axios.post(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`, formData, { headers: {"Content-Type" : "multipart/form-data"}})
         .then(res => {
           data.withChallenge.image = res.data
-          this.createChallenge(data)
+          // this.createChallenge(data)
         })
         .catch(err => {
           console.error(err.response.data)

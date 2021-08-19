@@ -101,4 +101,10 @@ public class FeedController {
 		return new ResponseEntity<>(feedService.getScrapList(userId, page), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "글에 연결된 해시태그들 가져오기")
+	@GetMapping("/post/hashtag/{postId}")
+	public Object getPostHashtags(@PathVariable int postId) {
+		return new ResponseEntity<>(feedService.getPostHashtags(postId), HttpStatus.OK);
+	}
+	
 }
