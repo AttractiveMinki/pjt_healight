@@ -44,6 +44,7 @@ export default {
       this.getInitialScrapList();
     }
     else {
+      this.$store.state.selectedSubCategory = 3;
       this.getInitialCommunityInfo();
     }
 	},
@@ -66,7 +67,12 @@ export default {
     },
     selectedSubCategory() {
       this.initPage();
-      this.getInitialPostListByCategory();
+      if(this.category == 3) {
+        this.getInitialCommunityInfo();
+      }
+      else {
+        this.getInitialPostListByCategory();
+      }
       this.$emit("changeSubCategory");
     },
     keyword() {
