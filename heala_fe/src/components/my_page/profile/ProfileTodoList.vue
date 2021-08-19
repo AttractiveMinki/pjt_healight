@@ -6,7 +6,7 @@
           <span>오늘의 할 일</span>
         </el-col>
         <router-link :to="{ name: 'ProfilePhysInfo' }" class="text-decoration-none">
-          <el-col :span="12" style="text-align: end;" class="community-title">
+          <el-col :span="12" style="text-align: end; font-family: 'TmoneyRoundWindRegular';" class="community-title">
             <i class="margin-left-10 el-icon-arrow-right"></i>
             <span>신체정보 등록</span>
           </el-col>

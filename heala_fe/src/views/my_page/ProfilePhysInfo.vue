@@ -1,13 +1,13 @@
 <template>
   <div>
     <Navbar />
-    <h1 style="text-align: start; margin: 3vw; margin-bottom: 5vh">신체정보 등록</h1>
+    <h1 style="text-align: center; margin: 3vw; margin-bottom: 5vh; font-family: 'TmoneyRoundWindRegular';">신체정보 등록</h1>
 
     <!-- 사용자의 신체 정보가 있다면 vue component 내의 data에 미리 등록하는 함수 만들기 -->
 
-    <el-row style="display: flex; text-align: space-between; align-items: center">
+    <el-row style="display: flex; text-align: space-between; align-items: center; ">
       <el-col :span="8">
-        <span style="margin: 5vw">성별</span>
+        <span style="margin: 5vw; font-family: 'TmoneyRoundWindRegular';">성별</span>
       </el-col>
       <el-col :span="16">
         <span v-if="data.gender == true">
@@ -23,7 +23,7 @@
 
     <el-row style="display: flex; text-align: space-between; align-items: center">
       <el-col :span="8">
-        <span style="margin: 5vw">생년월일</span>
+        <span style="margin: 5vw; font-family: 'TmoneyRoundWindRegular';">생년월일</span>
       </el-col>
       <el-col :span="16">
         <input type="date" style="margin: 5vw" v-model="data.birth">
@@ -32,7 +32,7 @@
 
     <el-row style="display: flex; text-align: space-between; align-items: center">
       <el-col :span="8">
-        <span style="margin: 5vw">키</span>
+        <span style="margin: 5vw; font-family: 'TmoneyRoundWindRegular';">키</span>
       </el-col>
       <el-col :span="16">
         <input type="number" style="margin: 5vw" v-model="data.height">cm
@@ -41,13 +41,13 @@
 
     <el-row style="display: flex; text-align: space-between; align-items: center">
       <el-col :span="8">
-        <span style="margin: 5vw">몸무게</span>
+        <span style="margin: 5vw; font-family: 'TmoneyRoundWindRegular';">몸무게</span>
       </el-col>
       <el-col :span="16">
         <input type="number" style="margin: 5vw" v-model="data.weight">kg
       </el-col>
     </el-row>
-    <div id="submit" @click="submit(data)" style="background-color: #ADEC6E; color: black; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center;">등록하기</div>
+    <div id="submit" @click="submit(data)" style="background-color: #ADEC6E; color: black; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center; font-family: 'TmoneyRoundWindRegular';">등록하기</div>
   </div>
 </template>
 
