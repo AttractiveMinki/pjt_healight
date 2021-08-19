@@ -93,6 +93,7 @@ public class DietServiceImpl implements DietService {
 	@Override
 	public Object getTodayList(int userId) {
 		List<String> list = dietRepository.getListByUserId(userId, today);
+		System.out.println("today================"+today);
 		return list;
 	}
 

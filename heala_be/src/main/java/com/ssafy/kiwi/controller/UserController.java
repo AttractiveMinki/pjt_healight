@@ -2,6 +2,8 @@ package com.ssafy.kiwi.controller;
 
 import java.util.*;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +28,7 @@ public class UserController {
 	
     final private UserService userService;
 
+    
 	@ApiOperation(value = "아이디 중복 검사하기.")
 	@GetMapping("/checkidentity/{identity}")
 	public Object checkId(@PathVariable String identity) {
