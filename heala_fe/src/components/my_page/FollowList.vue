@@ -4,7 +4,9 @@
     <div :class="{ 'follow-list':!isSearchList, 'user-list':isSearchList }">
       <div class="follow-list-item"
         v-for="(follow, index) in followList"
-        v-bind:key="index">
+        v-bind:key="index"
+        @click="goToFeed(follow.id)"
+        >
         <follow-list-item v-bind="follow" @follow="$emit('follow')" @unfollow="$emit('unfollow')"></follow-list-item>
       </div>
       <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spineer="waveDots">
@@ -109,7 +111,10 @@ export default {
       } catch(exp) {
         console.log(exp);
       }
-    }
+    },
+    goToFeed(followId) {
+      this.$router.push({ name: "Profile", params: { id: followId }});
+    },
   },
   components: {
     InfiniteLoading,

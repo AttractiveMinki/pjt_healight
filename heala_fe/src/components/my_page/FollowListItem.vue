@@ -8,7 +8,7 @@
       <div class="follow-user-identity">{{ identity }}</div>
     </div>
     <div class="follow-button">
-      <follow :following="follow" :followId="id" @follow="$emit('follow')" @unfollow="$emit('unfollow')"></follow>
+      <follow v-if="userId != id" :following="follow" :followId="id" @follow="$emit('follow')" @unfollow="$emit('unfollow')"></follow>
     </div>
   </div>
 </template>
@@ -18,36 +18,40 @@ import UserImage from "@/components/UserImage";
 import Follow from "@/components/my_page/Follow";
 
 export default {
-    name: "FollowListItem",
-    props: [ "id", "identity", "name", "image", "follow"],
-    data() {
-        return {
-            
-        }
-    },
-    methods: {
-        
-    },
-    components: {
-        UserImage,
-        Follow,
+  name: "FollowListItem",
+  props: [ "id", "identity", "name", "image", "follow"],
+  data() {
+    return {
+      userId: "",
     }
+  },
+  created() {
+    this.$store.commit("GET_USERID");
+    this.userId = this.$store.state.userId;
+  },
+  components: {
+    UserImage,
+    Follow,
+  }
 }
 </script>
 
 <style scoped>
 .follow-list-item {
-    position: relative;
-    height: fit-content;
-    overflow: hidden;
-    margin: 15px;
+  position: relative;
+  height: fit-content;
+  overflow: hidden;
+  margin: 15px;
 }
 .user-image-wrapper {
-    width: fit-content;
-    overflow: hidden;
-    float: left;
+  width: fit-content;
+  overflow: hidden;
+  float: left;
 }
 .follow-user-info {
+  position: relative;
+  top: 25px;
+  transform: translate(0, -50%);
   text-align: left;
   padding: 0px 100px 0px 60px;
   box-sizing: border-box;
