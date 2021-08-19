@@ -9,9 +9,10 @@
         <label class="input-file-button" for="input-file">+</label>
         <input type="file" id="input-file" style="display: none;" @change="selectFile"/>
         <img class="image" src="../../assets/img/writing_upload.png" alt="" @click="dialogVisible.first = true">
-        <el-dialog :visible.sync="dialogVisible.first" width="95%">
+         <el-dialog :visible.sync="dialogVisible.first" width="95%">
           <img :src="imgUrl.first" alt="" width="99%">
         </el-dialog>
+        <!--
         <img class="image" src="../../assets/img/writing_upload.png" alt="" @click="dialogVisible.second = true">
         <el-dialog :visible.sync="dialogVisible.second" width="95%">
           <img :src="imgUrl.second" alt="" width="99%">
@@ -27,7 +28,7 @@
         <img class="image" src="../../assets/img/writing_upload.png" alt="" @click="dialogVisible.fifth = true">
         <el-dialog :visible.sync="dialogVisible.fifth" width="95%">
           <img :src="imgUrl.fifth" alt="" width="99%">
-        </el-dialog>
+        </el-dialog> -->
       </el-col>
     </el-row>
     <hr>
@@ -83,7 +84,7 @@
         <input @click="access_click" type="radio" id="input-radio8" v-model="data.post.access" value="1" style="display: none;"/>
       </el-col>
       <el-col :span="3" class="access" style="font-size: 13px;">
-        <label for="input-radio9" style="cursor: pointer;">자신</label>
+        <label for="input-radio9" style="cursor: pointer;">비공개</label>
         <input @click="access_click" type="radio" id="input-radio9" v-model="data.post.access" value="2" style="display: none;"/>
       </el-col>
       <el-col :span="5"></el-col>
@@ -98,22 +99,23 @@
     <!-- 해시태그 -->
     <el-row type="flex" align="middle">
       <el-col :span="6" style="text-align: left; padding-left: 16px; font-size: 13px; font-weight: bold;">해시태그</el-col>
-      <el-col :span="17" style="padding-left: 10px;"><el-input placeholder="해시태그를 작성해주세요" v-model="data.hashtag.word" clearable></el-input></el-col>
+      <el-col :span="17" style="padding-left: 10px;"><el-input placeholder="#달리기 #추천_메뉴" v-model="data.hashtag.word" clearable></el-input></el-col>
       <el-col :span="1"></el-col>
     </el-row>
-    <div id="submit" @click="checkData(data)" style="margin-top: 20px; background-color: #ADEC6E; color: white; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center; cursor: pointer;">저장</div>
+    <div id="submit" @click="checkData(data)" style="background-color: #ADEC6E; color: white; width: 100%; height: 50px; display:flex; align-items: center; justify-content: center; cursor: pointer;">작성</div>
   </div>
 </template>
 
 <script>
 import SERVER from "@/api/drf.js"
 import axios from 'axios';
+import router from "@/router/index.js"
 
 export default {
   name: "Writing",
   data: () => {
     return {
-      imgCnt: 0,
+      // imgCnt: 0,
       data: {
         post: {
           title: "",
@@ -137,36 +139,47 @@ export default {
   methods: {
     selectFile(e) {
       const file = e.target.files[0];
-      document.getElementsByClassName("image")[this.imgCnt].src = URL.createObjectURL(file);
-      if(this.imgCnt === 0) this.imgUrl.first = URL.createObjectURL(file);
-      else if(this.imgCnt === 1) this.imgUrl.second = URL.createObjectURL(file);
-      else if(this.imgCnt === 2) this.imgUrl.third = URL.createObjectURL(file);
-      else if(this.imgCnt === 3) this.imgUrl.fourth = URL.createObjectURL(file);
-      else if(this.imgCnt === 4) this.imgUrl.fifth = URL.createObjectURL(file);
-      this.imgCnt++;
+      // 클릭했을 때 미리보기
+      this.imgUrl.first = URL.createObjectURL(file);
+
+      // 작은 칸 미리보기
+      document.getElementsByClassName("image")[0].src = URL.createObjectURL(file);
+
+      // document.getElementsByClassName("image")[this.imgCnt].src = URL.createObjectURL(file);
+      // if(this.imgCnt === 0) this.imgUrl.first = URL.createObjectURL(file);
+      // else if(this.imgCnt === 1) this.imgUrl.second = URL.createObjectURL(file);
+      // else if(this.imgCnt === 2) this.imgUrl.third = URL.createObjectURL(file);
+      // else if(this.imgCnt === 3) this.imgUrl.fourth = URL.createObjectURL(file);
+      // else if(this.imgCnt === 4) this.imgUrl.fifth = URL.createObjectURL(file);
+      // this.imgCnt++;
     },
     checkData(data) {
-      console.log(document.getElementById("input-file").files[0])
       if (document.getElementById("input-file").files[0] == undefined) {
         alert('이미지를 입력하세요.')
       }
-      else if (data.title == "" ) {
+      else if (data.post.title == "" ) {
         alert('제목을 입력하세요.')
       }
-      else if (data.title == "" ) {
-        alert('제목을 입력하세요.')
+      else if (data.post.title.length > 40 ) {
+        alert('제목은 40자 이내로 작성해주세요.')
       }
-      else if (data.category == "") {
+      else if (data.post.category == "") {
         alert('카테고리를 선택하세요.')
       }
-      else if (data.subCategory == "") {
+      else if (data.post.subCategory == "") {
         alert('주제를 선택하세요.')
       }
-      else if (data.access == "") {
+      else if (data.post.access == "") {
         alert('공개범위를 선택하세요.')
       }
-      else if (data.content == "") {
+      else if (data.post.content == "") {
         alert('글 내용을 작성하세요.')
+      }
+      else if (data.post.content.length > 1500) {
+        alert('내용은 1500자 이내로 작성해주세요.')
+      }
+      else if (data.hashtag.word.length > 20) {
+        alert('해시태그는 20자 이내로 작성해주세요.')
       }
       else {
         this.uploadImage(data)
@@ -182,6 +195,7 @@ export default {
           this.submit(data)
         })
         .catch(err => {
+          alert('이미지를 업로드하는 도중 에러가 발생했습니다.')
           console.log('통신 실패')
           console.error(err.response.data)
         })
@@ -194,23 +208,26 @@ export default {
         data.post.anonymous = 1
       }
       data.post.userId = this.$store.state.userId
-      console.log('data--------------------', data)
       // 서버로 FormData 전송
       axios.post(`${SERVER.URL}${SERVER.ROUTES.feedPost}`, data)
         .then(response => {
           if(response.status === 200) {
-            console.log("등록 완료");
+            console.log(data)
+            console.log(response)
+            alert('등록이 완료되었습니다.')
+            router.push({ name: "CommunityNewMain" })
           }
         })
         .catch(err => {
+          if (err.response.status == 500) {
+            alert('글자 수 제한을 확인해주세요.\n 제목: 40자, 내용: 1500자, 해시태그: 20자')
+          } else {
+          alert('오류가 발생했습니다.')
           console.error(err.response.data)
+          }
         });
     },
     category_click(e) {
-      // if (this.anonymous != false && e.target.defaultValue != 2) {
-      //   alert('마음 카테고리만 익명을 사용할 수 있습니다.')
-      //   return
-      // }
       for(var i = 0; i < 3; i++) {
         document.getElementsByClassName("category")[i].style.fontWeight = "normal";
         document.getElementsByClassName("category")[i].style.color = "black";
@@ -293,7 +310,7 @@ export default {
     border: none;
     resize: none;
     width: 100%;
-    height: 15vh;
+    height: calc(60vh - 92px - 3rem);
   }
   .textarea:focus {
     outline: none;
