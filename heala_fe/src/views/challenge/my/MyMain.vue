@@ -91,6 +91,7 @@ export default {
   created() {
     this.$store.commit("GET_USERID");
     this.getMyChallenge();
+    this.$store.state.selectedRouter = 3;
   },
   methods: {
     goToCertifyImage(withChallengeId) {
