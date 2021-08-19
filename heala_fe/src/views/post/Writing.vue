@@ -80,7 +80,7 @@
       <el-col :span="1"></el-col>
     </el-row>
     <div class="rest"></div>
-    <div id="submit" @click="checkData(data)">저장</div>
+    <div id="submit" @click="checkData()">저장</div>
   </div>
 </template>
 
@@ -96,10 +96,10 @@ export default {
       data: {
         post: {
           title: "",
-          category: "",
-          subCategory: "",
-          access: "",
-          anonymous: "",
+          category: 0,
+          subCategory: 0,
+          access: 0,
+          anonymous: false,
           content: "",
           image: "",
           userId: "",
@@ -117,7 +117,7 @@ export default {
       imageChanged: false,
       originalImage: "",
       imageServer: SERVER.IMAGE_URL,
-    }; 
+    };
   },
   created () {
     if(this.$route.params.postId) {
@@ -158,41 +158,33 @@ export default {
       this.imageChanged = true;
       this.imgUrl.first = URL.createObjectURL(file);
     },
-    checkData(data) {
+    checkData() {
+      console.log("this.data.post.title", this.data.post.title);
       if (this.data.post.image == "" && document.getElementById("input-file").files[0] == undefined) {
         alert('이미지를 입력하세요.')
       }
-      else if (data.post.title == "" ) {
+      else if (this.data.post.title == "" ) {
         alert('제목을 입력하세요.')
       }
-      else if (data.post.title.length > 40 ) {
+      else if (this.data.post.title.length > 40 ) {
         alert('제목은 40자 이내로 작성해주세요.')
       }
-      else if (data.post.category == "") {
-        alert('카테고리를 선택하세요.')
-      }
-      else if (data.post.subCategory == "") {
-        alert('주제를 선택하세요.')
-      }
-      else if (data.post.access == "") {
-        alert('공개범위를 선택하세요.')
-      }
-      else if (data.post.content == "") {
+      else if (this.data.post.content == "") {
         alert('글 내용을 작성하세요.')
       }
-      else if (data.post.content.length > 1500) {
+      else if (this.data.post.content.length > 1500) {
         alert('내용은 1500자 이내로 작성해주세요.')
       }
-      else if (data.hashtag.word.length > 20) {
+      else if (this.data.hashtag.word.length > 20) {
         alert('해시태그는 20자 이내로 작성해주세요.')
       }
       else {
-        this.uploadImage(data)
+        this.uploadImage()
       }
     },
-    uploadImage(data) {
+    uploadImage() {
       if(this.$route.params.postId && this.originalImage == this.data.post.image) {
-        this.submit(data);
+        this.submit();
         return;
       }
       let formData = new FormData()
@@ -201,7 +193,7 @@ export default {
       axios.post(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`, formData, { headers: {"Content-Type" : "multipart/form-data"}})
         .then(res => {
           this.data.post.image = res.data
-          this.submit(data)
+          this.submit()
         })
         .catch(err => {
           alert('이미지를 업로드하는 도중 에러가 발생했습니다.')
@@ -210,8 +202,9 @@ export default {
         })
     // submit(res)
     },
-    async submit(data) {
-      if (data.anonymous == false || data.category != 2) {
+    async submit() {
+      let data = this.data;
+      if (data.post.anonymous == false || data.post.category != 2) {
         data.post.anonymous = 0
       } else {
         data.post.anonymous = 1
@@ -229,51 +222,8 @@ export default {
           this.$router.push({ name: "CommunityNewMain" })
         }
       } catch (error) {
-        alert('글자 수 제한을 확인해주세요.\n 제목: 40자, 내용: 1500자, 해시태그: 20자')
+        // alert('글자 수 제한을 확인해주세요.\n 제목: 40자, 내용: 1500자, 해시태그: 20자')
         console.log(error);
-      }
-    },
-    category_click(e) {
-      for(var i = 0; i < 3; i++) {
-        document.getElementsByClassName("category")[i].style.fontWeight = "normal";
-        document.getElementsByClassName("category")[i].style.color = "black";
-      }
-      let dom = e.target.parentNode;
-      dom.style.fontWeight = "bold";
-      dom.style.color = "#ADEC6E";
-    },
-    subCategory_click(e) {
-      for(var i = 0; i < 3; i++) {
-        document.getElementsByClassName("subCategory")[i].style.fontWeight = "normal";
-        document.getElementsByClassName("subCategory")[i].style.color = "black";
-      }
-      let dom = e.target.parentNode;
-      dom.style.fontWeight = "bold";
-      dom.style.color = "#ADEC6E";
-    },
-    access_click(e) {
-      for(var i = 0; i < 3; i++) {
-        document.getElementsByClassName("access")[i].style.fontWeight = "normal";
-        document.getElementsByClassName("access")[i].style.color = "black";
-      }
-      let dom = e.target.parentNode;
-      dom.style.fontWeight = "bold";
-      dom.style.color = "#ADEC6E";
-    },
-    anonymous_click(e) {
-      // if (this.category != 2 && this.anonymous == false) {
-      //   alert('마음 카테고리만 익명을 사용할 수 있습니다.')
-      //   return
-      // }
-      let dom = e.target.parentNode;
-      if (this.anonymous != false) {
-        this.anonymous = false
-        dom.style.fontWeight = "normal";
-        dom.style.color = "black";
-      } else {
-        this.anonymous = true
-        dom.style.fontWeight = "bold";
-        dom.style.color = "#ADEC6E";
       }
     },
     goBack: function () {
