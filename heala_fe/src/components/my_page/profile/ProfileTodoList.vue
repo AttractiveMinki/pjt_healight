@@ -95,7 +95,7 @@ export default {
           this.food_length = res.data.length
       })
         .catch((err) => {
-          this.$alert("에러가 발생했습니다.");
+          alert("에러가 발생했습니다.");
           console.error(err.response.data)
       })
     },
@@ -104,10 +104,10 @@ export default {
     this.getDate()
 
     // 현재 보고 있는 프로필 주인의 id 주소창에서 가져오기
-    this.userId = this.$route.path.split('/')[3]
+    this.userId = this.$route.params.id;
 
     // 내 아이디 localStorage에서 가져오기
-    this.myId = this.$store.state.userId
+    this.myId = this.$store.state.userId;
     this.getDietRecord()
   },
 }

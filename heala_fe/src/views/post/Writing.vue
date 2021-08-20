@@ -164,7 +164,6 @@ export default {
       this.imgUrl.first = URL.createObjectURL(file);
     },
     checkData() {
-      console.log("this.data.post.title", this.data.post.title);
       if (this.data.post.image == "" && document.getElementById("input-file").files[0] == undefined) {
         this.$alert("이미지를 입력하세요.");
       }
@@ -220,8 +219,7 @@ export default {
           await axios.patch(SERVER.URL + SERVER.ROUTES.feedPost + `?postId=${this.$route.params.postId}`, data);
         }
         else await axios.post(`${SERVER.URL}${SERVER.ROUTES.feedPost}`, data);
-        alert('등록이 완료되었습니다.')
-        this.$alert("Hello Vue Simple Alert.");
+        this.$alert("등록이 완료되었습니다.");
         if(this.editing) {
           this.$router.go(-1);
         } else {
@@ -301,5 +299,8 @@ hr {
 }
 .rest {
   height: 48px;
+}
+.el-message-box {
+  width: 90% !important;
 }
 </style>

@@ -35,12 +35,19 @@ export default {
   computed: {
     ...mapState([
       "profileSelectedCategory",
-    ])
+    ]),
+    paramUserId() {
+      return this.$route.params.id;
+    }
   },
   watch: {
     profileSelectedCategory() {
       this.page = 0;
       this.infiniteId += 1;
+      this.getInitialFeedPost();
+    },
+    paramUserId() {
+      this.userId = this.$route.params.id;
       this.getInitialFeedPost();
     }
   },

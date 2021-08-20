@@ -420,7 +420,6 @@ export default new Vuex.Store({
       // event.preventDefault()
       axios.post(SERVER.URL + SERVER.ROUTES.login, data)
         .then((res) => {
-          console.log(res)
           commit('SET_TOKEN', res.data.tokenDto.accessToken)
           commit('GET_USERID')
           commit("SET_USERIDENTITY", data)
@@ -430,7 +429,7 @@ export default new Vuex.Store({
       })
         .catch((err) => {
           console.log(err)
-          this.$alert("존재하지 않는 회원이거나, 비밀번호가 일치하지 않습니다.");
+          alert("존재하지 않는 회원이거나, 비밀번호가 일치하지 않습니다.");
       })
     },
     logout: function ({ commit }) {

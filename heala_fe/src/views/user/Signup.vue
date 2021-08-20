@@ -34,14 +34,14 @@
 
       <el-row type="flex" justify="center" align="middle">
         <el-col :span="22">
-          <input type="text" class='get-input bg-gray remove-lr-padding' id="name" v-model="name" v-bind:class="{error : error.name, complete:!error.name&&name.length>0}" placeholder=" 닉네임" maxlength="15" required >
+          <input type="text" class='get-input bg-gray' id="name" v-model="name" v-bind:class="{error : error.name, complete:!error.name&&name.length>0}" placeholder=" 닉네임" maxlength="15" required >
         </el-col> 
       </el-row>
       <div class="error-text" v-if="error.name">{{error.name}}</div>
 
       <el-row type="flex" justify="center" align="middle">
         <el-col :span="22">
-          <input type="password" class='get-input bg-gray remove-lr-padding' id="password" v-model="password" v-bind:class="{error : error.password, complete:!error.password&&password.length>0}" placeholder=" 비밀번호" maxlength="20" required>
+          <input type="password" class='get-input bg-gray' id="password" v-model="password" v-bind:class="{error : error.password, complete:!error.password&&password.length>0}" placeholder=" 비밀번호" maxlength="20" required>
         </el-col>
       </el-row>
       <div class="error-text" v-if="error.password">{{ error.password }}</div>
@@ -50,7 +50,7 @@
           <input
             type="password" 
             id="passwordConfirm" 
-            class="get-input bg-gray remove-lr-padding"
+            class="get-input bg-gray"
             maxlength="20"
             v-model="passwordConfirm"
             v-bind:class="{error : error.passwordConfirm, complete:!error.passwordConfirm&&passwordConfirm.length!==0}"
@@ -171,13 +171,13 @@ export default {
     checkIdentity: function (identity) {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.checkIdentity}${identity}`)
         .then(() => {
-          this.$alert("사용 가능합니다!");
+          alert("사용 가능합니다!");
           this.error.check_identity = false
           // commit("SET_CHECKIDENTITY", res)
           this.checkForm();
       })
         .catch(() => {
-          this.$alert("이미 존재하는 아이디입니다.");
+          alert("이미 존재하는 아이디입니다.");
           this.error.check_identity = "이미 존재하는 아이디입니다."
           
           // commit("INIT_CHECKIDENTITY")
@@ -186,13 +186,13 @@ export default {
     checkEmail: function (email) {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.checkEmail}${email}`)
         .then(() => {
-          this.$alert("사용 가능합니다!");
+          alert("사용 가능합니다!");
           //// commit("SET_CHECKEMAIL", res)
           this.error.check_email = false
           this.checkForm();
       })
         .catch(() => {
-          this.$alert("이미 존재하는 이메일입니다.");
+          alert("이미 존재하는 이메일입니다.");
           // commit("INIT_CHECKEMAIL")
           this.error.check_email = "이미 존재하는 이메일입니다."
           // console.log(`${SERVER.URL}${SERVER.ROUTES.checkEmail}${email}`)
@@ -297,8 +297,5 @@ export default {
   }
   .get-input:focus {
     outline: none;
-  }
-  .remove-lr-padding {
-    padding: 0px 1px;
   }
 </style>

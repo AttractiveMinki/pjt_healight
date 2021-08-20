@@ -24,6 +24,16 @@ export default {
   created() {
     this.getBadgeInfo();
   },
+  computed: {
+    paramUserId() {
+      return this.$route.params.id;
+    }
+  },
+  watch: {
+    paramUserId() {
+      this.getBadgeInfo();
+    }
+  },
   methods: {
     async getBadgeInfo() {
       try {

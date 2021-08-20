@@ -136,14 +136,14 @@ export default {
           })
           .catch(err => {
             console.error(err.response.data)
-            this.$alert("이미지 업로드 과정에서 에러가 발생했습니다.");
+            alert("이미지 업로드 과정에서 에러가 발생했습니다.");
           })
       },
     submit(data) {
       axios.patch(`${SERVER.URL}${SERVER.ROUTES.profile}${this.data.user.id}`, data)
         .then(response => {
           if(response.status === 200) {
-            this.$alert("설정 변경이 완료되었습니다.");
+            alert("설정 변경이 완료되었습니다.");
             if (this.originalIdentity != data.user.identity) {
               localStorage.setItem('userIdentity', data.user.identity)
             }
@@ -151,7 +151,7 @@ export default {
           }
         })
         .catch(error => {
-          this.$alert("프로필 정보 등록 과정에서 에러가 발생하였습니다.");
+          alert("프로필 정보 등록 과정에서 에러가 발생하였습니다.");
           console.error(error.response.data)
         });
     },
@@ -159,13 +159,13 @@ export default {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.checkIdentity}${identity}`)
         .then(() => {
           this.error.check_identity = false
-          this.$alert("사용 가능한 아이디입니다!");
+          alert("사용 가능한 아이디입니다!");
           this.checkForm();
       })
         .catch((error) => {
           if (this.originalIdentity == this.data.user.identity){
             this.error.check_identity = false
-            this.$alert("사용 가능한 아이디입니다!");
+            alert("사용 가능한 아이디입니다!");
             this.checkForm();
           }
           else if (error.response.status == 400){
