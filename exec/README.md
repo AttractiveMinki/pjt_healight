@@ -31,6 +31,13 @@
       - git clone을 하여 배포하지 않고, 빌드 파일만 서버에 직접 올려 배포하였습니다.
       - 프론트엔드 빌드 폴더: dist
       - 백엔드 빌드 파일: heala_be-0.0.1-SNAPSHOT.war
+      - 배포 과정
+         - 프론트엔드(dist), 백엔드 빌드(heala_be-0.0.1-SNAPSHOT.war)
+         - docker start mariadb 로 DB 실행
+         - var/www/html 에 dist 폴더 이동
+         - sudo service nginx start 명령어 입력
+         - java -jar heala_be-0.0.1-SNAPSHOT.war & 명령어 입력
+
 
    4. 데이터베이스 접속 정보 등 프로젝트(ERD)에 활용되는 주요 계정 및 프로퍼티가 정의된 파일 목록
 
