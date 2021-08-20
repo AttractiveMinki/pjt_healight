@@ -85,7 +85,7 @@ export default {
         const res = await axios.get(`${SERVER.URL}${SERVER.ROUTES.getWithHeartChallenge}&page=${this.limit}`)
         this.withChallenges = res.data
       } catch(err) {
-        console.log(err)
+        alert('정보를 가져오던 중 오류가 발생했습니다.')
       }
     },
     async infiniteHandler($state) {

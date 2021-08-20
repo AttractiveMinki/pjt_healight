@@ -114,7 +114,7 @@ export default {
         const response = await axios.get(SERVER.URL + SERVER.ROUTES.postUser + `?userId=${this.userId}`);
         this.commentUser = response.data;
       } catch (error) {
-        console.log(error);
+        alert('댓글 정보를 가져오던 중 오류가 발생했습니다.')
       }
     }
   },

@@ -178,16 +178,13 @@ export default {
       let formData = new FormData()
       let imgFile = document.getElementById("change_image").files[0]
       formData.append("file", imgFile)
-      console.log(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`)
-      console.log(imgFile)
-      console.log(imgFile.file)
       axios.post(`${SERVER.URL}${SERVER.ROUTES.uploadImage}`, formData, { headers: {"Content-Type" : "multipart/form-data"}})
         .then(res => {
           data.withChallenge.image = res.data
           this.createChallenge(data)
         })
-        .catch(err => {
-          console.error(err.response.data)
+        .catch(() => {
+          alert('정보를 가져오던 중 오류가 발생했습니다.')
         })
       },
     createChallenge: function (data) {
@@ -196,9 +193,8 @@ export default {
           alert("성공적으로 글이 작성되었습니다.");
           router.push({ name: "WithMain" })
         })
-        .catch((err) => {
+        .catch(() => {
           alert("전송 실패");
-          console.error(err)
         })
     },
     selectFile(e) {

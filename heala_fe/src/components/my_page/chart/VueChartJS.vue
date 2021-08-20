@@ -108,7 +108,7 @@
 
           this.calculatehotDates()
         } catch(err) {
-          console.log(err)
+          alert('날짜 계산 중 오류가 발생했습니다.')
         }
       },
 
@@ -153,7 +153,7 @@
 
           this.calculatehotDates()
         } catch(err) {
-          console.log(err)
+          alert('날짜 계산 중 오류가 발생했습니다.')
         }
       },
       calculatehotDates () {
@@ -249,7 +249,7 @@
               }
               // break;
             default:
-              console.log("unknown month " + month);
+              alert('유효하지 않은 달:' + month)
               return 0;
               // break;
         }

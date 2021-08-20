@@ -53,36 +53,31 @@ export default {
       }
     },
     Withdrawal(data) {
-      console.log(SERVER.URL + SERVER.ROUTES.withdrawal, data)
       axios.post(`${SERVER.URL}${SERVER.ROUTES.withdrawal}/checkAuthorization`, data)
         .then(() => {
-          console.log('회원 인증 완료')
           if (localStorage.getItem('userIdentity') == data.identity) {
             axios.delete(`${SERVER.URL}${SERVER.ROUTES.withdrawal}/${this.$store.state.userId}`)
-            .then((res) => {
-              console.log(res)
-              this.$alert("삭제가 완료되었습니다. 그동안 이용해주셔서 감사합니다.");
+            .then(() => {
+              alert("삭제가 완료되었습니다. 그동안 이용해주셔서 감사합니다.");
               localStorage.removeItem('userIdentity')
               localStorage.removeItem('jwt')
               localStorage.removeItem('userName')
               localStorage.removeItem('userImage')
               router.push({ name: "Login" })
             })
-            .catch((err) => {
-              console.log(err.response.data)
+            .catch(() => {
+              alert('정보를 처리하던 중 오류가 발생했습니다.')
             })
           } else {
-            this.$alert("현재 접속한 아이디와 탈퇴하는 아이디가 다릅니다. 재접속 후 시도해주세요.");
+            alert("현재 접속한 아이디와 탈퇴하는 아이디가 다릅니다. 재접속 후 시도해주세요.");
           }
           this.showDeleteModal = false
 
 
           // 아이디 삭제 요청을 보낸다.
       })
-        .catch((err) => {
-          console.log(err)
-          console.error(err.response.data)
-          this.$alert("아이디나 비밀번호가 일치하지 않습니다.");
+        .catch(() => {
+          alert("아이디나 비밀번호가 일치하지 않습니다.");
           this.showDeleteModal = false
       })
     },

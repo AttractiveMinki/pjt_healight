@@ -94,9 +94,8 @@ export default {
         .then((res) => {
           this.food_length = res.data.length
       })
-        .catch((err) => {
+        .catch(() => {
           alert("에러가 발생했습니다.");
-          console.error(err.response.data)
       })
     },
   },

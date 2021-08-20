@@ -103,11 +103,10 @@ export default {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiChallenge}`)
         .then((res) => {
           this.data = res.data
-          console.log(this.data)
           this.dataLoaded = true
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(() => {
+          alert('정보를 가져오던 중 오류가 발생했습니다.')
         })
     },
   },

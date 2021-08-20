@@ -127,8 +127,8 @@ export default {
           this.value = res.data
           this.dataLoaded = true
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(() => {
+          alert('정보를 가져오던 중 오류가 발생했습니다.')
         })
     },
     joinChallenge: function () {
@@ -136,8 +136,8 @@ export default {
         .then (() => {
           alert("챌린지에 참가하셨습니다.");
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(() => {
+          alert('챌린지에 참가하던 중 오류가 발생했습니다.')
         })
     },
   },  

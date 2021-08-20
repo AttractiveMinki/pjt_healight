@@ -140,7 +140,7 @@ export default {
         this.data.post = response.data;
         this.originalImage = response.data.image;
       } catch (error) {
-        console.log(error);
+        alert('정보를 가져오던 중 오류가 발생했습니다.')
       }
     },
     async getHashtag() {
@@ -154,7 +154,7 @@ export default {
           }
         }
       } catch (error) {
-        console.log(error);
+        alert('해시태그 정보를 가져오던 중 오류가 발생했습니다.')
       }
     },
     selectFile(e) {
@@ -165,22 +165,22 @@ export default {
     },
     checkData() {
       if (this.data.post.image == "" && document.getElementById("input-file").files[0] == undefined) {
-        this.$alert("이미지를 입력하세요.");
+        alert("이미지를 입력하세요.");
       }
       else if (this.data.post.title == "" ) {
-        this.$alert("제목을 입력하세요.");
+        alert("제목을 입력하세요.");
       }
       else if (this.data.post.title.length > 40 ) {
-        this.$alert("제목은 40자 이내로 작성해주세요.");
+        alert("제목은 40자 이내로 작성해주세요.");
       }
       else if (this.data.post.content == "") {
-        this.$alert("글 내용을 작성하세요.");
+        alert("글 내용을 작성하세요.");
       }
       else if (this.data.post.content.length > 1500) {
-        this.$alert("내용은 1500자 이내로 작성해주세요.");
+        alert("내용은 1500자 이내로 작성해주세요.");
       }
       else if (this.data.hashtag.word.length > 20) {
-        this.$alert("해시태그는 20자 이내로 작성해주세요.");
+        alert("해시태그는 20자 이내로 작성해주세요.");
       }
       else {
         this.uploadImage()
@@ -199,10 +199,8 @@ export default {
           this.data.post.image = res.data
           this.submit()
         })
-        .catch(err => {
-          this.$alert("이미지를 업로드하는 도중 에러가 발생했습니다.");
-          console.log('통신 실패')
-          console.error(err.response.data)
+        .catch(() => {
+          alert("이미지를 업로드하는 도중 에러가 발생했습니다.");
         })
     // submit(res)
     },
@@ -219,15 +217,14 @@ export default {
           await axios.patch(SERVER.URL + SERVER.ROUTES.feedPost + `?postId=${this.$route.params.postId}`, data);
         }
         else await axios.post(`${SERVER.URL}${SERVER.ROUTES.feedPost}`, data);
-        this.$alert("등록이 완료되었습니다.");
+        alert("등록이 완료되었습니다.");
         if(this.editing) {
           this.$router.go(-1);
         } else {
           this.$router.push({ name: "CommunityNewMain" })
         }
       } catch (error) {
-        // alert('글자 수 제한을 확인해주세요.\n 제목: 40자, 내용: 1500자, 해시태그: 20자')
-        console.log(error);
+        alert('글자 수 제한을 확인해주세요.\n 제목: 40자, 내용: 1500자, 해시태그: 20자')
       }
     },
     goBack: function () {

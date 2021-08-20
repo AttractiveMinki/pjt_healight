@@ -70,16 +70,13 @@ export default {
       axios.get(SERVER.URL + SERVER.ROUTES.getWithDetail
             + `?userId=${this.$store.state.userId}&withChallengeId=${this.challengeId}`)
         .then((response) =>{
-          // this.withChallenge = response.data.withChallenge
           this.challengeInfo = response.data
-          console.log(this.challengeInfo)
           this.dataLoaded = true
         }
             
         )
         .catch((exp) => 
             alert(`인증사진 불러오기에 실패했습니다: ${exp}`)
-            // console.log(`인증사진 불러오기에 실패했습니다: ${exp}`)
         );
     },
   },  

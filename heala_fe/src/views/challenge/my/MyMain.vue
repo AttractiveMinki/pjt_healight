@@ -105,7 +105,6 @@ export default {
     selectFile(e) {
       const file = e.target.files[0];
       this.certify.image = URL.createObjectURL(file);
-      console.log(this.certify.image)
     },
     uploadImage(withChallengeId) {
       let formData = new FormData()
@@ -117,9 +116,8 @@ export default {
           this.certify.withChallengeId = withChallengeId
           this.submit(this.certify)
         })
-        .catch(err => {
+        .catch(() => {
           alert("이미지 업로드에 실패했습니다.");
-          console.error(err.response.data)
         })
       },
     submit(certify) {
@@ -129,9 +127,8 @@ export default {
             alert("등록 완료");
           }
         })
-        .catch(error => {
-          alert("오류가 발생했습니다.");
-          console.log(error);
+        .catch(() => {
+          alert('정보를 제출하던 중 중 오류가 발생했습니다.')
         });
     },
     getMyChallenge: function () {
@@ -139,8 +136,8 @@ export default {
         .then((res) => {
           this.values = res.data
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(() => {
+          alert('정보를 가져오던 중 오류가 발생했습니다.')
         })
     },
   },

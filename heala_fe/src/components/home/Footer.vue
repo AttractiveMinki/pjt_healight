@@ -55,17 +55,6 @@ export default {
     this.$store.commit("GET_USERID")
     this.userId = this.$store.state.userId
   },
-
-  // watch: {
-  //   selectedRouter: {
-  //     handler: 'changeRouter',
-  //     immediate: true,
-      
-  //     // changeRouter: function () {
-  //     //   console.log(this.selectedRouter, 'watching')
-  //     // },
-  //   },
-  // },
 }
 </script>
 

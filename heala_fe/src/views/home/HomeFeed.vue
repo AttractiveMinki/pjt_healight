@@ -48,7 +48,7 @@ export default {
           const response = await axios.get(SERVER.URL + SERVER.ROUTES.getFeedPostData + this.userId + `?page=${this.limit}`);
           this.postData = response.data;
         } catch(exp) {
-          console.log(exp);
+          alert('게시물 정보를 가져오던 중 오류가 발생했습니다.')
         }
       },
       async infiniteHandler($state) {

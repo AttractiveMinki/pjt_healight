@@ -149,7 +149,7 @@ export default {
               }
               // break;
             default:
-              console.log("unknown month " + month);
+              alert('유효하지 않은 달:' + month)
               return 0;
               // break;
         }
@@ -217,8 +217,8 @@ export default {
         .then((res) => {
           this.recordDates = res.data
         })
-        .catch((err) => {
-          console.error(err)
+        .catch(() => {
+          alert('정보를 가져오던 중 오류가 발생했습니다.')
           this.recordDates = []
         })
     },

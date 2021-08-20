@@ -192,7 +192,7 @@ export default new Vuex.Store({
           store.dispatch("setPostUser", { userId: response.data.userId });
         })
         .catch((exp) => {
-          console.log(`게시글 조회에 실패했습니다: ${exp}`);
+          alert(`게시글 조회에 실패했습니다: ${exp}`)
         });
     },
     setPostUser(store, payload) {
@@ -203,7 +203,7 @@ export default new Vuex.Store({
           store.commit("setPostUser", { postUser: response.data })
         })
         .catch((exp) => {
-          console.log(`게시글 작성자 조회에 실패했습니다: ${exp}`);
+          alert(`게시글 작성자 조회에 실패했습니다: ${exp}`)
         })
     },
     setPostComments(store, { postId }){
@@ -225,7 +225,7 @@ export default new Vuex.Store({
           store.commit("setPostComments", { comments: commentTree });
         })
         .catch((exp) => {
-          console.log(`댓글 조회에 실패했습니다: ${exp}`);
+          alert(`댓글 조회에 실패했습니다: ${exp}`)
           // 이 밑 두 줄 나중에 삭제
           let commentTree = util.convertToTree(store.state.comments, "id", "commentId", "childrenComment");
           store.commit("setPostComments", { comments: commentTree });
@@ -240,7 +240,7 @@ export default new Vuex.Store({
         store.commit("setCommentUsers", { commentUsers: response.data })
       )
       .catch((exp) =>
-        console.log(`댓글 작성자 조회에 실패했습니다: ${exp}`)
+      alert(`댓글 작성자 조회에 실패했습니다: ${exp}`)
       );
     },
     setCommentLikes(store, { commentIds }) {
@@ -253,7 +253,7 @@ export default new Vuex.Store({
         store.commit("setCommentLikes", { commentLikes: response.data })
       )
       .catch((exp) =>
-        console.log(`댓글 좋아요 조회에 실패했습니다: ${exp}`)
+      alert(`댓글 좋아요 조회에 실패했습니다: ${exp}`)
       );
     },
     setPostScrap(store, { postId }){
@@ -263,7 +263,7 @@ export default new Vuex.Store({
           store.commit("setPostScrap", { scrap: response.data })
         })
         .catch((exp) => {
-          console.log(`게시글 스크랩 여부 조회에 실패했습니다: ${exp}`);
+          alert(`게시글 스크랩 여부 조회에 실패했습니다: ${exp}`)
         });
     },
     setPostLike(store, { postId }){
@@ -273,7 +273,7 @@ export default new Vuex.Store({
           store.commit("setPostLike", { like: response.data })
         })
         .catch((exp) => {
-          console.log(`게시글 좋아요 여부 조회에 실패했습니다: ${exp}`);
+          alert(`게시글 좋아요 여부 조회에 실패했습니다: ${exp}`)
         });
     },
     likePost(store, { postId }){
@@ -287,10 +287,10 @@ export default new Vuex.Store({
         })
         .catch((exp) => {
           if(exp.response.status == 409) {
-            console.log("이미 존재하는 게시글 좋아요 정보가 있습니다.");
+            alert("이미 존재하는 게시글 좋아요 정보가 있습니다.")
           }
           else {
-            console.log(`게시글 좋아요에 실패했습니다: ${exp}`)
+            alert(`게시글 좋아요에 실패했습니다: ${exp}`)
           }
         });
     },
@@ -303,10 +303,10 @@ export default new Vuex.Store({
         })
         .catch((exp) => {
           if(exp.response.status == 404) {
-            console.log("게시글 좋아요 정보가 존재하지 않습니다.");
+            alert("게시글 좋아요 정보가 존재하지 않습니다.")
           }
           else {
-            console.log(`게시글 좋아요 취소에 실패했습니다: ${exp}`)
+            alert(`게시글 좋아요 취소에 실패했습니다: ${exp}`)
           }
         });
     },
@@ -321,10 +321,10 @@ export default new Vuex.Store({
         })
         .catch((exp) => {
           if(exp.response.status == 409) {
-            console.log("이미 존재하는 게시글 스크랩 정보가 있습니다.");
+            alert("이미 존재하는 게시글 스크랩 정보가 있습니다.")
           }
           else {
-            console.log(`게시글 스크랩에 실패했습니다: ${exp}`)
+            alert(`게시글 스크랩에 실패했습니다: ${exp}`)
           }
         });
     },
@@ -337,10 +337,10 @@ export default new Vuex.Store({
         })
         .catch((exp) => {
           if(exp.response.status == 404) {
-            console.log("게시글 스크랩 정보가 존재하지 않습니다.");
+            alert("게시글 스크랩 정보가 존재하지 않습니다.")
           }
           else {
-            console.log(`게시글 스크랩 취소에 실패했습니다: ${exp}`)
+            alert(`게시글 스크랩 취소에 실패했습니다: ${exp}`)
           }
         });
     },
@@ -356,7 +356,7 @@ export default new Vuex.Store({
           store.dispatch("setPostComments", { postId: payload.postId })
         )
         .catch((exp) => {
-          console.log(`댓글 작성에 실패했습니다: ${exp}`)
+          alert(`댓글 작성에 실패했습니다: ${exp}`)
         });
     },
     deleteComment(store, payload) {
@@ -366,7 +366,7 @@ export default new Vuex.Store({
           store.dispatch("setPostComments", { postId: payload.postId })
         )
         .catch((exp) =>
-          console.log(`댓글 삭제에 실패했습니다: ${exp}`)
+          alert(`댓글 삭제에 실패했습니다: ${exp}`)
         );
     },
     likeComment(store, payload) {
@@ -380,10 +380,11 @@ export default new Vuex.Store({
         })
         .catch((exp) => {
           if(exp.response.status == 409) {
-            console.log("이미 존재하는 댓글 좋아요 정보가 있습니다.");
+            alert("이미 존재하는 댓글 좋아요 정보가 있습니다.")
           }
           else{
-            console.log(`댓글 좋아요에 실패했습니다: ${exp}`)}
+            alert(`댓글 좋아요에 실패했습니다: ${exp}`)
+          }
         });
     },
     cancelLikeComment(store, payload) {
@@ -395,10 +396,10 @@ export default new Vuex.Store({
         })
         .catch((exp) => {
           if(exp.response.status == 404) {
-            console.log("존재하는 댓글 좋아요 정보가 없습니다.");
+            alert("존재하는 댓글 좋아요 정보가 없습니다.")
           }
           else
-            console.log(`댓글 좋아요 취소에 실패했습니다: ${exp}`);
+            alert(`댓글 좋아요 취소에 실패했습니다: ${exp}`)
         });
     },
 
@@ -411,9 +412,8 @@ export default new Vuex.Store({
           commit("SET_USERIDENTITY2", data)
           router.push({ name: "SignupSuccess" })
       })
-        .catch((err) => {
-          console.log(err)
-          console.error(err.response.data)
+        .catch(() => {
+          alert('회원가입 중 오류가 발생했습니다.')
       })
     },
     login: function ({ commit }, data) {
@@ -427,8 +427,7 @@ export default new Vuex.Store({
           commit("SET_USERIMAGE", res)
           router.push({ name: "HomeFeed" }) // 홈 피드 구현 후 변경
       })
-        .catch((err) => {
-          console.log(err)
+        .catch(() => {
           alert("존재하지 않는 회원이거나, 비밀번호가 일치하지 않습니다.");
       })
     },
@@ -447,8 +446,8 @@ export default new Vuex.Store({
         .then(() => {
           commit("SET_FEEDS")
       })
-        .catch((err) => {
-          console.err(err)
+        .catch(() => {
+          alert('정보를 가져오던 중 오류가 발생했습니다.')
       })
     },
   },

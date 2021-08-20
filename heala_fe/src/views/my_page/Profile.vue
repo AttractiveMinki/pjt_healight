@@ -180,7 +180,7 @@ export default {
         this.user = response.data;
         this.setLevel(this.user.exp);
       } catch (error) {
-        console.log(error);
+        alert('프로필 정보를 가져오던 중 오류가 발생했습니다.')
       }
     },
     async getFollowing() {
@@ -188,7 +188,7 @@ export default {
         const response = await axios.get(SERVER.URL + SERVER.ROUTES.follow + `?userId=${this.myId}&followId=${this.userId}`);
         this.isFollowing = response.data;
       } catch (error) {
-        console.log(error);
+        alert('팔로잉 정보를 가져오던 중 오류가 발생했습니다.')
       }
     },
     following() {

@@ -152,8 +152,8 @@ export default {
           this.register = res.data.register
           this.minCalory = res.data.minCalory
         })
-        .catch((err) => {
-          console.error(err.response.data)
+        .catch(() => {
+          alert('식단 정보를 가져오던 중 오류가 발생했습니다.')
         })
     },
   },

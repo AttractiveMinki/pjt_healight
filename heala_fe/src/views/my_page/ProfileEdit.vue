@@ -134,8 +134,7 @@ export default {
             this.data.user.image = res.data
             this.submit(data)
           })
-          .catch(err => {
-            console.error(err.response.data)
+          .catch(() => {
             alert("이미지 업로드 과정에서 에러가 발생했습니다.");
           })
       },
@@ -150,9 +149,8 @@ export default {
             router.push({ name: "Profile", params: { id: this.data.user.id }})
           }
         })
-        .catch(error => {
+        .catch(() => {
           alert("프로필 정보 등록 과정에서 에러가 발생하였습니다.");
-          console.error(error.response.data)
         });
     },
     checkIdentity: function (identity) {
@@ -236,13 +234,11 @@ export default {
         this.data.user.introduction = response.data.introduction;
         this.data.badges = response.data.badges;
         this.originalImage = response.data.image
-        console.log(this.data.user.image)
-        console.log(this.data.badges)
+
         this.originalIdentity = response.data.identity;
       })
-      .catch(error => {
-        console.log(error);
-        console.error(error.response.data);
+      .catch(() => {
+        alert('프로필 정보를 가져오던 중 오류가 발생했습니다.')
       });
   },
 };

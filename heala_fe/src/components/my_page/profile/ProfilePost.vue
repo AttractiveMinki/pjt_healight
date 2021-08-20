@@ -57,7 +57,7 @@ export default {
         const response = await axios.get(SERVER.URL + SERVER.ROUTES.feedPost + `/${this.userId}/my/${this.profileSelectedCategory}?page=${this.page}`);
         this.feedImages = response.data;
       } catch (error) {
-        console.log(error);
+        alert('피드를 가져오던 중 오류가 발생했습니다.')
       }
     },
     async infiniteHandler($state) {
@@ -78,7 +78,7 @@ export default {
           $state.complete();
         }
       } catch(exp) {
-        console.log(exp);
+        alert('추가로 게시물을 가져오던 중 오류가 발생했습니다.')
       }
     },
     goToPost(id) {

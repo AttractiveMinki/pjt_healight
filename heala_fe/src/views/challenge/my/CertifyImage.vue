@@ -63,7 +63,7 @@ export default {
             this.withChallenge = response.data.withChallenge
         )
         .catch((exp) => 
-            console.log(`인증사진 불러오기에 실패했습니다: ${exp}`)
+          alert(`인증사진 불러오기에 실패했습니다: ${exp}`)
         );
     },
     getImages() {
@@ -74,7 +74,7 @@ export default {
             this.certifyData = response.data
         )
         .catch((exp) => 
-            console.log(`인증사진 불러오기에 실패했습니다: ${exp}`)
+          alert(`인증사진 불러오기에 실패했습니다: ${exp}`)
         );
     }
   },

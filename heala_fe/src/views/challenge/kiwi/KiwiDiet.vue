@@ -148,27 +148,23 @@ export default {
           this.challenges = res.data
           this.dataLoaded = true
         })
-        .catch((err) => {
-          console.error(err.response.data)
+        .catch(() => {
+          alert('정보를 가져오던 중 오류가 발생했습니다.')
         })
     },
     certifyMission: function (missionId) {
       // 주소 이상하고, 챌린지 성공 실패 기준을 몰라 보류중
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}${this.$store.state.userId}/{missionId}?missionId=${missionId}`)
         .then((res) => {
-          console.log(res)
           if (res.data == "") {
             alert("챌린지 실패");
           } else {
             alert("챌린지 성공!");
             history.go(0);
           }
-          
-          // 챌린지 성공!
         })
-        .catch((err) => {
-          console.log(err)
-          // 챌린지 실패
+        .catch(() => {
+          alert('정보를 가져오던 중 오류가 발생했습니다.')
         })
     },
   },

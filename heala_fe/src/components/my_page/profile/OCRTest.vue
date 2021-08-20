@@ -33,12 +33,11 @@ export default {
       formData.append('image', imgFile.files[0])
       axios.post(`${SERVER.ROUTES.OCR}`, formData , { headers: {'Content-Type' : 'multipart/form-data', 'Authorization': `KakaoAK ${process.env.VUE_APP_OCR_REST_API_KEY}`}})
       .then((res) => {
-        // console.log(res)
         this.data = res.data
         this.findNutrient(this.data)
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
+        alert('제출 중 오류가 발생했습니다.')
       })
     },
     findNutrient: function (value) {

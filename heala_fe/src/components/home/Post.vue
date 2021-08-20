@@ -100,7 +100,7 @@ export default {
         this.userImage = user.image;
         this.userName = user.name;
       } catch(exp) {
-        console.log(exp);
+        alert('유저 정보를 가져올 때 오류가 발생했습니다.')
       }
     },
     async getCommentCount() {
@@ -108,15 +108,16 @@ export default {
         const response = await axios.get(SERVER.URL + SERVER.ROUTES.commentCount + this.id);
         this.commentCount = response.data;
       } catch(exp) {
-        console.log(exp);
+        alert('댓글 정보를 가져올 때 오류가 발생했습니다.')
       }
     },
     async getPostScrap() {
       try {
         const response = await axios.get(SERVER.URL + SERVER.ROUTES.postScrap + `?postId=${this.id}&userId=${this.currentUserId}`);
         this.postScrap = response.data;
+        return response.data;
       } catch(exp) {
-        this.postScrap = exp.response.data;
+        alert('스크랩 정보를 가져올 때 오류가 발생했습니다.')
       }
     },
     async getPostLike() {
@@ -125,7 +126,7 @@ export default {
         this.postLike = response.data;
         return response.data;
       } catch(exp) {
-        console.log(exp);
+        alert('좋아요 정보를 가져올 때 오류가 발생했습니다.')
       }
     },
     goToCommentMore() {

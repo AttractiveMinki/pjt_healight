@@ -81,7 +81,7 @@ export default {
         this.post = response.data;
         this.getPostUser();
       } catch (error) {
-        console.log(error);
+        alert('게시물 정보를 가져오던 중 오류가 발생했습니다.')
       }
     },
     async getPostUser() {
@@ -89,7 +89,7 @@ export default {
         const response = await axios.get(SERVER.URL + SERVER.ROUTES.postUser + `?userId=${this.post.userId}`);
         this.postUser = response.data;
       } catch (error) {
-        console.log(error);
+        alert('유저 정보를 가져오던 중 오류가 발생했습니다.')
       }
     },
   },

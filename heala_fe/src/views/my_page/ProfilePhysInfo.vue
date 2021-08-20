@@ -82,15 +82,13 @@ export default {
       }
     },
     submit(data) {
-      console.log(data)
       axios.post(`${SERVER.URL}${SERVER.ROUTES.profilePhysInfo}`, data)
       .then(() => {
         alert("신체 정보가 등록되었습니다!");
         this.$router.push({ name: "Profile", params: {id: this.data.userId} })
       })
-      .catch((err) => {
+      .catch(() => {
         alert("오류가 발생했습니다.");
-        console.log(err)
       })
     },
   },
@@ -98,20 +96,6 @@ export default {
     this.$store.commit("GET_USERID")
     this.data.userId = this.$store.state.userId
   },
-  // mounted() {
-  //   // 프로필 기존 정보 불러오기 -> 함수를 선언하고 따로 뺀 뒤, mounted에는 함수 이름만 호출하면 될 듯.
-  //   axios.get(`${SERVER.URL}${SERVER.ROUTES.userProfile}`)
-  //     .then(response => {     
-  //       this.image = require("@/assets/img/profile/" + response.data.image);
-  //       this.identity = response.data.identity;
-  //       this.name = response.data.name;
-  //       this.introduction = response.data.introduction;
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //       console.error(error.response.data);
-  //     });
-  // },
 }
 </script>
 

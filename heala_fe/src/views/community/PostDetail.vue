@@ -144,7 +144,7 @@ export default {
         await axios.delete(SERVER.URL + SERVER.ROUTES.feedPost
         + `?userId=${this.userId}&postId=${this.postId}`)
       } catch (error) {
-        console.log(`게시글 삭제에 실패했습니다: ${error}`)
+        alert(`게시글 삭제에 실패했습니다: ${error}`)
       }
       this.$router.go(-1);
     },

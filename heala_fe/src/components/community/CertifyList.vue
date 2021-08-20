@@ -21,10 +21,9 @@ export default {
   methods: {
     async getMyCertifyImages () {
       try {
-        const res = await axios.get(`${SERVER.URL}${SERVER.ROUTES.myChallengePhoto}?userId=${this.userId}&withChallengeId=${this.ChallengeId}`)
-        console.log(res)
+        await axios.get(`${SERVER.URL}${SERVER.ROUTES.myChallengePhoto}?userId=${this.userId}&withChallengeId=${this.ChallengeId}`)
       } catch (err) {
-        console.log(err)
+        alert('이미지를 검증하는 과정에서 에러가 발생했습니다.')
       }
     },
   },

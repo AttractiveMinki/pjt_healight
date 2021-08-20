@@ -125,14 +125,11 @@ export default {
     passwordChange: function () {
       axios.post(`${SERVER.URL}${SERVER.ROUTES.passwordChange}`, this.data)
         .then(() => {
-          this.$alert("패스워드가 정상적으로 변경되었습니다.")
+          alert("패스워드가 정상적으로 변경되었습니다.")
           router.push({ name: "Profile" })
       })
-        .catch((err) => {
-          console.log(`${SERVER.URL}${SERVER.ROUTES.passwordChange}`)
-          console.log(this.data)
-          this.$alert("비밀번호가 일치하지 않습니다.")
-          console.error(err.response.data)
+        .catch(() => {
+          alert("비밀번호가 일치하지 않습니다.")
       })
     },
   },

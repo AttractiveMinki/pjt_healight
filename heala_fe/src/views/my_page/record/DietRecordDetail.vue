@@ -93,9 +93,8 @@ export default {
         .then((res) => {
           this.food_list = res.data
       })
-        .catch((err) => {
-          alert("에러가 발생했습니다.");
-          console.error(err.response.data)
+        .catch(() => {
+          alert('식단 기록을 가져오던 중 오류가 발생했습니다.')
       })
     },
     getDietRecordToday: function () {
@@ -104,8 +103,8 @@ export default {
           this.diet.calory = res.data.calory
           this.recommend.calory = res.data.totalCalory
         })
-        .catch((err) => {
-          console.error(err.response.data)
+        .catch(() => {
+          alert('식단 기록을 가져오던 중 오류가 발생했습니다.')
         })
     },
 

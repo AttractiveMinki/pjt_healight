@@ -120,8 +120,8 @@ export default {
               alert("조회된 내용이 없습니다. ㅠ_ㅠ \n 상품의 이름을 검색해보세요! \n ex) 초코파이");
             }
           })
-          .catch((err) => {
-            console.log(err)
+          .catch(() => {
+            alert('음식 정보를 가져오던 중 오류가 발생했습니다.')
           })
       }
       else {
@@ -182,8 +182,7 @@ export default {
         this.data = res.data
         this.findNutrient(this.data)
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
         alert("이미지 인식에 실패하였습니다. ㅠ_ㅠ \n 다른 이미지로 다시 시도해보아요!");
       })
     },

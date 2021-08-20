@@ -107,7 +107,7 @@ export default {
             this.certifyImageLimit = Array.from({length: arrLength}, () => 0);
           })
           .catch((exp) => {
-            console.log(`챌린지 결과 불러오기에 실패했습니다: ${exp}`)
+            alert(`챌린지 결과 불러오기에 실패했습니다: ${exp}`)
           })
       },
       getUserData() {
@@ -119,7 +119,7 @@ export default {
             this.setLevel(this.userData.exp);
           })
           .catch((exp) => {
-            console.log(`사용자 exp 불러오기에 실패했습니다: ${exp}`)
+            alert(`사용자 exp 불러오기에 실패했습니다: ${exp}`)
           })
       },
       setLevel(exp) {

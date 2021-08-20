@@ -40,7 +40,7 @@ export default {
         const response = await axios.get(SERVER.URL + SERVER.ROUTES.feed + `${this.$route.params.id}` + SERVER.ROUTES.badge);
         this.badges = response.data;
       } catch (error) {
-        console.log(error);
+        alert('배지를 가져오던 중 오류가 발생했습니다.')
       }
     },
   },

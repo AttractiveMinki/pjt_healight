@@ -60,7 +60,7 @@ export default {
         + `?myId=${this.userId}&follow=${this.followListType}&page=${this.page}`);
         this.followList = response.data;
       } catch(exp) {
-        console.log(exp);
+        alert('팔로우 정보를 가져오던 중 오류가 발생했습니다.')
       }
     },
     async getFollowList() {
@@ -69,7 +69,7 @@ export default {
         + `?myId=${this.userId}&follow=${this.followListType}&page=${this.page}`);
         return response.data;
       } catch(exp) {
-        console.log(exp);
+        alert('팔로우 정보를 가져오던 중 오류가 발생했습니다.')
       }
     },
     async getInitialSearchUserList() {
@@ -78,7 +78,7 @@ export default {
         + `?userId=${this.userId}&word=${this.keyword}&page=${this.page}`);
         this.followList = response.data;
       } catch(exp) {
-        console.log(exp);
+        alert('사용자 정보를 가져오던 중 오류가 발생했습니다.')
       }
     },
     async getSearchUserList() {
@@ -87,7 +87,7 @@ export default {
         + `?userId=${this.userId}&word=${this.keyword}&page=${this.page}`);
         return response.data;
       } catch(exp) {
-        console.log(exp);
+        alert('사용자 정보를 가져오던 중 오류가 발생했습니다.')
       }
     },
     async infiniteHandler($state) {
@@ -109,7 +109,7 @@ export default {
           $state.complete();
         }
       } catch(exp) {
-        console.log(exp);
+        alert('추가 정보를 가져오던 중 오류가 발생했습니다.')
       }
     },
     goToFeed(followId) {

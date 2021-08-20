@@ -110,7 +110,7 @@ export default {
         const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}?page=${this.limit}&subCategory=${this.$store.state.selectedSubCategory}`)
         this.communityArticles = response.data
       } catch(err) {
-        console.log(err)
+        alert('초기 값을 불러들일 때 오류가 발생했습니다.')
       }
     },
 		async getCommunityInfo() {
@@ -118,16 +118,15 @@ export default {
         const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}?page=${this.limit}&subCategory=${this.$store.state.selectedSubCategory}`)
         return response.data
       } catch(err) {
-        console.log(err)
+        alert('정보를 불러올 때 오류가 발생했습니다.')
       }
     },
     async getInitialPostListByCategory() {
       try {
         const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}category?category=${this.category}&page=${this.limit}&subCategory=${this.$store.state.selectedSubCategory}`)
         this.communityArticles = response.data
-        console.log(response.data);
       } catch(err) {
-        console.log(err)
+        alert('세부 카테고리를 불러올 때 오류가 발생했습니다.')
       }
     },
     async getPostListByCategory() {
@@ -135,7 +134,7 @@ export default {
         const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.community}category?category=${this.category}&page=${this.limit}&subCategory=${this.$store.state.selectedSubCategory}`)
         return response.data
       } catch(err) {
-        console.log(err)
+        alert('세부 카테고리를 불러올 때 오류가 발생했습니다.')
       }
     },
     async getInitialSearchPostList() {
@@ -143,7 +142,7 @@ export default {
         const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.postSearch}?page=${this.limit}&word=${this.keyword}`)
         this.communityArticles = response.data;
         } catch(err) {
-        console.log(err)
+        alert('검색 결과를 가져올 때 오류가 발생했습니다.')
       }
     },
     async getInitialScrapList() {
@@ -151,7 +150,7 @@ export default {
         const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.feed}${this.userId}${SERVER.ROUTES.scrap}?page=${this.limit}`)
         this.communityArticles = response.data
       } catch(err) {
-        console.log(err)
+        alert('스크랩 목록을 가져올 때 오류가 발생했습니다.')
       }
     },
     async getSearchPostList() {
@@ -159,7 +158,7 @@ export default {
         const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.postSearch}?page=${this.limit}&word=${this.keyword}`)
         return response.data
       } catch(err) {
-        console.log(err)
+        alert('검색 결과를 가져올 때 오류가 발생했습니다.')
       }
     },
     async getScrapList() {
@@ -167,7 +166,7 @@ export default {
         const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.feed}${this.userId}${SERVER.ROUTES.scrap}?page=${this.limit}`)
         return response.data
       } catch(err) {
-        console.log(err)
+        alert('스크랩 목록을 가져올 때 오류가 발생했습니다.')
       }
     },
     async getInitialSearchPostListByCategory() {
@@ -175,7 +174,7 @@ export default {
         const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.postSearchCategory}?page=${this.limit}&word=${this.keyword}&category=${this.category}&subCategory=${this.$store.state.selectedSubCategory}`)
         this.communityArticles = response.data;
       } catch(err) {
-        console.log(err)
+        alert('검색 결과를 가져올 때 오류가 발생했습니다.')
       }
     },
     async getSearchPostListByCategory() {
@@ -183,7 +182,7 @@ export default {
         const response = await axios.get(`${SERVER.URL}${SERVER.ROUTES.postSearchCategory}?page=${this.limit}&word=${this.keyword}&category=${this.category}&subCategory=${this.$store.state.selectedSubCategory}`)
         return response.data;
       } catch(err) {
-        console.log(err)
+        alert('검색 결과를 가져올 때 오류가 발생했습니다.')
       }
     },
     async infiniteHandler($state) {

@@ -154,7 +154,7 @@ export default {
               }
               // break;
             default:
-              console.log("unknown month " + month);
+              alert('유효하지 않은 달:' + month)
               return 0;
               // break;
         }
@@ -222,8 +222,8 @@ export default {
         .then((res) => {
           this.recordDates = res.data
         })
-        .catch((err) => {
-          console.error(err)
+        .catch(() => {
+          alert('기록을 가져오던 중 오류가 발생했습니다.')
           this.recordDates = []
         })
     },
@@ -236,7 +236,7 @@ export default {
         await axios.post(`${SERVER.URL}${SERVER.ROUTES.getMonthWeiRecord}`, data)
         alert("체중 입력이 완료되었습니다.");
       } catch(err) {
-        console.log(err)
+        alert('체중 정보를 입력하던 중 오류가 발생했습니다.')
       }
     },
   },
