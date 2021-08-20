@@ -34,7 +34,7 @@
                   <img :src="certify.image" alt="certify_image" width="99%">
                 </el-dialog>
 
-                <button class="my-pictures-button" @click="goToCertifyImage(with_challenge.id)">내 인증사진 <br> 모아보기</button>
+                <button class="my-pictures-button" @click="goToCertifyImage(with_challenge.id)">내 인증사진 모아보기</button>
                 
               </div>
             </el-col>
