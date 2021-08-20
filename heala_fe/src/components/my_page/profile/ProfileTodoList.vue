@@ -29,7 +29,7 @@
       <router-link :to="{ name: 'WeightCalender' }" class="text-decoration-none">
         <el-row class="community-inside">
           <el-col :span="18">
-              <div>체중 기록하기</div>
+              <div><h2 style="padding-top: 10px">체중 기록하기</h2></div>
           </el-col>
           <el-col :span="6">
             <img class="image" :src="imageServer + `admin/body`" alt="physic">
@@ -134,19 +134,19 @@ export default {
   .community-inside {
     margin: 0px 5px 5px 5px;
     padding-left: 10vw;
+    padding-right: 5vw;
     padding-top: 3vh;
     font-weight: bold;
     border-radius: 5px;
-    height: 10vh;
+    height: 18vh;
     text-align: start;
     border: 1.5px solid darkgrey;
     box-sizing: border-box;
   }
   .image {
-    width: 40px;
-    height: 40px;
+    width: 12vh;
+    height: 12vh;
     position: relative;
-    top: -8px;
   }
   .alert-record-diet {
     font-size: 13px;
