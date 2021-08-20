@@ -16,7 +16,7 @@
       <router-link :to="{ name: 'DietRecord' }" class="text-decoration-none">
         <el-row class="community-inside">
           <el-col :span="18">
-              <div>식단 기록하기</div>
+              <div class="community-inside-text">식단 기록하기</div>
               <!-- <div v-if="food_length == 0" class="alert-record-diet">오늘 식사 기록을 하지 않으셨습니다.</div> -->
               
           </el-col>
@@ -29,7 +29,7 @@
       <router-link :to="{ name: 'WeightCalender' }" class="text-decoration-none">
         <el-row class="community-inside">
           <el-col :span="18">
-              <div><h2 style="padding-top: 10px">체중 기록하기</h2></div>
+              <div class="community-inside-text">체중 기록하기</div>
           </el-col>
           <el-col :span="6">
             <img class="image" :src="imageServer + `admin/body`" alt="physic">
@@ -37,6 +37,7 @@
         </el-row>
       </router-link>
     </div>
+    <div class="rest"></div>
   </div>
 </template>
 
@@ -134,22 +135,28 @@ export default {
     margin: 0px 5px 5px 5px;
     padding-left: 10vw;
     padding-right: 5vw;
-    padding-top: 3vh;
+    padding-top: 2vh;
     font-weight: bold;
     border-radius: 5px;
-    height: 18vh;
+    height: 14vh;
     text-align: start;
     border: 1.5px solid darkgrey;
     box-sizing: border-box;
   }
+  .community-inside-text {
+    padding-top: 3vh;
+  }
   .image {
-    width: 12vh;
-    height: 12vh;
+    width: 10vh;
+    height: 10vh;
     position: relative;
   }
   .alert-record-diet {
     font-size: 13px;
     color: gray;
     margin-top: 1vh;
+  }
+  .rest {
+    height: 48px;
   }
 </style>
