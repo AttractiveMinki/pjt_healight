@@ -32,14 +32,14 @@
       </el-col>
     </el-row>
 
-    <el-row id="challenge-title" style="margin: 2%; text-align: start">
+    <el-row id="challenge-title" class="challenge-info">
       <el-col :span="16" class="text-challenge-title">
         {{ value.withChallenge.title }}
       </el-col>
     </el-row>
 
     <el-row>
-      <el-col id="challenge-certifyinfo" style="margin: 2%; text-align: start">
+      <el-col id="challenge-certifyinfo" class="challenge-info">
         <span v-if="value.withChallenge.category == 0">
           챌린지 카테고리: 운동
         </span>
@@ -53,39 +53,39 @@
     </el-row>
 
     <el-row>
-      <el-col id="challenge-duration" style="margin: 2%; text-align: start">
+      <el-col id="challenge-duration" class="challenge-info">
         {{ value.withChallenge.startDate }} ~ {{ value.withChallenge.endDate }}
       </el-col>
     </el-row>
 
     <hr>
     <el-row style="text-align: start">
-      <span id="challenge-certifyinfo" style="margin: 2%" v-for="(hashtag, idx) in value.hashtags" :key="idx">
+      <span id="challenge-certifyinfo" style="padding: 2%; box-sizing: border-box;" v-for="(hashtag, idx) in value.hashtags" :key="idx">
         <span class="text-hashtag-detail">#{{ hashtag }}</span> 
       </span>
     </el-row>
 
     <el-row>
-      <el-col id="challenge-certifyinfo" style="margin: 2%; text-align: start">
+      <el-col id="challenge-certifyinfo" class="challenge-info">
         소개: {{ value.withChallenge.introduction }}
       </el-col>
     </el-row>
 
     <el-row>
-      <el-col id="challenge-certifyinfo" style="margin: 2%; text-align: start">
+      <el-col id="challenge-certifyinfo" class="challenge-info">
         <router-link :to="{ name: 'MyMain' }" class="text-decoration-category selected-category" >인증하러가기</router-link> 
       </el-col>
     </el-row>
 
     <hr>
     <el-row>
-      <el-col id="challenge-people" style="margin: 2%; text-align: start">
+      <el-col id="challenge-people" class="challenge-info">
         <font-awesome-icon icon="user" /> 참가 인원: {{ value.participantsNum }}
       </el-col>
     </el-row>
 
     <el-row>
-      <el-col id="challenge-exp" style="margin: 2%; text-align: start">
+      <el-col id="challenge-exp" class="challenge-info">
         <font-awesome-icon icon="star" /> 키위 점수: {{ value.withChallenge.kiwiPoint }}
       </el-col>
     </el-row>
@@ -135,6 +135,7 @@ export default {
       axios.post(`${SERVER.URL}${SERVER.ROUTES.joinWithChallenge}?userId=${this.$store.state.userId}&withChallengeId=${this.$route.params.id}`)
         .then (() => {
           alert("챌린지에 참가하셨습니다.");
+          this.$router.push({ name: "WithMain" });
         })
         .catch(() => {
           alert('챌린지에 참가하던 중 오류가 발생했습니다.')
@@ -162,6 +163,12 @@ export default {
   #submit {
     position: fixed;
     bottom: 0rem;
+  }
+  .challenge-info {
+    /* margin: 2% 0px 2% 0px; */
+    padding: 2%;
+    box-sizing: border-box;
+    text-align: start
   }
   .text-decoration-category {
     text-decoration: none;

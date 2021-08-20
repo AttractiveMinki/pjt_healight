@@ -150,7 +150,7 @@ export default {
     },
     certifyMission: function (missionId) {
       // 주소 이상하고, 챌린지 성공 실패 기준을 몰라 보류중
-      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}${this.$store.state.userId}/{missionId}?missionId=${missionId}`)
+      axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiHealthChallenge}${this.$store.state.userId}/mission?missionId=${missionId}`)
         .then((res) => {
           if (res.data == "") {
             alert("챌린지 실패");

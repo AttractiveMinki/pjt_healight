@@ -73,7 +73,7 @@ public class ChallengeController {
 	}
 	
 	@ApiOperation(value = "키위 챌린지 미션 성공 여부 확인하기.")
-	@GetMapping("/kiwi/{category}/{userId}/{missionId}")
+	@GetMapping("/kiwi/{category}/{userId}/mission")
 	public Object completeKiwiMission(@PathVariable int category, @PathVariable int userId,
 			@RequestParam(value="missionId") int missionId) {
 		return new ResponseEntity<>(kiwiChallengeService.completeKiwiMission(category, userId, missionId), HttpStatus.OK);
