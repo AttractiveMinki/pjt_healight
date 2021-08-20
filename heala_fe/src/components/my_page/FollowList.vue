@@ -114,6 +114,7 @@ export default {
     },
     goToFeed(followId) {
       this.$router.push({ name: "Profile", params: { id: followId }});
+      // this.$router.go({ name: "Profile", params: { id: followId }});
     },
   },
   components: {

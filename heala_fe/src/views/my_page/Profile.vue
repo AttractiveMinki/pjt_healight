@@ -12,7 +12,7 @@
 
         <!-- 사용자와 프로필 주인이 다르다면 -->
         <div v-else class="follow-button">
-          <follow :following="isFollowing" :followId="userId" :isFeedFollow=true></follow>
+          <follow :following="isFollowing" :followId="userId" :isFeedFollow=true @follow="follow" @unfollow="unfollow"></follow>
         </div>
       </el-col>
     </el-row>
@@ -37,10 +37,10 @@
 
     <!-- FollowList -->
     <div class="follow-list-container">
-      <follow-list v-if="showFollowingList" :followListType=1 @follow="user.following++" @unfollow="user.following--"></follow-list>
+      <follow-list v-if="showFollowingList" :followListType=1 @follow="followBy" @unfollow="unfollowBy"></follow-list>
     </div>
     <div class="follow-list-container">
-      <follow-list v-if="showFollowerList" :followListType=2 @follow="user.following++" @unfollow="user.following--"></follow-list>
+      <follow-list v-if="showFollowerList" :followListType=2 @follow="followBy" @unfollow="unfollowBy"></follow-list>
     </div>
 
     <div class="badge-container">
@@ -64,7 +64,7 @@
       </div>
       <div class="select-tab" :class="{ selected: !showFeed }" @click="showFeed = false">
         <div v-if="userId == myId" class="select-tab-title">오늘의 할 일</div>
-        <div v-else class="select-tab-title">뱃지 보관함</div>
+        <div v-else class="select-tab-title">배지 보관함</div>
       </div>
     </el-row>
     <div v-if="showFeed">
@@ -117,7 +117,7 @@ export default {
       },
       // 보고 있는 프로필 계정 주인의 id
       userId: "",
-      isFollowing: 1,
+      isFollowing: "",
       
       // 로그인 한 내 아이디
       myId: "",
@@ -152,6 +152,22 @@ export default {
     this.getProfile();
     this.getFollowing();
   },
+  computed: {
+    paramUserId() {
+      return this.$route.params.id;
+    }
+  },
+  watch: {
+    paramUserId() {
+      this.$store.commit("GET_USERID")
+      this.myId = this.$store.state.userId
+      this.userId = this.$route.params.id;
+      this.showFollowingList = false;
+      this.showFollowerList = false;
+      this.getProfile();
+      this.getFollowing();
+    }
+  },
   methods: {
     async getProfile() {
       try {
@@ -165,7 +181,6 @@ export default {
         this.setLevel(this.user.exp);
       } catch (error) {
         console.log(error);
-        console.error(error.response.data);
       }
     },
     async getFollowing() {
@@ -183,6 +198,24 @@ export default {
     follower() {
       if(this.showFollowingList) this.showFollowingList = false;
       this.showFollowerList ^= 1;
+    },
+    follow() {
+      this.isFollowing = true;
+      this.user.follower++;
+    },
+    unfollow() {
+      this.isFollowing = false;
+      this.user.follower--;
+    },
+    followBy() {
+      if(this.user.id == this.myId) {
+        this.user.following++;
+      }
+    },
+    unfollowBy() {
+      if(this.user.id == this.myId) {
+        this.user.following--;
+      }
     },
     setLevel(exp) {
       for (let i = 0; i < 100; i++) {
