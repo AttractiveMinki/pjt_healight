@@ -16,8 +16,8 @@
       <router-link :to="{ name: 'DietRecord' }" class="text-decoration-none">
         <el-row class="community-inside">
           <el-col :span="18">
-              <div><h2 style="margin-top: 10px; margin-bottom: 5px">식단 기록하기</h2></div>
-              <div v-if="food_length == 0" class="alert-record-diet">오늘 식사 기록을 하지 않으셨습니다.</div>
+              <div>식단 기록하기</div>
+              <!-- <div v-if="food_length == 0" class="alert-record-diet">오늘 식사 기록을 하지 않으셨습니다.</div> -->
               
           </el-col>
           <el-col :span="6">

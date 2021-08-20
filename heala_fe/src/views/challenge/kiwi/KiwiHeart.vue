@@ -13,27 +13,22 @@
           </div>
           <div>
             <!-- challenge.point -->
-            500point
+            미션 모두 완료 시 500 point 지급!
           </div>
         </div>
         <el-row class="set-circle-line" style="margin-bottom: 40vw; font-size: 12px">
           <el-col :span="8" style="margin-top: 1vh;">
             <div id="circle" style="display: grid; align-items: center;">
-              <!-- {{ mission.content }} 미션 내용 -->
-              <!-- {{ challenges[0].mission.content }} -->
-              <div class="challenge-content">{{ challenges[0].content }}</div>
+              <div v-html="challenges[0].content" class="challenge-content">{{ challenges[0].content }}</div>
               <span v-if="challenges[0].completeDate" class="complete"> Complete </span>
-              <!-- v-if mission_user.comple_date 미션 완료 날짜가0 있다면 -->
-              <!-- {{ challenges[0].mission_user.complete_date }} -->
             </div>
             <div>1</div>
             <div>{{ challenges[0].completeDate }}</div>
             <button v-if="challenges[0].completeDate == null" class="button-setting" @click="certifyMission(challenges[0].id)">달성 확인</button>
-            <!-- <span v-else> 완료! </span> -->
           </el-col>
           <el-col :span="8" @click="setSelectedMissionId(1)">
             <div id="circle" style="display: grid; align-items: center">
-              <div class="challenge-content">{{ challenges[1].content }}</div>
+              <div v-html="challenges[1].content" class="challenge-content">{{ challenges[1].content }}</div>
               <span v-if="challenges[1].completeDate" class="complete"> Complete </span>
             </div>
             <div>2</div>
@@ -42,7 +37,7 @@
           </el-col>
           <el-col :span="8" style="margin-top: 2vh">
             <div id="circle" style="display: grid; align-items: center">
-              <div class="challenge-content">{{ challenges[2].content }}</div>
+              <div v-html="challenges[2].content" class="challenge-content">{{ challenges[2].content }}</div>
               <span v-if="challenges[2].completeDate" class="complete"> Complete </span>
             </div>
             <div>3</div>
@@ -53,7 +48,7 @@
         <el-row class="set-circle-line" style="margin-bottom: 40vw; font-size: 11px">
           <el-col :span="8" style="margin-top: 3vh">
             <div id="circle" style="display: grid; align-items: center">
-              <div class="challenge-content">{{ challenges[5].content }}</div>
+              <div v-html="challenges[5].content" class="challenge-content">{{ challenges[5].content }}</div>
               <span v-if="challenges[5].completeDate" class="complete"> Complete </span>
             </div>
             <div>6</div>
@@ -62,7 +57,7 @@
           </el-col>
           <el-col :span="8" style="margin-top: 1vh">
             <div id="circle" style="display: grid; align-items: center">
-              <div class="challenge-content">{{ challenges[4].content }}</div>
+              <div v-html="challenges[4].content" class="challenge-content">{{ challenges[4].content }}</div>
               <span v-if="challenges[4].completeDate" class="complete"> Complete </span>
             </div>
             <div>5</div>
@@ -71,7 +66,7 @@
           </el-col>
           <el-col :span="8">
             <div id="circle" style="display: grid; align-items: center">
-              <div class="challenge-content">{{ challenges[3].content }}</div>
+              <div v-html="challenges[3].content" class="challenge-content">{{ challenges[3].content }}</div>
               <span v-if="challenges[3].completeDate" class="complete"> Complete </span>
             </div>
             <div>4</div>
@@ -82,7 +77,7 @@
         <el-row class="set-circle-line" style="margin-bottom: 40vw; font-size: 11px">
           <el-col :span="8" style="margin-bottom: 15px">
             <div id="circle" style="display: grid; align-items: center">
-              <div class="challenge-content">{{ challenges[6].content }}</div>
+              <div v-html="challenges[6].content" class="challenge-content">{{ challenges[6].content }}</div>
               <span v-if="challenges[6].completeDate" class="complete"> Complete </span>
             </div>
             <div>7</div>
@@ -91,7 +86,7 @@
           </el-col>
           <el-col :span="8" style="margin-top: 1vh">
             <div id="circle" style="display: grid; align-items: center">
-              <div class="challenge-content">{{ challenges[7].content }}</div>
+              <div v-html="challenges[7].content" class="challenge-content">{{ challenges[7].content }}</div>
               <span v-if="challenges[7].completeDate" class="complete"> Complete </span>
             </div>
             <div>8</div>
@@ -100,7 +95,7 @@
           </el-col>
           <el-col :span="8" style="margin-top: 2vh">
             <div id="circle" style="display: grid; align-items: center">
-              <div class="challenge-content">{{ challenges[8].content }}</div>
+              <div v-html="challenges[8].content" class="challenge-content">{{ challenges[8].content }}</div>
               <span v-if="challenges[8].completeDate" class="complete"> Complete </span>
             </div>
             <div>9</div>
@@ -111,7 +106,7 @@
         <el-row class="set-circle-line" style="margin-bottom: 10vw; font-size: 11px">
           <el-col :span="8" style="margin-top: 3vh">
             <div id="circle" style="display: grid; align-items: center">
-              <div class="challenge-content">{{ challenges[9].content }}</div>
+              <div v-html="challenges[9].content" class="challenge-content">{{ challenges[9].content }}</div>
               <span v-if="challenges[9].completeDate" class="complete"> Complete </span>
             </div>
             <div>10</div>

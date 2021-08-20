@@ -81,5 +81,10 @@ html, body {
     font-weight: normal;
     font-style: normal;
 }
+@media (min-width: 425px) {
+	body {
+		font-size: 20px;
+	}
+}
 </style>
 
