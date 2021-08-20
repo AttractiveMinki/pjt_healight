@@ -33,6 +33,7 @@ public class ApiController {
 		String urlStr = "http://apis.data.go.kr/1470000/FoodNtrIrdntInfoService/getFoodNtrItdntList?"
 				+ "serviceKey=" + apiKey
 				+ "&desc_kor=" + URLEncoder.encode(desc_kor, "UTF-8")
+				+ "&numOfRows=30"
 				+ "&type=json";
 		
         URL url = new URL(urlStr);
