@@ -36,8 +36,8 @@ export default {
       }
     },
     created() {
-      // this.$store.commit("GET_USERID")
-      // this.userId = this.$store.state.userId
+      this.$store.commit("GET_USERID")
+      this.userId = this.$store.state.userId
       this.getPostData();
       // footer 0으로 설정
       this.$store.state.selectedRouter = 0
