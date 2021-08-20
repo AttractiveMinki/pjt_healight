@@ -17,7 +17,7 @@
         <el-row class="community-inside">
           <el-col :span="18">
               <div>식단 기록하기</div>
-              <div v-if="food_length == 0" class="alert-record-diet">오늘 식사 기록을 하지 않으셨습니다.</div>
+              <!-- <div v-if="food_length == 0" class="alert-record-diet">오늘 식사 기록을 하지 않으셨습니다.</div> -->
               
           </el-col>
           <el-col :span="6">

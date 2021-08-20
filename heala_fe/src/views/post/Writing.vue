@@ -219,7 +219,7 @@ export default {
           await axios.patch(SERVER.URL + SERVER.ROUTES.feedPost + `?postId=${this.$route.params.postId}`, data);
         }
         else await axios.post(`${SERVER.URL}${SERVER.ROUTES.feedPost}`, data);
-        this.$alert("등록이 완료되었습니다.");
+        alert("등록이 완료되었습니다.");
         if(this.editing) {
           this.$router.go(-1);
         } else {

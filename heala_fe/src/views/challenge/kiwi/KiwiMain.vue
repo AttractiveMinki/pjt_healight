@@ -3,7 +3,7 @@
     <Navbar />
     <ChallengeContainerKiwi />
     <el-row class="community" v-if="dataLoaded">
-      <el-col :span="24" class="community-box-special">
+      <!-- <el-col :span="24" class="community-box-special">
         <el-row>
           <router-link :to="{ name: 'KiwiSpecial' }" class="text-decoration-none">
             <el-col :span="18" class="community-inside-special">
@@ -13,24 +13,20 @@
               <div>기간: {{ data[3].startDate }} ~ {{ data[3].endDate }}</div>
             </el-col>
             <el-col :span="6">
-              <img v-if="image == data[3].image" src="@/assets/img/profile/user.png" alt="profile_image" width="70" height="70" style="border-radius: 50%;">
-              <img v-else :src="image" alt="image" width="70" height="70" style="border-radius: 50%;"><br>
-              <!-- {{ data[3].image }} -->
+              <img :src="imageServer + ``" alt="challenge_image" width="70" height="70" style="border-radius: 50%;">
             </el-col>
           </router-link>
         </el-row>
-      </el-col>
+      </el-col> -->
       <el-col :span="24" class="community-box">
         <el-row>
           <router-link :to="{ name: 'KiwiHealth' }" class="text-decoration-none">
             <el-col :span="18" class="community-inside">
               <div class="text-align-start text-title">{{ data[0].name }}</div>
-              <div class="text-align-start">{{ data[0].introduction }}</div>
+              <div v-html="data[0].introduction" class="text-align-start"></div>
             </el-col>
             <el-col :span="6">
-              <img v-if="image == data[0].image" src="@/assets/img/profile/user.png" alt="profile_image" width="70" height="70" style="border-radius: 50%;">
-              <img v-else :src="image" alt="image" width="70" height="70" style="border-radius: 50%;"><br>
-              <!-- {{ data[0].image }} -->
+              <img class="challenge-image" :src="imageServer + `admin/kiwichallenge0`" alt="challenge_image" width="70" height="70" style="border-radius: 50%;">
             </el-col>
           </router-link>
         </el-row>
@@ -40,12 +36,10 @@
           <router-link :to="{ name: 'KiwiDiet' }" class="text-decoration-none">
             <el-col :span="18" class="community-inside">
               <div class="text-align-start text-title">{{ data[1].name }}</div>
-              <div class="text-align-start">{{ data[1].introduction }}</div>
+              <div v-html="data[1].introduction" class="text-align-start"></div>
             </el-col>
             <el-col :span="6">
-              <img v-if="image == data[1].image" src="@/assets/img/profile/user.png" alt="profile_image" width="70" height="70" style="border-radius: 50%;">
-              <img v-else :src="image" alt="image" width="70" height="70" style="border-radius: 50%;"><br>
-              <!-- {{ data[1].image }} -->
+              <img class="challenge-image" :src="imageServer + `admin/kiwichallenge1`" alt="challenge_image" width="70" height="70" style="border-radius: 50%;">
             </el-col>
           </router-link>
         </el-row>
@@ -55,12 +49,10 @@
           <router-link :to="{ name: 'KiwiHeart' }" class="text-decoration-none"> 
             <el-col :span="18" class="community-inside">
               <div class="text-align-start text-title">{{ data[2].name }}</div>
-              <div class="text-align-start">{{ data[2].introduction }}</div>
+              <div v-html="data[2].introduction" class="text-align-start"></div>
             </el-col>
             <el-col :span="6">
-              <img v-if="image == data[2].image" src="@/assets/img/profile/user.png" alt="profile_image" width="70" height="70" style="border-radius: 50%;">
-              <img v-else :src="image" alt="image" width="70" height="70" style="border-radius: 50%;"><br>
-              <!-- {{ data[2].image }} -->
+              <img class="challenge-image" :src="imageServer + `admin/kiwichallenge2`" alt="challenge_image" width="70" height="70" style="border-radius: 50%;">
             </el-col>
           </router-link>
         </el-row>
@@ -82,6 +74,7 @@ export default {
   name: "KiwiMain",
   data: function () {
     return {
+      imageServer: SERVER.IMAGE_URL,
       data: {
         // id: "",
         // name: "",
@@ -103,7 +96,6 @@ export default {
       axios.get(`${SERVER.URL}${SERVER.ROUTES.getKiwiChallenge}`)
         .then((res) => {
           this.data = res.data
-          console.log(this.data)
           this.dataLoaded = true
         })
         .catch((err) => {
@@ -176,5 +168,8 @@ export default {
     /* width: 100%; */
     height: 20vh;
     border: 1.5px solid darkgrey;
+  }
+  .challenge-image {
+    padding-top: 10px;
   }
 </style>
