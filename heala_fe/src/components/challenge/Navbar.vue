@@ -55,7 +55,7 @@ export default {
     font-weight: bold; 
     font-size: 17px;
     text-align: left;
-    padding-left: 5vw; 
+    padding-left: 10px; 
   }
   .challenge-make {
     font-size: 13px;

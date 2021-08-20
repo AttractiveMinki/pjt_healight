@@ -81,10 +81,11 @@ html, body {
     font-weight: normal;
     font-style: normal;
 }
-@media (min-width: 425px) {
-	body {
-		font-size: 20px;
+/* @media (min-width: 425px) {
+	#app {
+		max-width: 425px;
+    margin: 10px auto;
 	}
-}
+} */
 </style>
 
