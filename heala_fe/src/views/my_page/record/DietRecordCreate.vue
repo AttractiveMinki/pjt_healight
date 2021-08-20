@@ -8,7 +8,7 @@
     <input type="text" id="foodNameSearch" v-model="foodNameSearch" style="margin-right: 2vw" @keyup.enter="getFoodInfo()">
     <el-button style="font-family:'TmoneyRoundWindRegular';" @click="getFoodInfo()">음식 검색</el-button>
 
-    <div v-if="foodList">
+    <div v-if="foodList.length != 0" id="houseScroll">
       <div v-for="food, idx in foodList" :key="idx">
         <button class="select-food-button" @click="selectNutrient(food)">
           <span v-if="food.ANIMAL_PLANT"> [{{ food.ANIMAL_PLANT }}] </span>
@@ -306,7 +306,12 @@ export default {
   #change_image:hover, #submit {
     cursor: pointer;
   }
-  
+  #houseScroll {
+    overflow: scroll;
+    margin: 10px 0 0 0;
+    height: 150px;
+  }
+
   .btn-file{
     position: relative;
     overflow: hidden;
@@ -350,12 +355,12 @@ export default {
     cursor: pointer;
   }
   .select-food-button {
-    background: #ADEC6E;
+    background: white;
     color: black;
     width: 80%;
-    height: 4vh;
     margin: 2vw;
-    border-width: 0px;
+    padding: 1vw;
+    border: #ADEC6E 2px solid;
     border-radius: 5px;
   }
   .select-food-number {
@@ -368,4 +373,27 @@ export default {
     border-radius: 5px;
   }
 
+/* scroll bar*/
+/* 스크롤바 뒷 배경 설정*/
+::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+/* 스크롤바 설정*/
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+/* 스크롤바 막대 설정*/
+::-webkit-scrollbar-thumb {
+  height: 17%;
+  background-color: #ADEC6E;
+  /* 스크롤바 둥글게 설정    */
+  border-radius: 10px;
+}
+
+/* 스크롤바 뒷 배경 설정*/
+::-webkit-scrollbar-track {
+  background-color: rgba(255, 255, 255, 0.33);
+}
 </style>
